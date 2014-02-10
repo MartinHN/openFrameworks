@@ -305,12 +305,11 @@ bool    blobmirrorx;
 };
 
 
-static int computeRatio = 4;
-//static int FPS = (computeRatio)*23;
+static int computeRatio = 2;
+
 static int FPS = 23;
 // screen size
-//static int scrw = 1280-10;
-//static int scrh = 800-10;
+
 static int scrw = 1280;
 static int scrh = 800;
 

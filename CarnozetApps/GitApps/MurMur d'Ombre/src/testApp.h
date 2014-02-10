@@ -7,7 +7,7 @@
 //#define localcamera
 //#define testvid
 //#define emulateshadow
-//#define syphon
+
 
 //#define blobcomp
 
@@ -26,16 +26,6 @@
 #include "ofxNetwork.h"
 #include "ofxOsc.h"
 #include "ofxGui.h"
-
-
-
-
-#if defined  syphon | defined syphonout
-#include "ofxSyphon.h"
-#endif
-
-
-
 
 
 //#include "ofxXmlSettings.h"
@@ -69,10 +59,10 @@ public:
     
     
    
-    
+     void keyPressed  (int key);
 #ifndef GUIMODE
     void exit();
-     void keyPressed  (int key);
+    
     void windowResized(int w, int h);
     ofVec3f camToWorld(ofVec3f vecin);
     
@@ -90,10 +80,6 @@ public:
     
 #ifdef syphon  
     ofxSyphonClient blobClient;
-    ofxSyphonClient videoClient;
-#endif
-#ifdef syphonout  
-    ofxSyphonServer syphonserver;
 #endif
 
 
@@ -233,6 +219,7 @@ public:
 
 #ifdef GUIMODE
     Gui gui;
+    string lastpath;
 #endif
     
 

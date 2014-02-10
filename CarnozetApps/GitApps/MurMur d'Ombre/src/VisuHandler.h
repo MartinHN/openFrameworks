@@ -8,6 +8,12 @@
 #pragma once
 //#ifndef VISU_HANDLER
 //#define VISU_HANDLER
+#define syphon
+
+#ifdef  syphon
+#include "ofxSyphon.h"
+#endif
+
 
 #include "AttrCtl.h"
 #include "Constants.h"
@@ -36,7 +42,7 @@ public:
     
     
     void addVisu(VisuClass * v);
-    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh);
+    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh,ofShader *blurX,ofShader *blurY);
     void update();
     void updateHighFPS();
     const void draw();
@@ -47,14 +53,6 @@ public:
     
     VisuClass * get(const string & name);
 
-
-
-    
-
-
-#ifdef HOMOGRAPHY
-    ofFbo fbo;
-#endif
     void loadScreensPos();
     const void printallp(ofParameterGroup p);
     int zdepth;
@@ -65,7 +63,15 @@ public:
     bool visufollowcam;
     
     AttrCtl* attr;
-    ofTexture syphonTex;
+#ifdef syphon
+    ofxSyphonClient blobClient;
+    pingPongBuffer syphonTex;
+    void blurblob();
+    ofShader * blurX;
+    ofShader * blurY;
+    ofParameter<float> blobBlur;
+    
+#endif
     vector<ofPolyline> blobs;
     
     ScreenHandler sH;

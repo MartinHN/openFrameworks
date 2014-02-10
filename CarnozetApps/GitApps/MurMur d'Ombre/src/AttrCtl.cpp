@@ -38,15 +38,20 @@ AttrCtl::AttrCtl(){
     lastp = vector<ofPoint>();
     destp = vector<ofPoint>();
     
+
+
+   
+    
+}
+
+void AttrCtl::registerParam(){
     settings.setName("attrCtl");
     
     zoffset.setName("zoffset");
     zoffset.setMin(0.);
     zoffset.setMax(1.);
-    settings.add(zoffset);
     zoffset=0.5;
-   
-    
+    settings.add(zoffset);
 }
 
 void AttrCtl::update(vector<ofPoint> curpin,vector<int> famillyin){

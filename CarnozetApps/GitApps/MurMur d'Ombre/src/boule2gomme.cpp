@@ -32,4 +32,8 @@ void boule2gomme::draw(int w, int h){
     for(int i = 0 ; i<points->size();i++)    
         ofEllipse(scale*points->at(i),rayon,rayon);
     
+#ifdef syphon
+    dad->syphonTex.src->draw(0,0);
+        dad->blobClient.draw(w/2,0);
+#endif
 }

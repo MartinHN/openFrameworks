@@ -68,6 +68,7 @@ Particles::Particles(VisuHandler * v):VisuClass(v){
     isHighFPS = true;
     int scrw = v->sH.sizeOfScreen(screenN).x;
     int scrh = v->sH.sizeOfScreen(screenN).y;
+    netCompRatio = 2;
 
 }
 
@@ -88,7 +89,7 @@ void Particles::setup(){
     
     
     MYPARAM(timeStep , 1.f,0.f,30.f);
-    timeStep*=timeStep/(FPS);
+
     
     MYPARAM(numParticles , 100000,100,1000000);
     
@@ -103,37 +104,51 @@ void Particles::setup(){
     MYPARAM(gradName,"rasta","","");
     MYPARAM(maxgrad,1,-9999.f,9999.f);
     
-        
+    numParticles.addListener(this,&Particles::changeNum);
     
     forces.push_back(new Force("origin"));
-    forces[forces.size()-1]->addParameter("k",.10f,-.5f,.5f);
-    forces[forces.size()-1]->addParameter("z",.05f,-.1f,.1f);
+    forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
+    forces[forces.size()-1]->addParameter("z",.01f,0.f,.05f);
     forces[forces.size()-1]->addParameter("freeze",0.f,0.f,1.f);
-    forces[forces.size()-1]->isActive=true;
+
     
     
     forces.push_back(new Force("gravity",true));
     forces[forces.size()-1]->addParameter("r",.90f,0.f,.8f);
-    forces[forces.size()-1]->addParameter("m",.05f,-.2f,.2f);
-    forces[forces.size()-1]->addParameter("damp",0.4f,-2.0f,2.0f);  
+    forces[forces.size()-1]->addParameter("m",.001f,-.0002f,.002f);
+    forces[forces.size()-1]->addParameter("damp",0.04f,-1.0f,1.0f);
 
     forces.push_back(new Force("netw"));
-    forces[forces.size()-1]->addParameter("k",.30f,0.f,.5f);
-    forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
-    forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("k",.30f,0.f,4.5f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.0f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,.05f);
     
     forces.push_back(new Force("neth"));
-    forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
-    forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
-    forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);    
+    forces[forces.size()-1]->addParameter("k",.030f,0.f,4.5f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,.5f);
     
     forces.push_back(new Force("spring",true));
     forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
     forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
     forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);    
     forces[forces.size()-1]->addParameter("mode",1,0,1);
-    forces.back()->isActive=true;
     
+    forces.push_back(new Force("fieldForce"));
+    forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("velouty",.030f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("veloutz",.030f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("veloutborder",.00f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("minv",.10f,0.f,1.f);
+    forces[forces.size()-1]->addParameter("maxv",.80f,0.f,1.f);
+
+
+    forces.push_back(new Force("globalForce"));
+    forces[forces.size()-1]->addParameter("f",1.f,0.f,1.3f);
+    forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
+    forces[forces.size()-1]->addParameter("vmax",.010f,0.f,1.f);
+    forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
+
     
     
     
@@ -160,7 +175,24 @@ void Particles::update(int w, int h){
     glBlendFunc(GL_ONE, GL_ZERO);
     
     for(int i = 0 ; i < forces.size();i++){
-        if(forces[i]->isActive && (forces[i]->isAttr?dad->attr->curp.size()>0:1)){
+        if(forces[i]->isActive&&forces[i]->name.find("net")!=string::npos){
+            for(int j = 0 ; j<netCompRatio;j++){
+            velPingPong.dst->begin();
+            forces[i]->shader.begin();
+            forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);
+            forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
+            forces[i]->shader.setUniform1i("resolution",textureRes);
+            forces[i]->updateShader();
+            
+            velPingPong.src->draw(0,0);
+            
+            forces[i]->shader.end();
+            
+            velPingPong.dst->end();
+            velPingPong.swap();
+            }
+        }
+        else if(forces[i]->isActive && (forces[i]->isAttr?dad->attr->curp.size()>0:1)){
             int j = 0;
             do{
         velPingPong.dst->begin();
@@ -168,6 +200,18 @@ void Particles::update(int w, int h){
         forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);
         if(forces[i]->name=="origin") 
             forces[i]->shader.setUniformTexture("originData",origins.getTextureReference(), 2);
+                if(forces[i]->name=="fieldForce"){
+                forces[i]->shader.setUniform2f("inres",dad->inw,dad->inh);
+#ifdef syphon
+                    forces[i]->shader.setUniformTexture("fieldData",dad->syphonTex.src->getTextureReference(), 2);
+#endif
+                    
+                    
+                    
+                    
+                    
+                }
+//            forces[i]->shader.setUniformTexture("fieldData",dad->blobFbo.getTextureReference(), 2);
         if(forces[i]->isAttr&&j<dad->attr->curp.size())
             forces[i]->shader.setUniform3f("attr",dad->attr->curp[j].x,dad->attr->curp[j].y*scrh/scrw,dad->attr->curp[j].z);
         forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
@@ -194,7 +238,7 @@ void Particles::update(int w, int h){
     posPingPong.dst->begin();
     updatePos.begin();  // Previus position
     updatePos.setUniformTexture("velData", velPingPong.src->getTextureReference(), 1);      // Velocity
-    updatePos.setUniform1f("timestep",timeStep );
+    updatePos.setUniform1f("timestep",timeStep*1.0/FPS );
     updatePos.setUniform1i("resolution",textureRes);
     
     posPingPong.src->draw(0,0);
@@ -280,7 +324,7 @@ void Particles::initFbo(){
             int i = textureRes * y + x;
             
             pos[i*3 + 0] = x*1.0/textureRes;
-            pos[i*3 + 1] = y*1.0/textureRes*scrh/scrw;
+            pos[i*3 + 1] = y*1.0*scrh/(textureRes*scrw);
             pos[i*3 + 2] = 0.5;
         }
     }
@@ -331,6 +375,10 @@ void Particles::registerParam(){
         }
          
     }
+}
+
+void Particles::changeNum(int & num){
+    initFbo();
 }
 
 

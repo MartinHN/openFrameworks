@@ -15,6 +15,8 @@ class AttrCtl{
     public :
     AttrCtl();
     
+    void registerParam();
+    
     float* attr;
 
     

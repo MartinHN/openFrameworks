@@ -19,7 +19,8 @@ public:
     Force();
     Force(string namein,bool isAttr=false);
     ~Force(){
-        FreeClear(pl);             };
+//        FreeClear(pl);
+    };
     
     void updateShader();
     ofShader getShader();
@@ -61,6 +62,7 @@ public:
     
     
     void initFbo();
+    void changeNum(int & num);
     
     ofFbo origins;
     ofShader updatePos;
@@ -87,6 +89,8 @@ public:
     ofVec2f  textureRes2;
     
     ofImage gradient;
+    
+    int netCompRatio;
     
 };
 

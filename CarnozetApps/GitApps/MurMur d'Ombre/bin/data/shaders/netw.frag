@@ -34,9 +34,9 @@ void main(void){
     
     
     vec3 distbuf;
-    
+    float l0norm = l0/resolution;
 
-    float netmax = 50*l0;
+    float netmax = 10*l0norm;
     float normbuf;
     vec3 linbuf;
     linbuf.x=netmax+1;
@@ -46,7 +46,7 @@ void main(void){
             linbuf=distbuf;
             normbuf = length(distbuf);
             if(normbuf<netmax){
-            vel+=normalize(distbuf)*(normbuf-l0)*k;            
+            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
         }
     if(st.x>1){
@@ -54,11 +54,11 @@ void main(void){
         normbuf = length(distbuf);
         
         if(normbuf<netmax){
-            vel+=normalize(distbuf)*(normbuf-l0)*k;            
+            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
         }
         
         if(length(linbuf)<netmax){
-            vel+=z*(distbuf+linbuf);
+            vel-=z*(distbuf+linbuf);
         }
         
     }

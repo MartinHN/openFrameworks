@@ -31,7 +31,6 @@ void main(void){
     
     
     vec3 distbuf = (attr-pos);
-    vec3 distnormed = normalize(distbuf);
     float normbuf = length(distbuf);//dist.x*dist.x+dist.y*dist.y+dist.z*dist.z;
     
 //    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);

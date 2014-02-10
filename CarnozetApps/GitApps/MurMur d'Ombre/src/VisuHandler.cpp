@@ -27,9 +27,6 @@ VisuHandler::VisuHandler(AttrCtl *attrctl,int inwin,int inhin,int zdepthin, int 
     beat=0;
     attr = attrctl;
     
-#ifdef HOMOGRAPHY
-    fbo.allocate(scrw,scrh,GL_RGBA32F);
-#endif
     syphonTex.allocate(inw,inh,GL_RGBA32F);
     
     sH = ScreenHandler(scrw,scrh,zdepth);
@@ -41,7 +38,7 @@ VisuHandler::VisuHandler(AttrCtl *attrctl,int inwin,int inhin,int zdepthin, int 
     
    
 }
-void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int scrwin, int scrhin){
+void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int scrwin, int scrhin,ofShader *blurXin,ofShader *blurYin){
     
     allParams.clear();
     allParams.setName("Visu");
@@ -53,10 +50,17 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     beat=0;
     attr = attrctl;
     
-#ifdef HOMOGRAPHY
-    fbo.allocate(scrw,scrh,GL_RGBA32F);
+#ifdef syphon
+    blobClient.setup();
+    blobClient.setApplicationName("Simple Server");
+    blobClient.setServerName("");
+      syphonTex.allocate(inw,inh,GL_RGBA32F);
+    blurX = blurXin;
+    blurY = blurYin;
+    
 #endif
-    syphonTex.allocate(inw,inh,GL_RGBA32F);
+    
+  
     
     sH.setup(scrw,scrh,zdepth);
     sH.loadScreensPos();
@@ -73,10 +77,41 @@ VisuClass * VisuHandler::get(const string & name){
     return NULL;  
 }
 
+#ifdef syphon
+void VisuHandler::blurblob(){
+    ofPushMatrix();
+    ofPushStyle();
+    ofPushView();
+    ofSetColor(255);
+    syphonTex.dst->begin();
+    blurX->begin();
+    blurX->setUniform1f("blurAmnt", blobBlur);
+    blobClient.draw(0,0,inw,inh);
+    blurX->end();
+    syphonTex.dst->end();
+
+    syphonTex.swap();
+    
+    syphonTex.dst->begin();
+    blurY->begin();
+    blurY->setUniform1f("blurAmnt", blobBlur);
+    syphonTex.src->draw(0,0);
+    blurY->end();
+    syphonTex.dst->end();
+    syphonTex.swap();
+    ofPopMatrix();
+    ofPopStyle();
+    ofPopView();
+
+}
+#endif
 
 
 void VisuHandler::update(){
     paramSync.update();
+#ifdef syphon
+    blurblob();
+#endif
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->screenN>=0&&!visuList[i]->isHighFPS){
@@ -104,59 +139,47 @@ void VisuHandler::updateHighFPS(){
 
 
 void VisuHandler::saveState(string & s){
-//    sH.screensParam.setSerializable(false);
-    string abspath = ofToDataPath("presets/"+ofToString(s));
+    string abspath = ofToDataPath("presets/"+ofToString(loadName));
+    if(s.find("/")!=string::npos) {abspath = s;}
+    else{ofLogWarning("saving to local : " + abspath);}
     cout<<"saving to " + abspath<<endl;
     ofXml xml;
 	xml.serialize(allParams);
 	cout<<xml.save(abspath)<<endl;
 }
+
+
+
 void VisuHandler::loadState(string & s){
     string abspath = ofToDataPath("presets/"+ofToString(loadName));
-    cout<<"loading from " + abspath<<endl;
-    
+    if(s.find("/")!=string::npos) {abspath = s;}
+    else{ofLogWarning("loading from local : " + abspath);}
     ofXml xml;
-//	xml.serialize(allParams);
-	cout<<xml.load(abspath)<<endl;
+
+	xml.load(abspath);
     xml.deserialize(allParams);
-//    ofFile filein(abspath,ofFile::ReadOnly,false);
-////    ofBuffer
-//    if(!filein.exists())return;
-//    //    ostream streamout;
-//    ofBuffer buf = filein.readToBuffer();
-//    
-//    ofParameterGroup curG = allParams;
-//    while(!buf.isLastLine()){
-//        string in  = buf.getNextLine();
-//    vector<string> args = ofSplitString(in,":",true);
-//        if(args.size()>1){
-//            if(curG.contains(args[0]))curG[args[0]].fromString(args[1]);
-//            else cout<<"error reading"<<endl;
-//        }
-//        else{
-//            if(curG.contains(args[0])) curG =curG.getGroup(args[0]);
-//            else curG = curG.getParent()->getGroup(args[0]);
-//        }
-//    
-//    cout<<ofToString(args[0]) + ofToString(curG.contains(args[0]))<<endl;
-//    }
-////    filein>>allParams;
-//    filein.close();
-    
+
 }
 void VisuHandler::registerParams(){
-    sH.registerParams();
-    allParams.add((&sH)->screensParam);
+//    sH.registerParams();
+//    allParams.add((&sH)->screensParam);
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
     }
+    
     saveName.setName("saveName");
     allParams.add(saveName);
     loadName.setName("loadName");
     allParams.add(loadName);
-    
+    blobBlur.setName("blobBlur");
+    blobBlur.setMin(0);
+    blobBlur.setMax(10);
+    blobBlur = 2;
+    allParams.add(blobBlur);
+    attr->registerParam();
     allParams.add(attr->settings);
+    
 #ifdef GUIMODE
     paramSync.setup(allParams,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
 #else
@@ -192,7 +215,7 @@ const void VisuHandler::draw(){
         if(visuList[i]->screenN>=0){
             ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
             if(curS.width>0){
-#ifdef HOMOGRAPHY
+
             if(visuList[i]->screenN<sH.screenL.size()){
                 if(visuList[i]->isMapping)sH.screenL[visuList[i]->screenN]->screenWarp.loadMat();
                 else ofTranslate(curS.x,curS.y,0);
@@ -201,20 +224,19 @@ const void VisuHandler::draw(){
             }
             else{
                 ofTranslate(curS.x,curS.y,0);
-#endif  
+ 
                 visuList[i]->draw(curS.width,curS.height);
-        
-#ifdef HOMOGRAPHY
-        }
-#endif
+
             }
 
         }
+
+    }
         ofPopStyle();
         ofPopView();
         ofPopMatrix();
     }
-    
+    ofSetColor(255);
 
 }
 

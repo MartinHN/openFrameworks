@@ -36,13 +36,7 @@ void testApp::setup(){
     foregroundtype=1;
     isFullScreen=false;
 
-#ifdef syphon
-    blobClient.setup();
-    blobClient.setApplicationName("OF8");
-    blobClient.setServerName("blob");
-    
 
-#endif
 
     ofBackground(0);
     glDisable(GL_DEPTH_TEST);
@@ -121,7 +115,7 @@ ofSetVerticalSync(false);
     brightness2=saturation2=contrast2=brightness=contrast=saturation=1.;
 #endif  
 
-    visuHandler.setup(&attrctl,inw,inh,zdepth,scrw,scrh);
+    visuHandler.setup(&attrctl,inw,inh,zdepth,scrw,scrh,&blurX,&blurY);
 
 #ifndef GUIMODE  
 #ifndef LIVEBLUR
@@ -146,6 +140,7 @@ ofSetVerticalSync(false);
 #ifdef GUIMODE
     
     gui.load(visuHandler.allParams);
+
     
 #endif
 
@@ -392,7 +387,20 @@ finalRender.dst->end();
     
     
 }
-
+#ifdef GUIMODE
+void testApp::keyPressed(int key){
+     switch (key){
+         case 's':
+         {ofFileDialogResult filep = ofSystemSaveDialog("preset","save preset file");
+             visuHandler.saveName = filep.getPath();}
+             break;
+         case 'l':
+         {ofFileDialogResult filep = ofSystemLoadDialog("load preset");
+             visuHandler.loadName = filep.getPath();}
+             break;
+     }
+}
+#endif
 
 
 #ifndef GUIMODE
@@ -414,7 +422,7 @@ void testApp::keyPressed(int key){
             ofSetFullscreen(isFullScreen);
             break;
             
-
+            
             
             case'a':
             isAtt=!isAtt;
@@ -1058,7 +1066,7 @@ void testApp::mouseDragged(int x, int y, int button){
     vector<int> familly;
   
         familly.push_back(0);
-        points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,zdepth/2));
+        points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
 
     if(points.size()>0)attrctl.update(points,familly);
 //    printf("%i",button);

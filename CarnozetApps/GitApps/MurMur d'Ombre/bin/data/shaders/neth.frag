@@ -32,33 +32,33 @@ void main(void){
     vec3 opos = texture2DRect( posData , st+vec2(0,-1)).xyz;    
     
     
-    
+    float l0norm = l0/resolution;
     vec3 distbuf;
     
 
-    float netmax = 50*l0;
+    float netmax = 3*l0norm;
     float normbuf;
     vec3 linbuf;
     linbuf.x=netmax+1;
         
-    if(st.x<resolution-1){
+    if(st.y<resolution-1){
             distbuf=pos-poso;
             linbuf=distbuf;
             normbuf = length(distbuf);
             if(normbuf<netmax){
-            vel+=normalize(distbuf)*(normbuf-l0)*k;            
+            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
         }
-    if(st.x>1){
+    if(st.y>1){
         distbuf=pos-opos;
         normbuf = length(distbuf);
         
         if(normbuf<netmax){
-            vel+=normalize(distbuf)*(normbuf-l0)*k;            
+            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
         }
         
         if(length(linbuf)<netmax){
-            vel+=z*(distbuf+linbuf);
+            vel-=z*(distbuf+linbuf);
         }
         
     }

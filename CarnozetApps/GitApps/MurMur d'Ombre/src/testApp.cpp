@@ -115,9 +115,10 @@ ofSetVerticalSync(false);
     brightness2=saturation2=contrast2=brightness=contrast=saturation=1.;
 #endif  
 
-    visuHandler.setup(&attrctl,inw,inh,zdepth,scrw,scrh,&blurX,&blurY);
+    visuHandler.setup(&attrctl,inw,inh,zdepth,scrw,scrh);
 
-#ifndef GUIMODE  
+#ifndef GUIMODE 
+    visuHandler.setupSyphon(&blurX,&blurY);
 #ifndef LIVEBLUR
     foreground.push_back(visuHandler.sH.globalMask);
 #endif

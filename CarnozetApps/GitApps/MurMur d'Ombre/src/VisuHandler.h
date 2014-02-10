@@ -42,7 +42,8 @@ public:
     
     
     void addVisu(VisuClass * v);
-    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh,ofShader *blurX,ofShader *blurY);
+    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh);
+    void setupSyphon(ofShader *blurXin,ofShader *blurYin);
     void update();
     void updateHighFPS();
     const void draw();

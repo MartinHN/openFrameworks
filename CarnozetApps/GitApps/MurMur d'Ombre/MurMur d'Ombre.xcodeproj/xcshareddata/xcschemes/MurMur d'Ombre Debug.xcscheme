@@ -2,7 +2,7 @@
 <Scheme
    version = "1.8">
    <BuildAction
-      parallelizeBuildables = "YES"
+      parallelizeBuildables = "NO"
       buildImplicitDependencies = "YES">
       <BuildActionEntries>
          <BuildActionEntry
@@ -16,6 +16,20 @@
                BlueprintIdentifier = "E4B69B5A0A3A1756003C02F2"
                BuildableName = "MurMur d&apos;Ombre.app"
                BlueprintName = "MurMur d&apos;Ombre 10.6"
+               ReferencedContainer = "container:MurMur d&apos;Ombre.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "F200AA2618A97C5D0004F00A"
+               BuildableName = "MurMur d&apos;Ombre 10.6 copy.app"
+               BlueprintName = "MurMur d&apos;Ombre 10.6 GUI"
                ReferencedContainer = "container:MurMur d&apos;Ombre.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,7 +60,6 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Debug"
-      ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>

@@ -38,7 +38,7 @@ VisuHandler::VisuHandler(AttrCtl *attrctl,int inwin,int inhin,int zdepthin, int 
     
    
 }
-void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int scrwin, int scrhin,ofShader *blurXin,ofShader *blurYin){
+void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int scrwin, int scrhin){
     
     allParams.clear();
     allParams.setName("Visu");
@@ -50,16 +50,7 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     beat=0;
     attr = attrctl;
     
-#ifdef syphon
-    blobClient.setup();
-    blobClient.setApplicationName("Simple Server");
-    blobClient.setServerName("");
-      syphonTex.allocate(inw,inh,GL_RGBA32F);
-    blurX = blurXin;
-    blurY = blurYin;
-    
-#endif
-    
+
   
     
     sH.setup(scrw,scrh,zdepth);
@@ -68,6 +59,19 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     
     
 
+}
+
+void VisuHandler::setupSyphon(ofShader *blurXin,ofShader *blurYin){
+#ifdef syphon
+    blobClient.setup();
+    blobClient.setApplicationName("Simple Server");
+    blobClient.setServerName("");
+    syphonTex.allocate(inw,inh,GL_RGBA32F);
+    blurX = blurXin;
+    blurY = blurYin;
+    
+#endif
+    
 }
 VisuClass * VisuHandler::get(const string & name){
     for (int i = 0; i< visuList.size() ; i++){
@@ -139,6 +143,7 @@ void VisuHandler::updateHighFPS(){
 
 
 void VisuHandler::saveState(string & s){
+        if(s!=""){
     string abspath = ofToDataPath("presets/"+ofToString(loadName));
     if(s.find("/")!=string::npos) {abspath = s;}
     else{ofLogWarning("saving to local : " + abspath);}
@@ -146,11 +151,17 @@ void VisuHandler::saveState(string & s){
     ofXml xml;
 	xml.serialize(allParams);
 	cout<<xml.save(abspath)<<endl;
+        }
+        else{
+            ofLogWarning("no argument for save state");
+        }
+
 }
 
 
 
 void VisuHandler::loadState(string & s){
+    if(s!=""){
     string abspath = ofToDataPath("presets/"+ofToString(loadName));
     if(s.find("/")!=string::npos) {abspath = s;}
     else{ofLogWarning("loading from local : " + abspath);}
@@ -158,6 +169,10 @@ void VisuHandler::loadState(string & s){
 
 	xml.load(abspath);
     xml.deserialize(allParams);
+    }
+    else{
+        ofLogWarning("no argument for load state");
+    }
 
 }
 void VisuHandler::registerParams(){

@@ -1,0 +1,518 @@
+<Widget>
+    <Kind>2</Kind>
+    <Name>origin</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>korigin</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>zorigin</Name>
+    <Value>120.699996948</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>gravity</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Gx</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Gy</Name>
+    <Value>109.650001526</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>Gz</Name>
+    <Value>209.099990845</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>border</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>kborder</Name>
+    <Value>171.942855835</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>zborder</Name>
+    <Value>128.228576660</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>fr</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>frmin</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>minv</Name>
+    <Value>224.399993896</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>maxv</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>netw</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>lnetw</Name>
+    <Value>132.599990845</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>knetw</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>znetw</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>neth</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>lneth</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>kneth</Name>
+    <Value>75.771430969</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>zneth</Name>
+    <Value>132.599990845</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>usemouse</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrspring0</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>normal</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>interieur</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>raspring0</Name>
+    <Value>45.645023346</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>kaspring0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>zaspring0</Name>
+    <Value>45.351470947</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrspring1</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>normal</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>interieur</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>raspring1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>kaspring1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>zaspring1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrspring2</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>normal</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>interieur</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>raspring2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>kaspring2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>zaspring2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrrotation0</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>rarotation0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>sarotation0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrrotation1</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>rarotation1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>sarotation1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrrotation2</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>rarotation2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>sarotation2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrgravity0</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>magravity0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>rinagravity0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>minagravity0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrgravity1</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>magravity1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>Rragravity1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>minagravity1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrgravity2</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>magravity2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>ragravity2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>minagravity2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrdamp0</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>radamp0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>cadamp0</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrdamp1</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>radamp1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>cadamp1</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrdamp3</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>radamp2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>cadamp2</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrorx0</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrory0</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrorx1</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrory1</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrorx2</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>attrmirrory2</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>11</Kind>
+    <Name>partSV</Name>
+    <XValue>116.025001526</XValue>
+    <YValue>114.750000000</YValue>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>partHue</Name>
+    <Value>166.369995117</Value>
+</Widget>
+<Widget>
+    <Kind>11</Kind>
+    <Name>bgSV</Name>
+    <XValue>84.150001526</XValue>
+    <YValue>173.400009155</YValue>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>bgHue</Name>
+    <Value>144.779998779</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Fixed Color</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Speed Gradient</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>Z Gradient</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>What else</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>alphablur</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>finalblur</Name>
+    <Value>84.150001526</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>partsize</Name>
+    <Value>255.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>alphaparticule</Name>
+    <Value>125.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>6</Kind>
+    <Name>maxgrad</Name>
+    <HighValue>2800.000244141</HighValue>
+    <LowValue>1266.666625977</LowValue>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>camrotx</Name>
+    <Value>48.470325470</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>camroty</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>camrotz</Name>
+    <Value>0.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>camdist</Name>
+    <Value>122.399993896</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>blobmin</Name>
+    <Value>1</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>blobforce</Name>
+    <Value>57.145786285</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>blobz</Name>
+    <Value>3.470191240</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>bloboutvel</Name>
+    <Value>21.201480865</Value>
+</Widget>
+<Widget>
+    <Kind>21</Kind>
+    <Name>blobblur</Name>
+    <Value>212.768554688</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>blobmirrorx</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>blobmirrory</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>blobxinvert</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>blobyinvert</Name>
+    <Value>0</Value>
+</Widget>

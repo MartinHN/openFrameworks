@@ -65,7 +65,12 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 		}else if(type==typeid(ofParameter<ofShortColor>).name()){
 			ofParameter<ofShortColor> p = _parameters.getShortColor(i);
 			add(p);
-		}else if(type==typeid(ofParameter<ofFloatColor>).name()){
+		}
+    else if(type==typeid(ofParameter<string>).name()){
+        ofParameter<string> p = _parameters.getString(i);
+        add(p);
+    }
+        else if(type==typeid(ofParameter<ofFloatColor>).name()){
 			ofParameter<ofFloatColor> p = _parameters.getFloatColor(i);
 			add(p);
 		}else if(type==typeid(ofParameterGroup).name()){
@@ -131,6 +136,11 @@ void ofxGuiGroup::add(const ofParameterGroup & parameters){
 	add(panel);
 }
 
+void ofxGuiGroup::add(ofParameterGroup & parameters){
+	ofxGuiGroup * panel = new ofxGuiGroup(parameters);
+	panel->parent = this;
+	add(panel);
+}
 void ofxGuiGroup::add(ofParameter<float> & parameter){
 	add(new ofxFloatSlider(parameter,b.width));
 }

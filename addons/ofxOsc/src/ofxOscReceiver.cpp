@@ -232,12 +232,43 @@ bool ofxOscReceiver::getParameter(ofAbstractParameter & parameter){
 		getNextMessage(&msg);
 		vector<string> address = ofSplitString(msg.getAddress(),"/",true);
 		for(int i=0;i<address.size();i++){
+            
+//            cout<<p->getName()<<endl;
 			if(address[i]==p->getName()){
 				if(p->type()==typeid(ofParameterGroup).name()){
 					if(address.size()>=i+1){
-						p = &static_cast<ofParameterGroup*>(p)->get(address[i+1]);
+                        if(static_cast<ofParameterGroup*>(p)->contains(address[i+1]))
+                            { p = &static_cast<ofParameterGroup*>(p)->get(address[i+1]);}
+                        else 
+                            {cout<<"wrong oscmessage"<<endl;
+                            return false;} 
 					}
-				}else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
+				}
+                else if(p->type()==typeid(ofParameter<ofVec3f>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT ){
+                    if(msg.getNumArgs()!=3){ofLogWarning("recieving wrong vector size : "+p->getName()+" with "+ ofToString(msg.getNumArgs())+" values");}
+                    else{
+                    ofVec3f vt;
+                    for(int i  = 0 ; i < 3 ; i++){
+					vt[i] = msg.getArgAsFloat(i);
+                    }
+                    (p->cast<ofVec3f>())=vt;
+                    }
+                }
+                
+                else if(p->type()==typeid(ofParameter<ofVec2f>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
+                    if(msg.getNumArgs()!=2){ofLogWarning("recieving wrong vector size : "+p->getName()+" with "+ ofToString(msg.getNumArgs())+" values");}
+                    else{
+                    ofVec2f vt;
+                    for(int i  = 0 ; i < 2 ; i++){
+                        vt[i] = msg.getArgAsFloat(i);
+                    }
+                    (p->cast<ofVec2f>())=vt;
+                }
+                }
+                
+                
+                
+                else if(p->type()==typeid(ofParameter<int>).name() && msg.getArgType(0)==OFXOSC_TYPE_INT32){
 					p->cast<int>() = msg.getArgAsInt32(0);
 				}else if(p->type()==typeid(ofParameter<float>).name() && msg.getArgType(0)==OFXOSC_TYPE_FLOAT){
 					p->cast<float>() = msg.getArgAsFloat(0);
@@ -246,8 +277,13 @@ bool ofxOscReceiver::getParameter(ofAbstractParameter & parameter){
 				}else if(msg.getArgType(0)==OFXOSC_TYPE_STRING){
 					p->fromString(msg.getArgAsString(0));
 				}
+                else{
+                    ofLogWarning("wrong format for message : "+msg.getAddress());
+                }
 			}
-		}
+            }
+            
+            
 	}
 	return true;
 }

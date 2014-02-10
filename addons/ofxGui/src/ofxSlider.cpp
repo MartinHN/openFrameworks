@@ -103,7 +103,7 @@ void ofxSlider<Type>::generateDraw(){
 	bg.setFillColor(thisBackgroundColor);
 	bg.setFilled(true);
 	bg.rectangle(b);
-
+    if(value.getMin()==value.getMax())cout<<value.getName()+"lllllllllllllllllll"+ofToString(value.getParent())<<endl;
 	float valAsPct = ofMap( value, value.getMin(), value.getMax(), 0, b.width-2, true );
 	bar.setFillColor(thisFillColor);
 	bar.setFilled(true);

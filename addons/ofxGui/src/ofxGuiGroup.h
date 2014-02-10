@@ -25,6 +25,7 @@ public:
     void add(ofParameter<ofColor> & parameter);
     void add(ofParameter<ofShortColor> & parameter);
     void add(ofParameter<ofFloatColor> & parameter);
+    void add(ofParameterGroup & parameters);
 
     void minimize();
     void maximize();

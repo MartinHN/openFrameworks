@@ -33,6 +33,7 @@ public:
     
     vector<Ecran *> screenL;
     ofParameterGroup screensParam;
+    ofParameter<bool> isMasking;
     
     int scrw;
     int scrh;

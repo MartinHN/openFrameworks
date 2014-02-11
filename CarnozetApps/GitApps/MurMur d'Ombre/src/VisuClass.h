@@ -71,6 +71,7 @@ public:
 
     ofParameter<int> screenN;
     ofParameter<bool> isMapping;
+    ofParameter<bool> recopy;
     VisuHandler *dad;
     ofParameterGroup settings;
     bool isHighFPS;

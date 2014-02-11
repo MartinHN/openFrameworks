@@ -22,11 +22,16 @@
 #define blobosc
 
 #include "ofMain.h"
+#ifndef GUIMODE
 #include "ofxOpenCv.h"
+#endif
 #include "ofxNetwork.h"
 #include "ofxOsc.h"
-#include "ofxGui.h"
 
+
+
+
+#include "CamWiggler.h"
 
 //#include "ofxXmlSettings.h"
 //#include "ofx3DModelLoader.h"
@@ -38,12 +43,13 @@
 
 //#include "VisuHandler.h"
 #include "AttrCtl.h"
-#include "CamWiggler.h"
+
 
 
 #include "Constants.h"
 #ifdef GUIMODE
 #include "Gui.h"
+#include "ofxGui.h"
 #endif
 #include "visuWarper.h"
 

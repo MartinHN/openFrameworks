@@ -17,8 +17,6 @@
 void Gui::load(ofParameterGroup & pgtmp){
 
     globP.setName("global");
-
-    
    
     for (int i = 0 ; i< pgtmp.size();i++){
         ofAbstractParameter * p = &pgtmp.get(i); 

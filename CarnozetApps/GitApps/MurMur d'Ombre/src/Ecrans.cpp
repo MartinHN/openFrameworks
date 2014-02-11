@@ -38,6 +38,8 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int scrwin, int  scrhin):number(num
 }
 
 
+
+
 vector<ofVec3f> Ecran::getVerticesNorm(){
     vector<ofVec3f> res;
     for (std::list<ofParameter<ofVec3f> *>::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){

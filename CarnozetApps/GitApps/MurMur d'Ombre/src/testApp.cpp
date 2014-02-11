@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 //    ofSetDataPathRoot("../Resources/data/");
+    
     #ifndef GUIMODE
     
  
@@ -139,7 +140,7 @@ ofSetVerticalSync(false);
     string savename = "lolo";
     visuHandler.saveState(savename);
 #ifdef GUIMODE
-    
+         ofSetFrameRate(8);
     gui.load(visuHandler.allParams);
 
     
@@ -354,21 +355,20 @@ finalRender.dst->end();
 
     
 
-    if(foregroundtype>0){
-#ifdef LIVEBLUR
+    if(visuHandler.sH.isMasking){
         visuHandler.sH.drawMask();
-#else
-        foreground[foregroundtype-1].draw(0,0,scrw,scrh);
-#endif
+        ofSetColor(0);
+        glBlendEquation(GL_ADD);
+        glBlendFunc(GL_DST_COLOR,GL_ZERO);
+
     }
-    ofSetColor(0);
-    glBlendEquation(GL_ADD);
-    glBlendFunc(GL_DST_COLOR,GL_ZERO);
+
 
     ofSetColor(255);
     finalRender.src->draw(cropxl,cropyh,ofGetWidth()-cropxr-cropxl,ofGetHeight()-cropyl-cropyh); 
     
 
+    
     if(isFPS){
         ofSetColor(0,0,0,!isFPS?0:255);
         ofRect(0, 0, 300, 25);

@@ -40,11 +40,11 @@ void main(void){
 
     
     
-    if (field>max&&velout>0){
+    if (field>maxv&&velouty*veloutz>0){
         vel+=vec3(0,velouty,veloutz);
         
     }
-    else if(field>min){
+    else if(field>minv){
         vel+= vec3 (k*(field-texture2DRect( fieldData , pos+vec2(1,0)).x) , k*(field-texture2DRect( fieldData , pos+vec2(0,1)).x) , veloutborder);
     }
 

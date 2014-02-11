@@ -27,7 +27,7 @@ VisuHandler::VisuHandler(AttrCtl *attrctl,int inwin,int inhin,int zdepthin, int 
     beat=0;
     attr = attrctl;
     
-    syphonTex.allocate(inw,inh,GL_RGBA32F);
+//    syphonTex.allocate(inw,inh,GL_RGBA32F);
     
     sH = ScreenHandler(scrw,scrh,zdepth);
     sH.loadScreensPos();
@@ -66,7 +66,8 @@ void VisuHandler::setupSyphon(ofShader *blurXin,ofShader *blurYin){
     blobClient.setup();
     blobClient.setApplicationName("Simple Server");
     blobClient.setServerName("");
-    syphonTex.allocate(inw,inh,GL_RGBA32F);
+   syphonTex.allocate(inw,inh,GL_RGB32F);
+
     blurX = blurXin;
     blurY = blurYin;
     
@@ -86,28 +87,34 @@ void VisuHandler::blurblob(){
     ofPushMatrix();
     ofPushStyle();
     ofPushView();
-    ofSetColor(255);
+    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    
     syphonTex.dst->begin();
+    ofSetColor(255);
     blurX->begin();
     blurX->setUniform1f("blurAmnt", blobBlur);
     blobClient.draw(0,0,inw,inh);
     blurX->end();
     syphonTex.dst->end();
+     glFlush();
 
     syphonTex.swap();
-    
+
     syphonTex.dst->begin();
     blurY->begin();
     blurY->setUniform1f("blurAmnt", blobBlur);
-    syphonTex.src->draw(0,0);
+    syphonTex.src->draw(0,0,inw,inh);
     blurY->end();
     syphonTex.dst->end();
     syphonTex.swap();
     ofPopMatrix();
     ofPopStyle();
     ofPopView();
-
 }
+
 #endif
 
 
@@ -160,6 +167,8 @@ void VisuHandler::saveState(string & s){
 
 
 
+
+
 void VisuHandler::loadState(string & s){
     if(s!=""){
     string abspath = ofToDataPath("presets/"+ofToString(loadName));
@@ -176,8 +185,8 @@ void VisuHandler::loadState(string & s){
 
 }
 void VisuHandler::registerParams(){
-//    sH.registerParams();
-//    allParams.add((&sH)->screensParam);
+    sH.registerParams();
+    allParams.add((&sH)->screensParam);
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
@@ -190,7 +199,7 @@ void VisuHandler::registerParams(){
     blobBlur.setName("blobBlur");
     blobBlur.setMin(0);
     blobBlur.setMax(10);
-    blobBlur = 2;
+    blobBlur = 0;
     allParams.add(blobBlur);
     attr->registerParam();
     allParams.add(attr->settings);
@@ -221,6 +230,9 @@ const void VisuHandler::printallp(ofParameterGroup p){
 const void VisuHandler::draw(){
     // draw visu
    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
 
     for (int i = 0 ; i<visuList.size();i++){
         ofPushMatrix();
@@ -230,19 +242,40 @@ const void VisuHandler::draw(){
         if(visuList[i]->screenN>=0){
             ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
             if(curS.width>0){
+                int curSn = visuList[i]->screenN;
+                int curSn2 = curSn;
+                
+                do{
+                    if(visuList[i]->recopy){
+                        curSn2 = curSn%10;
+                      curS = sH.rectOfScreen(curSn2);
+                    }
+                    
+                    if(curSn2<sH.screenL.size()){
+                        
+                        if(visuList[i]->isMapping)
+                            sH.screenL[curSn2]->screenWarp.loadMat();
+                        else
+                            ofTranslate(curS.x,curS.y,0);
+                        
+                        visuList[i]->draw(curS.width,curS.height);
+                        
+                        if(visuList[i]->isMapping)
+                            sH.screenL[curSn2]->screenWarp.unloadMat();
+                        else
+                            ofTranslate(-curS.x,-curS.y,0);
+                    }
+                
+                
+                    else if(!visuList[i]->recopy){
+                        ofTranslate(curS.x,curS.y,0);
+                        
+                        visuList[i]->draw(curS.width,curS.height);
+                    }
+                    curSn/=10;
+                }while(curSn%10>0&&visuList[i]->recopy);
 
-            if(visuList[i]->screenN<sH.screenL.size()){
-                if(visuList[i]->isMapping)sH.screenL[visuList[i]->screenN]->screenWarp.loadMat();
-                else ofTranslate(curS.x,curS.y,0);
-                visuList[i]->draw(curS.width,curS.height);
-                if(visuList[i]->isMapping)sH.screenL[visuList[i]->screenN]->screenWarp.unloadMat();
-            }
-            else{
-                ofTranslate(curS.x,curS.y,0);
- 
-                visuList[i]->draw(curS.width,curS.height);
-
-            }
+            
 
         }
 
@@ -251,6 +284,8 @@ const void VisuHandler::draw(){
         ofPopView();
         ofPopMatrix();
     }
+    
+    
     ofSetColor(255);
 
 }

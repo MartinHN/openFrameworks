@@ -17,43 +17,14 @@ screensParam.setName("screens");
 }
 
 
-ScreenHandler::ScreenHandler(int win, int hin, int zin){
-    scrw=win;
-    scrh = hin;
-    zdepth=zin;
-    screensParam.setName("screens");
-    
-#ifdef LIVEBLUR
-    blurX.load("","shaders/blurXa.frag");
-    blurY.load("","shaders/blurYa.frag");
-    blurX.setUniform1f("blurAmnt", 10);
-    blurY.setUniform1f("blurAmnt", 10);
-    blur.allocate(scrw,scrh,GL_RGB32F);
-    float * pos = new float[scrw*scrh*3];
-    for (int x = 0; x < scrw; x++){
-        for (int y = 0; y < scrh; y++){
-            int i = scrw * y + x;
-            
-            pos[i*3 + 0] = 0;
-            pos[i*3 + 1] = 0;
-            pos[i*3 + 2] = 0;
-        }
-    }
-    
-    // Load this information in to the FBO´s texture
-    blur.src->getTextureReference().loadData(pos, scrw,scrh, GL_RGB);
-    blur.dst->getTextureReference().loadData(pos, scrw,scrh, GL_RGB);
-    delete pos;
-#endif
-    
-}
+
 
 void ScreenHandler::setup(int win, int hin, int zin){
     scrw=win;
     scrh = hin;
     zdepth=zin;
     screensParam.setName("screens");
-    
+    isMasking= true;
 #ifdef LIVEBLUR
     blurX.load("","shaders/blurXa.frag");
     blurY.load("","shaders/blurYa.frag");
@@ -90,6 +61,8 @@ void ScreenHandler::registerParams(){
         screenL[i]->registerParams();
       screensParam.add(screenL[i]->vertices);  
     }
+    isMasking.setName("isMasking");
+    screensParam.add(isMasking);
     
     screensParam.setName("screens");
    
@@ -123,46 +96,36 @@ const ofVec2f ScreenHandler::sizeOfScreen(const int which){
 
 void ScreenHandler::blurmask(){
 #ifdef LIVEBLUR
-//    blur.src->begin();
-//
+//    glBlendEquation(GL_FUNC_ADD_EXT);
 //    
-//    blur.src->end();
-    ofPushView();
-    ofPushMatrix();
-    ofPushStyle();
-    blur.allocate(scrw,scrh,GL_RGB32F);
-    blur.src->begin();
+//    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+//    
+//
+//    ofPushView();
+//    ofPushMatrix();
+//    ofPushStyle();
+//    blur.dst->begin();
 //    blurX.begin();
 //    blurX.setUniform1f("blurAmnt",finalblur);
-    ofSetColor(100);
-    ofRect(0,0,scrw,scrh);
-    ofSetColor(0,0, 255);
-    
-    ofRect(0, 0, 400, 400);
-//    for(int z = 1 ; z<screenL.size();z++){
-//        ofPolyline tmpPath(screenL[z]->getVertices());
-//        tmpPath.close();
-//        tmpPath.draw();
-//    } 
-//    blurX.end();
-    blur.src->end();
-//    blur.swap();
-//    
-//    blur.dst->begin();
-//    blurY.begin();
-////    blurY.setUniform1f("blurAmnt",finalblur);            
-//    blur.src->draw(0,0);
-//    blurY.end();        
+//    drawMask();
 //    blur.dst->end();
-//    
-//    blur.swap();
-//    
-//    
-//    
-//   
-    ofPopView();
-    ofPopMatrix();
-    ofPopStyle();
+////    blur.swap();
+////    
+////    blur.dst->begin();
+////    blurY.begin();
+//////    blurY.setUniform1f("blurAmnt",finalblur);            
+////    blur.src->draw(0,0);
+////    blurY.end();        
+////    blur.dst->end();
+////    
+////    blur.swap();
+////    
+////    
+////    
+////   
+//    ofPopView();
+//    ofPopMatrix();
+//    ofPopStyle();
 #else
     //Create globalMask
     

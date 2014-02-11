@@ -28,7 +28,7 @@
 #include "ofXml.h"
 #include "EcranHandler.h"
 
-#include "listUtils.h"
+
 
 //#define IS_VIDEO
 
@@ -82,7 +82,8 @@ public:
     
     ScreenHandler sH;
     
-    map<string, ofImage> sharedImg;
+    vector<ofImage> sharedImg;
+    ofImage* getSharedImg(int i);
     
     vector<VisuClass*> visuList;
 //protected:

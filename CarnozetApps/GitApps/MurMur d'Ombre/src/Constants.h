@@ -68,6 +68,29 @@ private:
 };
 
 
+class Timer{
+    
+    float startT;
+    float time;
+    
+    void start(float timein){
+        startT = ofGetElapsedTimef();
+        time = timein>0?timein:0.000001;
+    }
+    float getSeconds(){
+        return ofGetElapsedTimef()-startT;
+    }
+    float get(){
+        return time - (ofGetElapsedTimef()-startT);
+    }
+    
+    float getNorm(){
+        return get()*1.0/time;
+    }
+};
+
+
+
 struct forces{
     
     float mousex;

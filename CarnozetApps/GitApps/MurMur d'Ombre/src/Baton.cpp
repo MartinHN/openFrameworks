@@ -138,7 +138,7 @@ void Baton::update(VisuHandler * dad){
         //    }
     }
     
-    if(poly.size()>maxsize||(poly.size()>1&&(width<poly.back().x<0||height<poly.back().y<0||300<poly.back().z<-500))){
+    if(poly.size()>maxsize||(poly.size()>1&&(width<poly.back().x<0||height<poly.back().y<0||(300< poly.back().z && poly.back().z < -500)))){
         poly.pop_back();
         poly2.pop_back();
         orientation.pop_back();

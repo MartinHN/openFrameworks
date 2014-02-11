@@ -25,6 +25,7 @@ public:
     ofParameter<float> scale;
     ofParameter<float> ratio;
     ofParameter<ofVec4f> color;
+    ofParameter<bool> fill;
     
     void draw(int w, int h);
     void update(int w, int h);

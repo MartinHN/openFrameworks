@@ -673,7 +673,6 @@
 		F20CC4621885DBD600FDBDC2 /* Baton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Baton.h; sourceTree = "<group>"; };
 		F220C7B218A65D1900B8EA9F /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui.cpp; sourceTree = "<group>"; };
 		F220C7B318A65D1900B8EA9F /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gui.h; sourceTree = "<group>"; };
-		F220C7B618A65DA400B8EA9F /* listUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = listUtils.h; sourceTree = "<group>"; };
 		F222D98018A52F2100450D5F /* blurXa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurXa.frag; sourceTree = "<group>"; };
 		F222D98118A52F2200450D5F /* blurYa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurYa.frag; sourceTree = "<group>"; };
 		F22359EC17C15D1B00895AA8 /* AutoTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoTree.cpp; sourceTree = "<group>"; };
@@ -1393,7 +1392,6 @@
 				F29F92A5167B5D98007DBECF /* Constants.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
-				F220C7B618A65DA400B8EA9F /* listUtils.h */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
 				F2B9D62418A13D44005EA5A4 /* Unused */,
 				F2B9D62318A13D2B005EA5A4 /* Attr */,

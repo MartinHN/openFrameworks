@@ -57,12 +57,13 @@ void ScreenHandler::addScreen(vector<ofVec3f> vert){
 
 void ScreenHandler::registerParams(){
     screensParam.clear();
+    isMasking.setName("isMasking");
+    screensParam.add(isMasking);
     for(int i = 0 ;i< screenL.size();i++){
         screenL[i]->registerParams();
       screensParam.add(screenL[i]->vertices);  
     }
-    isMasking.setName("isMasking");
-    screensParam.add(isMasking);
+
     
     screensParam.setName("screens");
    

@@ -29,7 +29,7 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     beat=0;
     attr = attrctl;
     
-    sharedImg["circlegrad"] = ofImage("images/background.png");
+    sharedImg.push_back(ofImage("images/background.png"));
   
     
     sH.setup(scrw,scrh,zdepth);
@@ -162,6 +162,11 @@ void VisuHandler::loadState(string & s){
         ofLogWarning("no argument for load state");
     }
 
+}
+
+ofImage * VisuHandler::getSharedImg(int i){
+    if(i>sharedImg.size())return;
+    return &sharedImg[i];
 }
 void VisuHandler::registerParams(){
     sH.registerParams();

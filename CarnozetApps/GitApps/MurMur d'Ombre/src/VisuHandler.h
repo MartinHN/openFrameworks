@@ -8,7 +8,10 @@
 #pragma once
 //#ifndef VISU_HANDLER
 //#define VISU_HANDLER
+#ifndef GUIMODE
 #define syphon
+#endif
+
 
 #ifdef  syphon
 #include "ofxSyphon.h"
@@ -64,15 +67,17 @@ public:
     bool visufollowcam;
     
     AttrCtl* attr;
+    
 #ifdef syphon
     ofxSyphonClient blobClient;
     pingPongBuffer syphonTex;
     void blurblob();
     ofShader * blurX;
     ofShader * blurY;
-    ofParameter<float> blobBlur;
-    
 #endif
+    
+     ofParameter<float> blobBlur;
+    
     vector<ofPolyline> blobs;
     
     ScreenHandler sH;

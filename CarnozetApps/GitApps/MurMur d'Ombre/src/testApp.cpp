@@ -10,7 +10,7 @@ void testApp::setup(){
     
  
     isFPS = true;
-    cropxr=cropxl=cropyh=cropyl=0;
+
     
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofImage tmp;
@@ -365,7 +365,7 @@ finalRender.dst->end();
 
 
     ofSetColor(255);
-    finalRender.src->draw(cropxl,cropyh,ofGetWidth()-cropxr-cropxl,ofGetHeight()-cropyl-cropyh); 
+    finalRender.src->draw(0,0,ofGetWidth(),ofGetHeight());
     
 
     

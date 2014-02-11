@@ -107,17 +107,7 @@ public:
     
     
     
-    vector<ofImage> background;
-    Boolean backTrack;
-    ofPoint offsetbkg;
-    float zoomback,curzoomback;
-    float zoombackalpha;
-#ifdef LIVEBLUR
-//    vector<ofFbo*> foreground;
-#else
-    vector<ofImage> foreground;
-#endif
-    int backgroundtype,foregroundtype;
+
     
     ofCamera camera;
     
@@ -205,7 +195,7 @@ public:
     
 
     bool isFullScreen;
-    ofParameter<int> cropxl,cropxr,cropyh,cropyl;
+    
  
 #endif
     int zdepth;

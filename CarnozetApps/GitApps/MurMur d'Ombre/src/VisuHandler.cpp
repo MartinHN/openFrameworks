@@ -15,30 +15,9 @@ VisuHandler::VisuHandler(){
   
     
 }
-VisuHandler::VisuHandler(AttrCtl *attrctl,int inwin,int inhin,int zdepthin, int scrwin, int scrhin){
-           
-    allParams.clear();
-    allParams.setName("Visu");
-    zdepth = zdepthin;
-    inw=inwin;
-    inh= inhin;
-    scrw=scrwin;
-    scrh=scrhin;
-    beat=0;
-    attr = attrctl;
-    
-//    syphonTex.allocate(inw,inh,GL_RGBA32F);
-    
-    sH = ScreenHandler(scrw,scrh,zdepth);
-    sH.loadScreensPos();
-    
-   
-    
 
-    
-   
-}
-void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int scrwin, int scrhin){
+
+void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int * scrwin, int * scrhin){
     
     allParams.clear();
     allParams.setName("Visu");
@@ -50,7 +29,7 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     beat=0;
     attr = attrctl;
     
-
+    sharedImg["circlegrad"] = ofImage("images/background.png");
   
     
     sH.setup(scrw,scrh,zdepth);
@@ -240,42 +219,37 @@ const void VisuHandler::draw(){
         ofPushStyle();
         ofTranslate(0,0,zdepth/2);
         if(visuList[i]->screenN>=0){
-            ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
-            if(curS.width>0){
-                int curSn = visuList[i]->screenN;
-                int curSn2 = curSn;
-                
-                do{
-                    if(visuList[i]->recopy){
-                        curSn2 = curSn%10;
-                      curS = sH.rectOfScreen(curSn2);
-                    }
+            int validScreen = sH.getValidScreen(visuList[i]->screenN);
+            if(validScreen>=0){
+                if(visuList[i]->recopy){
+                    int curn = validScreen%10;
+                    do{
+                        ofRectangle curR = sH.screenL[curn]->rectMax;
+                        if (visuList[i]->isMapping)sH.screenL[curn]->screenWarp.loadMat();
+                        else ofTranslate(curR.x,curR.y);
+                        
+                        visuList[i]->draw(curR.width,curR.height);
+                        
+                        if (visuList[i]->isMapping)sH.screenL[curn]->screenWarp.unloadMat();
+                        else ofTranslate(-curR.x,-curR.y);
+                        validScreen/=10;
+                        curn = validScreen%10;
+                    }while (curn>0);
                     
-                    if(curSn2<sH.screenL.size()){
-                        
-                        if(visuList[i]->isMapping)
-                            sH.screenL[curSn2]->screenWarp.loadMat();
-                        else
-                            ofTranslate(curS.x,curS.y,0);
-                        
-                        visuList[i]->draw(curS.width,curS.height);
-                        
-                        if(visuList[i]->isMapping)
-                            sH.screenL[curSn2]->screenWarp.unloadMat();
-                        else
-                            ofTranslate(-curS.x,-curS.y,0);
-                    }
-                
-                
-                    else if(!visuList[i]->recopy){
-                        ofTranslate(curS.x,curS.y,0);
-                        
-                        visuList[i]->draw(curS.width,curS.height);
-                    }
-                    curSn/=10;
-                }while(curSn%10>0&&visuList[i]->recopy);
+                }
+                else{
+                    
+                    ofRectangle curR = sH.rectOfScreen(validScreen);
+                    if (visuList[i]->isMapping&&validScreen<sH.screenL.size())sH.screenL[validScreen]->screenWarp.loadMat();
+                    else ofTranslate(curR.x,curR.y);
+                    
+                    visuList[i]->draw(curR.width,curR.height);
+                    
+                    if (visuList[i]->isMapping&&validScreen<sH.screenL.size())sH.screenL[validScreen]->screenWarp.unloadMat();
+                    else ofTranslate(-curR.x,-curR.y);
+                    
+                }
 
-            
 
         }
 
@@ -304,6 +278,12 @@ void VisuHandler::addVisu(VisuClass * v){
     visuList.push_back(v);
 }
 
+
+void VisuHandler::updateScreenSize(){
+    for (int i = 0 ; i< sH.screenL.size();i++){
+        sH.screenL[i]->calcRectMax();
+    }
+}
 
 
 

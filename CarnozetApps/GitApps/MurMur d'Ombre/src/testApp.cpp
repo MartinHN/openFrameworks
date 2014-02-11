@@ -13,28 +13,7 @@ void testApp::setup(){
 
     
     ofSetLogLevel(OF_LOG_VERBOSE);
-    ofImage tmp;
-    tmp.loadImage("images/backgroundvid.png");
-    background.push_back(tmp);
-    tmp.loadImage("images/background2.png");
-    background.push_back(tmp);
-    tmp.loadImage("images/background3.png");
-    background.push_back(tmp);
-    tmp.loadImage("images/background4.png");
-    background.push_back(tmp);
-    tmp.loadImage("images/background5.png");
-    background.push_back(tmp);
-    for(int i = 0 ; i<background.size();i++){
-        background[i].setAnchorPercent(.50,.50);
-    }
-    zoomback = 100;
-    curzoomback=zoomback;
-    zoombackalpha = 0.8;
-    
 
-    //delete(tmp);
-    backgroundtype=0;
-    foregroundtype=1;
     isFullScreen=false;
 
 
@@ -116,7 +95,7 @@ ofSetVerticalSync(false);
     brightness2=saturation2=contrast2=brightness=contrast=saturation=1.;
 #endif  
 
-    visuHandler.setup(&attrctl,inw,inh,zdepth,scrw,scrh);
+    visuHandler.setup(&attrctl,inw,inh,zdepth,&scrw,&scrh);
 
 #ifndef GUIMODE 
     visuHandler.setupSyphon(&blurX,&blurY);
@@ -135,6 +114,7 @@ ofSetVerticalSync(false);
     
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     visuHandler.addVisu(new Particles(&visuHandler));
+    visuHandler.addVisu(new background(&visuHandler));
 
     visuHandler.registerParams();
     string savename = "lolo";
@@ -218,15 +198,12 @@ void testApp::draw(){
         }
         
         if(abs(camrot.y-camdest.y)>100)camdest.y=0;
-        //if(abs(camrot.w-camdest.w)>250)camdest.w= 0;
+
         if(abs(camrot.w-camdest.w)>100) camdest.w=-camdest.w;
         
         
         camrot = camdest*alphacamrot + camrot*(1-alphacamrot);
- //       camwiggle.update(visuHandler.beat);
- //    camera.orbit(camrot.y,camrot.z,camwiggle.z*height*camrot.x,ofVec3f(width/2+camwiggle.x,height/2 +camwiggle.y, zdepth/2));       
          camera.orbit(camrot.y,camrot.z,1.0*height*camrot.x,ofVec3f(width/2,height/2 , zdepth/2)); 
-
         camera.rotate(camrot.w,camera.getLookAtDir());
 
 #ifdef OF_VERSION_MAJOR
@@ -237,24 +214,7 @@ void testApp::draw(){
     finalRender.dst->begin();
     
     ofSetColor(rback,gback,bback,alphablur);
-       if(backgroundtype>0)  {
-           
-           
-           if(backTrack){
-               for (int i = 0 ; i<attrctl.curp.size() ; i++){
-                   if(attrctl.familly[i] == 0){offsetbkg = attrctl.curp[i]*ofPoint(scrw,scrh);}
-               }
-           }
-           else{
-               offsetbkg.set(scrw/2,scrh/2);
-           }
-           curzoomback = zoomback;//*(1-zoombackalpha) +curzoomback*zoombackalpha;
-           background[backgroundtype-1].draw(offsetbkg.x,offsetbkg.y,scrw*curzoomback/100.,scrh*curzoomback/100.);
-       }
-       else{
-        ofRect(0,0,scrw,scrh);
-       }
-
+    ofRect(0,0,scrw,scrh);
     
     
         if(isAtt){
@@ -486,9 +446,9 @@ void testApp::windowResized(int w, int h){
     scrw=width=w;
     scrh=height=h;
     
-    visuHandler.scrh = h;
-    visuHandler.scrw = w;
-    
+
+ 
+    visuHandler.updateScreenSize();
     finalRender.allocate(width,height,GL_RGB);
 #endif
 }
@@ -545,13 +505,7 @@ void testApp::oscUpdate(){
             }
             attrctl.update(points,familly);
         } 
-        else if(m.getAddress() == "/backTrack"){
-            backTrack = m.getArgAsInt32(0)>0;
-        }
-        else if(m.getAddress() == "/zoomback"){
-            zoomback = m.getArgAsFloat(0);
-            // printf("curzoom %f\n",zoomback);
-        }
+
 //        else if(m.getAddress() == "/gravity"){
 //            f.gravity=m.getArgAsFloat(0)==1;
 //        }

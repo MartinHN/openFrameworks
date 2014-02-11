@@ -40,12 +40,11 @@ class VisuHandler{
 public:
     
     VisuHandler();
-    VisuHandler(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh);
     ~VisuHandler(){FreeClear(visuList);};
     
     
     void addVisu(VisuClass * v);
-    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int scrw,int scrh);
+    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int * scrw,int * scrh);
     void setupSyphon(ofShader *blurXin,ofShader *blurYin);
     void update();
     void updateHighFPS();
@@ -54,13 +53,14 @@ public:
     void saveState(string & s);
     void loadState(string & s);
     ofParameterGroup * getParamPtr();
+    void updateScreenSize();
     
     VisuClass * get(const string & name);
 
     void loadScreensPos();
     const void printallp(ofParameterGroup p);
     int zdepth;
-    int inw,inh,scrw,scrh;
+    int inw,inh,* scrw,* scrh;
     
     int beat;
     float audioenv;
@@ -81,7 +81,9 @@ public:
     vector<ofPolyline> blobs;
     
     ScreenHandler sH;
-
+    
+    map<string, ofImage> sharedImg;
+    
     vector<VisuClass*> visuList;
 //protected:
     

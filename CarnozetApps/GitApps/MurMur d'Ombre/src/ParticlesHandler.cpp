@@ -66,8 +66,6 @@ void Force::updateShader(){
 Particles::Particles(VisuHandler * v):VisuClass(v){
     setup();
     isHighFPS = true;
-    int scrw = v->sH.sizeOfScreen(screenN).x;
-    int scrh = v->sH.sizeOfScreen(screenN).y;
     netCompRatio = 2;
 
 }
@@ -213,7 +211,7 @@ void Particles::update(int w, int h){
                 }
 //            forces[i]->shader.setUniformTexture("fieldData",dad->blobFbo.getTextureReference(), 2);
         if(forces[i]->isAttr&&j<dad->attr->curp.size())
-            forces[i]->shader.setUniform3f("attr",dad->attr->curp[j].x,dad->attr->curp[j].y*scrh/scrw,dad->attr->curp[j].z);
+            forces[i]->shader.setUniform3f("attr",dad->attr->curp[j].x,dad->attr->curp[j].y* *dad->scrh/ *dad->scrw,dad->attr->curp[j].z);
         forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
         forces[i]->shader.setUniform1i("resolution",textureRes);
         forces[i]->updateShader();
@@ -311,7 +309,7 @@ void Particles::initFbo(){
 //    textureResx*textureResy = numParticles;
 //    textureResx/textureResy = scrw/scrh;
  
-    textureRes2.x = (int)sqrt((float)numParticles*scrw/scrh);
+    textureRes2.x = (int)sqrt((float)numParticles* *dad->scrw/ *dad->scrh);
     textureRes2.y = (int)numParticles/textureRes2.x;
     
     textureRes = (int)sqrt((float)numParticles);
@@ -324,7 +322,7 @@ void Particles::initFbo(){
             int i = textureRes * y + x;
             
             pos[i*3 + 0] = x*1.0/textureRes;
-            pos[i*3 + 1] = y*1.0*scrh/(textureRes*scrw);
+            pos[i*3 + 1] = y*1.0* *dad->scrh/(textureRes* *dad->scrw);
             pos[i*3 + 2] = 0.5;
         }
     }

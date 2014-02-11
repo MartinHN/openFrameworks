@@ -14,7 +14,7 @@
 #include "Ruban.h"
 #include "boule2gomme.h"
 #include "ParticlesHandler.h"
-#include "
+#include "background.h"
 //#include "Cinetique.h"
 //#include "AutoTree.h"
 //#include "DreamCatcher.h"

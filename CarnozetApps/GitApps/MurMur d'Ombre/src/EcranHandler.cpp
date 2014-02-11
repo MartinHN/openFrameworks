@@ -19,7 +19,7 @@ screensParam.setName("screens");
 
 
 
-void ScreenHandler::setup(int win, int hin, int zin){
+void ScreenHandler::setup(int * win, int * hin, int zin){
     scrw=win;
     scrh = hin;
     zdepth=zin;
@@ -30,11 +30,11 @@ void ScreenHandler::setup(int win, int hin, int zin){
     blurY.load("","shaders/blurYa.frag");
     blurX.setUniform1f("blurAmnt", 10);
     blurY.setUniform1f("blurAmnt", 10);
-    blur.allocate(scrw,scrh,GL_RGB32F);
-    float * pos = new float[scrw*scrh*3];
-    for (int x = 0; x < scrw; x++){
-        for (int y = 0; y < scrh; y++){
-            int i = scrw * y + x;
+    blur.allocate(*scrw,*scrh,GL_RGB32F);
+    float * pos = new float[*scrw * *scrh*3];
+    for (int x = 0; x < *scrw; x++){
+        for (int y = 0; y < *scrh; y++){
+            int i = *scrw * y + x;
             
             pos[i*3 + 0] = 0;
             pos[i*3 + 1] = 0;
@@ -43,8 +43,8 @@ void ScreenHandler::setup(int win, int hin, int zin){
     }
     
     // Load this information in to the FBO´s texture
-    blur.src->getTextureReference().loadData(pos, scrw,scrh, GL_RGB);
-    blur.dst->getTextureReference().loadData(pos, scrw,scrh, GL_RGB);
+    blur.src->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
+    blur.dst->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
     delete pos;
 #endif
     
@@ -67,6 +67,24 @@ void ScreenHandler::registerParams(){
     screensParam.setName("screens");
    
     return screensParam;
+}
+
+int ScreenHandler::getValidScreen(int which){
+    int k = 1;
+    int idx = which%10;
+    int res = -1;
+    
+    do{
+
+        if(idx<screenL.size()){
+            if(res==-1) res = idx;
+            else res +=k *idx;
+            }
+        
+        k*=10;
+        idx = (which/k) %10;
+    }while(idx>0);
+    return res;
 }
 
 ofRectangle ScreenHandler::rectOfScreen(int which){
@@ -195,7 +213,7 @@ void ScreenHandler::blurmask(){
 
 void ScreenHandler::drawMask(){
     ofSetColor(0);
-    ofRect(0,0, scrw,scrh);
+    ofRect(0,0, *scrw,*scrh);
     ofSetColor(0,0,244);
     for (int i = 1 ; i < screenL.size();i++){
         ofPath tmpP;

@@ -15,12 +15,12 @@ class ScreenHandler{
 public:  
     
     ScreenHandler();
-    ScreenHandler(int w, int h, int z);
     ~ScreenHandler(){};
-    void setup(int w, int h, int z);
+    void setup(int * w, int * h, int z);
     void loadScreensPos();
     void addScreen(vector<ofVec3f> vert);
     void registerParams();
+    int getValidScreen(int which);
     
     ofRectangle rectOfScreen(int which);
     const ofVec2f sizeOfScreen(const int which);
@@ -35,8 +35,8 @@ public:
     ofParameterGroup screensParam;
     ofParameter<bool> isMasking;
     
-    int scrw;
-    int scrh;
+    int * scrw;
+    int * scrh;
     int zdepth;
     
     ofImage globalMask;

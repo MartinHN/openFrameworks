@@ -18,7 +18,7 @@
 class Ecran{
 public:
     Ecran(){};
-    Ecran(int number,vector<ofVec3f> vert, int scrw,int scrh);
+    Ecran(int number,vector<ofVec3f> vert, int * scrw,int * scrh);
     ~Ecran(){FreeClear(vl);};
     
     void calcRectMax();
@@ -27,8 +27,8 @@ public:
     
     vector<ofVec3f> getVertices();
     vector<ofVec3f> getVerticesNorm();
-    int scrw;
-    int scrh;
+    int * scrw;
+    int * scrh;
     int number;
     ofParameterGroup vertices;
     list<ofParameter<ofVec3f> *> vl;

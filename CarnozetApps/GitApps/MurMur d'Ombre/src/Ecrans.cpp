@@ -8,7 +8,7 @@
 
 #include "Ecrans.h"
 
-Ecran::Ecran(int number,vector<ofVec3f> vert,int scrwin, int  scrhin):number(number){ 
+Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin):number(number){
 
     scrw = scrwin;
     scrh = scrhin;
@@ -29,7 +29,7 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int scrwin, int  scrhin):number(num
 #ifdef HOMOGRAPHY
     screenWarp=Warp();
     screenWarp.setSrc(ofPoint(0,0), ofPoint(rectMax.width,0), ofPoint(rectMax.width,rectMax.height), ofPoint(0,rectMax.height));
-    ofVec2f scale(scrw,scrh);
+    ofVec2f scale(*scrw,*scrh);
     if(vert.size()<4)ofLogWarning("less than 4 vertices for screen : "+ofToString(number));
     else screenWarp.setDst(vert[0]*scale,vert[1]*scale,vert[2]*scale, vert[3]*scale);
 #endif
@@ -50,7 +50,7 @@ vector<ofVec3f> Ecran::getVerticesNorm(){
 
 vector<ofVec3f> Ecran::getVertices(){
     vector<ofVec3f> res;
-    ofVec2f scale(scrw,scrh);
+    ofVec2f scale(*scrw,*scrh);
     for (std::list<ofParameter<ofVec3f> *>::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         
         res.push_back(**vv );

@@ -11,8 +11,11 @@
 
 
 background::background(VisuHandler * v):VisuClass(v){
-    MYPARAM(rayon,2,0,100);
-    MYPARAM(center,ofVec2f(0.5,0.5),ofVec2f(0),ofVec2f(1));
+    MYPARAM(type,0,0,10);
+    MYPARAM(center, ofVec2f(0.5), ofVec2f(0), ofVec2f(1));
+    MYPARAM(color, ofVec4f(255), ofVec4f(0), ofVec4f(255));
+    MYPARAM(scale, 1.f,0.f,5.f);
+    MYPARAM(ratio, 1.f,0.f,5.f);
     settings.setName("background");
 }
 
@@ -23,15 +26,11 @@ void background::update(int w, int h){
 }
 
 void background::draw(int w, int h){
-
-    ofVec2f scale(w,h);
-    vector<ofVec3f> * points =  &dad->attr->curp;
-    ofSetColor(255,0,0);
-    
-    for(int i = 0 ; i<points->size();i++)    
-        ofEllipse(scale*points->at(i),rayon,rayon);
-#ifdef syphon
-    ofSetColor(255);
-    dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);
-#endif
+    ofSetColor(color.get().x,color.get().y,color.get().z,color.get().w);
+    ofRectangle rect;
+    rect.setFromCenter(center.get()*ofVec2f(w,h), w*scale, h*scale*ratio);
+    if(type>0)
+        dad->sharedImg["circlegrad"].draw(rect);
+    else
+        ofRectangle(rect);
 }

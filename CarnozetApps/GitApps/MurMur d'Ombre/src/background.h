@@ -19,8 +19,12 @@ public:
     background(VisuHandler * v);
     ~background(){};
     
-    ofParameter<int> rayon;
     ofParameter<ofVec2f> center;
+    
+    ofParameter<int> type;
+    ofParameter<float> scale;
+    ofParameter<float> ratio;
+    ofParameter<ofVec4f> color;
     
     void draw(int w, int h);
     void update(int w, int h);

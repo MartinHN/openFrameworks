@@ -5,7 +5,10 @@
 // This fill the billboard made on the Geometry Shader with a texture
 
 
+
 uniform float alpha;
+
+
 
 
 void main() {

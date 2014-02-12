@@ -36,7 +36,7 @@ void main(void){
     vec3 distbuf;
     float l0norm = l0/resolution;
 
-    float netmax = 10*l0norm;
+    float netmax = 100*l0norm;
     float normbuf;
     vec3 linbuf;
     linbuf.x=netmax+1;

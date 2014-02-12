@@ -47,6 +47,7 @@
 
 
 #include "Constants.h"
+#include "CamHandler.h"
 #ifdef GUIMODE
 #include "Gui.h"
 #include "ofxGui.h"
@@ -67,45 +68,25 @@ public:
    
      void keyPressed  (int key);
 #ifndef GUIMODE
-    void exit();
     
+    void exit();    
     void windowResized(int w, int h);
-    ofVec3f camToWorld(ofVec3f vecin);
     
 #ifdef MOUSEATTR
     void mouseDragged(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 #endif
-    
-    
-    
 
-    
-    
-    
-    
 #ifdef syphon  
     ofxSyphonClient blobClient;
 #endif
 
-
-
-
-
  pingPongBuffer finalRender;
-
-    
-    
 
 #if defined testvid || localcamera
     ofVideoGrabber vidGrab;
     ofVideoPlayer vidplay;
 #endif
-    
-    
-    
-    
-    
     
 
     
@@ -118,17 +99,14 @@ public:
     
     //Colors
     
-    int rback,gback,bback,alphablur,finalblur;
-    int rblob,gblob,bblob,ablob;
+//    int rback,gback,bback,alphablur;
+//    int rblob,gblob,bblob,ablob;
 
 
 
 
     bool iscam;
     bool isFPS;
-    
-
-
 
     //OSC
     ofxOscReceiver receiver;
@@ -143,7 +121,7 @@ public:
 
 
     
-    CamWiggler camwiggle;
+
     
     //BLOB
 #if  defined blobcomp || defined testvid
@@ -198,18 +176,28 @@ public:
     
  
 #endif
+
+    
+        CamHandler camera2;
+   
+    ofParameterGroup globalParam;    
+    ofParameterGroup settings;
+    ofParameter<float> finalblur;
+    ofParameter<float> brightness,saturation,contrast;
+    ofParameter<int> rback,bback,gback;
+    ofParameter<int> alphablur;
+    ofParameter<float> brightness2,saturation2,contrast2;
     int zdepth;
     int inw;
     int inh;
     VisuHandler visuHandler;
     
-    
+
 
     AttrCtl attrctl;
     
+    ofxOscParameterSync paramSync;
 
-    float brightness,saturation,contrast;
-    float brightness2,saturation2,contrast2;
     
     
 

@@ -98,7 +98,7 @@ void VisuHandler::blurblob(){
 
 
 void VisuHandler::update(){
-    paramSync.update();
+    
 #ifdef syphon
     blurblob();
 #endif
@@ -115,7 +115,7 @@ void VisuHandler::update(){
 
 
 void VisuHandler::updateHighFPS(){
-    paramSync.update();
+   
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->screenN>=0&&visuList[i]->isHighFPS){
@@ -169,8 +169,7 @@ ofImage * VisuHandler::getSharedImg(int i){
     return &sharedImg[i];
 }
 void VisuHandler::registerParams(){
-    sH.registerParams();
-    allParams.add((&sH)->screensParam);
+
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
@@ -187,12 +186,6 @@ void VisuHandler::registerParams(){
     allParams.add(blobBlur);
     attr->registerParam();
     allParams.add(attr->settings);
-    
-#ifdef GUIMODE
-    paramSync.setup(allParams,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
-#else
-    paramSync.setup(allParams,VISU_OSC_OUT,"0",VISU_OSC_IN);
-#endif
     
     saveName.addListener(this, &VisuHandler::saveState);
     loadName.addListener(this, &VisuHandler::loadState);

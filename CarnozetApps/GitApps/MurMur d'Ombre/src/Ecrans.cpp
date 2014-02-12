@@ -82,9 +82,6 @@ void Ecran::registerParams(){
         vertices.add(**vv);
         (*vv)->addListener(this,&Ecran::updateMatrix);
     }
-//    for(std::list<ofParameter<ofVec3f> >::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
-//        vl[i].addListener(this,&Ecran::updateMatrix);
-//    }
 }
 
 void Ecran::calcRectMax(){

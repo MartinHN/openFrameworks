@@ -67,7 +67,7 @@ void ScreenHandler::registerParams(){
     
     screensParam.setName("screens");
    
-    return screensParam;
+    
 }
 
 int ScreenHandler::getValidScreen(int which){

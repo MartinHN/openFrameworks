@@ -55,7 +55,7 @@ ofSetVerticalSync(false);
 #endif
 
 
-  camwiggle=CamWiggler();
+
     
 
     receiver.setup(12345);
@@ -86,14 +86,14 @@ ofSetVerticalSync(false);
 #endif  
     
 
-    alphablur=100;
+
     finalblur=0;
-    rback=gback=bback=255;
+
 
 
     attrctl = AttrCtl();  
 
-    brightness2=saturation2=contrast2=brightness=contrast=saturation=1.;
+
 #endif  
 
     visuHandler.setup(&attrctl,inw,inh,zdepth,&scrw,&scrh);
@@ -110,20 +110,56 @@ ofSetVerticalSync(false);
     
     polyBlob.allocate(inw,inh,GL_RGB32F);
 //    Shadow.load("","shaders/Shadow.frag");
-    bblob=rblob=gblob=255;
+    
 #endif
+    camera2.setup(&scrw,&scrh, &zdepth);
+    
+    
+    globalParam.setName("OF");
+    settings.setName("global");
+    MYPARAM(finalblur, 0.f, 0.f, 10.f);
+    MYPARAM(saturation, 1.f, 0.f, 2.f);
+    MYPARAM(contrast, 1.f, 0.f, 2.f);
+    MYPARAM(brightness, 1.f, 0.f, 2.f);
+    MYPARAM(rback, 255, 0, 255);
+    MYPARAM(gback, 255, 0, 255);
+    MYPARAM(bback, 255, 0, 255);
+    MYPARAM(alphablur, 100, 0, 255);
+    settings.add(camera2.settings);
+    
+    
+//    settings.add(finalblur);
+    
     visuHandler.addVisu(new background(&visuHandler));
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     visuHandler.addVisu(new Particles(&visuHandler));
     
+    
+    
+    
 
     visuHandler.registerParams();
-    string savename = "lolo";
-    visuHandler.saveState(savename);
+    visuHandler.sH.registerParams();
+    globalParam.add(visuHandler.sH.screensParam);
+    globalParam.add(settings);
+    globalParam.add(visuHandler.allParams);
+    
+    
+
+#ifdef GUIMODE
+    paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
+#else
+    paramSync.setup(globalParam,VISU_OSC_OUT,"0",VISU_OSC_IN);
+#endif
+//    string savename = "lolo";
+//    visuHandler.saveState(savename);
+
 #ifdef GUIMODE
          ofSetFrameRate(8);
-    gui.load(visuHandler.allParams);
-
+//    gui.load(visuHandler.allParams);
+//    gui.loadOne(settings);
+    gui.load(globalParam);
+    
     
 #endif
 
@@ -146,7 +182,7 @@ void testApp::update(){
     for (int ncom = 0 ; ncom< computeRatio;ncom++){
         visuHandler.updateHighFPS();
     }
-
+paramSync.update();
         
     oscUpdate();
   
@@ -229,35 +265,35 @@ void testApp::draw(){
     
     
     
-          camera.begin();
+          camera2.begin();
 
-        if(drawBlob)   {
-            
-#ifdef blobosc
-            
-            ofPushStyle();
-            ofPushMatrix();
-            ofSetColor(ofColor(255,255,255,255));
-            
-            glBlendColor(rblob/255.0,gblob/255.0,bblob/255.0,ablob/255.0);
-            glBlendFunc(GL_CONSTANT_COLOR, GL_ONE);
-            
-          if(drawBlob)polyBlob.src->getTextureReference().draw(0,0,zdepth/2,width,height);
-            
-            
-            ofPopStyle();
-            ofPopMatrix();
-            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
-#endif   
-            
-        }   
+//        if(drawBlob)   {
+//            
+//#ifdef blobosc
+//            
+//            ofPushStyle();
+//            ofPushMatrix();
+//            ofSetColor(ofColor(255,255,255,255));
+//            
+////            glBlendColor(rblob/255.0,gblob/255.0,bblob/255.0,ablob/255.0);
+//            glBlendFunc(GL_CONSTANT_COLOR, GL_ONE);
+//            
+//          if(drawBlob)polyBlob.src->getTextureReference().draw(0,0,zdepth/2,width,height);
+//            
+//            
+//            ofPopStyle();
+//            ofPopMatrix();
+//            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
+//#endif   
+//            
+//        }   
         
         
 
         //NEW POSITION for VISU
         visuHandler.draw();
           
-  camera.end();
+  camera2.end();
         
         
 
@@ -399,19 +435,19 @@ void testApp::keyPressed(int key){
             break;
             
             case 356:
-            camdest.y+=5;
+            camera2.ypr+=ofVec2f(5,0);
             break;
 
         case 357:
-            camdest.z=ofClamp(camdest.z+5,-90,90);
+            camera2.ypr=ofVec2f(camera2.ypr.get().x,ofClamp(camera2.ypr.get().y+5,-90,90));
             break;
             
         case 358:
-            camdest.y-=5;
+            camera2.ypr-=ofVec2f(5,0);
             break;
             
         case 359:
-            camdest.z=ofClamp(camdest.z-5,-90,90);
+            camera2.ypr=ofVec2f(camera2.ypr.get().x,ofClamp(camera2.ypr.get().y-5,-90,90));
             break;
         
         case ' ':
@@ -572,25 +608,7 @@ void testApp::oscUpdate(){
         else if(m.getAddress()=="/audioenv"){
             visuHandler.audioenv=m.getArgAsFloat(0);
         }
-        else if(m.getAddress()=="/camwiggledamp"){
-            camwiggle.damp=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/camwigglezoomdamp"){
-            camwiggle.zoomdamp=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/camwigglezoomamp"){
-            camwiggle.zoomamplitude=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/camwiggleamp"){
-            camwiggle.amplitude=m.getArgAsFloat(0);
-        }
-        else if(m.getAddress()=="/camwigglefreq"){
-           camwiggle.frequency=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/camwigglephase"){
-            camwiggle.speedPhase=m.getArgAsFloat(0)/100.0;
-        }
-        
+
         
         
     }
@@ -895,20 +913,6 @@ void testApp::changeOrigin(int type){
 
 
 
-
-
-
-ofVec3f testApp::camToWorld(ofVec3f vecin){
-    float ph=ofDegToRad(camrot.y);
-    float th=ofDegToRad(camrot.z);
-    
-    ofMatrix3x3 rotmat=ofMatrix3x3(cos(ph),      0,         sin(ph),
-                                   sin(ph)*sin(th), cos(th), -cos(ph)*sin(th),
-                                   -cos(th)*sin(ph), sin(th),  cos(ph)*cos(th));
-    rotmat.invert();
-    
-    return ofVec3f(vecin.dot(ofVec3f(rotmat[0],rotmat[1],rotmat[2])),vecin.dot(ofVec3f(rotmat[3],rotmat[4],rotmat[5])),vecin.dot(ofVec3f(rotmat[6],rotmat[7],rotmat[8])));
-}
 
 
 void testApp::oscBlobUpdate(){

@@ -16,6 +16,10 @@
 
 #define VISU_OSC_IP_OUT "localhost"
 
+
+
+#define MYPARAM(nom,init,min,max) nom.setName(#nom);nom.setMin(min);nom.setMax(max);settings.add(nom);nom=init;
+
 //#define GUIMODE
 
 

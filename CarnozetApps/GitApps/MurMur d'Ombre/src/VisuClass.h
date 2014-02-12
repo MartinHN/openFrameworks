@@ -20,7 +20,7 @@ every thing is in Boule2gomme.cpp / .h thats the Template!!
      
      every parameter must be register in the visu's parametergroup "settings" as follows:
      
-    MYPARAM(nom,init,min,max)
+    MYPARAM(nom,init,min,max)   cf  Constants.h
    
      }
  
@@ -47,10 +47,11 @@ by defining GUIMODE in constants.h, it creates the control GUI with every parame
  */
 
 
-#define MYPARAM(nom,init,min,max) nom.setName(#nom);nom.setMin(min);nom.setMax(max);settings.add(nom);nom=init;
+
 #pragma once
 #include "string.h"
 #include "ofxOsc.h"
+#include "Constants.h"
 
 class VisuHandler;
 

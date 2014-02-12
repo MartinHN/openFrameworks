@@ -11,6 +11,7 @@
 #include "VisuHandler.h"
 #include "Constants.h"
 #define PVISU
+//#define PIMG
 //#define PFBO
 
 class Force {
@@ -33,8 +34,7 @@ public:
     bool isAttr;
     template<typename ParameterType>
     void addParameter(string name,ParameterType v,ParameterType min,ParameterType max);
-    
-    
+
 };
 
 
@@ -59,6 +59,10 @@ public:
 #ifdef PFBO
     ofFbo finaldraw;
 #endif
+#ifdef PIMG
+    ofImage partImg;
+#endif
+    
     
     
     void initFbo();

@@ -77,9 +77,21 @@ void Particles::setup(){
     
     
     gradient.loadImage("gradients/rasta.tiff");
+#ifdef PIMG
+    int partRes = 10 ;
+    partImg.allocate(partRes,partRes,OF_IMAGE_COLOR_ALPHA);
+    ofVec2f center(partRes/2);
+    for(int i = 0 ; i<partRes;i++){
+        for(int j = 0 ; j<partRes;j++){
+            ofVec2f curp(i,j);
+            ofColor cc(0,0,0,max(0.,1-curp.distance(center)*1.0/partRes));
+            partImg.setColor(i,j,cc);
+        }
+    }
     
+#endif
 
-    
+
     //GLOBAL
     
     
@@ -104,6 +116,13 @@ void Particles::setup(){
     
     numParticles.addListener(this,&Particles::changeNum);
     
+    forces.push_back(new Force("globalForce"));
+    forces[forces.size()-1]->addParameter("f",1.f,0.9f,1.3f);
+    forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
+    forces[forces.size()-1]->addParameter("vmax",1.0f,0.f,10.f);
+    forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
+
+    
     forces.push_back(new Force("origin"));
     forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
     forces[forces.size()-1]->addParameter("z",.01f,0.f,.05f);
@@ -117,14 +136,14 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("damp",0.04f,-1.0f,1.0f);
 
     forces.push_back(new Force("netw"));
-    forces[forces.size()-1]->addParameter("k",.30f,0.f,4.5f);
+    forces[forces.size()-1]->addParameter("k",.30f,0.f,20.f);
     forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.0f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,.05f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,10.f);
     
     forces.push_back(new Force("neth"));
-    forces[forces.size()-1]->addParameter("k",.030f,0.f,4.5f);
+    forces[forces.size()-1]->addParameter("k",.030f,0.f,20.f);
     forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,10.f);
     
     forces.push_back(new Force("spring",true));
     forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
@@ -141,11 +160,6 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("maxv",.80f,0.f,1.f);
 
 
-    forces.push_back(new Force("globalForce"));
-    forces[forces.size()-1]->addParameter("f",1.f,0.f,1.3f);
-    forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
-    forces[forces.size()-1]->addParameter("vmax",.010f,0.f,1.f);
-    forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
 
     
     
@@ -264,7 +278,11 @@ void Particles::draw(int w, int h){
     updateRender.setUniformTexture("posTex", posPingPong.src->getTextureReference(), 0);
     if(gradtype==2) updateRender.setUniformTexture("velTex",velPingPong.src->getTextureReference(),1);
     if(gradtype>0) updateRender.setUniformTexture("gradient",gradient.getTextureReference(),2);
-#ifdef CAMCOLOR
+#ifdef PIMG
+    updateRender.setUniformTexture("img",partImg.getTextureReference(),3);
+
+#endif
+#ifdef CAMCOLO
     updateRender.setUniformTexture("camin", backImage.getTextureReference(), 4);
     updateRender.setUniform1i("iscam",iscam);
     updateRender.setUniform2f("insize",backImage.getWidth(),backImage.getHeight());

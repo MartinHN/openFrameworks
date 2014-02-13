@@ -76,6 +76,7 @@ public:
     ofShader * blurY;
 #endif
     
+    ofParameterGroup settings;
      ofParameter<float> blobBlur;
     
     vector<ofPolyline> blobs;
@@ -90,8 +91,7 @@ public:
     
     ofParameterGroup allParams;
     ofxOscParameterSync paramSync;
-    ofParameter<string> saveName;
-    ofParameter<string> loadName;
+
   
 
   

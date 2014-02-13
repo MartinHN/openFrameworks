@@ -79,8 +79,25 @@ else{
 
 vector<ofPoint> AttrCtl::getFamilly(int f){
     vector<ofPoint> res;
+    vector<int> targetf;
+    
+    if(f<0){
+     return res;
+    }
+    
+    int curf = f%10;
+    int k = 0;
+     do{
+         targetf.push_back(curf);
+     k++;
+    curf = f/(pow(10.,k));
+
+}while (f>10&&curf>0);
+
     for(int i = 0 ; i< curp.size() ; i++){
-        if(familly[i]==f)res.push_back(curp[i]);
+        for(int j = 0 ; j<targetf.size();j++){
+            if(familly[i]==targetf[j]){res.push_back(curp[i]);break;}
+        }
     }
     return res;
 }

@@ -17,8 +17,10 @@ uniform vec2  screen;
 
 // forces
 uniform vec3 attr;
-uniform float m;
+uniform float mass;
+uniform float massin;
 uniform float r;
+uniform float rin;
 uniform float damp;
 
 
@@ -36,9 +38,13 @@ void main(void){
 //    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);
     
     if(normbuf>=r){
-        vel+=distbuf*m/(normbuf*normbuf*normbuf);
+        vel+=distbuf*mass/(normbuf*normbuf*normbuf);
+    }
+    else if(normbuf<=rin){
+        vel+=distbuf*massin/(normbuf*normbuf*normbuf);
     }
     else{
+        
          vel *=damp;   
         }
 

@@ -19,10 +19,24 @@ void Gui::load(ofParameterGroup & pgtmp){
     gui.push_back(new ofxPanel());
     gui.back()->setup(pgtmp.getGroup("global"),pgtmp.getGroup("global").getName(),(baseC)*PARAMW);
     
-    int h = gui.back()->getHeight() + 20;
+    int h = gui.back()->getHeight() + 10;
+
+    gui.push_back(new ofxPanel());
+    gui.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW,h);
+    gui.back()->minimizeAll();
+    
+    h += gui.back()->getHeight() + 10;
+    gui.push_back(new ofxPanel());
+    gui.back()->setup(pgtmp.getGroup("blobsettings"),pgtmp.getGroup("blobsettings").getName(),(baseC)*PARAMW,h);
+    gui.back()->minimizeAll();
+    
+    h += gui.back()->getHeight() + 10;
+
     gui.push_back(new ofxPanel());
     gui.back()->setup(pgtmp.getGroup("screens"),pgtmp.getGroup("screens").getName(),(baseC)*PARAMW,h);
     gui.back()->minimizeAll();
+    
+    
     baseC++;
     
     ofParameterGroup pgtmp2 = pgtmp.getGroup("Visu");

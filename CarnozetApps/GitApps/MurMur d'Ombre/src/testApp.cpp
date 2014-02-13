@@ -65,7 +65,8 @@ ofSetVerticalSync(false);
     blurX.load("","shaders/blurX.frag");
     blurY.load("","shaders/blurY.frag");
     colorMod.load("","shaders/colorMod.frag");
-     
+    bloom.load("","shaders/bloom.frag");
+    gloom.load("","shaders/gloom.frag");
     
     finalRender.allocate(scrw,scrh,GL_RGB);
         
@@ -117,6 +118,11 @@ ofSetVerticalSync(false);
     
     globalParam.setName("OF");
     settings.setName("global");
+    MYPARAM(loadName, "", "", "");
+    MYPARAM(saveName, "", "", "");
+    saveName.addListener(this, &testApp::saveState);
+    loadName.addListener(this, &testApp::loadState);
+    
     MYPARAM(finalblur, 0.f, 0.f, 10.f);
     MYPARAM(saturation, 1.f, 0.f, 2.f);
     MYPARAM(contrast, 1.f, 0.f, 2.f);
@@ -125,6 +131,9 @@ ofSetVerticalSync(false);
     MYPARAM(gback, 255, 0, 255);
     MYPARAM(bback, 255, 0, 255);
     MYPARAM(alphablur, 100, 0, 255);
+    MYPARAM(isBloom,false,false,true);
+    MYPARAM(isGloom,false,false,true);
+
     settings.add(camera2.settings);
     
     
@@ -140,8 +149,13 @@ ofSetVerticalSync(false);
 
     visuHandler.registerParams();
     visuHandler.sH.registerParams();
-    globalParam.add(visuHandler.sH.screensParam);
+    
+
+
     globalParam.add(settings);
+    globalParam.add(visuHandler.settings);
+    globalParam.add(visuHandler.attr->settings);
+    globalParam.add(visuHandler.sH.screensParam);
     globalParam.add(visuHandler.allParams);
     
     
@@ -221,31 +235,11 @@ void testApp::draw(){
 #else
     
     
-    glBlendEquation(GL_FUNC_ADD_EXT);
+    glBlendEquation(GL_FUNC_ADD);
     
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
 
-        alphacamrot=0.3;
-        if(camctl>0){
-            vector<ofPoint> camctlpoints = attrctl.getFamilly(camctl-1);
-            if(camctlpoints.size()==2){
-                camdest.w = (ofVec2f(1,0).angle(camctlpoints[1]-camctlpoints[0]));
-            }
-            else camdest.w=0;
-        }
-        
-        if(abs(camrot.y-camdest.y)>100)camdest.y=0;
 
-        if(abs(camrot.w-camdest.w)>100) camdest.w=-camdest.w;
-        
-        
-        camrot = camdest*alphacamrot + camrot*(1-alphacamrot);
-         camera.orbit(camrot.y,camrot.z,1.0*height*camrot.x,ofVec3f(width/2,height/2 , zdepth/2)); 
-        camera.rotate(camrot.w,camera.getLookAtDir());
-
-#ifdef OF_VERSION_MAJOR
-        camera.setVFlip(true);
-#endif
 
 
     finalRender.dst->begin();
@@ -263,39 +257,19 @@ void testApp::draw(){
         }
          
     
-    
+    ofPushMatrix();
+    ofPushView();
     
           camera2.begin();
-
-//        if(drawBlob)   {
-//            
-//#ifdef blobosc
-//            
-//            ofPushStyle();
-//            ofPushMatrix();
-//            ofSetColor(ofColor(255,255,255,255));
-//            
-////            glBlendColor(rblob/255.0,gblob/255.0,bblob/255.0,ablob/255.0);
-//            glBlendFunc(GL_CONSTANT_COLOR, GL_ONE);
-//            
-//          if(drawBlob)polyBlob.src->getTextureReference().draw(0,0,zdepth/2,width,height);
-//            
-//            
-//            ofPopStyle();
-//            ofPopMatrix();
-//            glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA); 
-//#endif   
-//            
-//        }   
-        
         
 
         //NEW POSITION for VISU
         visuHandler.draw();
           
   camera2.end();
-        
-        
+    ofPopMatrix();
+    ofPopView();
+    
 
 
 
@@ -303,7 +277,14 @@ void testApp::draw(){
 finalRender.dst->end();
     
     finalRender.swap();
-                  
+    
+    
+    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    
+    glBlendFunc(GL_ONE,GL_ZERO);
+    
+
             finalRender.dst->begin();
             blurX.begin();
             blurX.setUniform1f("blurAmnt",finalblur);
@@ -328,21 +309,40 @@ finalRender.dst->end();
             colorMod.setUniform1f("saturation",saturation); 
             colorMod.setUniform1f("brightness",brightness); 
             finalRender.src->draw(0,0);
-            colorMod.end();        
+//    ofRect(0,0,ofGetHeight()/2,300);
+            colorMod.end();
             finalRender.dst->end();
-            
+
             finalRender.swap();
             
-            
-     
+    if(isBloom){
+        finalRender.dst->begin();
+        bloom.begin();
+        finalRender.src->draw(0,0);
+        bloom.end();
+        finalRender.dst->end();
         
+        finalRender.swap();
+    }
+    if(isGloom){
+        finalRender.dst->begin();
+        gloom.begin();
+        finalRender.src->draw(0,0);
+        gloom.end();
+        finalRender.dst->end();
         
+        finalRender.swap();
+
+    
+    }
+    
+    
 
 
    
         
-        glFinish();
-      
+//        glFinish();
+    
        
                   
 
@@ -390,11 +390,11 @@ void testApp::keyPressed(int key){
      switch (key){
          case 's':
          {ofFileDialogResult filep = ofSystemSaveDialog("preset","save preset file");
-             visuHandler.saveName = filep.getPath();}
+             saveName = filep.getPath();}
              break;
          case 'l':
          {ofFileDialogResult filep = ofSystemLoadDialog("load preset");
-             visuHandler.loadName = filep.getPath();}
+             loadName = filep.getPath();}
              break;
      }
 }
@@ -1042,4 +1042,42 @@ void testApp::mouseReleased(int x, int y, int button){
 }
 #endif
 #endif
+
+
+
+void testApp::saveState(string & s){
+    if(s!=""){
+        string abspath = ofToDataPath("presets/"+ofToString(loadName));
+        if(s.find("/")!=string::npos) {abspath = s;}
+        else{ofLogWarning("saving to local : " + abspath);}
+        cout<<"saving to " + abspath<<endl;
+        ofXml xml;
+        xml.serialize(globalParam);
+        cout<<xml.save(abspath)<<endl;
+    }
+    else{
+        ofLogWarning("no argument for save state");
+    }
+    
+}
+
+
+
+
+
+void testApp::loadState(string & s){
+    if(s!=""){
+        string abspath = ofToDataPath("presets/"+ofToString(loadName));
+        if(s.find("/")!=string::npos) {abspath = s;}
+        else{ofLogWarning("loading from local : " + abspath);}
+        ofXml xml;
+        
+        xml.load(abspath);
+        xml.deserialize(globalParam);
+    }
+    else{
+        ofLogWarning("no argument for load state");
+    }
+    
+}
 

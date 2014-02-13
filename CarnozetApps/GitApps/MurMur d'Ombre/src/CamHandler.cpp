@@ -17,8 +17,9 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
     zdepth = zdepthin;
     
     settings.setName("camera");
-    camera.setFov(ofRadToDeg(atan(*scrw*1.0/(*zdepth))));//50
+    camera.setFov(2*ofRadToDeg(atan(*scrh*1.0/(*zdepth))));//50
     camera.setAspectRatio(*scrw*1.0/(*scrh));
+//    camera.setupOffAxisViewPortal(ofVec3f(*scrw/2,0,*zdepth/2),ofVec3f(*scrw/2,*scrh/2,*zdepth/2),ofVec3f(*scrw,*scrh/2,*zdepth/2));
     camera.disableOrtho();
     
 #ifdef OF_VERSION_MAJOR
@@ -35,9 +36,9 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
 void CamHandler::begin(){
     curdist = distance*1.0*alpha+curdist*(1.0-alpha);
     curypr = ypr.get() * alpha+ curypr*(1-alpha);
-    camera.orbit(curypr.x,curypr.y,curdist * (*zdepth/2),ofVec3f(*scrw/2,*scrh/2,*zdepth/2)); 
+    camera.orbit(curypr.x,curypr.y,curdist * (*zdepth/2.0),ofVec3f(*scrw/2.0,*scrh/2.0,*zdepth/2.0));
     camera.rotate(curypr.z,camera.getLookAtDir());
-    camera.setupOffAxisViewPortal(ofVec3f(-*scrw/2,+-*scrh/2,*zdepth/2),ofVec3f(*scrw,0,*zdepth/2),ofVec3f(0,*scrh,*zdepth/2));
+    
     camera.begin();
 }
 

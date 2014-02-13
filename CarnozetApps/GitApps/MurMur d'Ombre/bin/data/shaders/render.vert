@@ -39,17 +39,36 @@ void main() {
    
     // gl_PointSize  = pixPos.z;
     
+    
+    if(colorpart.x==0){
+        
+        gl_FrontColor = vec4(colorpart.y/255.0,colorpart.z/255.0,colorpart.w/255.0,1.);
+    }
+    else if(colorpart.x==1){
+        
+        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(pixPos.z-1/2.0-gradbounds.x)/(gradbounds.y-gradbounds.x),1));
+    }
+    
+    
+    else if(colorpart.x==2){
+        
+        
+        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(100.0*length(texture2DRect( velTex, verPos.xy ).xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));
+        
+        
+    }
+    
+
+    
     pixPos.x =pixPos.x*screen.x;
-    pixPos.y =pixPos.y*screen.x;
+    pixPos.y =pixPos.y*screen.y;
     pixPos.z =(pixPos.z-0.5)*screen.z;
     
-   
-  
-
+    gl_Position = gl_ModelViewProjectionMatrix*pixPos;
     
 
-    gl_Position = gl_ModelViewProjectionMatrix*pixPos;
- 
+
+
  
 //    if(iscam>0){
 //        vec2 camPos=verPos.xy;
@@ -59,24 +78,7 @@ void main() {
 //    }
 //    else{
 
-        if(colorpart.x==0){
 
-       gl_FrontColor = vec4(colorpart.y/255.0,colorpart.z/255.0,colorpart.w/255.0,1.);
-        }
-        else if(colorpart.x==1){
-           
-            gl_FrontColor = texture2DRect(gradient,vec2(100.0*(pixPos.z-screen.z/2.0-gradbounds.x)/(gradbounds.y-gradbounds.x),1));
-        }
-        else if(colorpart.x==3){
-            gl_FrontColor=texture2DRect(gradient,vec2(100.0*(length(pixPos.xyz-mouse.xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));  
-        }
-        else if(colorpart.x==2){
-            pixPos = texture2DRect( velTex, verPos.xy );
-
-                     gl_FrontColor = texture2DRect(gradient,vec2(100.0*(100.0*length(pixPos.xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));      
-            
-          
-        }
       
 //    }
     

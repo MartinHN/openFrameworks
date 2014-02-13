@@ -29,7 +29,7 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     beat=0;
     attr = attrctl;
     
-    sharedImg.push_back(ofImage("images/background.png"));
+//    sharedImg.push_back(ofImage("images/background.png"));
   
     
     sH.setup(scrw,scrh,zdepth);
@@ -128,68 +128,29 @@ void VisuHandler::updateHighFPS(){
 }
 
 
-void VisuHandler::saveState(string & s){
-        if(s!=""){
-    string abspath = ofToDataPath("presets/"+ofToString(loadName));
-    if(s.find("/")!=string::npos) {abspath = s;}
-    else{ofLogWarning("saving to local : " + abspath);}
-    cout<<"saving to " + abspath<<endl;
-    ofXml xml;
-	xml.serialize(allParams);
-	cout<<xml.save(abspath)<<endl;
-        }
-        else{
-            ofLogWarning("no argument for save state");
-        }
 
-}
-
-
-
-
-
-void VisuHandler::loadState(string & s){
-    if(s!=""){
-    string abspath = ofToDataPath("presets/"+ofToString(loadName));
-    if(s.find("/")!=string::npos) {abspath = s;}
-    else{ofLogWarning("loading from local : " + abspath);}
-    ofXml xml;
-
-	xml.load(abspath);
-    xml.deserialize(allParams);
-    }
-    else{
-        ofLogWarning("no argument for load state");
-    }
-
-}
 
 ofImage * VisuHandler::getSharedImg(int i){
     if(i>sharedImg.size())return;
     return &sharedImg[i];
 }
-void VisuHandler::registerParams(){
 
+
+
+
+void VisuHandler::registerParams(){
+    settings.setName("blobsettings");
+    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
+
+    attr->registerParam();
+    
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
     }
-    
-    saveName.setName("saveName");
-    allParams.add(saveName);
-    loadName.setName("loadName");
-    allParams.add(loadName);
-    blobBlur.setName("blobBlur");
-    blobBlur.setMin(0);
-    blobBlur.setMax(10);
-    blobBlur = 0;
-    allParams.add(blobBlur);
-    attr->registerParam();
-    allParams.add(attr->settings);
-    
-    saveName.addListener(this, &VisuHandler::saveState);
-    loadName.addListener(this, &VisuHandler::loadState);
-    
+
+
+
 }
 
 

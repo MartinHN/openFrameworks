@@ -31,7 +31,7 @@ public:
     vector<ofAbstractParameter *> pl;
     ofShader shader;
     ofParameter<bool> isActive;
-    bool isAttr;
+    ofParameter<int> attrFamilly;
     template<typename ParameterType>
     void addParameter(string name,ParameterType v,ParameterType min,ParameterType max);
 
@@ -55,6 +55,7 @@ public:
     void update(int w, int h);
     
     void registerParam();
+    void changeGrad(int & i);
 
 #ifdef PFBO
     ofFbo finaldraw;
@@ -66,7 +67,11 @@ public:
     
     
     void initFbo();
+    void initFbo(int w, int h);
     void changeNum(int & num);
+    
+    
+    int lastw,lasth;
     
     ofFbo origins;
     ofShader updatePos;
@@ -82,11 +87,11 @@ public:
     ofParameter<float>      particleSize;
     ofParameter<float>      alphaparticle;
     ofParameter<ofVec3f>    partcolor;
-    ofParameter<bool>       isGradient;
     ofParameter<int>        gradtype;
     ofParameter<float>      mingrad;
     ofParameter<float>      maxgrad;
-    ofParameter<string>     gradName;
+    ofParameter<int>        gradNum;
+    
     
     
     int textureRes;
@@ -94,7 +99,7 @@ public:
     
     ofImage gradient;
     
-    int netCompRatio;
+    ofParameter<int> netCompRatio;
     
 };
 

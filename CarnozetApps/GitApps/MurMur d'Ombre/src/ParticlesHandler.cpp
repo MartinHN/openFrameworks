@@ -12,8 +12,9 @@ Force::Force(){
     settings = ofParameterGroup();
     settings.setName("empty");
     isActive = true;
+    
 }
-Force::Force(string namein,bool isAttrin){
+Force::Force(string namein,bool isAttr){
     name = namein;
     shader.load("","shaders/"+name+".frag");
     settings = ofParameterGroup();
@@ -23,7 +24,9 @@ Force::Force(string namein,bool isAttrin){
     settings.add(isActive);
     isActive = false;
     
-    isAttr = isAttrin;
+    attrFamilly = -2;
+    if(isAttr) {    MYPARAM(attrFamilly,-1,-1,123);
+    pl.push_back(&attrFamilly);}
     
 }
 
@@ -66,7 +69,7 @@ void Force::updateShader(){
 Particles::Particles(VisuHandler * v):VisuClass(v){
     setup();
     isHighFPS = true;
-    netCompRatio = 2;
+    netCompRatio = 8;
 
 }
 
@@ -76,7 +79,10 @@ void Particles::setup(){
     settings.setName("Particles");
     
     
-    gradient.loadImage("gradients/rasta.tiff");
+    int defaultgrad=0;
+    changeGrad(defaultgrad);
+    
+  
 #ifdef PIMG
     int partRes = 10 ;
     partImg.allocate(partRes,partRes,OF_IMAGE_COLOR_ALPHA);
@@ -108,20 +114,25 @@ void Particles::setup(){
     MYPARAM(particleSize, 3.0f,0.f,30.f);
     MYPARAM(alphaparticle,1.f,0.f,4.f);
     MYPARAM(partcolor, ofVec3f(0,0,1.),ofVec3f(0.),ofVec3f(255.));
-    MYPARAM(isGradient,false,false,true);
-    MYPARAM(gradtype , 1,0,3);
-    MYPARAM(mingrad,0.f,-9999.f,9999.f);
-    MYPARAM(gradName,"rasta","","");
-    MYPARAM(maxgrad,1,-9999.f,9999.f);
+    MYPARAM(gradtype , 2,0,2);
+    MYPARAM(gradNum,0,0,20);
+    MYPARAM(mingrad,0.f,-1.f,1.f);
+    MYPARAM(maxgrad,1,-1.f,1.f);
+    MYPARAM(netCompRatio,8,3,20);
     
+    
+    gradNum.addListener(this,&Particles::changeGrad);
     numParticles.addListener(this,&Particles::changeNum);
-    
-    forces.push_back(new Force("globalForce"));
-    forces[forces.size()-1]->addParameter("f",1.f,0.9f,1.3f);
-    forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
-    forces[forces.size()-1]->addParameter("vmax",1.0f,0.f,10.f);
-    forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
 
+    forces.push_back(new Force("netw"));
+    forces[forces.size()-1]->addParameter("k",.030f,0.f,.2f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.0f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,.2f);
+    
+    forces.push_back(new Force("neth"));
+    forces[forces.size()-1]->addParameter("k",.030f,0.f,.2f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,.2f);
     
     forces.push_back(new Force("origin"));
     forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
@@ -131,22 +142,16 @@ void Particles::setup(){
     
     
     forces.push_back(new Force("gravity",true));
-    forces[forces.size()-1]->addParameter("r",.90f,0.f,.8f);
-    forces[forces.size()-1]->addParameter("m",.001f,-.0002f,.002f);
-    forces[forces.size()-1]->addParameter("damp",0.04f,-1.0f,1.0f);
+    forces[forces.size()-1]->addParameter("r",.50f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("mass",.001f,-.0002f,.0002f);
+        forces[forces.size()-1]->addParameter("rin",.50f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("massin",-.001f,-.0002f,.0002f);
+    forces[forces.size()-1]->addParameter("damp",1.f,.60f,1.0f);
 
-    forces.push_back(new Force("netw"));
-    forces[forces.size()-1]->addParameter("k",.30f,0.f,20.f);
-    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.0f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,10.f);
-    
-    forces.push_back(new Force("neth"));
-    forces[forces.size()-1]->addParameter("k",.030f,0.f,20.f);
-    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,10.f);
+
     
     forces.push_back(new Force("spring",true));
-    forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("k",.030f,-.5f,.5f);
     forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
     forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);    
     forces[forces.size()-1]->addParameter("mode",1,0,1);
@@ -159,6 +164,11 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("minv",.10f,0.f,1.f);
     forces[forces.size()-1]->addParameter("maxv",.80f,0.f,1.f);
 
+    forces.push_back(new Force("globalForce"));
+    forces[forces.size()-1]->addParameter("f",1.f,0.99f,1.001f);
+    forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
+    forces[forces.size()-1]->addParameter("vmax",1.0f,0.f,1.f);
+    forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
 
 
     
@@ -183,6 +193,11 @@ void Particles::setup(){
 
 
 void Particles::update(int w, int h){
+    
+    if(w!=lastw||h!=lasth) initFbo(w, h);
+    
+    
+    
     glBlendEquation(GL_ADD);
     glBlendFunc(GL_ONE, GL_ZERO);
     
@@ -202,43 +217,58 @@ void Particles::update(int w, int h){
             
             velPingPong.dst->end();
             velPingPong.swap();
+                
+                posPingPong.dst->begin();
+                updatePos.begin();  // Previus position
+                updatePos.setUniformTexture("velData", velPingPong.src->getTextureReference(), 1);      // Velocity
+                updatePos.setUniform1f("timestep",timeStep*1.0/FPS );
+                updatePos.setUniform1i("resolution",textureRes);
+                
+                posPingPong.src->draw(0,0);
+                
+                
+                
+                updatePos.end();
+                posPingPong.dst->end();
+                
+                
+                posPingPong.swap();
+                
+                
             }
         }
-        else if(forces[i]->isActive && (forces[i]->isAttr?dad->attr->curp.size()>0:1)){
+        else if(forces[i]->isActive ){
             int j = 0;
-            do{
-        velPingPong.dst->begin();
-        forces[i]->shader.begin();
-        forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);
-        if(forces[i]->name=="origin") 
-            forces[i]->shader.setUniformTexture("originData",origins.getTextureReference(), 2);
-                if(forces[i]->name=="fieldForce"){
-                forces[i]->shader.setUniform2f("inres",dad->inw,dad->inh);
-#ifdef syphon
-                    forces[i]->shader.setUniformTexture("fieldData",dad->syphonTex.src->getTextureReference(), 2);
-#endif
+            vector<ofPoint> curattr = dad->attr->getFamilly(forces[i]->attrFamilly);
+            if((forces[i]->attrFamilly>-2?curattr.size()>0:1)){
+                do{
+                    velPingPong.dst->begin();
+                    forces[i]->shader.begin();
+                    forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);
+                    if(forces[i]->name=="origin") 
+                        forces[i]->shader.setUniformTexture("originData",origins.getTextureReference(), 2);
+                    if(forces[i]->name=="fieldForce"){
+                        forces[i]->shader.setUniform2f("inres",dad->inw,dad->inh);
+            #ifdef syphon
+                        forces[i]->shader.setUniformTexture("fieldData",dad->syphonTex.src->getTextureReference(), 2);
+            #endif
+                            }
+                    if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size())
+                        forces[i]->shader.setUniform3f("attr",curattr[j].x,curattr[j].y,curattr[j].z);
                     
+                    forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
+                    forces[i]->shader.setUniform1i("resolution",textureRes);
+                    forces[i]->updateShader();
                     
+                    velPingPong.src->draw(0,0);
                     
+                    forces[i]->shader.end();
                     
-                    
-                }
-//            forces[i]->shader.setUniformTexture("fieldData",dad->blobFbo.getTextureReference(), 2);
-        if(forces[i]->isAttr&&j<dad->attr->curp.size())
-            forces[i]->shader.setUniform3f("attr",dad->attr->curp[j].x,dad->attr->curp[j].y* *dad->scrh/ *dad->scrw,dad->attr->curp[j].z);
-        forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
-        forces[i]->shader.setUniform1i("resolution",textureRes);
-        forces[i]->updateShader();
-        
-        velPingPong.src->draw(0,0);
-        
-        forces[i]->shader.end();
-        
-        velPingPong.dst->end();
-        velPingPong.swap();
-                j++;
-            }while( forces[i]->isAttr&&j<dad->attr->curp.size());
-
+                    velPingPong.dst->end();
+                    velPingPong.swap();
+                            j++;
+                }while( forces[i]->attrFamilly>=0&&j<curattr.size());
+            }
         }
 //        glEnd();
     }
@@ -263,7 +293,8 @@ void Particles::update(int w, int h){
     
     posPingPong.swap();
     
-    
+    lastw = w;
+    lasth = h;
     
 }
 
@@ -321,17 +352,21 @@ void Particles::draw(int w, int h){
 
 }
 
+
 void Particles::initFbo(){
+    initFbo(*dad->scrw,*dad->scrh);
+}
+void Particles::initFbo(int w,int h){
     
     // Seting the textures where the information ( position and velocity ) will be
 //    textureResx*textureResy = numParticles;
 //    textureResx/textureResy = scrw/scrh;
  
-    textureRes2.x = (int)sqrt((float)numParticles* *dad->scrw/ *dad->scrh);
+    textureRes2.x = (int)sqrt((float)numParticles* w/ h);
     textureRes2.y = (int)numParticles/textureRes2.x;
     
     textureRes = (int)sqrt((float)numParticles);
-    numParticles = textureRes * textureRes;
+    numParticles = textureRes* textureRes;
     
     // 1. Making arrays of float pixels with position information
     float * pos = new float[numParticles*3];
@@ -340,7 +375,7 @@ void Particles::initFbo(){
             int i = textureRes * y + x;
             
             pos[i*3 + 0] = x*1.0/textureRes;
-            pos[i*3 + 1] = y*1.0* *dad->scrh/(textureRes* *dad->scrw);
+            pos[i*3 + 1] = y*1.0/(textureRes)*w/h;
             pos[i*3 + 2] = 0.5;
         }
     }
@@ -397,5 +432,12 @@ void Particles::changeNum(int & num){
     initFbo();
 }
 
+
+void Particles::changeGrad(int & i){
+    ofDirectory gradDir("gradients");
+    if(i<gradDir.listDir()){
+    gradDir.getFile(i).getFileName();
+        gradient.loadImage("gradients/"+gradDir.getFile(i).getFileName());}
+}
 
 

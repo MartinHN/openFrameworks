@@ -39,7 +39,7 @@ void main(void){
     float netmax = 100*l0norm;
     float normbuf;
     vec3 linbuf;
-    linbuf.x=netmax+1;
+
         
     if(st.y<resolution-1){
             distbuf=pos-poso;
@@ -55,11 +55,12 @@ void main(void){
         
         if(normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-l0norm)*k;
+            if(st.y<resolution-1&&length(distbuf)<netmax){
+                vel-=z*(distbuf+linbuf);
+            }
         }
         
-        if(length(linbuf)<netmax){
-            vel-=z*(distbuf+linbuf);
-        }
+
         
     }
     

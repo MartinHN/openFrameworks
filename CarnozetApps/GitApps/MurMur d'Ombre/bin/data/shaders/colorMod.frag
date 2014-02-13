@@ -8,9 +8,7 @@ uniform float contrast;
 uniform float saturation;
 uniform float brightness;
 
-uniform vec3 rgb2greyCoeff = vec3(0.299, 0.587, 0.114);
-// color for 0% contrast (mean color intensity)
-uniform vec3 meanLuminosity = vec3(0.5, 0.5, 0.5);
+
     
     void main()
     {
@@ -18,7 +16,9 @@ uniform vec3 meanLuminosity = vec3(0.5, 0.5, 0.5);
             // were derived from 'Adrian Ford, Alan Roberts. Colour Space Conversions.', which
             // can be found here: http://www.poynton.com/PDFs/coloureq.pdf
             //
-            
+        vec3 rgb2greyCoeff = vec3(0.299, 0.587, 0.114);
+        // color for 0% contrast (mean color intensity)
+        vec3 meanLuminosity = vec3(0.5, 0.5, 0.5);
             
             // enbrighten color
             vec3 brightened = texture2DRect(tex0, gl_TexCoord[0].st).xyz * brightness;
@@ -31,7 +31,9 @@ uniform vec3 meanLuminosity = vec3(0.5, 0.5, 0.5);
             
             // apply contrast to saturated color
             vec3 contrasted = mix(meanLuminosity, saturated, contrast);
-           
+        
+
+    
             gl_FragColor.xyz = contrasted;
 
 }

@@ -76,7 +76,7 @@ public:
     VisuHandler *dad;
     ofParameterGroup settings;
     bool isHighFPS;
-    
+    ofReadOnlyParameter<int, int> beat;
     
     
     

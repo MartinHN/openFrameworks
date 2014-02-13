@@ -19,6 +19,7 @@ public:
     background(VisuHandler * v);
     ~background(){};
     
+    void typeChanged(int & i);
     ofParameter<ofVec2f> center;
     
     ofParameter<int> type;
@@ -26,6 +27,8 @@ public:
     ofParameter<float> ratio;
     ofParameter<ofVec4f> color;
     ofParameter<bool> fill;
+    
+    ofImage bg;
     
     void draw(int w, int h);
     void update(int w, int h);

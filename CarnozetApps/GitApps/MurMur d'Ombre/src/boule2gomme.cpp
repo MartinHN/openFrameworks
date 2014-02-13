@@ -26,9 +26,9 @@ void boule2gomme::draw(int w, int h){
 
     ofVec2f scale(w,h);
     vector<ofVec3f> * points =  &dad->attr->curp;
-    ofSetColor(255,0,0);
-    ofRect(0,0,scrw,scrh);
-    for(int i = 0 ; i<points->size();i++)    
+//    ofSetColor(255,0,0);
+//    ofRect(0,0,w,h);
+    for(int i = 0 ; i<points->size();i++)
         ofEllipse(scale*points->at(i),rayon,rayon);
 #ifdef syphon
     ofSetColor(255);

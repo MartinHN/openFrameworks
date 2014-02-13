@@ -63,7 +63,8 @@ public:
     void setup();
     void update();
     void draw();
-    
+    void saveState(string & s);
+    void loadState(string & s);
     
    
      void keyPressed  (int key);
@@ -167,6 +168,8 @@ public:
     ofShader blurX;
     ofShader blurY;
     ofShader colorMod;
+    ofShader bloom;
+    ofShader gloom;
 
     ofPath polyline;
 
@@ -187,6 +190,10 @@ public:
     ofParameter<int> rback,bback,gback;
     ofParameter<int> alphablur;
     ofParameter<float> brightness2,saturation2,contrast2;
+    ofParameter<string> saveName;
+    ofParameter<string> loadName;
+    ofParameter<bool> isBloom;
+    ofParameter<bool> isGloom;
     int zdepth;
     int inw;
     int inh;

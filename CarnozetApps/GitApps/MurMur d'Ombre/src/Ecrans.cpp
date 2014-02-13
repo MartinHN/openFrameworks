@@ -79,6 +79,7 @@ void Ecran::registerParams(){
     vertices.clear();
     vertices.setName("screen"+ofToString(number));
     for (std::list<ofParameter<ofVec3f>* >::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
+        (*vv)->setSerializable(false);
         vertices.add(**vv);
         (*vv)->addListener(this,&Ecran::updateMatrix);
     }

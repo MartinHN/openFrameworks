@@ -60,6 +60,7 @@ public:
 #ifdef PFBO
     ofFbo finaldraw;
 #endif
+//    ofFbo distance;
 #ifdef PIMG
     ofImage partImg;
 #endif

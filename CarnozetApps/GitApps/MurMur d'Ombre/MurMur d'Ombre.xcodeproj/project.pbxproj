@@ -404,6 +404,10 @@
 		F2D52E1217BB856300E384AB /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		F2D52E1617BBA3E800E384AB /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		F2D666FC16F8D94F00B5FD58 /* visu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D666FA16F8D94F00B5FD58 /* visu.cpp */; };
+		F2E27B0F18AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
+		F2E27B1018AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
+		F2E27B1118AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
+		F2E27B1218AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
 		F2F7745C1653B46B00E0CB96 /* posUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774571653B46B00E0CB96 /* posUpdate.frag */; };
 		F2F7745D1653B46B00E0CB96 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774581653B46B00E0CB96 /* render.frag */; };
 		F2F7745E1653B46B00E0CB96 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745A1653B46B00E0CB96 /* render.vert */; };
@@ -752,6 +756,7 @@
 		F2D52E1517BBA3E800E384AB /* ParticlesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticlesHandler.h; sourceTree = "<group>"; };
 		F2D666FA16F8D94F00B5FD58 /* visu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visu.cpp; sourceTree = "<group>"; };
 		F2D666FB16F8D94F00B5FD58 /* visu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visu.h; sourceTree = "<group>"; };
+		F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = thresholdBW.frag; sourceTree = "<group>"; };
 		F2F774571653B46B00E0CB96 /* posUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = posUpdate.frag; sourceTree = "<group>"; };
 		F2F774581653B46B00E0CB96 /* render.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.frag; sourceTree = "<group>"; };
 		F2F7745A1653B46B00E0CB96 /* render.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.vert; sourceTree = "<group>"; };
@@ -1712,6 +1717,7 @@
 				F222D98118A52F2200450D5F /* blurYa.frag */,
 				F2B9D61318A111D2005EA5A4 /* blurY.frag */,
 				F26A260B17BEB77B0053DD48 /* Shadow.frag */,
+				F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */,
 				F2F774571653B46B00E0CB96 /* posUpdate.frag */,
 				F2F774581653B46B00E0CB96 /* render.frag */,
 				F2F7745A1653B46B00E0CB96 /* render.vert */,
@@ -2000,8 +2006,6 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "MurMur d'Ombre" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -2173,6 +2177,7 @@
 				6F1EE6C018A927ED00608125 /* ofxSliderGroup.cpp in Sources */,
 				6F1EE6C118A927ED00608125 /* spring.frag in Sources */,
 				F25C29E718ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
+				F2E27B1118AD60D000DE2130 /* thresholdBW.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2267,6 +2272,7 @@
 				6F9E618018AD48EB00D93498 /* gloom.frag in Sources */,
 				6FC6764E18A9118F00D24E6C /* spring.frag in Sources */,
 				F25C29E618ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
+				F2E27B1018AD60D000DE2130 /* thresholdBW.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2361,6 +2367,7 @@
 				6F9E617F18AD48EB00D93498 /* gloom.frag in Sources */,
 				F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */,
 				F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
+				F2E27B0F18AD60D000DE2130 /* thresholdBW.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2455,6 +2462,7 @@
 				6F9E618218AD48EB00D93498 /* gloom.frag in Sources */,
 				F200AA7D18A97C5D0004F00A /* spring.frag in Sources */,
 				F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
+				F2E27B1218AD60D000DE2130 /* thresholdBW.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

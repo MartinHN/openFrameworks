@@ -18,8 +18,8 @@
 
 
 
-#define MOUSEATTR
-#define blobosc
+
+//#define blobosc
 
 #include "ofMain.h"
 #ifndef GUIMODE
@@ -73,10 +73,10 @@ public:
     void exit();    
     void windowResized(int w, int h);
     
-#ifdef MOUSEATTR
+
     void mouseDragged(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
-#endif
+
 
 #ifdef syphon  
     ofxSyphonClient blobClient;

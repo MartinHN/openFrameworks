@@ -17,7 +17,7 @@ void main() {
     vec2 st = 2*gl_PointCoord.st-vec2(1,1);
  
     
-    float curalpha = alpha*max(0.3,1-length(st));//max(0.f,1.f-texture2DRect(Tex,vec2(l,1)).x);
+    float curalpha = alpha*(1-length(st));//max(0.f,1.f-texture2DRect(Tex,vec2(l,1)).x);
     
 
 

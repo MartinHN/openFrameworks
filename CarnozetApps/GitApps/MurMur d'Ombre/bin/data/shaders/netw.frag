@@ -41,7 +41,7 @@ void main(void){
     vec3 linbuf;
     linbuf.x=netmax+1;
         
-    if(st.x<resolution-1){
+//    if(st.x<resolution-1){
             distbuf=pos-poso;
             linbuf=distbuf;
             normbuf = length(distbuf);
@@ -49,7 +49,7 @@ void main(void){
             vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
         }
-    if(st.x>1){
+//    if(st.x>1){
         distbuf=pos-opos;
         normbuf = length(distbuf);
         
@@ -61,7 +61,7 @@ void main(void){
             vel-=z*(distbuf+linbuf);
         }
         
-    }
+//    }
     
     
 
@@ -71,6 +71,6 @@ void main(void){
     
 
     
-    gl_FragColor = vec4(vel.x,vel.y,vel.z,1.0);
+    gl_FragColor.xyz = vel.xyz;
 
 }

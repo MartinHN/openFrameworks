@@ -15,6 +15,7 @@
 
 #ifdef  syphon
 #include "ofxSyphon.h"
+#include "ofxOpenCv.h"
 #endif
 
 
@@ -74,6 +75,10 @@ public:
     void blurblob();
     ofShader * blurX;
     ofShader * blurY;
+    ofShader threshBW;
+    ofxCvContourFinder contourFinder;
+    void computePoly();
+    ofPixels pix;
 #endif
     
     ofParameterGroup settings;

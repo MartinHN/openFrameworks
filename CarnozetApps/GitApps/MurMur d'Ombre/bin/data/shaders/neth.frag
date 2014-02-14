@@ -41,15 +41,15 @@ void main(void){
     vec3 linbuf;
 
         
-    if(st.y<resolution-1){
+//    if(st.y<resolution-1){
             distbuf=pos-poso;
             linbuf=distbuf;
             normbuf = length(distbuf);
             if(normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
-        }
-    if(st.y>1){
+//        }
+//    if(st.y>1){
         distbuf=pos-opos;
         normbuf = length(distbuf);
         
@@ -62,7 +62,7 @@ void main(void){
         
 
         
-    }
+//    }
     
     
 

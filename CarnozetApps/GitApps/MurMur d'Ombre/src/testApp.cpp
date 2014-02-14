@@ -593,9 +593,9 @@ void testApp::oscUpdate(){
 //            f.yori=scrh/2-m.getArgAsFloat(0)*300.0;
 //        }
         
-        else if(m.getAddress()=="/drawBlob"){
-            drawBlob=m.getArgAsFloat(0)==1;
-        }
+//        else if(m.getAddress()=="/drawBlob"){
+//            drawBlob=m.getArgAsFloat(0)==1;
+//        }
     
         
         else if(m.getAddress()=="/beat"){
@@ -1020,7 +1020,7 @@ void testApp::oscBlobUpdate(){
 
 #endif
 
-#ifdef MOUSEATTR
+
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
     vector<int> familly;
@@ -1040,7 +1040,7 @@ void testApp::mouseReleased(int x, int y, int button){
     attrctl.update(points,familly);
     
 }
-#endif
+
 #endif
 
 

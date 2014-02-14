@@ -35,20 +35,23 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     sH.setup(scrw,scrh,zdepth);
     sH.loadScreensPos();
     
-    
-    
+#ifdef syphon
+    pix.allocate(inw,inh,3);
+#endif
 
 }
 
 void VisuHandler::setupSyphon(ofShader *blurXin,ofShader *blurYin){
 #ifdef syphon
     blobClient.setup();
-    blobClient.setApplicationName("Simple Server");
-    blobClient.setServerName("");
+    blobClient.setApplicationName("Quartz Composer");
+    blobClient.setServerName("name");
    syphonTex.allocate(inw,inh,GL_RGB32F);
 
     blurX = blurXin;
     blurY = blurYin;
+    
+    threshBW.load("","shaders/thresholdBW");
     
 #endif
     
@@ -244,6 +247,26 @@ void VisuHandler::updateScreenSize(){
     }
 }
 
+#ifdef syphon
+void VisuHandler::computePoly(){
+    
+    syphonTex.dst->begin();
+    threshBW.begin();
+    threshBW.setUniformTexture("tex",blobClient.getTexture(),1);
+    
+
+    threshBW.end();
+    syphonTex.dst->end();    
+    
+    ofxCvGrayscaleImage bw ;
+    bw.getTextureReference() = syphonTex.src->getTextureReference();
+    bw.threshold(40);
+//    ofTexture
+//    contourFinder.findContours(syphonTex.src->getTextureReference(),20, 5000, 3, true);
+    
+//    syphonTex.
+}
+#endif
 
 
 

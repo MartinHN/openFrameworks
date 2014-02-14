@@ -13,68 +13,62 @@
 //}
 
 AttrCtl::AttrCtl(){
-
-    surech = 9;
     attrotate=0;
-    //echcoef = (float*)malloc(surech*sizeof(float));
-    echcoef[0]  = 1/2.0;
-    echcoef[1]  =3/4.0;
-    echcoef[2]  =1/4.0;
-    echcoef[3]  =7/8.0;
-    echcoef[4]  =1/8.0;
-    echcoef[5]  =3/8.0;
-    echcoef[6]  =5/8.0;
-    echcoef[7]  =3/8.0;
-    echcoef[8]  =7/8.0;
-    curech=0;
     
-    attr = (float*)calloc(MAXATTRACTORS, 5*sizeof(float));
-    
-    for(int i=0;i<3;i++){
-        attrmirorx[i]=false;
-        attrmirory[i]=false;
-    }
-    numattr=0;
-    lastp = vector<ofPoint>();
-    destp = vector<ofPoint>();
-    
+}
 
-
-   
-    
+void AttrCtl::update(){
+    smooth();
+    staticpoints();
+    timedPoints();
 }
 
 void AttrCtl::registerParam(){
     settings.setName("attrCtl");
     
-    zoffset.setName("zoffset");
-    zoffset.setMin(0.);
-    zoffset.setMax(1.);
-    zoffset=0.5;
-    settings.add(zoffset);
+    MYPARAM(zoffset,0.5f,0.f,1.f);
+    MYPARAM(attrmirrorx,4,0,16);
+    MYPARAM(attrmirrory,0,0,16);
+    MYPARAM(attrmirrorz,0,0,16);
+    MYPARAM(zonefamilly3,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
+    MYPARAM(zonefamilly1,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
+    MYPARAM(zonefamilly2,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
 }
 
-void AttrCtl::update(vector<ofPoint> curpin,vector<int> famillyin){
+
+
+void AttrCtl::updatePoints(vector<ofPoint> curpin){
     
-  if(destp.size()>0)lastp=destp;
-    destp.clear();
-     if(familly.size()>0)lastfamilly=familly;
-    familly=famillyin;
-    for(int i = 0 ; i< MIN(MAXATTRACTORS,curpin.size()) ; i++){
-if(attrotate!=0){
-        destp.push_back(ofPoint(attrotate*(curpin[i].y),(1-curpin[i].x),curpin[i].z+zoffset));
+  if(destA.size()>0)lastA=destA;
+    destA.clear();
+    for(int i = 0 ; i< curpin.size() ; i++){
+        vector<ofRectangle> zones;
+        zones.push_back(ofRectangle(zonefamilly3.get().x, zonefamilly3.get().y, zonefamilly3.get().z, zonefamilly3.get().w));
+        zones.push_back(ofRectangle(zonefamilly1.get().x, zonefamilly1.get().y, zonefamilly1.get().z, zonefamilly1.get().w));
+        zones.push_back(ofRectangle(zonefamilly2.get().x, zonefamilly2.get().y, zonefamilly2.get().z, zonefamilly2.get().w));
+        
+        for(int k = 0 ; k< zones.size();k++){
+                //destp.push_back(ofPoint(attrotate*(curpin[i].y),(1-curpin[i].x),curpin[i].z+zoffset));
+            ofPoint p = ofPoint(1-curpin[i].x,curpin[i].y,curpin[i].z+zoffset);
+            if(zones[k].inside(p)){
+                destA.push_back(AttrStruct(p,k+1));
+                break;
+            }
+        }
+
+                
     }
-else{
-    destp.push_back(ofPoint(1-curpin[i].x,curpin[i].y,curpin[i].z+zoffset));
+
+    
 }
+
+vector<ofPoint> AttrCtl::getAll(){
+    vector<ofPoint> res;
+    for(int i = 0 ; i< destA.size() ; i++){
+        res.push_back(destA[i].p);
         
-        
-     }
-    //cout<<curech<<endl;   
-    curech=0;
-    
- 
-    
+    }
+    return res;
 }
 
 vector<ofPoint> AttrCtl::getFamilly(int f){
@@ -94,10 +88,9 @@ vector<ofPoint> AttrCtl::getFamilly(int f){
 
 }while (f>10&&curf>0);
 
-    for(int i = 0 ; i< curp.size() ; i++){
-        for(int j = 0 ; j<targetf.size();j++){
-            if(familly[i]==targetf[j]){res.push_back(curp[i]);break;}
-        }
+    for(int i = 0 ; i< destA.size() ; i++){
+        if(destA[i].f==f){res.push_back(destA[i].p);}
+        
     }
     return res;
 }
@@ -106,81 +99,58 @@ vector<ofPoint> AttrCtl::getFamilly(int f){
 
 void AttrCtl::smooth(){
     
-    curp.clear();
-    newfamilly.clear();
+    smoothedA.clear();
     
-    for(int i=0;i<destp.size();i++){
-        bool isdetected=false;
-//        for(int j=0;j<lastp.size();j++){
-//            if((destp[j]-lastp[i]).length()<1/8.0){
-//                if(curech<=surech){
-//                    newfamilly.push_back(lastfamilly[i]);
-//                    curp.push_back(lastp[i]+(destp[j]-lastp[i])*echcoef[curech]);//(1+curech)*1.0/(surech+1));//
-//
-//                    isdetected=true;}          
-//                break;          
-//            }          
-//        }
-        if(!isdetected){
-            newfamilly.push_back(familly[i]);
-            curp.push_back(destp[i]);
-        }
-        
+    for(int i=0;i<destA.size();i++){
+            smoothedA.push_back(destA[i]);
         
     }
-    familly.clear();
-    for(int i = 0 ; i< newfamilly.size();i++){
-    familly.push_back(newfamilly[i]);
-    }
-    curech++;
+
+
 
 
 }
 
-void AttrCtl::addpoints(){
-    addpoint.clear();
-    addfamilly.clear();
+void AttrCtl::staticpoints(){
+    staticA.clear();
     
-    for(int i = 0;i<curp.size();i++){
-        addpoint.push_back(curp[i]);
-        addfamilly.push_back(familly[i]);
+    if(destA.size()==2){
+        staticA.push_back(AttrStruct((destA[1].p+destA[0].p)/2.0,destA[0].f));
     }
-    
-    
-    if(curp.size()==2){
-        addpoint.push_back((curp[1]+curp[0])/2.0);
-        addfamilly.push_back(2);
-    }
-int idx = addpoint.size();
-    for(int i=0;i<idx;i++){
-        if(attrmirorx[addfamilly[i]]){
-            addpoint.push_back(ofPoint(1-addpoint[i].x,addpoint[i].y,addpoint[i].z));
-            addfamilly.push_back(addfamilly[i]);
+
+    vector<int> mirrorFam = getActiveFromInt(attrmirrorx);
+
+    for(int i=0;i<mirrorFam.size();i++){
+        for(int j = 0 ; j< destA.size();j++){
+            if(destA[j].f==mirrorFam[i])
+                staticA.push_back(AttrStruct(ofPoint(1-destA[j].p.x,destA[j].p.y,destA[j].p.z),destA[j].f));
         }
 
     }
-    idx = addpoint.size();
-      for(int i=0;i<idx;i++){
-    if(attrmirory[addfamilly[i]]){
-        addpoint.push_back(ofPoint(addpoint[i].x,1-addpoint[i].y,addpoint[i].z));
-        addfamilly.push_back(addfamilly[i]);
+    
+    mirrorFam = getActiveFromInt(attrmirrory);
+    
+    for(int i=0;i<mirrorFam.size();i++){
+        for(int j = 0 ; j< destA.size();j++){
+            if(destA[j].f==mirrorFam[i])
+                staticA.push_back(AttrStruct(ofPoint(1-destA[j].p.x,destA[j].p.y,destA[j].p.z),destA[j].f));
+        }
+        
     }
-      }
+    
+    mirrorFam = getActiveFromInt(attrmirrorz);
+    
+    for(int i=0;i<mirrorFam.size();i++){
+        for(int j = 0 ; j< destA.size();j++){
+            if(destA[j].f==mirrorFam[i])
+                staticA.push_back(AttrStruct(ofPoint(1-destA[j].p.x,destA[j].p.y,destA[j].p.z),destA[j].f));
+        }
+        
+    }
     
 }
 
-void AttrCtl::setattr(){
-
-    numattr = MIN(MAXATTRACTORS,addpoint.size());
-
-
-    for(int i = 0; i< numattr;i++){
-        attr[5*i]=addfamilly[i];
-        attr[5*i+1]=addpoint[i].x;
-        attr[5*i+2]=addpoint[i].y;
-        attr[5*i+2]=addpoint[i].z;
-    }
+void AttrCtl::timedPoints(){
     
-    
-
 }
+

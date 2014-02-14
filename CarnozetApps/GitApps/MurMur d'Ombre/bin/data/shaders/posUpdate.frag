@@ -24,25 +24,25 @@ void main(void){
     //vel.x*=1.7;
     pos += vel*timestep ; // Updates the position
     //if(borders.x==1){
-        if ( pos.x < 0.0)
-        {pos.x=0;}
-        
-        else if ( pos.x > 1.0)
-        {pos.x=1.0;}
-        
-        if (pos.y < 0.0)
-        {pos.y=0;}
-        
-        else if ( pos.y > 1.0)
-        {pos.y=1.0;}
+//        if ( pos.x < 0.0)
+//        {pos.x=0;}
+//        
+//        else if ( pos.x > 1.0)
+//        {pos.x=1.0;}
+//        
+//        if (pos.y < 0.0)
+//        {pos.y=0;}
+//        
+//        else if ( pos.y > 1.0)
+//        {pos.y=1.0;}
+//    
+//    if (pos.z < 0.0)
+//    {pos.z=0;}
+//    
+//    else if ( pos.z > 1.0)
+//    {pos.z=1.0;}
     
-    if (pos.z < 0.0)
-    {pos.z=0;}
-    
-    else if ( pos.z > 1.0)
-    {pos.z=1.0;}
-        
     //}
-    gl_FragColor.rgba = vec4(pos.x,pos.y,pos.z,1.0);  // And finaly it store it on the position FBO
+    gl_FragColor.xyz = pos;  // And finaly it store it on the position FBO
 //}
 }

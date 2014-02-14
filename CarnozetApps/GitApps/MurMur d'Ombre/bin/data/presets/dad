@@ -1,7 +1,7 @@
 <OF>
 	<global>
 		<loadName/>
-		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur</saveName>
+		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur d&apos;Ombre/bin/data/presets/dad</saveName>
 		<finalblur>0</finalblur>
 		<saturation>1</saturation>
 		<contrast>0.99</contrast>
@@ -53,13 +53,13 @@
 			<center>0.5, 0.5</center>
 		</boule2gomme>
 		<particles>
-			<screenN>0</screenN>
+			<screenN>-1</screenN>
 			<recopy>1</recopy>
 			<isMapping>0</isMapping>
 			<timeStep>1</timeStep>
-			<numParticles>124609</numParticles>
+			<numParticles>184900</numParticles>
 			<particleSize>6.15</particleSize>
-			<alphaparticle>0.3</alphaparticle>
+			<alphaparticle>0.4</alphaparticle>
 			<partcolor>255, 255, 255</partcolor>
 			<gradtype>0</gradtype>
 			<gradNum>0</gradNum>
@@ -128,12 +128,13 @@
 			</globalForce>
 		</particles>
 		<metaBalls>
-			<screenN>-1</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<rayon>0.58</rayon>
+			<thresh>0</thresh>
 			<curFamilly>0</curFamilly>
-			<color>255, 255, 255, 255</color>
+			<color>255, 255, 0, 255</color>
 		</metaBalls>
 	</Visu>
 </OF>

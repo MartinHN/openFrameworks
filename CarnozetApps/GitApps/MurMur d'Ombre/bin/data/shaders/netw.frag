@@ -48,7 +48,7 @@ void main(void){
             if(normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
-        }
+//        }
 //    if(st.x>1){
         distbuf=pos-opos;
         normbuf = length(distbuf);
@@ -71,6 +71,6 @@ void main(void){
     
 
     
-    gl_FragColor.xyz = vel.xyz;
+    gl_FragColor.xyz = vel;
 
 }

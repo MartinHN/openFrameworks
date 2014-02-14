@@ -1,7 +1,7 @@
 <OF>
 	<global>
 		<loadName/>
-		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur</saveName>
+		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur d&apos;Ombre/bin/data/presets/metatest</saveName>
 		<finalblur>0</finalblur>
 		<saturation>1</saturation>
 		<contrast>0.99</contrast>
@@ -132,6 +132,7 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<rayon>0.58</rayon>
+			<thresh>0</thresh>
 			<curFamilly>0</curFamilly>
 			<color>255, 255, 255, 255</color>
 		</metaBalls>

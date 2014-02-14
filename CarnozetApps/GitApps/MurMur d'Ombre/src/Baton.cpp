@@ -77,7 +77,7 @@ Baton::Baton(VisuHandler * dad):VisuClass(dad){
 
 
 void Baton::update(VisuHandler * dad){
-    attr=&dad->attr->curp;
+    attr=&dad->attr->destA;
     ofVec2f size =    dad->sH.sizeOfScreen(screenN);
     ofVec3f center = size/2;
     int width = size.x;
@@ -95,10 +95,10 @@ void Baton::update(VisuHandler * dad){
         if(noBeat&&beat==1){
             if(curthickness>0){
                 if(nattr>0){
-                    stainl.insert(stainl.begin(),ofVec2f(attr->at(0).x*width,attr->at(0).y*height));
+                    stainl.insert(stainl.begin(),ofVec2f(attr->at(0).p.x*width,attr->at(0).p.y*height));
                     
                     if(nattr>1){
-                        stainl.insert(stainl.begin(),ofVec2f(attr->at(1).x*width,attr->at(1).y*height));                     
+                        stainl.insert(stainl.begin(),ofVec2f(attr->at(1).p.x*width,attr->at(1).p.y*height));
                     }
                 }
             }
@@ -110,8 +110,8 @@ void Baton::update(VisuHandler * dad){
         
         
         if(nattr==2){
-            ofVec2f attr1=ofVec2f(attr->at(0).x*width,attr->at(0).y*height);
-            ofVec2f attr2=ofVec2f(attr->at(1).x*width,attr->at(1).y*height);
+            ofVec2f attr1=ofVec2f(attr->at(0).p.x*width,attr->at(0).p.y*height);
+            ofVec2f attr2=ofVec2f(attr->at(1).p.x*width,attr->at(1).p.y*height);
             orientation.insert(orientation.begin(),ofDegToRad((attr2-attr1).angle(ofVec2f(0,-1))));
             poly.insert(poly.begin(),attr1);
             poly2.insert(poly2.begin(),attr2);  
@@ -119,13 +119,13 @@ void Baton::update(VisuHandler * dad){
         else if(nattr==1){
             if(poly.size()==0){
                 orientation.insert(orientation.begin(),(ofGetElapsedTimeMillis()/500)%6);
-                poly.insert(poly.begin(),ofVec2f(attr->at(0).x*width,attr->at(0).y*height));
+                poly.insert(poly.begin(),ofVec2f(attr->at(0).p.x*width,attr->at(0).p.y*height));
                 
                 poly2.insert(poly2.begin(),ofVec2f(width,height));
             }
             else{
                 orientation.insert(orientation.begin(),(ofGetElapsedTimeMillis()/500)%6);
-                poly.insert(poly.begin(),ofVec2f(attr->at(0).x*width,attr->at(0).y*height));
+                poly.insert(poly.begin(),ofVec2f(attr->at(0).p.x*width,attr->at(0).p.y*height));
                 poly2.insert(poly2.begin(),poly2.front());
             }
         }

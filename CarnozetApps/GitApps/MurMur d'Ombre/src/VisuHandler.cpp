@@ -51,7 +51,7 @@ void VisuHandler::setupSyphon(ofShader *blurXin,ofShader *blurYin){
     blurX = blurXin;
     blurY = blurYin;
     
-    threshBW.load("","shaders/thresholdBW");
+//    threshBW.load("","shaders/thresholdBW");
     
 #endif
     
@@ -183,6 +183,7 @@ const void VisuHandler::draw(){
         if(visuList[i]->screenN>=0){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
+                ofEnableAlphaBlending();
                 if(visuList[i]->recopy){
                     int curn = validScreen%10;
                     do{

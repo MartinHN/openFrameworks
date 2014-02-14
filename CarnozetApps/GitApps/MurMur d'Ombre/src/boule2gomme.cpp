@@ -25,11 +25,11 @@ void boule2gomme::update(int w, int h){
 void boule2gomme::draw(int w, int h){
 
     ofVec2f scale(w,h);
-    vector<ofVec3f> * points =  &dad->attr->curp;
-//    ofSetColor(255,0,0);
+    vector<AttrStruct> * points =  &dad->attr->staticA;
+    ofSetColor(255,0,0);
 //    ofRect(0,0,w,h);
     for(int i = 0 ; i<points->size();i++)
-        ofEllipse(scale*points->at(i),rayon,rayon);
+        ofEllipse(scale*points->at(i).p,rayon,rayon);
 #ifdef syphon
     ofSetColor(255);
     dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);

@@ -59,15 +59,15 @@ uniform sampler2DRect tex0;
 
 void main(void){
        vec2 tc = gl_FragCoord.xy;
-       vec3 color = blur(tc, 2.0);
-       color += blur(tc, 3.0);
-       color += blur(tc, 5.0);
-       color += blur(tc, 7.0);
-       color /= 4.0;
+       vec3 color = blur(tc, 7.0);//2.0
+//       color += blur(tc, 3.0);
+//       color += blur(tc, 5.0);
+//       color += blur(tc, 7.0);
+//       color /= 4.0;
 
        color += sample(tc);
 
-       float divider = smoothstep(-0.01, 0.01, tc.x);
+    float divider = smoothstep(-0.01, 0.01, tc.x);
        gl_FragColor.xyz = mix(sample(tc), color, divider) * (divider * divider + (1.0 - divider) * (1.0 - divider));
     gl_FragColor.w =1.0;
 

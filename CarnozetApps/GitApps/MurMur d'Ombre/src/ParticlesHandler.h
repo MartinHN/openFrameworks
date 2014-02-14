@@ -9,7 +9,6 @@
 #pragma once
 #include "ofMain.h"
 #include "VisuHandler.h"
-#include "Constants.h"
 #define PVISU
 //#define PIMG
 //#define PFBO

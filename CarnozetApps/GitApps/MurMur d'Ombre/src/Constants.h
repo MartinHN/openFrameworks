@@ -32,6 +32,20 @@
 // http://www.comp.nus.edu/~ashwinna/docs/PingPong_FBO.pdf
 // http://www.seas.upenn.edu/~cis565/fbo.htm#setupgl4
 //
+
+
+static vector<int> getActiveFromInt(int a){
+    vector<int> res;
+    int i = 0;
+    while(a>>i>0){
+        if(a>>i & 1){
+            res.push_back(i+1);
+        }
+        i++;
+    }
+    return res;
+}
+
 struct pingPongBuffer {
 public:
     void allocate( int _width, int _height, int _internalformat = GL_RGBA, float _dissipation = 1.0f){

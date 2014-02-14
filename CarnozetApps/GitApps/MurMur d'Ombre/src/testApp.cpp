@@ -119,7 +119,9 @@ ofSetVerticalSync(false);
     globalParam.setName("OF");
     settings.setName("global");
     MYPARAM(loadName, "", "", "");
+    loadName.setSerializable(false);
     MYPARAM(saveName, "", "", "");
+    saveName.setSerializable(false);
     saveName.addListener(this, &testApp::saveState);
     loadName.addListener(this, &testApp::loadState);
     
@@ -131,7 +133,7 @@ ofSetVerticalSync(false);
     MYPARAM(gback, 255, 0, 255);
     MYPARAM(bback, 255, 0, 255);
     MYPARAM(alphablur, 100, 0, 255);
-    MYPARAM(isBloom,false,false,true);
+    MYPARAM(bloomsize,0,0,10);
     MYPARAM(isGloom,false,false,true);
 
     settings.add(camera2.settings);
@@ -142,6 +144,7 @@ ofSetVerticalSync(false);
     visuHandler.addVisu(new background(&visuHandler));
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     visuHandler.addVisu(new Particles(&visuHandler));
+    visuHandler.addVisu(new metaBalls(&visuHandler));
     
     
     
@@ -196,14 +199,14 @@ void testApp::update(){
     for (int ncom = 0 ; ncom< computeRatio;ncom++){
         visuHandler.updateHighFPS();
     }
-paramSync.update();
+    
+    paramSync.update();
         
     oscUpdate();
   
    
-    attrctl.smooth();
-    attrctl.addpoints();
-//    attrctl.setattr();
+    attrctl.update();
+
 #endif 
 
     
@@ -249,9 +252,10 @@ void testApp::draw(){
     
     
         if(isAtt){
-            for( int k=0;k<attrctl.addpoint.size() ; k++){
-                ofSetColor(attrctl.addfamilly[k]==0?255:0,attrctl.addfamilly[k]==1?255:0,attrctl.addfamilly[k]==2?255:0);
-                ofCircle(attrctl.addpoint[k].x*width,attrctl.addpoint[k].y*height,20);   
+
+            for( int k=0;k<attrctl.destA.size() ; k++){
+                ofSetColor(attrctl.destA[k].f==0?255:0,attrctl.destA[k].f==1?255:0,attrctl.destA[k].f==2?255:0);
+                ofCircle(attrctl.destA[k].p.x*width,attrctl.destA[k].p.y*height,20);
             }
             
         }
@@ -259,7 +263,7 @@ void testApp::draw(){
     
     ofPushMatrix();
     ofPushView();
-    
+    ofEnableAlphaBlending();
           camera2.begin();
         
 
@@ -315,9 +319,10 @@ finalRender.dst->end();
 
             finalRender.swap();
             
-    if(isBloom){
+    if(bloomsize>0){
         finalRender.dst->begin();
         bloom.begin();
+        bloom.setUniform1i("size", bloomsize);
         finalRender.src->draw(0,0);
         bloom.end();
         finalRender.dst->end();
@@ -540,8 +545,8 @@ void testApp::oscUpdate(){
                 
                 points.push_back(ofPoint(m.getArgAsFloat(2+i*3),m.getArgAsFloat(3+i*3)));
             }
-            attrctl.update(points,familly);
-        } 
+//            attrctl.update(points,familly);
+        }
 
 //        else if(m.getAddress() == "/gravity"){
 //            f.gravity=m.getArgAsFloat(0)==1;
@@ -1023,21 +1028,19 @@ void testApp::oscBlobUpdate(){
 
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
-    vector<int> familly;
-  
-        familly.push_back(0);
+    
         points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
+    points.push_back(ofPoint(0.2,0.2,0));
 
-    if(points.size()>0)attrctl.update(points,familly);
-//    printf("%i",button);
+    if(points.size()>0)attrctl.updatePoints(points);
+
 }
 void testApp::mouseReleased(int x, int y, int button){
     vector<ofPoint> points;
-    vector<int> familly;
-    familly.clear();
+
     points.clear();
     
-    attrctl.update(points,familly);
+    attrctl.updatePoints(points);
     
 }
 

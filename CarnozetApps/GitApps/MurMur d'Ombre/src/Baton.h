@@ -30,7 +30,7 @@ public:
     
    
     
-    vector<ofPoint>* attr;
+    vector<AttrStruct>* attr;
     ofImage stain;
     vector<ofPoint> stainl;
     int stainw,stainh;

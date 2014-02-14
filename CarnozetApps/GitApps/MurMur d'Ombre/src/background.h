@@ -27,7 +27,11 @@ public:
     ofParameter<float> ratio;
     ofParameter<ofVec4f> color;
     ofParameter<bool> fill;
+    ofParameter<int> followFam;
+    ofParameter<float> alpha;
     
+    
+    ofPoint lastPoint;
     ofImage bg;
     
     void draw(int w, int h);

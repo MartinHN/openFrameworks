@@ -15,6 +15,7 @@
 #include "boule2gomme.h"
 #include "ParticlesHandler.h"
 #include "background.h"
+#include "metaBalls.h"
 //#include "Cinetique.h"
 //#include "AutoTree.h"
 //#include "DreamCatcher.h"

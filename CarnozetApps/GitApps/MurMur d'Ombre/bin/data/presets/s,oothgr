@@ -1,17 +1,17 @@
 <OF>
 	<global>
 		<loadName/>
-		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur</saveName>
+		<saveName>/Users/mhermant/Documents/OF8/CarnozetApps/GitApps/MurMur d&apos;Ombre/bin/data/presets/s,oothgr</saveName>
 		<finalblur>0</finalblur>
 		<saturation>1</saturation>
-		<contrast>0.99</contrast>
+		<contrast>1</contrast>
 		<brightness>1</brightness>
-		<rback>0</rback>
-		<gback>0</gback>
-		<bback>0</bback>
-		<alphablur>255</alphablur>
+		<rback>255</rback>
+		<gback>255</gback>
+		<bback>255</bback>
+		<alphablur>100</alphablur>
 		<bloomsize>0</bloomsize>
-		<isGloom>1</isGloom>
+		<isGloom>0</isGloom>
 		<camera>
 			<alpha>0.4</alpha>
 			<distance>1</distance>
@@ -22,7 +22,7 @@
 		<blobBlur>0</blobBlur>
 	</blobsettings>
 	<attrCtl>
-		<zoffset>0.34</zoffset>
+		<zoffset>0.5</zoffset>
 	</attrCtl>
 	<screens>
 		<isMasking>1</isMasking>
@@ -33,7 +33,7 @@
 	</screens>
 	<Visu>
 		<background>
-			<screenN>-1</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<type>0</type>
@@ -46,7 +46,7 @@
 			<fill>1</fill>
 		</background>
 		<boule2gomme>
-			<screenN>-1</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<rayon>2</rayon>
@@ -57,31 +57,31 @@
 			<recopy>1</recopy>
 			<isMapping>0</isMapping>
 			<timeStep>1</timeStep>
-			<numParticles>124609</numParticles>
-			<particleSize>6.15</particleSize>
-			<alphaparticle>0.3</alphaparticle>
-			<partcolor>255, 255, 255</partcolor>
-			<gradtype>0</gradtype>
+			<numParticles>99856</numParticles>
+			<particleSize>3</particleSize>
+			<alphaparticle>1</alphaparticle>
+			<partcolor>0, 0, 1</partcolor>
+			<gradtype>2</gradtype>
 			<gradNum>0</gradNum>
 			<mingrad>0</mingrad>
 			<maxgrad>1</maxgrad>
 			<netCompRatio>3</netCompRatio>
 			<netw>
 				<isActive>1</isActive>
-				<k>0.00714286</k>
+				<k>0.00510204</k>
 				<l0>1</l0>
-				<z>0.0459184</z>
+				<z>0.0744898</z>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
-				<k>0.00408163</k>
+				<k>0.00612245</k>
 				<l0>1</l0>
-				<z>0.0377551</z>
+				<z>0.0744898</z>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
 				<k>0.00255102</k>
-				<z>0.05</z>
+				<z>0</z>
 				<freeze>0</freeze>
 			</origin>
 			<gravity>
@@ -96,17 +96,17 @@
 			<smoothyGrav>
 				<isActive>1</isActive>
 				<attrFamilly>0</attrFamilly>
-				<r>0.734694</r>
-				<mass>0.0244898</mass>
-				<rin>0.102041</rin>
-				<minattr>0</minattr>
-				<damp>0.977551</damp>
+				<r>0.903061</r>
+				<mass>0.077551</mass>
+				<rin>0.0331633</rin>
+				<minattr>0.00612244</minattr>
+				<damp>1</damp>
 			</smoothyGrav>
 			<spring>
-				<isActive>0</isActive>
-				<attrFamilly>-1</attrFamilly>
-				<k>0.03</k>
-				<l0>0.01</l0>
+				<isActive>1</isActive>
+				<attrFamilly>0</attrFamilly>
+				<k>0.341837</k>
+				<l0>0.069898</l0>
 				<z>0</z>
 				<mode>1</mode>
 			</spring>
@@ -120,20 +120,12 @@
 				<maxv>0.8</maxv>
 			</fieldForce>
 			<globalForce>
-				<isActive>1</isActive>
-				<f>0.995219</f>
+				<isActive>0</isActive>
+				<f>1</f>
 				<fmin>1</fmin>
 				<vmax>1</vmax>
 				<vmin>0</vmin>
 			</globalForce>
 		</particles>
-		<metaBalls>
-			<screenN>-1</screenN>
-			<recopy>1</recopy>
-			<isMapping>1</isMapping>
-			<rayon>0.58</rayon>
-			<curFamilly>0</curFamilly>
-			<color>255, 255, 255, 255</color>
-		</metaBalls>
 	</Visu>
 </OF>

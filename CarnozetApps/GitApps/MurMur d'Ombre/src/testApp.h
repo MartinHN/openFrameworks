@@ -192,8 +192,9 @@ public:
     ofParameter<float> brightness2,saturation2,contrast2;
     ofParameter<string> saveName;
     ofParameter<string> loadName;
-    ofParameter<bool> isBloom;
+
     ofParameter<bool> isGloom;
+    ofParameter<int> bloomsize;
     int zdepth;
     int inw;
     int inh;

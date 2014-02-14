@@ -18,14 +18,14 @@ uniform vec2  screen;
 // forces
 uniform vec3 attr;
 uniform float mass;
-uniform float massin;
+uniform float minattr;
 uniform float r;
 uniform float rin;
 uniform float damp;
 
 
 
-    
+
 void main(void){
     
     vec3 vel = texture2DRect(tex0, gl_TexCoord[0].xy).xyz;
@@ -35,21 +35,21 @@ void main(void){
     vec3 distbuf = (attr-pos);
     float normbuf = length(distbuf);//dist.x*dist.x+dist.y*dist.y+dist.z*dist.z;
     
-//    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);
+    //    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);
     
     if(normbuf>=r){
-        vel+=distbuf*mass/(normbuf*normbuf*normbuf);
+        vel+=normalize(distbuf)*minattr;
     }
     else if(normbuf<=rin){
-        vel+=distbuf*massin/(normbuf*normbuf*normbuf);
+        vel *=damp;
     }
     else{
+        vel+=minattr+normalize(distbuf)*(mass-minattr)* normbuf*normbuf*normbuf*(normbuf*(normbuf*6-15)+10);
         
-         vel *=damp;   
-        }
-
-
+    }
+    
+    
     
     gl_FragColor.xyz = vel;
-
+    
 }

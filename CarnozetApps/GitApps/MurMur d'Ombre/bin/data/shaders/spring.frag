@@ -53,6 +53,6 @@ void main(void){
     
 
     
-    gl_FragColor = vec4(vel.x,vel.y,vel.z,1.0);
+    gl_FragColor.xyz = vel;
 
 }

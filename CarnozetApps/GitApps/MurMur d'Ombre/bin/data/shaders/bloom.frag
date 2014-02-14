@@ -4,7 +4,7 @@
     
 uniform sampler2DRect tex0;
 
-
+uniform int size;
 
     
     void main()
@@ -14,8 +14,8 @@ uniform sampler2DRect tex0;
         vec4 sum = vec4(0);
         
         int j,i;
-        for( i= -4 ;i < 4; i++){
-            for (j = -3; j < 3; j++){
+        for( i= -size ;i < size; i++){
+            for (j = -size+1; j < size-1; j++){
                 sum += texture2DRect(tex0, st + vec2(j, i)*0.004) * 0.25;
             }
         }

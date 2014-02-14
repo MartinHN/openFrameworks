@@ -130,6 +130,18 @@
 		6F1EEA6E18A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		6F1EEA6F18A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		6F1EEA7018A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
+		6F2F476318AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
+		6F2F476418AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
+		6F2F476518AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
+		6F2F476618AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
+		6F4915F318AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
+		6F4915F418AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
+		6F4915F518AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
+		6F4915F618AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
+		6F4915F818AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
+		6F4915F918AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
+		6F4915FA18AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
+		6F4915FB18AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
 		6F9E617A18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
 		6F9E617B18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
 		6F9E617C18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
@@ -404,10 +416,10 @@
 		F2D52E1217BB856300E384AB /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		F2D52E1617BBA3E800E384AB /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		F2D666FC16F8D94F00B5FD58 /* visu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D666FA16F8D94F00B5FD58 /* visu.cpp */; };
-		F2E27B0F18AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
-		F2E27B1018AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
-		F2E27B1118AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
-		F2E27B1218AD60D000DE2130 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */; };
+		F2E27B0F18AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
+		F2E27B1018AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
+		F2E27B1118AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
+		F2E27B1218AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
 		F2F7745C1653B46B00E0CB96 /* posUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774571653B46B00E0CB96 /* posUpdate.frag */; };
 		F2F7745D1653B46B00E0CB96 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774581653B46B00E0CB96 /* render.frag */; };
 		F2F7745E1653B46B00E0CB96 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745A1653B46B00E0CB96 /* render.vert */; };
@@ -599,6 +611,10 @@
 		6F1EE6E218A9292500608125 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		6F1EEA6918A94F3300608125 /* globalForce.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = globalForce.frag; sourceTree = "<group>"; };
 		6F1EEA6D18A95D6C00608125 /* fieldForce.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fieldForce.frag; sourceTree = "<group>"; };
+		6F2F476218AE71F10050EA33 /* thresholdBW.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = thresholdBW.frag; sourceTree = "<group>"; };
+		6F4915F118AE2C7E001079F3 /* metaBalls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metaBalls.cpp; sourceTree = "<group>"; };
+		6F4915F218AE2C7E001079F3 /* metaBalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metaBalls.h; sourceTree = "<group>"; };
+		6F4915F718AE3171001079F3 /* smoothyGrav.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = smoothyGrav.frag; sourceTree = "<group>"; };
 		6F9E617918AD417100D93498 /* bloom.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = bloom.frag; sourceTree = "<group>"; };
 		6F9E617E18AD48EB00D93498 /* gloom.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = gloom.frag; sourceTree = "<group>"; };
 		6FB148C418AA5CF800C6B63F /* background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = background.cpp; sourceTree = "<group>"; };
@@ -756,7 +772,7 @@
 		F2D52E1517BBA3E800E384AB /* ParticlesHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParticlesHandler.h; sourceTree = "<group>"; };
 		F2D666FA16F8D94F00B5FD58 /* visu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = visu.cpp; sourceTree = "<group>"; };
 		F2D666FB16F8D94F00B5FD58 /* visu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visu.h; sourceTree = "<group>"; };
-		F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = thresholdBW.frag; sourceTree = "<group>"; };
+		F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = thresholdIntensity.frag; sourceTree = "<group>"; };
 		F2F774571653B46B00E0CB96 /* posUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = posUpdate.frag; sourceTree = "<group>"; };
 		F2F774581653B46B00E0CB96 /* render.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.frag; sourceTree = "<group>"; };
 		F2F7745A1653B46B00E0CB96 /* render.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.vert; sourceTree = "<group>"; };
@@ -1408,10 +1424,10 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* testApp.h */,
-				F2B9D62418A13D44005EA5A4 /* Unused */,
 				F2B9D62318A13D2B005EA5A4 /* Attr */,
 				F2B9D62518A13D5E005EA5A4 /* Camera */,
 				F220C7B518A65D2300B8EA9F /* Gui */,
+				F2B9D62418A13D44005EA5A4 /* Unused */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1558,6 +1574,7 @@
 			isa = PBXGroup;
 			children = (
 				6F1EEA6D18A95D6C00608125 /* fieldForce.frag */,
+				6F4915F718AE3171001079F3 /* smoothyGrav.frag */,
 				6F1EEA6918A94F3300608125 /* globalForce.frag */,
 				F2FB83EF18A8EF2B005E75BB /* spring.frag */,
 				F2C0B54818A7B66F0056A36B /* gravity.frag */,
@@ -1679,6 +1696,8 @@
 			children = (
 				6FB148C418AA5CF800C6B63F /* background.cpp */,
 				6FB148C518AA5CF800C6B63F /* background.h */,
+				6F4915F118AE2C7E001079F3 /* metaBalls.cpp */,
+				6F4915F218AE2C7E001079F3 /* metaBalls.h */,
 				F22359EC17C15D1B00895AA8 /* AutoTree.cpp */,
 				F22359ED17C15D1B00895AA8 /* AutoTree.h */,
 				F22359F317C15D2800895AA8 /* Ruban.cpp */,
@@ -1714,10 +1733,11 @@
 				F2B9D61618A11EEC005EA5A4 /* colorMod.frag */,
 				6F9E617E18AD48EB00D93498 /* gloom.frag */,
 				F222D98018A52F2100450D5F /* blurXa.frag */,
+				6F2F476218AE71F10050EA33 /* thresholdBW.frag */,
 				F222D98118A52F2200450D5F /* blurYa.frag */,
 				F2B9D61318A111D2005EA5A4 /* blurY.frag */,
 				F26A260B17BEB77B0053DD48 /* Shadow.frag */,
-				F2E27B0E18AD60D000DE2130 /* thresholdBW.frag */,
+				F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */,
 				F2F774571653B46B00E0CB96 /* posUpdate.frag */,
 				F2F774581653B46B00E0CB96 /* render.frag */,
 				F2F7745A1653B46B00E0CB96 /* render.vert */,
@@ -2006,6 +2026,8 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "MurMur d'Ombre" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -2132,6 +2154,8 @@
 				6F1EE69318A927ED00608125 /* ParticlesHandler.cpp in Sources */,
 				6F1EE69418A927ED00608125 /* Shadow.frag in Sources */,
 				6F1EE69518A927ED00608125 /* AutoTree.cpp in Sources */,
+				6F4915F518AE2C7E001079F3 /* metaBalls.cpp in Sources */,
+				6F2F476518AE71F10050EA33 /* thresholdBW.frag in Sources */,
 				6F1EE69618A927ED00608125 /* Cinetique.cpp in Sources */,
 				6F1EEA6C18A94F3300608125 /* globalForce.frag in Sources */,
 				6F1EEA7018A95D6C00608125 /* fieldForce.frag in Sources */,
@@ -2148,6 +2172,7 @@
 				6F1EE6A418A927ED00608125 /* OscOutboundPacketStream.cpp in Sources */,
 				6F1EE6A518A927ED00608125 /* OscPrintReceivedElements.cpp in Sources */,
 				6F1EE6A618A927ED00608125 /* OscReceivedElements.cpp in Sources */,
+				6F4915FA18AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				6F1EE6A718A927ED00608125 /* OscTypes.cpp in Sources */,
 				6F1EE6A818A927ED00608125 /* ofxOscBundle.cpp in Sources */,
 				6F1EE6A918A927ED00608125 /* ofxOscMessage.cpp in Sources */,
@@ -2177,7 +2202,7 @@
 				6F1EE6C018A927ED00608125 /* ofxSliderGroup.cpp in Sources */,
 				6F1EE6C118A927ED00608125 /* spring.frag in Sources */,
 				F25C29E718ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B1118AD60D000DE2130 /* thresholdBW.frag in Sources */,
+				F2E27B1118AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2244,6 +2269,7 @@
 				6FC6763018A9118F00D24E6C /* OscPrintReceivedElements.cpp in Sources */,
 				6FC6763118A9118F00D24E6C /* OscReceivedElements.cpp in Sources */,
 				6FC6763218A9118F00D24E6C /* OscTypes.cpp in Sources */,
+				6F4915F918AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				6FC6763318A9118F00D24E6C /* ofxOscBundle.cpp in Sources */,
 				6FC6763418A9118F00D24E6C /* ofxOscMessage.cpp in Sources */,
 				6FC6763518A9118F00D24E6C /* ofxOscParameterSync.cpp in Sources */,
@@ -2255,12 +2281,14 @@
 				6FC6763918A9118F00D24E6C /* Warp.cpp in Sources */,
 				6FC6763A18A9118F00D24E6C /* blurX.frag in Sources */,
 				6FC6763B18A9118F00D24E6C /* blurY.frag in Sources */,
+				6F4915F418AE2C7E001079F3 /* metaBalls.cpp in Sources */,
 				6FC6763C18A9118F00D24E6C /* colorMod.frag in Sources */,
 				6FC6763D18A9118F00D24E6C /* origin.frag in Sources */,
 				6F1EE65B18A9229100608125 /* ofxLabel.cpp in Sources */,
 				6FC6763E18A9118F00D24E6C /* EcranHandler.cpp in Sources */,
 				6FC6764718A9118F00D24E6C /* blurXa.frag in Sources */,
 				6F1EE65518A9229100608125 /* ofxBaseGui.cpp in Sources */,
+				6F2F476418AE71F10050EA33 /* thresholdBW.frag in Sources */,
 				6FC6764818A9118F00D24E6C /* blurYa.frag in Sources */,
 				6FC6764918A9118F00D24E6C /* Gui.cpp in Sources */,
 				6FC6764A18A9118F00D24E6C /* mask.frag in Sources */,
@@ -2272,7 +2300,7 @@
 				6F9E618018AD48EB00D93498 /* gloom.frag in Sources */,
 				6FC6764E18A9118F00D24E6C /* spring.frag in Sources */,
 				F25C29E618ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B1018AD60D000DE2130 /* thresholdBW.frag in Sources */,
+				F2E27B1018AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2339,6 +2367,7 @@
 				F2CCD6441891927A00C0F2B2 /* OscPrintReceivedElements.cpp in Sources */,
 				F2CCD6451891927A00C0F2B2 /* OscReceivedElements.cpp in Sources */,
 				F2CCD6461891927A00C0F2B2 /* OscTypes.cpp in Sources */,
+				6F4915F818AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F2CCD6471891927A00C0F2B2 /* ofxOscBundle.cpp in Sources */,
 				F2CCD6481891927A00C0F2B2 /* ofxOscMessage.cpp in Sources */,
 				F2CCD6491891927A00C0F2B2 /* ofxOscParameterSync.cpp in Sources */,
@@ -2350,12 +2379,14 @@
 				F2B9D60718A0E43C005EA5A4 /* Warp.cpp in Sources */,
 				F2B9D61418A111D2005EA5A4 /* blurX.frag in Sources */,
 				F2B9D61518A111D2005EA5A4 /* blurY.frag in Sources */,
+				6F4915F318AE2C7E001079F3 /* metaBalls.cpp in Sources */,
 				F2B9D61718A11EEC005EA5A4 /* colorMod.frag in Sources */,
 				F2B9D61918A12426005EA5A4 /* origin.frag in Sources */,
 				6F1EE65A18A9229100608125 /* ofxLabel.cpp in Sources */,
 				F2FA5DF318A3944F00513406 /* EcranHandler.cpp in Sources */,
 				F222D98218A52F2300450D5F /* blurXa.frag in Sources */,
 				6F1EE65418A9229100608125 /* ofxBaseGui.cpp in Sources */,
+				6F2F476318AE71F10050EA33 /* thresholdBW.frag in Sources */,
 				F222D98318A52F2300450D5F /* blurYa.frag in Sources */,
 				F220C7B418A65D1900B8EA9F /* Gui.cpp in Sources */,
 				F2C0B53518A6A9430056A36B /* mask.frag in Sources */,
@@ -2367,7 +2398,7 @@
 				6F9E617F18AD48EB00D93498 /* gloom.frag in Sources */,
 				F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */,
 				F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B0F18AD60D000DE2130 /* thresholdBW.frag in Sources */,
+				F2E27B0F18AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2434,6 +2465,7 @@
 				F200AA6118A97C5D0004F00A /* OscPrintReceivedElements.cpp in Sources */,
 				F200AA6218A97C5D0004F00A /* OscReceivedElements.cpp in Sources */,
 				F200AA6318A97C5D0004F00A /* OscTypes.cpp in Sources */,
+				6F4915FB18AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F200AA6418A97C5D0004F00A /* ofxOscBundle.cpp in Sources */,
 				F200AA6518A97C5D0004F00A /* ofxOscMessage.cpp in Sources */,
 				F200AA6618A97C5D0004F00A /* ofxOscParameterSync.cpp in Sources */,
@@ -2445,12 +2477,14 @@
 				F200AA6C18A97C5D0004F00A /* Warp.cpp in Sources */,
 				F200AA6D18A97C5D0004F00A /* blurX.frag in Sources */,
 				F200AA6E18A97C5D0004F00A /* blurY.frag in Sources */,
+				6F4915F618AE2C7E001079F3 /* metaBalls.cpp in Sources */,
 				F200AA6F18A97C5D0004F00A /* colorMod.frag in Sources */,
 				F200AA7018A97C5D0004F00A /* origin.frag in Sources */,
 				F200AA7118A97C5D0004F00A /* ofxLabel.cpp in Sources */,
 				F200AA7218A97C5D0004F00A /* EcranHandler.cpp in Sources */,
 				F200AA7318A97C5D0004F00A /* blurXa.frag in Sources */,
 				F200AA7418A97C5D0004F00A /* ofxBaseGui.cpp in Sources */,
+				6F2F476618AE71F10050EA33 /* thresholdBW.frag in Sources */,
 				F200AA7518A97C5D0004F00A /* blurYa.frag in Sources */,
 				F200AA7618A97C5D0004F00A /* Gui.cpp in Sources */,
 				F200AA7718A97C5D0004F00A /* mask.frag in Sources */,
@@ -2462,7 +2496,7 @@
 				6F9E618218AD48EB00D93498 /* gloom.frag in Sources */,
 				F200AA7D18A97C5D0004F00A /* spring.frag in Sources */,
 				F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B1218AD60D000DE2130 /* thresholdBW.frag in Sources */,
+				F2E27B1218AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

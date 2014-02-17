@@ -200,7 +200,9 @@ void Particles::setup(){
 
 void Particles::update(int w, int h){
     
-    if(w!=lastw||h!=lasth) initFbo(w, h);
+    if(w!=lastw||h!=lasth){
+        initFbo(w, h);
+    }
     
     
     
@@ -256,7 +258,7 @@ void Particles::update(int w, int h){
                     if(forces[i]->name=="fieldForce"){
                         forces[i]->shader.setUniform2f("inres",dad->inw,dad->inh);
             #ifdef syphon
-                        forces[i]->shader.setUniformTexture("fieldData",dad->syphonTex.src->getTextureReference(), 2);
+                        forces[i]->shader.setUniformTexture("fieldData",dad->bH->syphonTex.src->getTextureReference(), 2);
             #endif
                             }
                     if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size())
@@ -381,7 +383,7 @@ void Particles::initFbo(int w,int h){
             int i = textureRes * y + x;
             
             pos[i*3 + 0] = x*1.0/textureRes;
-            pos[i*3 + 1] = y*1.0/(textureRes)*w/h;
+            pos[i*3 + 1] = y*1.0/(textureRes);
             pos[i*3 + 2] = 0.5;
         }
     }

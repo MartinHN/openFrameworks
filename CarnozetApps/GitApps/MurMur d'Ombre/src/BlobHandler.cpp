@@ -1,0 +1,242 @@
+//
+//  BlobHandler.cpp
+//  MurMur d'Ombre
+//
+//  Created by martin hermant on 17/02/14.
+//
+//
+
+
+
+#include "BlobHandler.h"
+
+
+void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin){
+    inw = inwin;
+    inh = inhin;
+    blurX=blurXin;
+    blurY = blurYin;
+    
+    
+
+    blobClient.setup();
+    blobClient.setApplicationName("Quartz Composer");
+    blobClient.setServerName("name");
+    syphonTex.allocate(inw,inh,GL_RGB32F);
+    
+    gs.allocate(inw, inh);
+ 
+    
+
+    pix.allocate(inw,inh,3);
+    
+}
+
+
+void BlobHandler::update(){
+    blurblob();
+    getBlob();
+
+
+}
+
+void BlobHandler::registerParams(){
+    settings.setName("blobsettings");
+    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
+    MYPARAM(vidThreshold, 0.f, 0.f, 255.f);
+    MYPARAM(invertBW,false,false,true);
+    MYPARAM(minSide,0.5f,0.f,1.f);
+    MYPARAM(maxSide,0.5f,0.f,1.f);
+    MYPARAM(maxBlobs, 1,0,4);
+    MYPARAM(findHoles,false,false,true);
+    MYPARAM(simplification,0.5f,0.f,100.f);
+    MYPARAM(polyMaxPoints, 0,0,200);
+    MYPARAM(maxLengthExtrem, 25.f,0.f,100.f);
+
+}
+
+
+
+void BlobHandler::computePoly(){
+    
+    syphonTex.dst->begin();
+    threshBW.begin();
+    threshBW.setUniformTexture("tex",blobClient.getTexture(),1);
+    
+    
+    threshBW.end();
+    syphonTex.dst->end();
+    
+    ofxCvGrayscaleImage bw ;
+    bw.getTextureReference() = syphonTex.src->getTextureReference();
+    bw.threshold(40);
+
+}
+
+
+
+
+void BlobHandler::getBlob(){
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    
+    syphonTex.dst->begin();
+    ofSetColor(255);
+    blobClient.draw(0,0,inw,inh);
+    syphonTex.dst->end();
+    
+    //    syphonTex.swap();
+    
+    ofPixels pix;
+    pix.allocate(inw,inh,3);
+    
+    
+    
+    
+    syphonTex.dst->readToPixels(pix);
+    
+    ofxCvColorImage colorIm;
+    colorIm.allocate(inw,inh);
+    colorIm.setFromPixels(pix);
+    colorIm.updateTexture();
+    gs = colorIm;
+    gs.threshold(vidThreshold,invertBW);
+    
+    contourFinder.findContours(gs, minSide*inw*inh*minSide, maxSide*inw*inh*maxSide, maxBlobs, findHoles);
+   
+    blobs = contourFinder.blobs;
+    
+}
+
+
+vector<ofVec3f> BlobHandler::getCentroids(float w, float h){
+    vector<ofVec3f> res;
+    ofVec3f scale(inw/w,inh/h);
+    for (int i = 0 ; i< blobs.size();i++){
+        res.push_back(blobs[i].centroid/scale);
+    }
+    return res;
+}
+
+
+vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
+    vector<ofPolyline> res;
+       ofVec3f scale(inw/w,inh/h);
+    for (int i = 0 ; i< blobs.size();i++){
+        ofPolyline pp ;
+        for(int j = 0 ; j < blobs[i].nPts;j++){
+        pp.lineTo(blobs[i].pts[j]/scale);
+        }
+        if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
+        else{pp.simplify(simplification);}
+//        pp.setClosed(true);
+        res.push_back(pp);
+    }
+    return res;
+}
+
+vector<ofVec3f> BlobHandler::getExtrems(float w, float h){
+    vector<ofVec3f> res;
+    vector<ofPolyline> tmp ;
+
+    for (int i = 0 ; i< blobs.size();i++){
+        ofPolyline pp ;
+        for(int j = 0 ; j < blobs[i].nPts;j++){
+            pp.lineTo(blobs[i].pts[j]/ofVec2f(inw,inh));
+        }
+      pp=pp.getResampledByCount(200);
+      
+      
+        tmp.push_back(pp);
+    }
+    
+    
+    float sum_angles=0;
+    int begin=0,end=1;
+    float maxangle = 110;
+
+
+    for (int i = 0 ; i< tmp.size();i++){
+        begin=0;
+        end=1;
+        sum_angles=0;
+        ofPolyline tmpspaced = tmp[i];//.getSmoothed(0.01);
+//        tmpspaced = tmpspaced.getResampledBySpacing(0.01);
+        deque<float> tmpp;
+
+        while(end<tmpspaced.size()+maxLengthExtrem&&maxLengthExtrem<tmpspaced.size()){
+            if(end-begin<=maxLengthExtrem){
+                tmpp.push_back(tmpspaced.getRotationAtIndex(end%tmpspaced.size()).z>0?+tmpspaced.getAngleAtIndex(end%tmpspaced.size()):-tmpspaced.getAngleAtIndex(end%tmpspaced.size()));
+                sum_angles+=tmpp.back();
+                end++;
+            }
+            else if(tmpp.size()>0){
+                sum_angles-=tmpp.front();
+                tmpp.pop_front();
+                
+                tmpp.push_back(tmpspaced.getRotationAtIndex(end%tmpspaced.size()).z>0?+tmpspaced.getAngleAtIndex(end%tmpspaced.size()):-tmpspaced.getAngleAtIndex(end%tmpspaced.size()));
+                sum_angles+=tmpp.back();
+                
+                begin++;
+                end++;
+            }
+            else{break;}
+            
+            if(sum_angles>maxangle){
+                float idx = begin;
+                float sum = 0;
+                for (int j = 0 ; j < tmpp.size() ; j++){
+                    sum+= tmpp[j]*j;
+                    }
+                sum/=sum_angles;
+                idx+=sum;
+                
+                res.push_back(tmpspaced[(int)idx%tmpspaced.size()]*ofVec2f(w,h));
+//                }
+                    
+//                    if(test == false)ofLogWarning("no extrem");
+                begin = end;
+                end = begin;
+                sum_angles=0;
+                tmpp.clear();
+            }
+        }
+    }
+
+    return res;
+}
+
+void BlobHandler::blurblob(){
+    ofPushMatrix();
+    ofPushStyle();
+    ofPushView();
+    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    
+    syphonTex.dst->begin();
+    ofSetColor(255);
+    blurX->begin();
+    blurX->setUniform1f("blurAmnt", blobBlur);
+    blobClient.draw(0,0,inw,inh);
+    blurX->end();
+    syphonTex.dst->end();
+    glFlush();
+    
+    syphonTex.swap();
+    
+    syphonTex.dst->begin();
+    blurY->begin();
+    blurY->setUniform1f("blurAmnt", blobBlur);
+    syphonTex.src->draw(0,0,inw,inh);
+    blurY->end();
+    syphonTex.dst->end();
+    syphonTex.swap();
+    ofPopMatrix();
+    ofPopStyle();
+    ofPopView();
+}
+
+

@@ -93,14 +93,14 @@ ofSetVerticalSync(false);
 
 
     attrctl = AttrCtl();  
-
+bH.setup(inw,inh,&blurX,&blurY);
 
 #endif  
-
-    visuHandler.setup(&attrctl,inw,inh,zdepth,&scrw,&scrh);
+    
+    visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh);
 
 #ifndef GUIMODE 
-    visuHandler.setupSyphon(&blurX,&blurY);
+
 #ifndef LIVEBLUR
     foreground.push_back(visuHandler.sH.globalMask);
 #endif
@@ -156,8 +156,8 @@ ofSetVerticalSync(false);
 
 
     globalParam.add(settings);
-    globalParam.add(visuHandler.settings);
-    globalParam.add(visuHandler.attr->settings);
+    globalParam.add(bH.settings);
+    globalParam.add(attrctl.settings);
     globalParam.add(visuHandler.sH.screensParam);
     globalParam.add(visuHandler.allParams);
     
@@ -195,6 +195,7 @@ ofSetVerticalSync(false);
 
 void testApp::update(){
 #ifndef GUIMODE
+        bH.update();
     visuHandler.update();
     for (int ncom = 0 ; ncom< computeRatio;ncom++){
         visuHandler.updateHighFPS();
@@ -498,6 +499,7 @@ void testApp::windowResized(int w, int h){
  
     visuHandler.updateScreenSize();
     finalRender.allocate(width,height,GL_RGB);
+    camera2.updateScreenSize(w, h);
 #endif
 }
 

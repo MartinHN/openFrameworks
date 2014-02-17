@@ -42,21 +42,20 @@ void AttrCtl::updatePoints(vector<ofPoint> curpin){
     
   if(destA.size()>0)lastA=destA;
     destA.clear();
+    vector<ofRectangle> zones;
+    zones.push_back(ofRectangle(zonefamilly1.get().x, zonefamilly1.get().y, zonefamilly1.get().z, zonefamilly1.get().w));
+    zones.push_back(ofRectangle(zonefamilly2.get().x, zonefamilly2.get().y, zonefamilly2.get().z, zonefamilly2.get().w));
+    zones.push_back(ofRectangle(zonefamilly3.get().x, zonefamilly3.get().y, zonefamilly3.get().z, zonefamilly3.get().w));
     for(int i = 0 ; i< curpin.size() ; i++){
-        vector<ofRectangle> zones;
-        zones.push_back(ofRectangle(zonefamilly3.get().x, zonefamilly3.get().y, zonefamilly3.get().z, zonefamilly3.get().w));
-        zones.push_back(ofRectangle(zonefamilly1.get().x, zonefamilly1.get().y, zonefamilly1.get().z, zonefamilly1.get().w));
-        zones.push_back(ofRectangle(zonefamilly2.get().x, zonefamilly2.get().y, zonefamilly2.get().z, zonefamilly2.get().w));
-        
+        AttrStruct p = AttrStruct(ofPoint(1-curpin[i].x,curpin[i].y,curpin[i].z+zoffset),0);
         for(int k = 0 ; k< zones.size();k++){
-                //destp.push_back(ofPoint(attrotate*(curpin[i].y),(1-curpin[i].x),curpin[i].z+zoffset));
-            ofPoint p = ofPoint(1-curpin[i].x,curpin[i].y,curpin[i].z+zoffset);
-            if(zones[k].inside(p)){
-                destA.push_back(AttrStruct(p,k+1));
+            if(zones[k].inside(p.p)){
+                p.f=k+1;
                 break;
             }
+            
         }
-
+        destA.push_back(p);
                 
     }
 

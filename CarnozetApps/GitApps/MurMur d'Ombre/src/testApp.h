@@ -23,7 +23,7 @@
 
 #include "ofMain.h"
 #ifndef GUIMODE
-#include "ofxOpenCv.h"
+//#include "ofxOpenCv.h"
 #endif
 #include "ofxNetwork.h"
 #include "ofxOsc.h"
@@ -201,7 +201,7 @@ public:
     VisuHandler visuHandler;
     
 
-
+    BlobHandler bH;
     AttrCtl attrctl;
     
     ofxOscParameterSync paramSync;

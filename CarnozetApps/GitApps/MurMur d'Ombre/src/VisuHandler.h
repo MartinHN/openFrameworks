@@ -14,20 +14,25 @@
 
 
 #ifdef  syphon
-#include "ofxSyphon.h"
-#include "ofxOpenCv.h"
+//#include "ofxSyphon.h"
+//#include "ofxOpenCv.h"
 #endif
+#include "ofMain.h"
 
+
+#include "BlobHandler.h"
 
 #include "AttrCtl.h"
 #include "Constants.h"
 #include "ofxOscParameterSync.h"
-#include "ofMain.h"
-#include "Constants.h"
+
+
+
 #include "VisuClass.h"
 #include "Ecrans.h"
 #include "ofXml.h"
 #include "EcranHandler.h"
+
 
 
 
@@ -45,8 +50,7 @@ public:
     
     
     void addVisu(VisuClass * v);
-    void setup(AttrCtl *attrctl,int inw,int inh,int zdepthin,int * scrw,int * scrh);
-    void setupSyphon(ofShader *blurXin,ofShader *blurYin);
+    void setup(AttrCtl *attrctl,BlobHandler* bHin,int inw,int inh,int zdepthin,int * scrw,int * scrh);
     void update();
     void updateHighFPS();
     const void draw();
@@ -69,22 +73,11 @@ public:
     
     AttrCtl* attr;
     
-#ifdef syphon
-    ofxSyphonClient blobClient;
-    pingPongBuffer syphonTex;
-    void blurblob();
-    ofShader * blurX;
-    ofShader * blurY;
-    ofShader threshBW;
-    ofxCvContourFinder contourFinder;
-    void computePoly();
-    ofPixels pix;
-#endif
     
-    ofParameterGroup settings;
-     ofParameter<float> blobBlur;
     
-    vector<ofPolyline> blobs;
+    BlobHandler* bH;
+    
+
     
     ScreenHandler sH;
     

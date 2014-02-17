@@ -17,7 +17,7 @@ VisuHandler::VisuHandler(){
 }
 
 
-void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, int * scrwin, int * scrhin){
+void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin, int zdepthin, int * scrwin, int * scrhin){
     
     allParams.clear();
     allParams.setName("Visu");
@@ -35,27 +35,14 @@ void VisuHandler::setup(AttrCtl *attrctl, int inwin, int inhin, int zdepthin, in
     sH.setup(scrw,scrh,zdepth);
     sH.loadScreensPos();
     
-#ifdef syphon
-    pix.allocate(inw,inh,3);
-#endif
+    bH = bHin;
+
+    
+
 
 }
 
-void VisuHandler::setupSyphon(ofShader *blurXin,ofShader *blurYin){
-#ifdef syphon
-    blobClient.setup();
-    blobClient.setApplicationName("Quartz Composer");
-    blobClient.setServerName("name");
-   syphonTex.allocate(inw,inh,GL_RGB32F);
 
-    blurX = blurXin;
-    blurY = blurYin;
-    
-//    threshBW.load("","shaders/thresholdBW");
-    
-#endif
-    
-}
 VisuClass * VisuHandler::get(const string & name){
     for (int i = 0; i< visuList.size() ; i++){
         if(visuList[i]->settings.getName()==name) return visuList[i];
@@ -64,47 +51,11 @@ VisuClass * VisuHandler::get(const string & name){
     return NULL;  
 }
 
-#ifdef syphon
-void VisuHandler::blurblob(){
-    ofPushMatrix();
-    ofPushStyle();
-    ofPushView();
-    
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
-    
-    syphonTex.dst->begin();
-    ofSetColor(255);
-    blurX->begin();
-    blurX->setUniform1f("blurAmnt", blobBlur);
-    blobClient.draw(0,0,inw,inh);
-    blurX->end();
-    syphonTex.dst->end();
-     glFlush();
-
-    syphonTex.swap();
-
-    syphonTex.dst->begin();
-    blurY->begin();
-    blurY->setUniform1f("blurAmnt", blobBlur);
-    syphonTex.src->draw(0,0,inw,inh);
-    blurY->end();
-    syphonTex.dst->end();
-    syphonTex.swap();
-    ofPopMatrix();
-    ofPopStyle();
-    ofPopView();
-}
-
-#endif
 
 
 void VisuHandler::update(){
     
-#ifdef syphon
-    blurblob();
-#endif
+
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->screenN>=0&&!visuList[i]->isHighFPS){
@@ -142,10 +93,8 @@ ofImage * VisuHandler::getSharedImg(int i){
 
 
 void VisuHandler::registerParams(){
-    settings.setName("blobsettings");
-    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
-
-    attr->registerParam();
+    bH->registerParams();
+        attr->registerParam();
     
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
@@ -248,26 +197,7 @@ void VisuHandler::updateScreenSize(){
     }
 }
 
-#ifdef syphon
-void VisuHandler::computePoly(){
-    
-    syphonTex.dst->begin();
-    threshBW.begin();
-    threshBW.setUniformTexture("tex",blobClient.getTexture(),1);
-    
 
-    threshBW.end();
-    syphonTex.dst->end();    
-    
-    ofxCvGrayscaleImage bw ;
-    bw.getTextureReference() = syphonTex.src->getTextureReference();
-    bw.threshold(40);
-//    ofTexture
-//    contourFinder.findContours(syphonTex.src->getTextureReference(),20, 5000, 3, true);
-    
-//    syphonTex.
-}
-#endif
 
 
 

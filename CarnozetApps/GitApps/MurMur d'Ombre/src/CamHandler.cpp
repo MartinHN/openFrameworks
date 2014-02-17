@@ -33,6 +33,11 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
     curypr = ypr;
 }
 
+void CamHandler::updateScreenSize(int w, int h){
+    camera.setFov(2*ofRadToDeg(atan(h*1.0/(*zdepth))));//50
+    camera.setAspectRatio(w*1.0/(h));
+}
+
 void CamHandler::begin(){
     curdist = distance*1.0*alpha+curdist*(1.0-alpha);
     curypr = ypr.get() * alpha+ curypr*(1-alpha);

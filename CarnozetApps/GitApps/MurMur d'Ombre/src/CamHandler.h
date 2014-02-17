@@ -24,6 +24,7 @@ public:
     
     void begin();
     void end();
+    void updateScreenSize(int w, int h);
     
     
     ofCamera camera;

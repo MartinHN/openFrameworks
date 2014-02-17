@@ -34,9 +34,13 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
 
 
 void BlobHandler::update(){
-    blurblob();
+    
     getBlob();
-
+    arms = getExtrems();
+    centroids = getCentroids();
+    boxes = getBounds();
+    
+    blurblob();
 
 }
 
@@ -51,8 +55,8 @@ void BlobHandler::registerParams(){
     MYPARAM(findHoles,false,false,true);
     MYPARAM(simplification,0.5f,0.f,100.f);
     MYPARAM(polyMaxPoints, 0,0,200);
-    MYPARAM(maxLengthExtrem, 25.f,0.f,100.f);
-
+    MYPARAM(maxLengthExtrem, 15.f,0.f,100.f);
+    MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
 }
 
 
@@ -83,7 +87,7 @@ void BlobHandler::getBlob(){
     
     syphonTex.dst->begin();
     ofSetColor(255);
-    blobClient.draw(0,0,inw,inh);
+    blobClient.draw(-crop->x,-crop->y,inw+crop->x+crop->z,inh+crop->y+crop->w);
     syphonTex.dst->end();
     
     //    syphonTex.swap();
@@ -119,6 +123,15 @@ vector<ofVec3f> BlobHandler::getCentroids(float w, float h){
     return res;
 }
 
+vector<ofRectangle> BlobHandler::getBounds(float w, float h){
+    vector<ofRectangle> res;
+    ofVec3f scale(inw/w,inh/h);
+    for (int i = 0 ; i< blobs.size();i++){
+        res.push_back(ofRectangle(blobs[i].boundingRect.x/w,blobs[i].boundingRect.y/h,blobs[i].boundingRect.height*1.0/w,blobs[i].boundingRect.width*1.0/h));
+    }
+    return res;
+}
+
 
 vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
     vector<ofPolyline> res;
@@ -145,7 +158,7 @@ vector<ofVec3f> BlobHandler::getExtrems(float w, float h){
         for(int j = 0 ; j < blobs[i].nPts;j++){
             pp.lineTo(blobs[i].pts[j]/ofVec2f(inw,inh));
         }
-      pp=pp.getResampledByCount(200);
+      pp=pp.getResampledByCount(100);
       
       
         tmp.push_back(pp);
@@ -191,10 +204,12 @@ vector<ofVec3f> BlobHandler::getExtrems(float w, float h){
                     }
                 sum/=sum_angles;
                 idx+=sum;
+                if(idx>tmpspaced.size())idx-tmpspaced.size();
+                ofPoint p =tmpspaced.getPointAtIndexInterpolated(idx);
+                if(abs((p-tmpspaced.getCentroid2D()).getNormalized().dot(ofVec2f(1,0)))>cos(ofDegToRad(80))){
+                res.push_back(p*ofVec2f(w,h));
+                }
                 
-                res.push_back(tmpspaced[(int)idx%tmpspaced.size()]*ofVec2f(w,h));
-//                }
-                    
 //                    if(test == false)ofLogWarning("no extrem");
                 begin = end;
                 end = begin;
@@ -203,6 +218,7 @@ vector<ofVec3f> BlobHandler::getExtrems(float w, float h){
             }
         }
     }
+    
 
     return res;
 }
@@ -215,12 +231,13 @@ void BlobHandler::blurblob(){
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    gs.dilate_3x3();
     
     syphonTex.dst->begin();
     ofSetColor(255);
     blurX->begin();
     blurX->setUniform1f("blurAmnt", blobBlur);
-    blobClient.draw(0,0,inw,inh);
+    gs.draw(0,0,inw,inh);
     blurX->end();
     syphonTex.dst->end();
     glFlush();

@@ -33,6 +33,14 @@
 // http://www.seas.upenn.edu/~cis565/fbo.htm#setupgl4
 //
 
+class AttrStruct{
+public:
+    AttrStruct(ofPoint pin ,int typein,int zonein):p(pin),zone(zonein),type (typein){};
+    
+    ofPoint p;
+    int zone;
+    int type;
+};
 
 static vector<int> getActiveFromInt(int a){
     vector<int> res;

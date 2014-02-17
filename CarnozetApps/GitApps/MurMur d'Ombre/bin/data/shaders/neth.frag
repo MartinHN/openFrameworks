@@ -20,6 +20,7 @@ uniform vec2  screen;
 uniform float k;
 uniform float l0;
 uniform float z;
+uniform int size;
 
 
 
@@ -28,11 +29,12 @@ void main(void){
     vec2 st=gl_TexCoord[0].xy;
     vec3 vel = texture2DRect(tex0, st).xyz;
     vec3 pos = texture2DRect( posData, st).xyz;
-    vec3 poso = texture2DRect( posData , st+vec2(0,1)).xyz;
-    vec3 opos = texture2DRect( posData , st+vec2(0,-1)).xyz;    
+    for(int i = 1 ; i<=size;i++){
+    vec3 poso = texture2DRect( posData , st+vec2(0,i)).xyz;
+    vec3 opos = texture2DRect( posData , st+vec2(0,-i)).xyz;
     
     
-    float l0norm = l0/resolution;
+    float l0norm = (l0*i)/resolution;
     vec3 distbuf;
     
 
@@ -41,15 +43,15 @@ void main(void){
     vec3 linbuf;
 
         
-//    if(st.y<resolution-1){
+    if(st.y<resolution-i){
             distbuf=pos-poso;
             linbuf=distbuf;
             normbuf = length(distbuf);
             if(normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-l0norm)*k;
             }
-//        }
-//    if(st.y>1){
+        }
+    if(st.y>i){
         distbuf=pos-opos;
         normbuf = length(distbuf);
         
@@ -62,9 +64,9 @@ void main(void){
         
 
         
-//    }
+    }
     
-    
+    }
 
 
     

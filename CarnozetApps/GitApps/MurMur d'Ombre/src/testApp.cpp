@@ -195,8 +195,21 @@ bH.setup(inw,inh,&blurX,&blurY);
 
 void testApp::update(){
 #ifndef GUIMODE
-        bH.update();
+    bH.update();
+    
+    
+    attrctl.clearPoints();
+    
+    attrctl.addPoints(bH.centroids, 1);
+    attrctl.addPoints(bH.arms, 2);
+    
+    attrctl.update();
+    
+    
     visuHandler.update();
+    
+    
+    
     for (int ncom = 0 ; ncom< computeRatio;ncom++){
         visuHandler.updateHighFPS();
     }
@@ -206,7 +219,7 @@ void testApp::update(){
     oscUpdate();
   
    
-    attrctl.update();
+    
 
 #endif 
 
@@ -255,7 +268,7 @@ void testApp::draw(){
         if(isAtt){
 
             for( int k=0;k<attrctl.destA.size() ; k++){
-                ofSetColor(attrctl.destA[k].f==0?255:0,attrctl.destA[k].f==1?255:0,attrctl.destA[k].f==2?255:0);
+                ofSetColor(attrctl.destA[k].type==0?255:0,attrctl.destA[k].type==1?255:0,attrctl.destA[k].type==2?255:0);
                 ofCircle(attrctl.destA[k].p.x*width,attrctl.destA[k].p.y*height,20);
             }
             
@@ -1040,7 +1053,7 @@ void testApp::mouseDragged(int x, int y, int button){
         points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
     points.push_back(ofPoint(0.2,0.2,0));
 
-    if(points.size()>0)attrctl.updatePoints(points);
+    if(points.size()>0)attrctl.addPoints(points,0);
 
 }
 void testApp::mouseReleased(int x, int y, int button){
@@ -1048,7 +1061,7 @@ void testApp::mouseReleased(int x, int y, int button){
 
     points.clear();
     
-    attrctl.updatePoints(points);
+    attrctl.addPoints(points,0);
     
 }
 

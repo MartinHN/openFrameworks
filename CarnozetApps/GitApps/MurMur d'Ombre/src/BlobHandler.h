@@ -30,10 +30,14 @@ public:
     void getBlob();
     void registerParams();
     vector<ofVec3f> getCentroids(float w=1,float h=1);
+    vector<ofRectangle> getBounds(float w=1, float h=1);
     vector<ofPolyline> getBlobs(float w=1,float h=1);
-    vector<ofVec3f> getExtrems(float w, float h);
+    vector<ofVec3f> getExtrems(float w=1, float h=1);
     
-    
+    vector<ofVec3f> arms;
+    vector<ofVec3f> centroids;
+    vector<ofRectangle> boxes;
+
     int inw,inh;
     
     
@@ -59,5 +63,6 @@ public:
     ofParameter<int> maxBlobs,polyMaxPoints;
     ofParameter<bool> findHoles,invertBW;
     ofParameter<float> simplification;
+    ofParameter<ofVec4f> crop;
 };
 

@@ -25,7 +25,7 @@ Force::Force(string namein,bool isAttr){
     isActive = false;
     
     attrFamilly = -2;
-    if(isAttr) {    MYPARAM(attrFamilly,-1,-1,123);
+    if(isAttr) {    MYPARAM(attrFamilly,0,-1,13);
     pl.push_back(&attrFamilly);}
     
 }
@@ -126,19 +126,21 @@ void Particles::setup(){
 
     forces.push_back(new Force("netw"));
     forces[forces.size()-1]->addParameter("k",.030f,0.f,.2f);
-    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.0f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,.2f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,20.0f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,2.f);
+    forces[forces.size()-1]->addParameter("size",2,1,10);
     
     forces.push_back(new Force("neth"));
     forces[forces.size()-1]->addParameter("k",.030f,0.f,.2f);
-    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,2.f);
-    forces[forces.size()-1]->addParameter("z",.0f,0.f,.2f);
+    forces[forces.size()-1]->addParameter("l0",1.0f,0.f,20.f);
+    forces[forces.size()-1]->addParameter("z",.0f,0.f,2.f);
+    forces[forces.size()-1]->addParameter("size",2,1,10);
     
     forces.push_back(new Force("origin"));
     forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
-    forces[forces.size()-1]->addParameter("z",.01f,0.f,.05f);
-    forces[forces.size()-1]->addParameter("freeze",0.f,0.f,1.f);
-
+    forces[forces.size()-1]->addParameter("z",.01f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("freeze",0.f,0.f,.80f);
+    forces[forces.size()-1]->addParameter("damp",0.9f,0.5f,1.0f);
     
     
     forces.push_back(new Force("gravity",true));
@@ -157,7 +159,7 @@ void Particles::setup(){
 
     
     forces.push_back(new Force("spring",true));
-    forces[forces.size()-1]->addParameter("k",.030f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("k",.030f,-.2f,1.f);
     forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
     forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);    
     forces[forces.size()-1]->addParameter("mode",1,0,1);
@@ -211,7 +213,7 @@ void Particles::update(int w, int h){
     
     for(int i = 0 ; i < forces.size();i++){
         if(forces[i]->isActive&&forces[i]->name.find("net")!=string::npos){
-            for(int j = 0 ; j<netCompRatio;j++){
+//            for(int j = 0 ; j<netCompRatio;j++){
             velPingPong.dst->begin();
             forces[i]->shader.begin();
             forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);
@@ -226,28 +228,13 @@ void Particles::update(int w, int h){
             velPingPong.dst->end();
             velPingPong.swap();
                 
-                posPingPong.dst->begin();
-                updatePos.begin();  // Previus position
-                updatePos.setUniformTexture("velData", velPingPong.src->getTextureReference(), 1);      // Velocity
-                updatePos.setUniform1f("timestep",timeStep*1.0/FPS );
-                updatePos.setUniform1i("resolution",textureRes);
-                
-                posPingPong.src->draw(0,0);
                 
                 
-                
-                updatePos.end();
-                posPingPong.dst->end();
-                
-                
-                posPingPong.swap();
-                
-                
-            }
+//            }
         }
         else if(forces[i]->isActive ){
             int j = 0;
-            vector<ofPoint> curattr = dad->attr->getFamilly(forces[i]->attrFamilly);
+            vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly);
             if((forces[i]->attrFamilly>-2?curattr.size()>0:1)){
                 do{
                     velPingPong.dst->begin();

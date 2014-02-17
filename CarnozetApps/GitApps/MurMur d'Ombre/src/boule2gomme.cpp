@@ -33,21 +33,22 @@ void boule2gomme::draw(int w, int h){
     for(int i = 0 ; i<points->size();i++)
         ofEllipse(scale*points->at(i).p,rayon,rayon);
     for(int i = 0 ; i<opoints->size();i++){
-        ofSetColor(opoints->at(i).f==0?255:0, opoints->at(i).f==1?255:0, opoints->at(i).f==2?255:0);
+        ofSetColor(opoints->at(i).type==0?255:0, opoints->at(i).type==1?255:0, opoints->at(i).type==2?255:0);
         ofNoFill();
         ofEllipse(scale*opoints->at(i).p,rayon,rayon);
     }
 #ifdef syphon
     ofSetColor(255);
 //    dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);
-    dad->bH->gs.draw(0,0,w/2,h/2);
+    dad->bH->syphonTex.src->draw(0,0,w/2,h/2);
 //    ofTranslate(0,h/2);
     ofSetColor(0,255,0);
     vector<ofPolyline> pp = dad->bH->getBlobs(w/2,h/2);
     int max = pp.size();
     for(int i = 0 ; i<max ;i++){
         ofPolyline tt = pp[i];
-        
+        ofNoFill();
+        ofRect(pp[i].getBoundingBox());
 //        tt.simplify(30);
 //        tt = tt.getResampledByCount(10);
         for (int j = 0 ; j<tt.size();j++){

@@ -11,13 +11,7 @@
 #include "Constants.h"
 #define MAXATTRACTORS 16
 
-class AttrStruct{
-public:
-    AttrStruct(ofPoint pin ,int fin):p(pin),f(fin){};
-   
-    ofPoint p;
-    int f;
-};
+
 
 class AttrCtl{
     
@@ -32,6 +26,7 @@ class AttrCtl{
     bool attrmirorx[3];
     bool attrmirory[3];
     
+    
     vector<AttrStruct> lastA;
     vector<AttrStruct> destA;
 
@@ -40,12 +35,16 @@ class AttrCtl{
 
     
     
-    void updatePoints(vector<ofPoint> curpin);
+    void addPoints(vector<ofPoint> curcentroids,int type);
     void update();
     void smooth();
     void staticpoints();
     void timedPoints();
-    vector<ofPoint> getFamilly(int f);
+    
+    void clearPoints();
+    void zoneChanged(ofVec4f & dumb);
+    
+    vector<ofPoint> getType(int f);
     vector<ofPoint> getAll();
     
     ofParameterGroup settings;
@@ -53,6 +52,7 @@ class AttrCtl{
     ofParameter<ofVec4f> zonefamilly3;
     ofParameter<ofVec4f> zonefamilly1;
     ofParameter<ofVec4f> zonefamilly2;
+     vector<ofRectangle> zones;
     ofParameter<int> attrmirrorx;
     ofParameter<int> attrmirrory;
     ofParameter<int> attrmirrorz;

@@ -68,6 +68,7 @@ public:
     virtual void draw(int w, int h)=0;
     virtual void registerParam(){};
 //    virtual void oscUpdate(ofxOscMessage &m)=0;
+
     
 
     ofParameter<int> screenN;

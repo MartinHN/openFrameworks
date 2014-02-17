@@ -30,9 +30,10 @@ void AttrCtl::registerParam(){
     MYPARAM(attrmirrorx,4,0,16);
     MYPARAM(attrmirrory,0,0,16);
     MYPARAM(attrmirrorz,0,0,16);
-    MYPARAM(zonefamilly3,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
+
     MYPARAM(zonefamilly1,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
     MYPARAM(zonefamilly2,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
+    MYPARAM(zonefamilly3,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
 }
 
 

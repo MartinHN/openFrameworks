@@ -401,6 +401,10 @@ void testApp::keyPressed(int key){
          {ofFileDialogResult filep = ofSystemLoadDialog("load preset");
              loadName = filep.getPath();}
              break;
+
+         case'v':
+             gui.visuSettings = !gui.visuSettings;
+             break;
      }
 }
 #endif
@@ -460,6 +464,8 @@ void testApp::keyPressed(int key){
             vidplay.setPaused(!vidplay.isPaused());
 #endif
             break;
+            
+
         case 'c':
             drawcam=!drawcam;
             break;   

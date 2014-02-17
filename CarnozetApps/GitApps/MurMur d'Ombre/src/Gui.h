@@ -28,9 +28,10 @@ public:
 
     ofxPanel glob;
     ofParameterGroup globP;
-    list<ofxPanel *> gui;
+    list<ofxPanel *> guiParam,guiVisu;
     bool bHide;
      int baseC ;
+    bool visuSettings;
     
     
 };

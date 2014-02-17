@@ -16,28 +16,32 @@
 
 void Gui::load(ofParameterGroup & pgtmp){
 
-    gui.push_back(new ofxPanel());
-    gui.back()->setup(pgtmp.getGroup("global"),pgtmp.getGroup("global").getName(),(baseC)*PARAMW);
-    
-    int h = gui.back()->getHeight() + 10;
-
-    gui.push_back(new ofxPanel());
-    gui.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW,h);
-    gui.back()->minimizeAll();
-    
-    h += gui.back()->getHeight() + 10;
-    gui.push_back(new ofxPanel());
-    gui.back()->setup(pgtmp.getGroup("blobsettings"),pgtmp.getGroup("blobsettings").getName(),(baseC)*PARAMW,h);
-    gui.back()->minimizeAll();
-    
-    h += gui.back()->getHeight() + 10;
-
-    gui.push_back(new ofxPanel());
-    gui.back()->setup(pgtmp.getGroup("screens"),pgtmp.getGroup("screens").getName(),(baseC)*PARAMW,h);
-    gui.back()->minimizeAll();
-    
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("global"),pgtmp.getGroup("global").getName(),(baseC)*PARAMW);
     
     baseC++;
+    int h = guiParam.back()->getHeight() + 10;
+
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW);
+//    guiParam.back()->minimizeAll();
+    
+    h += guiParam.back()->getHeight() + 10;
+    baseC++;
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("blobsettings"),pgtmp.getGroup("blobsettings").getName(),(baseC)*PARAMW);
+//    guiParam.back()->minimizeAll();
+    
+    h += guiParam.back()->getHeight() + 10;
+    baseC++;
+    
+    
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("screens"),pgtmp.getGroup("screens").getName(),(baseC)*PARAMW);
+    guiParam.back()->minimizeAll();
+    
+    
+    baseC= 0;
     
     ofParameterGroup pgtmp2 = pgtmp.getGroup("Visu");
 
@@ -45,10 +49,10 @@ void Gui::load(ofParameterGroup & pgtmp){
     for (int i = 0 ; i< pgtmp2.size();i++){
         ofAbstractParameter * p = &pgtmp2.get(i); 
         if(p->type()==typeid(ofParameterGroup).name()){
-            gui.push_back(new ofxPanel());
-            gui.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),(baseC)*PARAMW);
-            gui.back()->minimizeAll();
-            gui.back()->getShape();
+            guiVisu.push_back(new ofxPanel());
+            guiVisu.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),(baseC)*PARAMW);
+            guiVisu.back()->minimizeAll();
+            guiVisu.back()->getShape();
             baseC++;
     }
     }
@@ -58,7 +62,15 @@ void Gui::load(ofParameterGroup & pgtmp){
 
 
 void Gui::draw(){
-    for(std::list<ofxPanel*>::iterator ggg = gui.begin() ; ggg!=gui.end();++ggg){
+    
+    if(!visuSettings){
+    for(std::list<ofxPanel*>::iterator ggg = guiParam.begin() ; ggg!=guiParam.end();++ggg){
     (*ggg)->draw();
+    }
+    }
+    else{
+        for(std::list<ofxPanel*>::iterator ggg = guiVisu.begin() ; ggg!=guiVisu.end();++ggg){
+            (*ggg)->draw();
+        }
     }
 }

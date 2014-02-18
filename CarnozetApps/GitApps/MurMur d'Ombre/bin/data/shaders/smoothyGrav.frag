@@ -44,7 +44,7 @@ void main(void){
         vel *=damp;
     }
     else{
-        vel+=minattr+normalize(distbuf)*(mass-minattr)* normbuf*normbuf*normbuf*(normbuf*(normbuf*6-15)+10);
+        vel+=normalize(distbuf)*(minattr + (mass-minattr)* normbuf*normbuf*normbuf*(normbuf*(normbuf*6-15)+10));
         
     }
     

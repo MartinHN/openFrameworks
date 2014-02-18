@@ -141,7 +141,18 @@ void ofxOscSender::appendParameter( ofxOscMessage & msg, const ofAbstractParamet
 		msg.addFloatArg(parameter.cast<float>());
 	}else if(parameter.type()==typeid(ofParameter<bool>).name()){
 		msg.addIntArg(parameter.cast<bool>());
-	}else{
+	}
+    else if(parameter.type()==typeid(ofParameter<ofVec2f>).name()){
+		msg.addFloatArg(parameter.cast<ofVec2f>()->x);
+		msg.addFloatArg(parameter.cast<ofVec2f>()->y);
+	}
+    else if(parameter.type()==typeid(ofParameter<ofVec3f>).name()){
+        msg.addFloatArg(parameter.cast<ofVec3f>()->x);
+        msg.addFloatArg(parameter.cast<ofVec3f>()->y);
+        msg.addFloatArg(parameter.cast<ofVec3f>()->z);
+	}
+    
+    else{
 		msg.addStringArg(parameter.toString());
 	}
 }

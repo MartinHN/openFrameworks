@@ -1051,7 +1051,7 @@ void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
     
         points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
-    points.push_back(ofPoint(0.2,0.2,0));
+//    points.push_back(ofPoint(0.2,0.2,0));
 
     if(points.size()>0)attrctl.addPoints(points,0);
 

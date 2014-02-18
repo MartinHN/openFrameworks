@@ -25,7 +25,8 @@ public:
     void begin();
     void end();
     void updateScreenSize(int w, int h);
-    
+    void look(ofVec3f & dumb);
+    void orbit(ofVec3f & dumb);
     
     ofCamera camera;
     
@@ -33,14 +34,15 @@ public:
 
     
     
-    
     ofParameterGroup settings;
     
     ofParameter<float> distance;
     ofParameter<ofVec3f> lookAt;
     ofParameter<ofVec3f> ypr;
+    ofParameter<ofVec3f> lookypr;
+    ofParameter<bool> isLooking;
     ofVec3f curypr;
-    
+    ofVec3f curlookypr;
     
     ofParameter<float> alpha;
     float curdist;

@@ -37,6 +37,7 @@ ofxPanel * ofxPanel::setup(const ofParameterGroup & parameters, string filename,
 		loadIcons();
 	}
 	registerMouseEvents();
+    
 	return (ofxPanel*)ofxGuiGroup::setup(parameters,filename,x,y);
 }
 
@@ -65,10 +66,12 @@ void ofxPanel::generateDraw(){
 	headerBg.setFilled(true);
 	headerBg.rectangle(b.x,b.y+1,b.width,header);
 
+    
 	float iconHeight = header*.5;
 	float iconWidth = loadIcon.getWidth()/loadIcon.getHeight()*iconHeight;
 	int iconSpacing = iconWidth*.5;
 
+    activeBox.set(b.getMaxX()-defaultHeight-2,b.y+2,defaultHeight,defaultHeight);
 	loadBox.x = b.getMaxX() - (iconWidth * 2 + iconSpacing + textPadding);
 	loadBox.y = b.y + header / 2. - iconHeight / 2.;
 	loadBox.width = iconWidth;
@@ -83,6 +86,8 @@ void ofxPanel::render(){
 	border.draw();
 	headerBg.draw();
 
+    
+
 	ofBlendMode blendMode = ofGetStyle().blendingMode;
 	if(blendMode!=OF_BLENDMODE_ALPHA){
 		ofEnableAlphaBlending();
@@ -96,8 +101,17 @@ void ofxPanel::render(){
 
 	bool texHackEnabled = ofIsTextureEdgeHackEnabled();
 	ofDisableTextureEdgeHack();
-	loadIcon.draw(loadBox);
-	saveIcon.draw(saveBox);
+//	loadIcon.draw(loadBox);
+//	saveIcon.draw(saveBox);
+    if(isDynamic){
+        ofSetColor(255,0,0);
+        if(*isActive){
+            ofFill();
+        }
+        else ofNoFill();
+        
+        ofRect(activeBox);
+    }
 	if(texHackEnabled){
 		ofEnableTextureEdgeHack();
 	}
@@ -139,17 +153,21 @@ bool ofxPanel::setValue(float mx, float my, bool bCheck){
 			} else{
 				bGrabbed = false;
 			}
-
-			if(loadBox.inside(mx, my)) {
-				loadFromFile(filename);
-				ofNotifyEvent(loadPressedE,this);
-				return true;
-			}
-			if(saveBox.inside(mx, my)) {
-				saveToFile(filename);
-				ofNotifyEvent(savePressedE,this);
-				return true;
-			}
+            if(isDynamic&&activeBox.inside(mx,my)){
+                *isActive = ! *isActive;
+                return true;
+            }
+//			if(loadBox.inside(mx, my)) {
+//                
+////				loadFromFile(filename);
+//				ofNotifyEvent(loadPressedE,this);
+//				return true;
+//			}
+//			if(saveBox.inside(mx, my)) {
+//				saveToFile(filename);
+//				ofNotifyEvent(savePressedE,this);
+//				return true;
+//			}
 		}
 	} else if( bGrabbed ){
 		setPosition(mx - grabPt.x,my - grabPt.y);

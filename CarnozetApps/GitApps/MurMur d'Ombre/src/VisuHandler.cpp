@@ -58,7 +58,7 @@ void VisuHandler::update(){
 
     
     for(int i = 0;i<visuList.size();i++){
-        if(visuList[i]->screenN>=0&&!visuList[i]->isHighFPS){
+        if(visuList[i]->isActive&&!visuList[i]->isHighFPS){
             ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
         visuList[i]->update(curS.width,curS.height);
         }
@@ -72,7 +72,7 @@ void VisuHandler::updateHighFPS(){
    
     
     for(int i = 0;i<visuList.size();i++){
-        if(visuList[i]->screenN>=0&&visuList[i]->isHighFPS){
+        if(visuList[i]->isActive&&visuList[i]->isHighFPS){
             ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
             visuList[i]->update(curS.width,curS.height);
         }
@@ -129,7 +129,7 @@ const void VisuHandler::draw(){
         ofPushView();
         ofPushStyle();
         ofTranslate(0,0,zdepth/2);
-        if(visuList[i]->screenN>=0){
+        if(visuList[i]->isActive&&visuList[i]->screenN>=0){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
                 ofEnableAlphaBlending();

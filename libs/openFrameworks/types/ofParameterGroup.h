@@ -83,7 +83,7 @@ public:
 	string getEscapedName() const;
 	string toString() const;
 
-	bool contains(string name);
+	bool contains(string name) const;
 
 	void notifyParameterChanged(ofAbstractParameter & param);
 

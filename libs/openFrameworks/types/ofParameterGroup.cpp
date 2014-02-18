@@ -215,7 +215,7 @@ ostream& operator<<(ostream& os, const ofParameterGroup& group) {
 	return os;
 }
 
-bool ofParameterGroup::contains(string name){
+bool ofParameterGroup::contains(string name) const{
 	return obj->parametersIndex.find(escape(name))!=obj->parametersIndex.end();
 }
 

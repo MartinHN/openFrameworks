@@ -67,7 +67,8 @@ protected:
     
 	float spacing,spacingNextElement;
 	float header;
-	
+
+    bool isDynamic;
     template<class ControlType>
 	ControlType & getControlType(string name);
 
@@ -75,13 +76,15 @@ protected:
 
 	vector <ofxBaseGui *> collection;
 	ofParameterGroup parameters;
-	
+	ofParameter<bool> * isActive;
+    
 	string filename;
 	bool minimized;
 	bool bGuiActive;
 
 	ofxGuiGroup * parent;
 	ofPath border, headerBg;
+    ofRectangle activeBox;
 	ofVboMesh textMesh;
 };
 

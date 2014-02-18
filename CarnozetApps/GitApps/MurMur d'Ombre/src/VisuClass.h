@@ -72,6 +72,7 @@ public:
     
 
     ofParameter<int> screenN;
+    ofParameter<bool> isActive;
     ofParameter<bool> isMapping;
     ofParameter<bool> recopy;
     VisuHandler *dad;

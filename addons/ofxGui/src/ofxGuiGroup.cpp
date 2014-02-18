@@ -17,6 +17,7 @@ ofxGuiGroup::ofxGuiGroup(const ofParameterGroup & parameters, string filename, f
 	minimized = false;
 	parent = NULL;
     setup(parameters, filename, x, y);
+    
 }
 
 ofxGuiGroup * ofxGuiGroup::setup(string collectionName, string filename, float x, float y){
@@ -25,6 +26,7 @@ ofxGuiGroup * ofxGuiGroup::setup(string collectionName, string filename, float x
 }
 
 ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _filename, float x, float y){
+    
 	b.x = x;
 	b.y = y;
 	header = defaultHeight;
@@ -39,6 +41,12 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 	filename = _filename;
 	bGuiActive = false;
     
+    isDynamic=false;
+    if(_parameters.contains("isActive")){
+        isDynamic = true;
+        isActive = static_cast<ofParameter<bool> *>(&_parameters.get("isActive"));
+    }
+
 	for(int i=0;i<_parameters.size();i++){
 		string type = _parameters.getType(i);
 		if(type==typeid(ofParameter<int>).name()){
@@ -79,6 +87,7 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 		}else if(type==typeid(ofParameterGroup).name()){
 			ofParameterGroup p = _parameters.getGroup(i);
 			ofxGuiGroup * panel = new ofxGuiGroup(p);
+            
 			add(panel);
 		}else{
 			ofLogWarning() << "ofxBaseGroup; no control for parameter of type " << type;
@@ -94,9 +103,14 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 }
 
 void ofxGuiGroup::add(ofxBaseGui * element){
-	collection.push_back( element );
+	
 
-	element->setPosition(b.x, b.y + b.height  + spacing);
+    
+    if(element->getName()!="isActive"){
+        collection.push_back( element );
+element->setPosition(b.x, b.y + b.height + spacing);
+    }
+        
 
 	b.height += element->getHeight() + spacing;
 
@@ -115,8 +129,10 @@ void ofxGuiGroup::add(ofxBaseGui * element){
 			element->setPosition(b.x + b.width-element->getWidth(),element->getPosition().y);
 		}
 	}
+
     
 	parameters.add(element->getParameter());
+
 	generateDraw();
 }
 
@@ -202,10 +218,12 @@ bool ofxGuiGroup::mouseMoved(ofMouseEventArgs & args){
 }
 
 bool ofxGuiGroup::mousePressed(ofMouseEventArgs & args){
+
 	if(setValue(args.x, args.y, true)){
 		return true;
 	}
 	if( bGuiActive ){
+
 		ofMouseEventArgs a = args;
 		for(int i = 0; i < (int)collection.size(); i++){
 			if(collection[i]->mousePressed(a)) return true;
@@ -252,6 +270,10 @@ void ofxGuiGroup::generateDraw(){
 	headerBg.setFilled(true);
 	headerBg.rectangle(b.x,b.y +1 + spacingNextElement, b.width, header);
 
+    if(isDynamic){
+        activeBox.set(b.getMaxX()-3*defaultHeight,b.y + 2,defaultHeight,defaultHeight);
+    }
+    
 	textMesh = getTextMesh(getName(), textPadding + b.x, header / 2 + 4 + b.y+ spacingNextElement);
 	if(minimized){
 		textMesh.append(getTextMesh("+", b.width-textPadding-8 + b.x, header / 2 + 4+ b.y+ spacingNextElement));
@@ -274,6 +296,17 @@ void ofxGuiGroup::render(){
 	bindFontTexture();
 	textMesh.draw();
 	unbindFontTexture();
+    if(isDynamic){
+        ofSetColor(255,0,0);
+        if(isActive->get()){
+            ofFill();
+        }
+        else ofNoFill();
+        
+        ofRect(activeBox);
+        
+        
+    }
     
 	if(!minimized){
 		for(int i = 0; i < (int)collection.size(); i++){
@@ -345,6 +378,10 @@ bool ofxGuiGroup::setValue(float mx, float my, bool bCheck){
 			bGuiActive = true;
 
 			ofRectangle minButton(b.x+b.width-textPadding*3,b.y,textPadding*3,header);
+            if(activeBox.inside(mx,my)){
+                *isActive=(!*isActive);
+                return true;
+            }
 			if(minButton.inside(mx,my)){
 				minimized = !minimized;
 				if(minimized){

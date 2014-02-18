@@ -116,7 +116,7 @@ void Force::addParameter(string name,ParameterType v,ParameterType min,Parameter
     p->setMin(min);
     p->setMax(max);
     *p=v;
-    cout<<p->type()<<endl;
+//    cout<<p->type()<<endl;
     settings.add(*p);
     pl.push_back(p);
 }

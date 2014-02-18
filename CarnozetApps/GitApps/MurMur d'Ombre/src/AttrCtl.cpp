@@ -51,8 +51,16 @@ void AttrCtl::clearPoints(){
 }
 void AttrCtl::addPoints(vector<ofPoint> curcentroids,int type){
     
-  if(destA.size()>0)lastA=destA;
-    
+
+    if(destA.size()>0){
+        std::vector<AttrStruct>::iterator g = destA.begin();
+        while(g!=destA.end()){
+            if(g->type==type){g=destA.erase(g);}
+            else{++g;}
+        };
+        lastA=destA;
+    }
+
 
     for(int i = 0 ; i< curcentroids.size() ; i++){
         AttrStruct p = AttrStruct(ofPoint(1-curcentroids[i].x,curcentroids[i].y,curcentroids[i].z+zoffset),type,0);

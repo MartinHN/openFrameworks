@@ -143,6 +143,10 @@
 		6F2DD5FC18B22E0600AA09D2 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F20915F6188EC6C100AC8620 /* SyphonNameboundClient.m */; };
 		6F2DD5FD18B22E2700AA09D2 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F20915F3188EC6C100AC8620 /* Syphon.framework */; };
 		6F2DD5FE18B22E6700AA09D2 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F20915F3188EC6C100AC8620 /* Syphon.framework */; };
+		6F2EDF9D18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
+		6F2EDF9E18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
+		6F2EDF9F18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
+		6F2EDFA018B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
 		6F2F476318AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
 		6F2F476418AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
 		6F2F476518AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
@@ -627,6 +631,7 @@
 		6F1EEA6D18A95D6C00608125 /* fieldForce.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = fieldForce.frag; sourceTree = "<group>"; };
 		6F2DD5EC18B2252700AA09D2 /* BlobHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlobHandler.cpp; sourceTree = "<group>"; };
 		6F2DD5ED18B2252700AA09D2 /* BlobHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlobHandler.h; sourceTree = "<group>"; };
+		6F2EDF9C18B3613400D28964 /* rotation.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = rotation.frag; sourceTree = "<group>"; };
 		6F2F476218AE71F10050EA33 /* thresholdBW.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = thresholdBW.frag; sourceTree = "<group>"; };
 		6F4915F118AE2C7E001079F3 /* metaBalls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = metaBalls.cpp; sourceTree = "<group>"; };
 		6F4915F218AE2C7E001079F3 /* metaBalls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metaBalls.h; sourceTree = "<group>"; };
@@ -1603,6 +1608,7 @@
 				6F1EEA6D18A95D6C00608125 /* fieldForce.frag */,
 				6F4915F718AE3171001079F3 /* smoothyGrav.frag */,
 				6F1EEA6918A94F3300608125 /* globalForce.frag */,
+				6F2EDF9C18B3613400D28964 /* rotation.frag */,
 				F2FB83EF18A8EF2B005E75BB /* spring.frag */,
 				F2C0B54818A7B66F0056A36B /* gravity.frag */,
 				F2FB83ED18A8D54D005E75BB /* neth.frag */,
@@ -2162,6 +2168,7 @@
 				6F1EE67718A927ED00608125 /* ofxTCPServer.cpp in Sources */,
 				6F1EE67818A927ED00608125 /* ofxUDPManager.cpp in Sources */,
 				6F1EE68018A927ED00608125 /* ofxVectorGraphics.cpp in Sources */,
+				6F2EDF9F18B3613400D28964 /* rotation.frag in Sources */,
 				6F1EE68118A927ED00608125 /* CreEPS.cpp in Sources */,
 				6F1EE68218A927ED00608125 /* ofxXmlSettings.cpp in Sources */,
 				6F1EE68318A927ED00608125 /* tinyxml.cpp in Sources */,
@@ -2307,6 +2314,7 @@
 				6F4915F918AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				6FC6763318A9118F00D24E6C /* ofxOscBundle.cpp in Sources */,
 				6F2DD5EF18B2252700AA09D2 /* BlobHandler.cpp in Sources */,
+				6F2EDF9E18B3613400D28964 /* rotation.frag in Sources */,
 				6FC6763418A9118F00D24E6C /* ofxOscMessage.cpp in Sources */,
 				6FC6763518A9118F00D24E6C /* ofxOscParameterSync.cpp in Sources */,
 				6FC6763618A9118F00D24E6C /* ofxOscReceiver.cpp in Sources */,
@@ -2406,6 +2414,7 @@
 				6F4915F818AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F2CCD6471891927A00C0F2B2 /* ofxOscBundle.cpp in Sources */,
 				6F2DD5EE18B2252700AA09D2 /* BlobHandler.cpp in Sources */,
+				6F2EDF9D18B3613400D28964 /* rotation.frag in Sources */,
 				F2CCD6481891927A00C0F2B2 /* ofxOscMessage.cpp in Sources */,
 				F2CCD6491891927A00C0F2B2 /* ofxOscParameterSync.cpp in Sources */,
 				F2CCD64A1891927A00C0F2B2 /* ofxOscReceiver.cpp in Sources */,
@@ -2505,6 +2514,7 @@
 				6F4915FB18AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F200AA6418A97C5D0004F00A /* ofxOscBundle.cpp in Sources */,
 				6F2DD5F118B2252700AA09D2 /* BlobHandler.cpp in Sources */,
+				6F2EDFA018B3613400D28964 /* rotation.frag in Sources */,
 				F200AA6518A97C5D0004F00A /* ofxOscMessage.cpp in Sources */,
 				F200AA6618A97C5D0004F00A /* ofxOscParameterSync.cpp in Sources */,
 				F200AA6718A97C5D0004F00A /* ofxOscReceiver.cpp in Sources */,

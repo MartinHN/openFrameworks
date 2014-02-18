@@ -37,6 +37,7 @@ public:
     ofParameterGroup settings;
     
     ofParameter<float> distance;
+    ofParameter<ofVec3f> lookAt;
     ofParameter<ofVec3f> ypr;
     ofVec3f curypr;
     

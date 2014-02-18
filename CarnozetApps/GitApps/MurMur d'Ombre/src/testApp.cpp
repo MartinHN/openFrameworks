@@ -198,7 +198,7 @@ void testApp::update(){
     bH.update();
     
     
-    attrctl.clearPoints();
+//    attrctl.clearPoints();
     
     attrctl.addPoints(bH.centroids, 1);
     attrctl.addPoints(bH.arms, 2);

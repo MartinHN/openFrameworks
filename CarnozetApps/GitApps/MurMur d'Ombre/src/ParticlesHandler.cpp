@@ -142,6 +142,11 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("freeze",0.f,0.f,.80f);
     forces[forces.size()-1]->addParameter("damp",0.9f,0.5f,1.0f);
     
+    forces.push_back(new Force("rotation",true));
+    forces[forces.size()-1]->addParameter("type",0,0,1);
+    forces[forces.size()-1]->addParameter("r",0.2f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("speed",0.f,0.f,0.5f);
+    forces[forces.size()-1]->addParameter("orientation",ofVec3f(0,1,0),ofVec3f(0),ofVec3f(1));
     
     forces.push_back(new Force("gravity",true));
     forces[forces.size()-1]->addParameter("r",.50f,0.f,.5f);

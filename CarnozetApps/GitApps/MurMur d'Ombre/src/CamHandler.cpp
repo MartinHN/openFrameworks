@@ -28,7 +28,9 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
     
     MYPARAM(alpha,0.4f,0.f,1.f);
     MYPARAM(distance,1.f,0.f,2.f);
-    MYPARAM(ypr,ofVec3f(0),ofVec3f(0,-90,0),ofVec3f(180,90,360));    
+    MYPARAM(ypr,ofVec3f(0),ofVec3f(0,-90,0),ofVec3f(180,90,360));
+    MYPARAM(lookAt,ofVec3f(0.5,0.5,0.5),ofVec3f(0),ofVec3f(1));
+    
     curdist = distance;
     curypr = ypr;
 }
@@ -41,7 +43,8 @@ void CamHandler::updateScreenSize(int w, int h){
 void CamHandler::begin(){
     curdist = distance*1.0*alpha+curdist*(1.0-alpha);
     curypr = ypr.get() * alpha+ curypr*(1-alpha);
-    camera.orbit(curypr.x,curypr.y,curdist * (*zdepth/2.0),ofVec3f(*scrw/2.0,*scrh/2.0,*zdepth/2.0));
+    camera.orbit(curypr.x,curypr.y,curdist * (*zdepth/2.0),ofVec3f(*scrw,*scrh,*zdepth)/2);
+    camera.lookAt(ofVec3f(*scrw,*scrh,*zdepth)*lookAt);
     camera.rotate(curypr.z,camera.getLookAtDir());
     
     camera.begin();

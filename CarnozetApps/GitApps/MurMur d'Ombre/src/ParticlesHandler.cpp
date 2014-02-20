@@ -119,7 +119,12 @@ void Particles::setup(){
     MYPARAM(mingrad,0.f,-1.f,1.f);
     MYPARAM(maxgrad,1,-1.f,1.f);
     MYPARAM(netCompRatio,8,3,20);
-    
+#ifdef PMOD
+    MYPARAM(origintype,1,0,1);
+#ifndef GUIMODE
+    origintype.addListener(this,&Particles::changeOrigins);
+#endif
+#endif
     
     gradNum.addListener(this,&Particles::changeGrad);
     numParticles.addListener(this,&Particles::changeNum);
@@ -392,6 +397,8 @@ void Particles::initFbo(int w,int h){
     
     
     
+    
+    
     // 2. Making arrays of float pixels with velocity information and the load it to a texture
     float * vel = new float[numParticles*3];
     for (int i = 0; i < numParticles; i++){
@@ -438,6 +445,124 @@ void Particles::changeGrad(int & i){
     if(i<gradDir.listDir()){
     gradDir.getFile(i).getFileName();
         gradient.loadImage("gradients/"+gradDir.getFile(i).getFileName());}
+}
+
+
+void Particles::changeOrigins(int &type){
+    
+    float * pos = new float[numParticles*3];
+    bool hasChanged = true;
+    
+    
+    
+    switch (type) {
+        case 0:
+        {
+            for (int x = 0; x < textureRes; x++){
+                for (int y = 0; y < textureRes; y++){
+                    int i = textureRes * y + x;
+                    
+                    pos[i*3 + 0] = x*1.0/textureRes;
+                    pos[i*3 + 1] = y*1.0/(textureRes);
+                    pos[i*3 + 2] = 0.5;
+                }
+            }
+            break;}
+#ifdef PMOD
+        case 1:
+        {
+            vector<ofPoint> vert = readObj("models/sphere68.obj");
+            
+            for (int x = 0; x < textureRes; x++){
+                for (int y = 0; y < textureRes; y++){
+                    int i =  y + textureRes * x;
+                    
+                    if(i<vert.size()){
+                    pos[i*3 + 0] = vert[i].x;
+                    pos[i*3 + 1] = vert[i].y;
+                    pos[i*3 + 2] = vert[i].z + 0.5;
+                    }
+                    else {
+                        pos[i*3 + 0] = 0;
+                        pos[i*3 + 1] = 0;
+                        pos[i*3 + 2] = 0;
+                    }
+                }
+            }
+            break;
+        }
+    
+#endif
+            
+        default:
+            hasChanged=false;
+            break;
+    }
+    if(hasChanged){
+     origins.allocate(textureRes, textureRes,GL_RGB32F);
+    origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
+    }
+ 
+    delete [] pos;
+}
+
+
+
+vector<ofPoint> Particles::readObj(string pathin){
+    vector<ofPoint> points;
+	string path = ofToDataPath(pathin, true);
+	string line;
+	
+
+
+	// obj file format vertexes are 1-indexed
+	points.push_back(ofPoint());
+	
+	ifstream myfile (path.c_str());
+	if (myfile.is_open()) {
+		while (! myfile.eof()) {
+			getline (myfile,line);
+			
+			
+			// parse the obj format here.
+			//
+			// the only things we're interested in is
+			// lines beginning with 'g' - this says start of new object
+			// lines beginning with 'v ' - coordinate of a vertex
+			// lines beginning with 'f ' - specifies a face of a shape
+			// 			we take each number before the slash as the index
+			// 			of the vertex to join up to create a face.
+			
+			if(line.find("g ")==0) { // new object definition
+
+			} else if(line.find("v ")==0) { // new vertex
+                ofPoint p;
+				vector<string> elements = ofSplitString(line, " ");
+                if(elements.size()!=4) {
+                    cout<<elements[0]+elements[1]+elements[2]+ofToString(elements.size())<<endl;
+                    printf("Error line does not have 3 coordinates: \"%s\"\n", line.c_str());
+                
+                }
+                
+                p.x = atof(elements[1].c_str());
+                p.y = atof(elements[2].c_str());
+                p.z = atof(elements[3].c_str());
+                points.push_back(p);
+                
+                
+			} else if(line.find("f ")==0) { // face definition
+				
+				}
+			}
+		}
+		
+		
+		myfile.close();
+		
+    
+    return points;
+
+
 }
 
 

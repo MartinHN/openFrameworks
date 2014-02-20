@@ -13,6 +13,16 @@
 //#define PIMG
 //#define PFBO
 
+
+#define PMOD
+
+#ifdef PMOD
+//#include "ofxAssimpModelLoader.h"
+
+#endif
+
+
+
 class Force {
     
 public:
@@ -63,14 +73,19 @@ public:
 #ifdef PIMG
     ofImage partImg;
 #endif
-    
+
     
     
     void initFbo();
     void initFbo(int w, int h);
     void changeNum(int & num);
-    
-    
+
+#ifdef PMOD
+    vector<ofPoint> readObj(string path);
+    ofPoint parseVertex(string line);
+    void changeOrigins(int & type);
+    ofParameter<int> origintype;
+#endif
     int lastw,lasth;
     
     ofFbo origins;

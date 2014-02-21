@@ -81,8 +81,7 @@ public:
     void changeNum(int & num);
 
 #ifdef PMOD
-    vector<ofPoint> readObj(string path);
-    ofPoint parseVertex(string line);
+    vector<ofPoint> readObj(string path,bool sort = false);
     void changeOrigins(int & type);
     ofParameter<int> origintype;
 #endif

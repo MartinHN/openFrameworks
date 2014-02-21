@@ -120,7 +120,7 @@ void Particles::setup(){
     MYPARAM(maxgrad,1,-1.f,1.f);
     MYPARAM(netCompRatio,8,3,20);
 #ifdef PMOD
-    MYPARAM(origintype,1,0,1);
+    MYPARAM(origintype,1,0,2);
 #ifndef GUIMODE
     origintype.addListener(this,&Particles::changeOrigins);
 #endif
@@ -447,10 +447,17 @@ void Particles::changeGrad(int & i){
         gradient.loadImage("gradients/"+gradDir.getFile(i).getFileName());}
 }
 
+bool sortOnZ(ofVec3f a,ofVec3f b){
+    return a.z>b.z;
+}
+bool sortOnXYZ(ofVec3f a,ofVec3f b){
+    return a.z>b.z&&a.x>b.x&&a.y>b.y;
+}
+
 
 void Particles::changeOrigins(int &type){
     
-    float * pos = new float[numParticles*3];
+    float * pos ;
     bool hasChanged = true;
     
     
@@ -458,6 +465,7 @@ void Particles::changeOrigins(int &type){
     switch (type) {
         case 0:
         {
+            pos = new float[numParticles*3];
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
                     int i = textureRes * y + x;
@@ -468,11 +476,39 @@ void Particles::changeOrigins(int &type){
                 }
             }
             break;}
-#ifdef PMOD
         case 1:
         {
-            vector<ofPoint> vert = readObj("models/sphere68.obj");
+            int zsplit = 2;
+            int textureRes3 = pow(numParticles,1.0/3);
+            numParticles= textureRes3*textureRes3*textureRes3;
+            textureRes = sqrt((float)numParticles);
+            int count=0;
+            pos = new float[numParticles*3];
             
+            for (int x = 0; x < textureRes3; x++){
+                for (int y = 0; y < textureRes3; y++){
+                    for (int z = 0; z < textureRes3; z++){
+                    
+                    int i = textureRes3 * textureRes3* x + textureRes3 * y + z;
+                    
+                    pos[i*3 + 0] = (float) (0.25 + x*1.0/textureRes3);
+                    pos[i*3 + 1] = (float) (0.25 + y*1.0/textureRes3);
+                    pos[i*3 + 2] = (float) (z*1.0/(textureRes3s));
+                        cout<<i<<endl;
+                    }
+                }
+            }
+            
+//            ofSort(pos,sortOnXYZ);
+            break;}
+#ifdef PMOD
+        case 2:
+        {
+            vector<ofPoint> vert = readObj("models/psy203.obj",true);
+            numParticles = vert.size();
+            textureRes = sqrt((float)numParticles);
+            numParticles = textureRes*textureRes;
+            pos = new float[numParticles*3];
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
                     int i =  y + textureRes * x;
@@ -480,7 +516,7 @@ void Particles::changeOrigins(int &type){
                     if(i<vert.size()){
                     pos[i*3 + 0] = vert[i].x;
                     pos[i*3 + 1] = vert[i].y;
-                    pos[i*3 + 2] = vert[i].z + 0.5;
+                    pos[i*3 + 2] = vert[i].z +1;
                     }
                     else {
                         pos[i*3 + 0] = 0;
@@ -507,8 +543,7 @@ void Particles::changeOrigins(int &type){
 }
 
 
-
-vector<ofPoint> Particles::readObj(string pathin){
+vector<ofPoint> Particles::readObj(string pathin,bool sort){
     vector<ofPoint> points;
 	string path = ofToDataPath(pathin, true);
 	string line;
@@ -560,9 +595,15 @@ vector<ofPoint> Particles::readObj(string pathin){
 		myfile.close();
 		
     
+    if(sort){
+        ofSort(points,sortOnXYZ);
+    }
+    
     return points;
 
 
 }
+
+
 
 

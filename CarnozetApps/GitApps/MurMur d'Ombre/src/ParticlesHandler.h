@@ -110,6 +110,7 @@ public:
     
     int textureRes;
     ofVec2f  textureRes2;
+    int textureRes3;
     
     ofImage gradient;
     

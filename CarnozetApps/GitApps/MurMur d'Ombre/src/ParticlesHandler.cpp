@@ -262,7 +262,8 @@ void Particles::update(int w, int h){
                         forces[i]->shader.setUniform3f("attr",curattr[j].x,curattr[j].y,curattr[j].z);
                     
                     forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
-                    forces[i]->shader.setUniform1i("resolution",textureRes);
+                    if(origintype==1)forces[i]->shader.setUniform1i("resolution",textureRes3);
+                    else forces[i]->shader.setUniform1i("resolution",textureRes);
                     forces[i]->updateShader();
                     
                     velPingPong.src->draw(0,0);
@@ -479,22 +480,23 @@ void Particles::changeOrigins(int &type){
         case 1:
         {
             int zsplit = 2;
-            int textureRes3 = pow(numParticles,1.0/3);
+            textureRes3 = pow(numParticles,1.0/3);
             numParticles= textureRes3*textureRes3*textureRes3;
             textureRes = sqrt((float)numParticles);
             int count=0;
             pos = new float[numParticles*3];
-            
+            for (int z = 0; z < textureRes3; z++){
+                
             for (int x = 0; x < textureRes3; x++){
                 for (int y = 0; y < textureRes3; y++){
-                    for (int z = 0; z < textureRes3; z++){
                     
-                    int i = textureRes3 * textureRes3* x + textureRes3 * y + z;
                     
-                    pos[i*3 + 0] = (float) (0.25 + x*1.0/textureRes3);
-                    pos[i*3 + 1] = (float) (0.25 + y*1.0/textureRes3);
-                    pos[i*3 + 2] = (float) (z*1.0/(textureRes3s));
-                        cout<<i<<endl;
+                    int i = textureRes3 * textureRes3* z + textureRes3 * y + x;
+                    
+                    pos[i*3 + 0] = (float) (x*1.0/textureRes3);
+                    pos[i*3 + 1] = (float) (y*1.0/textureRes3);
+                    pos[i*3 + 2] = (float) (z*1.0/(textureRes3));
+                        
                     }
                 }
             }
@@ -511,7 +513,7 @@ void Particles::changeOrigins(int &type){
             pos = new float[numParticles*3];
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
-                    int i =  y + textureRes * x;
+                    int i =  x + textureRes * y;
                     
                     if(i<vert.size()){
                     pos[i*3 + 0] = vert[i].x;

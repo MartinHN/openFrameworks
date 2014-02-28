@@ -506,7 +506,7 @@ void Particles::changeOrigins(int &type){
 #ifdef PMOD
         case 2:
         {
-            vector<ofPoint> vert = readObj("models/psy203.obj",true);
+            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
             numParticles = vert.size();
             textureRes = sqrt((float)numParticles);
             numParticles = textureRes*textureRes;

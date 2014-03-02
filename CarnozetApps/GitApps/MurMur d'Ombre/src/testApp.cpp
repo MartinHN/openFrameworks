@@ -41,12 +41,7 @@ ofSetVerticalSync(false);
 
     //Zdepth
     zdepth=1000;    
-    camera.setFov(ofRadToDeg(atan(scrw*1.0/(zdepth))));//50
-    camera.setAspectRatio(scrw*1.0/scrh);
-    camrot.x=camdest.x=1.0;
-    camrot.y=camrot.z=camrot.w=0.0;
-    camdest.y=camdest.z=camdest.w=0.0;
-    camera.disableOrtho();
+
     
 #ifdef testvid
     vidplay.loadMovie("bien.mov");
@@ -145,7 +140,8 @@ bH.setup(inw,inh,&blurX,&blurY);
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     visuHandler.addVisu(new Particles(&visuHandler));
     visuHandler.addVisu(new metaBalls(&visuHandler));
-    
+    visuHandler.addVisu(new AutoTree(&visuHandler));
+    visuHandler.addVisu(new BallManager(&visuHandler));
     
     
     

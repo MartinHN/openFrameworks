@@ -12,30 +12,47 @@ AutoTree::AutoTree(){
     
 }
 
-AutoTree::AutoTree(int w, int h, bool autostart)
-{
+AutoTree::AutoTree(VisuHandler * v):VisuClass(v){
+    
+   
     
     list.clear();
     
-    width = w;
-    height = h;
+    
     
     myfbo = ofFbo();
     
     count = 0;
-    
-    imageLeaf.loadImage("images/leaf.png");
-    
-    if(autostart) init();
+    introPhase = 0;
     
     
+    imagePart.loadImage("images/part.png");
+    imagePart.setAnchorPercent(0.5, 0.5);
+
+    
+    init();
     
     
+    
+    settings.setName("AutoTree");
+    
+    MYPARAM(pointToBegin,ofVec2f(0.5),ofVec2f(0),ofVec2f(1));
+    
+    
+    MYPARAM(initTrig,false,false,true);
+    initTrig.addListener(this, &AutoTree::startStop);
+    
+//    
+//    MYPARAM(addTrig,false,false,true);
+//    addTrig.addListener(this,&AutoTree::reset);
 }
 
+
+
 void AutoTree::init(){
-    
-    
+
+    width = ofGetWidth();
+    height = ofGetHeight();
     //    ofPoint center = ofPoint(width/2.0f, height-10);
     //    Branche b = Branche( center,1.57f, 200, true);
     //    b.angle = 1.57f;
@@ -46,14 +63,15 @@ void AutoTree::init(){
     myfbo.allocate(width,height, GL_RGBA);
     
     myfbo.begin();
-    ofClear(255, 255, 255, 0);
+    ofClear(0, 0, 0, 255);
     myfbo.end();
     list.clear();
+    
     
 }
 
 void AutoTree::clear(){
-    
+ introPhase = 0;
     list.clear();
     
     if(myfbo.isAllocated()){
@@ -63,7 +81,7 @@ void AutoTree::clear(){
     
 }
 
-void AutoTree::startStop(bool start){
+void AutoTree::startStop(bool & start){
     
     
     if(start)
@@ -71,6 +89,7 @@ void AutoTree::startStop(bool start){
         
         clear();
         init();
+        reset();
         
     }
     else
@@ -84,16 +103,20 @@ void AutoTree::startStop(bool start){
     
 }
 
+void AutoTree::update(int w, int h){
+    width = w;
+    height = h;
+}
 
 //--------------------------------------------------------------
-void AutoTree::draw()
+void AutoTree::draw(int width, int height)
 {
-    ofPushStyle();  
-    if (ofGetMousePressed())
-    {
-        reset(ofPoint(ofGetMouseX(), ofGetMouseY()));
-    }
     
+    ofPushMatrix();
+//    if (ofGetMousePressed())
+//    {
+//        reset(ofPoint(ofGetMouseX(), ofGetMouseY()));
+//    }
     
     std::vector<Branche>::iterator it;
     vector<Branche> newBranche;
@@ -102,93 +125,127 @@ void AutoTree::draw()
     int newBrancheL;
     bool endOfBranche = false;
     
-
-    
-    
-    
-        // Setup of FBO
-        ofSetColor(0, 0, 0,255);
-        myfbo.begin();
+    //INtro
+    if(initTrig )
+    {
+        int duree = 100; // 600
+        introPhase++;
         
-        //Update branches
-        for (it = list.begin() ; it != list.end();  )
+        if(introPhase< duree)
         {
         
-             it->update();
-
+            //--INTRO
             
-            if(it->lifeTime < 1 && !(it->isChildCreated)  )
+            float size = introPhase*0.6f;
+            
+            myfbo.begin();
+            //ofClear(0, 0, 0, 255);
+            ofSetColor(255, 255, 255, 5);
+
+            imagePart.draw(pointToBegin.get()*ofVec2f(width,height) , size, size);
+            myfbo.end();
+        }
+        else{
+            
+            
+            //-- REAL TREE
+            ofSetColor(255);
+            myfbo.begin();
+            
+            //Update branches
+            for (it = list.begin() ; it != list.end();  )
             {
                 
-                if(it->finalLength > 10)
-                {
+                ofPoint pos = it->end;
+                pos = pos/ofPoint(width, height);
+                pos = pos*ofPoint(320,240);
                 
-                    newBranche.push_back(*it);
+                it->update();
+                
+                if(it->lifeTime < 1 && !(it->isChildCreated)  )
+                {
+                    
+                    if(it->totalLength < 400 && it->length> 10)
+                    {
+                        
+                        newBranche.push_back(*it);
+                        
+                    }
+                    
+                    
+                    list.erase(it);
+                    
+                    
+                }
+                else
+                {
+                    ofEnableAlphaBlending();
+                    it->draw();
+                    ++it;
                     
                 }
                 
-                
-                list.erase(it);
-                
-                
             }
-            else
-            {
             
-            it->draw();
-            ++it;
+            
+            
+            
+            myfbo.end();
+            
+            if(newBranche.size()>0)
+            {
+                
+                for (it = newBranche.begin() ; it != newBranche.end(); ++it  )
+                {
+                    
+                    createBranche(it->end, it->angle, it->length, it->totalLength,  true);
+                    
+                }
                 
             }
+            
+            
+            
+            
             
         }
         
-            
-            
-        
-        myfbo.end();
-        
-        if(newBranche.size()>0)
-        {
-            
-            for (it = newBranche.begin() ; it != newBranche.end(); ++it  )
-            {
-                
-                createBranche(it->end, it->angle, it->length, true);
-                
-                
-            }
-            
-        }
+    }
+    
+
+
         
     
    // myfbo.updateTexture();
-   
-  myfbo.draw(0, 0);
     
-    ofPopStyle();
+    ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
+    ofSetColor(255);
+    myfbo.draw(0, 0,width,height);
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    
+    ofPopMatrix();
 }
 
 //--------------------------------------------------------------
-void AutoTree::createBranche(ofPoint p, float a, int l, bool isEnd){
+void AutoTree::createBranche(ofPoint p, float a, int l,int tot,  bool isEnd){
+    
+    
+    ///path = dad->bH->getBlobs();
+    
+    
     
     int nb;
     Branche b;
     bool isClockWise ;
     
-    if(l > 45){
-    //nb = (int) ofRandom(1.8) + 1;
+    //if(l > 45){
+    if(0){
     nb = (int)  2;
     }
     else
     {
-    
-        //if(ofRandomf()>0.45) nb = 2;
-        //else nb = 0;
-        
-        nb = (int) ofRandom( 3.1);
-    
+        nb = (int) (ofRandomuf()*1.9+ 1.0);
     }
-    
     
     
     for(int i=0; i<nb; i++)
@@ -201,7 +258,7 @@ void AutoTree::createBranche(ofPoint p, float a, int l, bool isEnd){
         }
         angle = angle+a;
         
-        b = Branche(p, angle, l, isClockWise, &imageLeaf);
+        b = Branche(p, angle, l,tot, isClockWise, &imagePart);
         list.push_back(b);
         
     }
@@ -211,38 +268,64 @@ void AutoTree::createBranche(ofPoint p, float a, int l, bool isEnd){
 }
 
 //--------------------------------------------------------------
-void AutoTree::reset(ofPoint p){
+void AutoTree::reset(){
     
-    // myfbo.begin();
-    // ofClear(255, 255, 255);
-    //myfbo.end();
     
-    list.clear();
+    float n = 3.0f;
+    float angle = 2*PI/n;
+    float curAngle = ofRandomuf()*3.14;
     
-    //ofPoint center = ofPoint(width/2.0f, height-10);
-    //    Branche b = Branche( p,1.57f, 200, true);
-    //    b.angle = 1.57f;
-    //    b.lifeTime = 200;
-    //    b.finalLength = 200;
-    //    list.push_back(b);
+//    if(pointToBegin->x * pointToBegin->y == 0 )
+        
+    if(dad->attr->getType(0).size()>0)
+        pointToBegin = dad->attr->getType(0)[0]*ofVec2f(width,height);
     
-    Branche b = Branche( p,1.47f, 200, false, &imageLeaf);
-   // b.angle = 1.39f;
-    b.lifeTime = 150;
-    b.finalLength = 150;
-    list.push_back(b);
     
-    b = Branche( p,0.8, 150, true, &imageLeaf);
-   // b.angle = 1.3f;
-    b.lifeTime = 140;
-    b.finalLength =140;
-    list.push_back(b);
+    for(int i=0; i<n; i++){
+        
+        float finalAngle = curAngle ;
+        Branche b = Branche( pointToBegin.get()*ofVec2f(width,height),finalAngle,0, 200, false, &imagePart);
+        b.lifeTime = 13 + ofRandomuf()*30.0f;
+        b.finalLength = b.lifeTime;
+        if((i+1)%2 == 0 ){
+            //b.angle *= -1.0f;
+            b.clockWise = true;
+        }
+        list.push_back(b);
+        
+        
+        curAngle +=angle;
+        
+        
+    }
     
-    b = Branche( p , 2.2f, 150, false, &imageLeaf);
-   // b.angle = 1.8f;
-    b.lifeTime = 145;
-    b.finalLength = 145;
-    list.push_back(b);
+
+    
+//    Branche b = Branche( p,1.47f, 50, false, &imageLeaf);
+//    
+//    b.lifeTime = 50;
+//    b.finalLength = 50;
+//    list.push_back(b);
+//    
+//
+//    
+//    b = Branche( p,0.8, 150, true, &imageLeaf);
+//        b.lifeTime = 40;
+//    b.finalLength =40;
+//    list.push_back(b);
+//    
+//
+//    
+//    b = Branche( p , 2.2f, 150, false, &imageLeaf);
+//    
+//    b.lifeTime = 45; 
+//    b.finalLength = 45;
+//    list.push_back(b);
+    
+
+    
+    
+
     
 }
 
@@ -254,26 +337,24 @@ Branche::Branche(){
     
 }
 
-Branche::Branche( ofPoint b, float a, int actualL, bool isClockWise, ofImage* img){
+Branche::Branche( ofPoint b, float a, int actualL,int totalL, bool isClockWise, ofImage* img){
     
     begin =b;
     end =b;
     
     isGrowing = true;
     isChildCreated = false;
-    lifeTime = (int) ofRandom(actualL/1.5f, actualL/1.08f);
+    lifeTime = (int) ofRandom(actualL/1.5f, actualL/0.6f);
     finalLength = (float)lifeTime;
+    totalLength = totalL + finalLength;
+    
     clockWise=isClockWise;
-    
-    
+
     angle = a;
-    length = 0;
+    length = 0.0f;
     
     leaf = img;
-    
-    //leaf.loadImage("images/leaf.png");
-    
-    
+        
 }
 
 
@@ -282,13 +363,19 @@ void Branche::update(){
     
     int maxLife = 200;
     
-    float speed = 4.0f;
+    float speed = 0.2f; //0.2f
     
     if(isGrowing){
-        lifeTime --;
-        length ++;
-        float curve = (200/finalLength)*0.0007;
+//        lifeTime -=speed;
+//        length +=speed;
+        lifeTime -= speed;
+        length += speed;
+        
+//        float curve = (200/finalLength)*0.0007;
+//        if (clockWise) curve *= -1.0f;
+        float curve = (cos(length*0.05)*0.003);
         if (clockWise) curve *= -1.0f;
+        
         angle +=  curve;
     }
     if (lifeTime<0 ){
@@ -310,23 +397,24 @@ void Branche::draw(){
     
     
     
-    float radius = finalLength/25.0f;
+   // float radius = 4.0 + finalLength/60.0f;
+    float radius = 1.0 ;
     if(radius<1.0f) radius = 1.0f;
-    ofSetColor(0,0,0,255);
+    ofSetColor(255,255,255,85);
     
     if(isGrowing){
         
         ofPushMatrix();
         ofCircle(end, radius);
         
-        if(ofRandomf()>0.90 && finalLength < 56)
-        {
-            
-            ofTranslate(end);
-            ofRotateZ(RAD_TO_DEG*angle);
-            leaf->draw(0, 0);
-            
-        }
+//        if(ofRandomf()>0.90 && finalLength < 56)
+//        {
+//            
+//            ofTranslate(end);
+//            ofRotateZ(RAD_TO_DEG*angle);
+//            leaf->draw(0, 0);
+//            
+//        }
         ofPopMatrix();
         
     }

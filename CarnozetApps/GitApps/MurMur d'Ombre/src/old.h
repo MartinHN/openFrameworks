@@ -1105,3 +1105,245 @@
  
  #else
 */
+
+
+/*
+ 
+ 
+ struct forces{
+ 
+ float mousex;
+ float mousey;
+ float mousez;
+ bool isClicked;
+ float screenw;
+ float screenh;
+ int lin;
+ int col;
+ float timestep;
+ 
+ float Gx;
+ float Gy;
+ float Gz;
+ 
+ float random;
+ 
+ 
+ 
+ //Friction
+ bool friction;
+ float fr;
+ float frmin;
+ float minv;
+ float maxv;
+ 
+ 
+ //Origin
+ bool origin;
+ bool circle;
+ bool forceorigin;
+ float korigin;
+ float zorigin;
+ 
+ //Border
+ bool border;
+ float kborder;
+ float zborder;
+ float rborder;
+ float zminborder;
+ float zmaxborder;
+ 
+ //Net
+ bool neth;
+ float kneth;
+ float zneth;
+ float lneth;
+ bool netshot;
+ 
+ bool netw;
+ float knetw;
+ float znetw;
+ float lnetw;
+ 
+ //MouseSpring
+ int mousespring;
+ float kmspring;
+ float knmspring;
+ int nkmspring;
+ float zmspring;
+ float rmspring;
+ 
+ 
+ //MouseRotation
+ bool mouserotation;
+ 
+ float rmrotation;
+ float smrotation;
+ 
+ //Mousepick
+ bool mousepick;
+ float rmpick;
+ float kmpick;
+ float zmpick;
+ 
+ int mousepicker;
+ float rmpicker;
+ float kmpicker;
+ float zmpicker;
+ 
+ int mousedamp;
+ float rmdamp;
+ float dmdamp;
+ 
+ //CONTOURSPRING
+ bool contourspring;
+ float kctrspring;
+ float zctrspring;
+ float rctrspring;
+ 
+ //MOUSEGRAVITY
+ bool mousegravity;
+ float mmgravity;
+ float rinmgravity;
+ float minmgravity;
+ 
+ 
+ // XSPRING   
+ bool xspring;
+ float kxspring;
+ float zxspring;
+ float xori;
+ 
+ 
+ //YSPRING
+ bool yspring;
+ float kyspring;
+ float zyspring;
+ float yori;
+ 
+ 
+ 
+ 
+ //ZSPRING
+ bool zspring;
+ float kzspring;
+ float zzspring;
+ float zori;
+ 
+ 
+ 
+ 
+ 
+ //
+ bool lorenz;
+ float lorenzatt;
+ 
+ // PLAN FORCE
+ ofVec3f plan;
+ 
+ 
+ int planforce;
+ float dplanforce;
+ float kplanforce;
+ float zplanforce;
+ 
+ 
+ 
+ 
+ // ATTRACTORS
+ 
+ bool split;
+ 
+ bool isAtt;
+ 
+ 
+ int attrspring0;
+ int attrspring1;
+ int attrspring2;
+ 
+ 
+ float raspring0;
+ float raspring1;
+ float raspring2;
+ 
+ float kaspring0;
+ float kaspring1;
+ float kaspring2;
+ 
+ float zaspring0;
+ float zaspring1;
+ float zaspring2;
+ 
+ 
+ Boolean attrgravity0;
+ Boolean attrgravity1;
+ Boolean attrgravity2;
+ 
+ float rinagravity0;
+ float rinagravity1;
+ float rinagravity2;
+ 
+ float minagravity0;
+ float minagravity1;
+ float minagravity2;
+ 
+ float magravity0;
+ float magravity1;
+ float magravity2;
+ 
+ 
+ Boolean attrrotation0;
+ Boolean attrrotation1;
+ Boolean attrrotation2;
+ 
+ float sarotation0;
+ float sarotation1;
+ float sarotation2;
+ 
+ float rarotation0;
+ float rarotation1;
+ float rarotation2;
+ 
+ int attrdamp0;
+ int attrdamp1;
+ int attrdamp2;
+ 
+ float radamp0;
+ float radamp1;
+ float radamp2;
+ 
+ float cadamp0;
+ float cadamp1;
+ float cadamp2;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ //gradient
+ bool splitgradient;
+ int gradtype;
+ int gradsize;
+ float mingrad;
+ float maxgrad;
+ float mingrad2;
+ float maxgrad2;
+ 
+ 
+ //blob
+ Boolean blobin;
+ float blobforce;
+ float blobz;
+ float bloboutvel;
+ bool blobxinvert;
+ bool    blobyinvert;
+ bool    blobmirrory;
+ bool    blobmirrorx;
+ float blobblur;
+ 
+ };
+ 
+*/

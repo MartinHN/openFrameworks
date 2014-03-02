@@ -38,10 +38,9 @@
 
 //#include "ofxAssimpModelLoader.h"
 //#include "ofxThreadedImageLoader.h"
-
-
-
 //#include "VisuHandler.h"
+
+
 #include "AttrCtl.h"
 
 
@@ -68,30 +67,30 @@ public:
     
    
      void keyPressed  (int key);
+
+
+
 #ifndef GUIMODE
     
     void exit();    
     void windowResized(int w, int h);
-    
-
     void mouseDragged(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
 
+    
+    
+    //Video INPUTS
 
 #ifdef syphon  
     ofxSyphonClient blobClient;
 #endif
-
- pingPongBuffer finalRender;
+    pingPongBuffer finalRender;
 
 #if defined testvid || localcamera
     ofVideoGrabber vidGrab;
     ofVideoPlayer vidplay;
 #endif
-    
 
-    
-    ofCamera camera;
     
     int     width, height;
     int     imgWidth, imgHeight;
@@ -181,8 +180,9 @@ public:
 #endif
 
     
-        CamHandler camera2;
+    CamHandler camera2;
    
+    
     ofParameterGroup globalParam;    
     ofParameterGroup settings;
     ofParameter<float> finalblur;

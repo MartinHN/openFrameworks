@@ -20,8 +20,8 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
     
 
     blobClient.setup();
-    blobClient.setApplicationName("Quartz Composer");
-    blobClient.setServerName("name");
+    blobClient.setApplicationName("kinectExampleDebug");
+    blobClient.setServerName("blob");
     syphonTex.allocate(inw,inh,GL_RGB32F);
     
     gs.allocate(inw, inh);

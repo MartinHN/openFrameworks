@@ -59,8 +59,6 @@
 		6F1EE69218A927ED00608125 /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		6F1EE69318A927ED00608125 /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		6F1EE69418A927ED00608125 /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
-		6F1EE69518A927ED00608125 /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EC17C15D1B00895AA8 /* AutoTree.cpp */; };
-		6F1EE69618A927ED00608125 /* Cinetique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EE17C15D1B00895AA8 /* Cinetique.cpp */; };
 		6F1EE69718A927ED00608125 /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
 		6F1EE69918A927ED00608125 /* Ecrans.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC44E1885C66F00FDBDC2 /* Ecrans.cpp */; };
 		6F1EE69A18A927ED00608125 /* VisuClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC45B1885D73E00FDBDC2 /* VisuClass.cpp */; };
@@ -206,8 +204,6 @@
 		6FC6761D18A9118F00D24E6C /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		6FC6761E18A9118F00D24E6C /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		6FC6761F18A9118F00D24E6C /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
-		6FC6762018A9118F00D24E6C /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EC17C15D1B00895AA8 /* AutoTree.cpp */; };
-		6FC6762118A9118F00D24E6C /* Cinetique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EE17C15D1B00895AA8 /* Cinetique.cpp */; };
 		6FC6762218A9118F00D24E6C /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
 		6FC6762418A9118F00D24E6C /* Ecrans.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC44E1885C66F00FDBDC2 /* Ecrans.cpp */; };
 		6FC6762518A9118F00D24E6C /* VisuClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC45B1885D73E00FDBDC2 /* VisuClass.cpp */; };
@@ -319,8 +315,6 @@
 		F200AA4C18A97C5D0004F00A /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		F200AA4D18A97C5D0004F00A /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		F200AA4E18A97C5D0004F00A /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
-		F200AA4F18A97C5D0004F00A /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EC17C15D1B00895AA8 /* AutoTree.cpp */; };
-		F200AA5018A97C5D0004F00A /* Cinetique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EE17C15D1B00895AA8 /* Cinetique.cpp */; };
 		F200AA5118A97C5D0004F00A /* globalForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6918A94F3300608125 /* globalForce.frag */; };
 		F200AA5218A97C5D0004F00A /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		F200AA5318A97C5D0004F00A /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
@@ -396,8 +390,6 @@
 		F220C7B418A65D1900B8EA9F /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F220C7B218A65D1900B8EA9F /* Gui.cpp */; };
 		F222D98218A52F2300450D5F /* blurXa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98018A52F2100450D5F /* blurXa.frag */; };
 		F222D98318A52F2300450D5F /* blurYa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98118A52F2200450D5F /* blurYa.frag */; };
-		F22359F017C15D1B00895AA8 /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EC17C15D1B00895AA8 /* AutoTree.cpp */; };
-		F22359F117C15D1B00895AA8 /* Cinetique.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359EE17C15D1B00895AA8 /* Cinetique.cpp */; };
 		F22359F517C15D2800895AA8 /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
 		F242ACAE18A05DAD0091E2EF /* boule2gomme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F242ACAD18A05DAC0091E2EF /* boule2gomme.cpp */; };
 		F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */; };
@@ -406,6 +398,22 @@
 		F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */; };
 		F260A73D16C4EE440041ACEA /* Easer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F260A73B16C4EE440041ACEA /* Easer.cpp */; };
 		F26A260C17BEB77B0053DD48 /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
+		F2901AE718C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
+		F2901AE818C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
+		F2901AE918C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
+		F2901AEA18C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
+		F2901AF118C22C9600B2D50E /* BallManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEB18C22C9600B2D50E /* BallManager.cpp */; };
+		F2901AF218C22C9600B2D50E /* BallManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEB18C22C9600B2D50E /* BallManager.cpp */; };
+		F2901AF318C22C9600B2D50E /* BallManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEB18C22C9600B2D50E /* BallManager.cpp */; };
+		F2901AF418C22C9600B2D50E /* BallManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEB18C22C9600B2D50E /* BallManager.cpp */; };
+		F2901AF518C22C9600B2D50E /* Balls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AED18C22C9600B2D50E /* Balls.cpp */; };
+		F2901AF618C22C9600B2D50E /* Balls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AED18C22C9600B2D50E /* Balls.cpp */; };
+		F2901AF718C22C9600B2D50E /* Balls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AED18C22C9600B2D50E /* Balls.cpp */; };
+		F2901AF818C22C9600B2D50E /* Balls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AED18C22C9600B2D50E /* Balls.cpp */; };
+		F2901AF918C22C9600B2D50E /* CircleLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEF18C22C9600B2D50E /* CircleLine.cpp */; };
+		F2901AFA18C22C9600B2D50E /* CircleLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEF18C22C9600B2D50E /* CircleLine.cpp */; };
+		F2901AFB18C22C9600B2D50E /* CircleLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEF18C22C9600B2D50E /* CircleLine.cpp */; };
+		F2901AFC18C22C9600B2D50E /* CircleLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEF18C22C9600B2D50E /* CircleLine.cpp */; };
 		F296B6E116FDB93F0068A6BD /* AttrCtl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F296B6DF16FDB93F0068A6BD /* AttrCtl.cpp */; };
 		F2B9D60718A0E43C005EA5A4 /* Warp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D60518A0E43C005EA5A4 /* Warp.cpp */; };
 		F2B9D61418A111D2005EA5A4 /* blurX.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61218A111D2005EA5A4 /* blurX.frag */; };
@@ -726,10 +734,6 @@
 		F220C7B318A65D1900B8EA9F /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gui.h; sourceTree = "<group>"; };
 		F222D98018A52F2100450D5F /* blurXa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurXa.frag; sourceTree = "<group>"; };
 		F222D98118A52F2200450D5F /* blurYa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurYa.frag; sourceTree = "<group>"; };
-		F22359EC17C15D1B00895AA8 /* AutoTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoTree.cpp; sourceTree = "<group>"; };
-		F22359ED17C15D1B00895AA8 /* AutoTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoTree.h; sourceTree = "<group>"; };
-		F22359EE17C15D1B00895AA8 /* Cinetique.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cinetique.cpp; sourceTree = "<group>"; };
-		F22359EF17C15D1B00895AA8 /* Cinetique.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cinetique.h; sourceTree = "<group>"; };
 		F22359F317C15D2800895AA8 /* Ruban.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ruban.cpp; sourceTree = "<group>"; };
 		F22359F417C15D2800895AA8 /* Ruban.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruban.h; sourceTree = "<group>"; };
 		F242ACAD18A05DAC0091E2EF /* boule2gomme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = boule2gomme.cpp; sourceTree = "<group>"; };
@@ -739,6 +743,14 @@
 		F260A73B16C4EE440041ACEA /* Easer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Easer.cpp; sourceTree = "<group>"; };
 		F260A73C16C4EE440041ACEA /* Easer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Easer.h; sourceTree = "<group>"; };
 		F26A260B17BEB77B0053DD48 /* Shadow.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shadow.frag; sourceTree = "<group>"; };
+		F2901AE518C22C8700B2D50E /* AutoTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AutoTree.cpp; sourceTree = "<group>"; };
+		F2901AE618C22C8700B2D50E /* AutoTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoTree.h; sourceTree = "<group>"; };
+		F2901AEB18C22C9600B2D50E /* BallManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BallManager.cpp; sourceTree = "<group>"; };
+		F2901AEC18C22C9600B2D50E /* BallManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BallManager.h; sourceTree = "<group>"; };
+		F2901AED18C22C9600B2D50E /* Balls.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Balls.cpp; sourceTree = "<group>"; };
+		F2901AEE18C22C9600B2D50E /* Balls.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Balls.h; sourceTree = "<group>"; };
+		F2901AEF18C22C9600B2D50E /* CircleLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CircleLine.cpp; sourceTree = "<group>"; };
+		F2901AF018C22C9600B2D50E /* CircleLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleLine.h; sourceTree = "<group>"; };
 		F296B6DF16FDB93F0068A6BD /* AttrCtl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AttrCtl.cpp; sourceTree = "<group>"; };
 		F296B6E016FDB93F0068A6BD /* AttrCtl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttrCtl.h; sourceTree = "<group>"; };
 		F29F92A5167B5D98007DBECF /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
@@ -1727,16 +1739,20 @@
 		F2D52E0F17BB853500E384AB /* Visux */ = {
 			isa = PBXGroup;
 			children = (
+				F2901AEB18C22C9600B2D50E /* BallManager.cpp */,
+				F2901AEC18C22C9600B2D50E /* BallManager.h */,
+				F2901AED18C22C9600B2D50E /* Balls.cpp */,
+				F2901AEE18C22C9600B2D50E /* Balls.h */,
+				F2901AEF18C22C9600B2D50E /* CircleLine.cpp */,
+				F2901AF018C22C9600B2D50E /* CircleLine.h */,
+				F2901AE518C22C8700B2D50E /* AutoTree.cpp */,
+				F2901AE618C22C8700B2D50E /* AutoTree.h */,
 				6FB148C418AA5CF800C6B63F /* background.cpp */,
 				6FB148C518AA5CF800C6B63F /* background.h */,
 				6F4915F118AE2C7E001079F3 /* metaBalls.cpp */,
 				6F4915F218AE2C7E001079F3 /* metaBalls.h */,
-				F22359EC17C15D1B00895AA8 /* AutoTree.cpp */,
-				F22359ED17C15D1B00895AA8 /* AutoTree.h */,
 				F22359F317C15D2800895AA8 /* Ruban.cpp */,
 				F22359F417C15D2800895AA8 /* Ruban.h */,
-				F22359EE17C15D1B00895AA8 /* Cinetique.cpp */,
-				F22359EF17C15D1B00895AA8 /* Cinetique.h */,
 				F2D666FA16F8D94F00B5FD58 /* visu.cpp */,
 				F2D666FB16F8D94F00B5FD58 /* visu.h */,
 				F20CC4611885DBD600FDBDC2 /* Baton.cpp */,
@@ -2186,10 +2202,8 @@
 				6F1EE69218A927ED00608125 /* VisuHandler.cpp in Sources */,
 				6F1EE69318A927ED00608125 /* ParticlesHandler.cpp in Sources */,
 				6F1EE69418A927ED00608125 /* Shadow.frag in Sources */,
-				6F1EE69518A927ED00608125 /* AutoTree.cpp in Sources */,
 				6F4915F518AE2C7E001079F3 /* metaBalls.cpp in Sources */,
 				6F2F476518AE71F10050EA33 /* thresholdBW.frag in Sources */,
-				6F1EE69618A927ED00608125 /* Cinetique.cpp in Sources */,
 				6F1EEA6C18A94F3300608125 /* globalForce.frag in Sources */,
 				6F1EEA7018A95D6C00608125 /* fieldForce.frag in Sources */,
 				6F9E618118AD48EB00D93498 /* gloom.frag in Sources */,
@@ -2243,6 +2257,10 @@
 				6F2DD5FB18B22DF100AA09D2 /* ofxSyphonServer.mm in Sources */,
 				6F2DD5FA18B22DEE00AA09D2 /* ofxSyphonClient.mm in Sources */,
 				F2E27B1118AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
+				F2901AE918C22C8700B2D50E /* AutoTree.cpp in Sources */,
+				F2901AF318C22C9600B2D50E /* BallManager.cpp in Sources */,
+				F2901AF718C22C9600B2D50E /* Balls.cpp in Sources */,
+				F2901AFB18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2288,8 +2306,6 @@
 				6FC6761D18A9118F00D24E6C /* VisuHandler.cpp in Sources */,
 				6FC6761E18A9118F00D24E6C /* ParticlesHandler.cpp in Sources */,
 				6FC6761F18A9118F00D24E6C /* Shadow.frag in Sources */,
-				6FC6762018A9118F00D24E6C /* AutoTree.cpp in Sources */,
-				6FC6762118A9118F00D24E6C /* Cinetique.cpp in Sources */,
 				6F1EEA6B18A94F3300608125 /* globalForce.frag in Sources */,
 				6F1EEA6F18A95D6C00608125 /* fieldForce.frag in Sources */,
 				6FC6762218A9118F00D24E6C /* Ruban.cpp in Sources */,
@@ -2343,6 +2359,10 @@
 				6FC6764E18A9118F00D24E6C /* spring.frag in Sources */,
 				F25C29E618ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
 				F2E27B1018AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
+				F2901AE818C22C8700B2D50E /* AutoTree.cpp in Sources */,
+				F2901AF218C22C9600B2D50E /* BallManager.cpp in Sources */,
+				F2901AF618C22C9600B2D50E /* Balls.cpp in Sources */,
+				F2901AFA18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2388,8 +2408,6 @@
 				F2D52E1217BB856300E384AB /* VisuHandler.cpp in Sources */,
 				F2D52E1617BBA3E800E384AB /* ParticlesHandler.cpp in Sources */,
 				F26A260C17BEB77B0053DD48 /* Shadow.frag in Sources */,
-				F22359F017C15D1B00895AA8 /* AutoTree.cpp in Sources */,
-				F22359F117C15D1B00895AA8 /* Cinetique.cpp in Sources */,
 				6F1EEA6A18A94F3300608125 /* globalForce.frag in Sources */,
 				6F1EEA6E18A95D6C00608125 /* fieldForce.frag in Sources */,
 				F22359F517C15D2800895AA8 /* Ruban.cpp in Sources */,
@@ -2443,6 +2461,10 @@
 				F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */,
 				F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
 				F2E27B0F18AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
+				F2901AE718C22C8700B2D50E /* AutoTree.cpp in Sources */,
+				F2901AF118C22C9600B2D50E /* BallManager.cpp in Sources */,
+				F2901AF518C22C9600B2D50E /* Balls.cpp in Sources */,
+				F2901AF918C22C9600B2D50E /* CircleLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2488,8 +2510,6 @@
 				F200AA4C18A97C5D0004F00A /* VisuHandler.cpp in Sources */,
 				F200AA4D18A97C5D0004F00A /* ParticlesHandler.cpp in Sources */,
 				F200AA4E18A97C5D0004F00A /* Shadow.frag in Sources */,
-				F200AA4F18A97C5D0004F00A /* AutoTree.cpp in Sources */,
-				F200AA5018A97C5D0004F00A /* Cinetique.cpp in Sources */,
 				F200AA5118A97C5D0004F00A /* globalForce.frag in Sources */,
 				F200AA5218A97C5D0004F00A /* fieldForce.frag in Sources */,
 				F200AA5318A97C5D0004F00A /* Ruban.cpp in Sources */,
@@ -2543,6 +2563,10 @@
 				F200AA7D18A97C5D0004F00A /* spring.frag in Sources */,
 				F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
 				F2E27B1218AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
+				F2901AEA18C22C8700B2D50E /* AutoTree.cpp in Sources */,
+				F2901AF418C22C9600B2D50E /* BallManager.cpp in Sources */,
+				F2901AF818C22C9600B2D50E /* Balls.cpp in Sources */,
+				F2901AFC18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,7 @@
 BallManager::BallManager(VisuHandler * v):VisuClass(v){
     settings.setName("BallManager");
     int num = 25;
-    imgPart.loadImage("images/part.png");
+    imgPart.loadImage("images/ballPart.png");
     
     centroidPoly = ofPoint( 0.5, 0,5);
     centroidSpeed = ofVec2f( 0.0, 0.0);
@@ -22,8 +22,13 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(usePointEmitter,true,false,true);
     MYPARAM(noiseF,ofVec2f(0),ofVec2f(0),ofVec2f(1));
     MYPARAM(emitter,ofVec2f(0),ofVec2f(0),ofVec2f(1));
+    MYPARAM(emission,0.0,0.0f,1.0f);
     MYPARAM(mode,0,0,10);
+    MYPARAM(lifeTime,0,0,2000);
+    
     mode.addListener(this,&BallManager::changeMode);
+    int m = 3;
+    changeMode(m);
 }
 
 
@@ -85,8 +90,8 @@ void BallManager::update(int w,int h){
         
         
         ofPoint noise = noiseF.get()*ofVec2f(ofRandomf());
-        ofPoint speed = ofPoint(0, 0.2);
-        speed += noise;
+        ofPoint speed = ofPoint(0, 0.01);
+        speed +=noise;
         speed *= 0.6f;
         
         ofPoint finalEmitter = emitter.get();
@@ -187,7 +192,7 @@ void BallManager::draw(int w, int h){
 //-------------------------------------------------------------
 void BallManager::addBall(ofPoint posin, ofPoint speedin, ofColor colin, float sizein){
     
-    int lifeTime = (int) 30 + ofRandom(100);
+    int life = (int) lifeTime + ofRandom(100);
     
     BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
                                      ,&gridForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
@@ -331,12 +336,12 @@ void BallManager::changeMode(int & m){
                 useGrid = false;
                 useBorder = true;
                 useTor = false;
-                gridForce = 0.0;
+                gridForce = 0.2;
                 insideMode = false;
                 dieMode = 2;
-                emission = 0.3;
+                emission = 0.0;
                 usePointEmitter = true;
-                gravity = ofVec2f(0, 0.05);
+                gravity = ofVec2f(0, 0.0003);
                 }
             break;
             case 4 : {

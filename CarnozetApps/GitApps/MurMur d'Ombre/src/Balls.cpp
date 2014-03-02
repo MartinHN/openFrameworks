@@ -202,18 +202,18 @@ void BouncingBall::draw(int w,int h){
     
     if(bounce){
         ofSetColor(255, 0, 0, 255);
-        //imgPart->draw(pos.x*w - size/2.0f, pos.y*h - size/2.0f, size, size );
+        imgPart->draw(pos.x*w - size/2.0f, pos.y*h - size/2.0f, size, size );
 //        ofSetColor(color.r, color.g, color.b, 100);
-        ofCircle(pos.x*w, pos.y*h, size);
+//        ofCircle(pos.x*w, pos.y*h, size);
 //        ofSetColor(color.r, color.g, color.b, 200);
         
     }
     else{
 //        ofSetColor(color.r, color.g, color.b, 50);
-        ofCircle(pos.x*w, pos.y*h, size);
+//        ofCircle(pos.x*w, pos.y*h, size);
 //        ofSetColor(color.r, color.g, color.b, 100);
 //        ofCircle(pos.x*w, pos.y*h, 5);
-        //imgPart->draw(pos.x*w - size/2.0f, pos.y*h - size/2.0f, size, size );
+        imgPart->draw(pos.x*w - size/2.0f, pos.y*h - size/2.0f, size, size );
        // ofCircle(origin.x*w, origin.y*h, 2);
 
     }

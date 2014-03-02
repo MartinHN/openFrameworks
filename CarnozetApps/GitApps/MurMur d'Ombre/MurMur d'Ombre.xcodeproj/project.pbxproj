@@ -449,6 +449,10 @@
 		F2F7745D1653B46B00E0CB96 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774581653B46B00E0CB96 /* render.frag */; };
 		F2F7745E1653B46B00E0CB96 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745A1653B46B00E0CB96 /* render.vert */; };
 		F2F7745F1653B46B00E0CB96 /* velUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745B1653B46B00E0CB96 /* velUpdate.frag */; };
+		F2F8117918C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
+		F2F8117A18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
+		F2F8117B18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
+		F2F8117C18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
 		F2FA5DF318A3944F00513406 /* EcranHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FA5DF218A3944F00513406 /* EcranHandler.cpp */; };
 		F2FB83EE18A8D54D005E75BB /* neth.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83ED18A8D54D005E75BB /* neth.frag */; };
 		F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83EF18A8EF2B005E75BB /* spring.frag */; };
@@ -810,6 +814,8 @@
 		F2F774581653B46B00E0CB96 /* render.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.frag; sourceTree = "<group>"; };
 		F2F7745A1653B46B00E0CB96 /* render.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = render.vert; sourceTree = "<group>"; };
 		F2F7745B1653B46B00E0CB96 /* velUpdate.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = velUpdate.frag; sourceTree = "<group>"; };
+		F2F8117818C3734600965B1B /* drawBlob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawBlob.cpp; sourceTree = "<group>"; };
+		F2F8117D18C3736500965B1B /* drawBlob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawBlob.h; sourceTree = "<group>"; };
 		F2FA5DF218A3944F00513406 /* EcranHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EcranHandler.cpp; sourceTree = "<group>"; };
 		F2FA5DF418A3946600513406 /* EcranHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EcranHandler.h; sourceTree = "<group>"; };
 		F2FB83ED18A8D54D005E75BB /* neth.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = neth.frag; sourceTree = "<group>"; };
@@ -1759,6 +1765,8 @@
 				F20CC4621885DBD600FDBDC2 /* Baton.h */,
 				F242ACAD18A05DAC0091E2EF /* boule2gomme.cpp */,
 				F242ACAF18A05DC00091E2EF /* boule2gomme.h */,
+				F2F8117818C3734600965B1B /* drawBlob.cpp */,
+				F2F8117D18C3736500965B1B /* drawBlob.h */,
 			);
 			name = Visux;
 			sourceTree = "<group>";
@@ -2261,6 +2269,7 @@
 				F2901AF318C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF718C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFB18C22C9600B2D50E /* CircleLine.cpp in Sources */,
+				F2F8117B18C3734700965B1B /* drawBlob.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2363,6 +2372,7 @@
 				F2901AF218C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF618C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFA18C22C9600B2D50E /* CircleLine.cpp in Sources */,
+				F2F8117A18C3734700965B1B /* drawBlob.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2465,6 +2475,7 @@
 				F2901AF118C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF518C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AF918C22C9600B2D50E /* CircleLine.cpp in Sources */,
+				F2F8117918C3734700965B1B /* drawBlob.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2567,6 +2578,7 @@
 				F2901AF418C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF818C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFC18C22C9600B2D50E /* CircleLine.cpp in Sources */,
+				F2F8117C18C3734700965B1B /* drawBlob.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

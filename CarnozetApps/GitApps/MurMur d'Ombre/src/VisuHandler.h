@@ -91,7 +91,7 @@ public:
     ofxOscParameterSync paramSync;
 
   
-
+    ofFbo pipeFbo;
   
 
     

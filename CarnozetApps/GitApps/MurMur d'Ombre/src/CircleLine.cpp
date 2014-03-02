@@ -6,6 +6,8 @@
 //
 //
 
+//TODO: make it a visuClass
+
 #include "CircleLine.h"
 
 

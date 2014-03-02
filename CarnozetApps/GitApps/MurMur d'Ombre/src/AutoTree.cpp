@@ -59,7 +59,8 @@ void AutoTree::init(){
     //    b.lifeTime = 200;
     //    b.finalLength = 200;
     //    list.push_back(b);
-   // myfbo = ofFbo();
+    // myfbo = ofFbo();
+    
     myfbo.allocate(width,height, GL_RGBA);
     
     myfbo.begin();

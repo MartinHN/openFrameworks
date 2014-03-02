@@ -5,6 +5,7 @@
 //  Created by Conil Aurélien on 25/02/2014.
 //
 //
+//TODO: make it a visuClass
 
 #ifndef __MurMurDombre__CircleLine__
 #define __MurMurDombre__CircleLine__

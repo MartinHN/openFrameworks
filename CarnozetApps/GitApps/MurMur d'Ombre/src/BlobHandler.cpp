@@ -35,10 +35,10 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
 
 void BlobHandler::update(){
     
-    getBlob();
-    arms = getExtrems();
-    centroids = getCentroids();
-    boxes = getBounds();
+    compBlob();
+    arms = compExtrems();
+    centroids = compCentroid();
+    boxes = compBounds();
     
     blurblob();
 
@@ -61,26 +61,26 @@ void BlobHandler::registerParams(){
 
 
 
-void BlobHandler::computePoly(){
-    
-    syphonTex.dst->begin();
-    threshBW.begin();
-    threshBW.setUniformTexture("tex",blobClient.getTexture(),1);
-    
-    
-    threshBW.end();
-    syphonTex.dst->end();
-    
-    ofxCvGrayscaleImage bw ;
-    bw.getTextureReference() = syphonTex.src->getTextureReference();
-    bw.threshold(40);
-
-}
-
-
+//void BlobHandler::computePoly(){
+//    
+//    syphonTex.dst->begin();
+//    threshBW.begin();
+//    threshBW.setUniformTexture("tex",blobClient.getTexture(),1);
+//    
+//    
+//    threshBW.end();
+//    syphonTex.dst->end();
+//    
+//    ofxCvGrayscaleImage bw ;
+//    bw.getTextureReference() = syphonTex.src->getTextureReference();
+//    bw.threshold(40);
+//
+//}
 
 
-void BlobHandler::getBlob(){
+
+
+void BlobHandler::compBlob(){
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
@@ -114,7 +114,7 @@ void BlobHandler::getBlob(){
 }
 
 
-vector<ofVec3f> BlobHandler::getCentroids(float w, float h){
+vector<ofVec3f> BlobHandler::compCentroid(float w, float h){
     vector<ofVec3f> res;
     ofVec3f scale(inw/w,inh/h);
     for (int i = 0 ; i< blobs.size();i++){
@@ -123,7 +123,7 @@ vector<ofVec3f> BlobHandler::getCentroids(float w, float h){
     return res;
 }
 
-vector<ofRectangle> BlobHandler::getBounds(float w, float h){
+vector<ofRectangle> BlobHandler::compBounds(float w, float h){
     vector<ofRectangle> res;
     ofVec3f scale(inw/w,inh/h);
     for (int i = 0 ; i< blobs.size();i++){
@@ -149,7 +149,24 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
     return res;
 }
 
-vector<ofVec3f> BlobHandler::getExtrems(float w, float h){
+vector<ofPath> BlobHandler::getPaths(float w, float h){
+    vector<ofPath> res;
+    ofVec3f scale(inw/w,inh/h);
+    for (int i = 0 ; i< blobs.size();i++){
+        ofPath pp ;
+        for(int j = 0 ; j < blobs[i].nPts;j++){
+            pp.lineTo(blobs[i].pts[j]/scale);
+        }
+        pp.simplify(simplification);
+//        if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
+//        else{pp.simplify(simplification);}
+        //        pp.setClosed(true);
+        res.push_back(pp);
+    }
+    return res;
+}
+
+vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     vector<ofVec3f> res;
     vector<ofPolyline> tmp ;
 

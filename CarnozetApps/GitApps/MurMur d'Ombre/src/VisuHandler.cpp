@@ -21,6 +21,8 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     allParams.clear();
     allParams.setName("Visu");
+    settings.setName("VisuHandler");
+    
     zdepth = zdepthin;
     inw=inwin;
     inh= inhin;
@@ -36,6 +38,8 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     sH.loadScreensPos();
     
     bH = bHin;
+    
+    pipeFbo.allocate(*scrw, *scrh);
 
     
 
@@ -96,6 +100,8 @@ void VisuHandler::registerParams(){
     bH->registerParams();
         attr->registerParam();
     
+    MYPARAM(pipeblur,255,0,255);
+    
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
@@ -120,6 +126,11 @@ const void VisuHandler::printallp(ofParameterGroup p){
 const void VisuHandler::draw(){
     // draw visu
    
+    pipeFbo.begin();
+    ofSetColor(0,0,0,pipeblur);
+    ofRect(0,0,*scrw,*scrh);
+    pipeFbo.end();
+    
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
@@ -192,6 +203,8 @@ void VisuHandler::addVisu(VisuClass * v){
 
 
 void VisuHandler::updateScreenSize(){
+    
+     pipeFbo.allocate(*scrw, *scrh);
     for (int i = 0 ; i< sH.screenL.size();i++){
         sH.screenL[i]->calcRectMax();
     }

@@ -29,6 +29,7 @@ public:
     ofParameter<ofVec2f> scale2;
     
     ofParameter<float> smooth;
+    ofParameter<bool> pipe;
     
     void draw(int w, int h);
     void update(int w, int h);

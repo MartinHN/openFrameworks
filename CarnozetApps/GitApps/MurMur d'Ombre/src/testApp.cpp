@@ -152,6 +152,7 @@ bH.setup(inw,inh,&blurX,&blurY);
 
 
     globalParam.add(settings);
+    globalParam.add(visuHandler.settings);
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
     globalParam.add(visuHandler.sH.screensParam);

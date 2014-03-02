@@ -89,10 +89,13 @@ public:
     
     ofParameterGroup allParams;
     ofxOscParameterSync paramSync;
-
+    
   
     ofFbo pipeFbo;
   
+    
+    ofParameterGroup settings;
+    ofParameter<int> pipeblur;
 
     
 };

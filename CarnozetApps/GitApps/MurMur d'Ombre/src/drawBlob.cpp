@@ -10,7 +10,8 @@
 
 
 drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
-   
+    MYPARAM(pipe, true,false,true);
+    
     MYPARAM(smooth,0.f,0.f,10.f)
     
     MYPARAM(screen1,0,-1,15);
@@ -24,6 +25,7 @@ drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
     MYPARAM(scale2,ofVec2f(1),ofVec2f(0),ofVec2f(2));
 
     
+    
     settings.setName("drawBlob");
 }
 
@@ -34,19 +36,22 @@ void drawBlob::update(int w, int h){
 }
 
 void drawBlob::draw(int w, int h){
-    
+    vector<ofPath> paths = dad->bH->getPaths(w*scale1->x , h*scale1->y) ;
+    if(pipe){
     dad->pipeFbo.begin();
         ofPushMatrix();
         ofTranslate(w*scale1->x /2.0, h*scale1->y/2.0, pos1->z*dad->zdepth);
-    
-        vector<ofPolyline> paths = dad->bH->getPaths(w*scale1->x , h*scale1->y) ;
+        for(int i  = 0 ; i< paths.size();i++){paths[i].draw();}
         
-        for(int i  = 0 ; i< polys.size();i++){
-            paths[i].draw();
-            
-        }
-        
-        ofPopMatrix();
+    ofPopMatrix();
+    dad->pipeFbo.begin();
     }
+    
+    
+    ofPushMatrix();
+    ofTranslate(w*scale1->x /2.0, h*scale1->y/2.0, pos1->z*dad->zdepth);
+    for(int i  = 0 ; i< paths.size();i++){paths[i].draw();}
+    
+    ofPopMatrix();
     
  }

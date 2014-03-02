@@ -21,6 +21,12 @@ void Gui::load(ofParameterGroup & pgtmp){
     
     baseC++;
     int h = guiParam.back()->getHeight() + 10;
+    
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("VisuHandler"),pgtmp.getGroup("VisuHandler").getName(),(baseC)*PARAMW);
+    
+    baseC++;
+    h += guiParam.back()->getHeight() + 10;
 
     guiParam.push_back(new ofxPanel());
     guiParam.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW);

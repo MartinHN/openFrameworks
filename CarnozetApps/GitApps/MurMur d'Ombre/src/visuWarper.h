@@ -18,6 +18,7 @@
 #include "metaBalls.h"
 #include "AutoTree.h"
 #include "BallManager.h"
+#include "drawBlob.h"
 
 
 

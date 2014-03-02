@@ -91,11 +91,11 @@ public:
     ofxOscParameterSync paramSync;
     
   
-    ofFbo pipeFbo;
+    pingPongBuffer pipePP;
   
     
     ofParameterGroup settings;
-    ofParameter<int> pipeblur;
+    ofParameter<float> pipeblur;
 
     
 };

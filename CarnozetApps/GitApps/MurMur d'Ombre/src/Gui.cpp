@@ -57,7 +57,7 @@ void Gui::load(ofParameterGroup & pgtmp){
         ofAbstractParameter * p = &pgtmp2.get(i); 
         if(p->type()==typeid(ofParameterGroup).name()){
             guiVisu.push_back(new ofxPanel());
-            guiVisu.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),(baseC)*PARAMW%ofGetWidth()*(4./5),(baseC)*PARAMW/ofGetWidth()*(4./5));
+            guiVisu.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),(int)((baseC)*PARAMW)%(int)(ofGetWidth()*(4./5)),3*PARAMW*int((baseC)*PARAMW/(ofGetWidth()*(4./5))));
             guiVisu.back()->minimizeAll();
             guiVisu.back()->getShape();
             baseC++;

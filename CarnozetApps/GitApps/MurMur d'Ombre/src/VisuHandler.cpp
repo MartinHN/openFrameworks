@@ -39,7 +39,7 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     bH = bHin;
     
-    pipeFbo.allocate(*scrw, *scrh);
+    pipePP.allocate(inw, inh);
 
     
 
@@ -100,7 +100,7 @@ void VisuHandler::registerParams(){
     bH->registerParams();
         attr->registerParam();
     
-    MYPARAM(pipeblur,255,0,255);
+    MYPARAM(pipeblur,0.f,0.f,25.f);
     
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
@@ -124,21 +124,27 @@ const void VisuHandler::printallp(ofParameterGroup p){
 }
 
 const void VisuHandler::draw(){
-    // draw visu
-   
-    pipeFbo.begin();
-    ofSetColor(0,0,0,pipeblur);
-    ofRect(0,0,*scrw,*scrh);
-    pipeFbo.end();
+
+    
+
     
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    
+    pipePP.src->begin();
+    ofSetColor(0,0,0,255);
+    ofRect(0,0,inw,inh);
+    pipePP.src->end();
+    
 
+    ofSetColor(255,255,255,255);
     for (int i = 0 ; i<visuList.size();i++){
+
         ofPushMatrix();
         ofPushView();
         ofPushStyle();
+        
         ofTranslate(0,0,zdepth/2);
         if(visuList[i]->isActive&&visuList[i]->screenN>=0){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
@@ -180,10 +186,46 @@ const void VisuHandler::draw(){
         ofPopStyle();
         ofPopView();
         ofPopMatrix();
+
+
     }
     
     
     ofSetColor(255);
+    
+    
+    if(pipeblur>0){
+        
+        pipePP.dst->begin();
+        bH->blurX->begin();
+        bH->blurX->setUniform1f("blurAmnt", pipeblur);
+        
+        pipePP.src->draw(0,0);
+        
+        bH->blurX->end();        
+        pipePP.dst->end();
+        pipePP.swap();
+        
+        pipePP.dst->begin();
+        bH->blurY->begin();
+        bH->blurY->setUniform1f("blurAmnt", pipeblur);
+        
+        pipePP.src->draw(0,0);
+        
+        bH->blurY->end();        
+        pipePP.dst->end();
+        pipePP.swap();
+        
+        
+        pipePP.dst->begin();
+ 
+        pipePP.src->draw(0,0);
+       
+        pipePP.dst->end();
+        
+        
+        
+    }
 
 }
 
@@ -204,7 +246,7 @@ void VisuHandler::addVisu(VisuClass * v){
 
 void VisuHandler::updateScreenSize(){
     
-     pipeFbo.allocate(*scrw, *scrh);
+
     for (int i = 0 ; i< sH.screenL.size();i++){
         sH.screenL[i]->calcRectMax();
     }

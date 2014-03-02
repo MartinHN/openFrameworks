@@ -25,7 +25,7 @@ void boule2gomme::update(int w, int h){
 void boule2gomme::draw(int w, int h){
 
     
-    dad->pipeFbo.draw();
+    dad->pipeFbo.draw(0,0);
 //    ofVec2f scale(w,h);
 //    vector<AttrStruct> * points =  &dad->attr->staticA;
 //     vector<AttrStruct> * opoints =  &dad->attr->destA;

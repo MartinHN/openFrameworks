@@ -163,7 +163,7 @@ bH.setup(inw,inh,&blurX,&blurY);
 #ifdef GUIMODE
     paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
 #else
-    paramSync.setup(globalParam,VISU_OSC_OUT,"0",VISU_OSC_IN);
+    paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
 #endif
 //    string savename = "lolo";
 //    visuHandler.saveState(savename);

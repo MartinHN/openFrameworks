@@ -59,9 +59,10 @@ public:
     
     //Die
     int dieMode;
+    ofParameter<int> lifeTime;
     
     //particule Emission
-    float emission;
+    ofParameter<float> emission;
     ofParameter<bool> usePointEmitter;
     ofParameter<ofVec2f> noiseF;
     ofParameter<ofVec2f> emitter;

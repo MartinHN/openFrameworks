@@ -127,7 +127,7 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(rback, 255, 0, 255);
     MYPARAM(gback, 255, 0, 255);
     MYPARAM(bback, 255, 0, 255);
-    MYPARAM(alphablur, 100, 0, 255);
+    MYPARAM(alphablur, 255, 0, 255);
     MYPARAM(bloomsize,0,0,10);
     MYPARAM(isGloom,false,false,true);
     MYPARAM(isPipe,false,false,true);
@@ -257,7 +257,7 @@ void testApp::draw(){
     
     glBlendEquation(GL_FUNC_ADD);
     
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 //
 //
 //    
@@ -287,8 +287,9 @@ void testApp::draw(){
     camera2.begin();
       ofSetColor(255,255,255,255);  
     
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+    glBlendEquation(GL_FUNC_ADD);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
         //Draw only for pipe
     int modeVisu = isPipe?1:0;
     visuHandler.draw(modeVisu);
@@ -336,7 +337,7 @@ if(isPipe){
           
     glBlendEquation(GL_FUNC_ADD);
     
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
         finalRender.src->begin();
     if(hidePipe) {
@@ -440,7 +441,7 @@ if(isPipe){
     
     bool oneMask = false;
     for (int i = 0 ; i<visuHandler.visuList.size();i++){
-        if(visuHandler.visuList[i]->isMasking){
+        if(visuHandler.visuList[i]->isMasking && visuHandler.visuList[i]->isActive){
             oneMask=true;
             break;
         }
@@ -460,7 +461,7 @@ if(isPipe){
     }
     glBlendEquation(GL_FUNC_ADD);
     
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     if(oneMask){
         ofSetColor(0);
         ofRect(0, 0, scrw, scrh);
@@ -469,10 +470,14 @@ if(isPipe){
         visuHandler.draw(3);  
         
         visuHandler.sH.drawMask();
-        
+    }
+    else{
+        ofSetColor(255);
+        ofRect(0, 0, scrw, scrh);
+    }
         glBlendEquation(GL_ADD);
         glBlendFunc(GL_DST_COLOR,GL_ZERO);
-    }
+    
 
     ofSetColor(255);
     finalRender.src->draw(0,0,ofGetWidth(),ofGetHeight());
@@ -1188,7 +1193,7 @@ void testApp::loadState(string & s){
 #if defined GUIMODE || defined STANDALONEMODE
     
     if(s!=""){
-        string abspath = ofToDataPath("presets/filage"+ofToString(loadName));
+        string abspath = ofToDataPath("presets/filage/"+ofToString(loadName));
         if(s.find("/")!=string::npos) {abspath = s;}
         else{ofLogWarning("loading from local : " + abspath);}
         ofXml xml;

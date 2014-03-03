@@ -22,7 +22,7 @@ VisuClass::VisuClass(VisuHandler * vh){
     MYPARAM(isMapping,true,false,true);
     
     MYPARAM(isPiping,false,false,true);
-    
+     MYPARAM(isMasking,false,false,true);
     
 }
 

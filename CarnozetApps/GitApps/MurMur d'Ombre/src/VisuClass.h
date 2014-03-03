@@ -75,7 +75,8 @@ public:
     ofParameter<bool> isActive;
     ofParameter<bool> isMapping;
     ofParameter<bool> recopy;
-    ofParameter<bool> isPiping;
+    ofParameter<bool> isPiping,isMasking;
+    
     VisuHandler *dad;
     ofParameterGroup settings;
     bool isHighFPS;

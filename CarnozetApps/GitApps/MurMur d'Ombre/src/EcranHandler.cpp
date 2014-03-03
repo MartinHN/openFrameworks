@@ -17,6 +17,25 @@ screensParam.setName("screens");
 }
 
 
+void ScreenHandler::updateBlobScreens(vector<ofxCvBlob> blobs){
+//    int  idx = 0;
+//        for (  vector<Ecran *>::iterator it = screenL.begin(); it != screenL.end(); ++it ) {
+//            if(idx>blobIdx){  delete * it;}
+//            idx++;
+//       
+//    }
+//
+//    
+//    screenL.resize(blobIdx);
+//    for(int i =0; i <blobs.size() ; i++){
+//        screenL.push_back(new Ecran(blobIdx+i,blobs[i].pts,scrw,scrh,true));
+//        screenL.back()->registerParams();
+//    }
+    
+    
+}
+
+
 
 
 void ScreenHandler::setup(int * win, int * hin, int zin){
@@ -24,7 +43,7 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
     scrh = hin;
     zdepth=zin;
     screensParam.setName("screens");
-    isMasking= true;
+    
 #ifdef LIVEBLUR
     blurX.load("","shaders/blurXa.frag");
     blurY.load("","shaders/blurYa.frag");
@@ -54,16 +73,14 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
 }
 
 void ScreenHandler::addScreen(vector<ofVec3f> vert){
-    screenL.push_back(new Ecran(screenL.size(),vert,scrw,scrh));
+    screenL.push_back(new Ecran(screenL.size(),vert,scrw,scrh,false));
 }
 
 void ScreenHandler::registerParams(){
     screensParam.clear();
-    isMasking.setName("isMasking");
-    screensParam.add(isMasking);
     for(int i = 0 ;i< screenL.size();i++){
         screenL[i]->registerParams();
-      screensParam.add(screenL[i]->vertices);  
+      screensParam.add(screenL[i]->settings);  
     }
 
     
@@ -216,17 +233,19 @@ void ScreenHandler::blurmask(){
 
 
 void ScreenHandler::drawMask(){
-    ofSetColor(0);
-    ofRect(0,0, *scrw,*scrh);
+
     ofSetColor(0,0,244);
     for (int i = 1 ; i < screenL.size();i++){
+        if(screenL[i]->mask){
         ofPath tmpP;
         vector<ofVec3f> vert = screenL[i]->getVertices();
         for(int j = 0 ; j<vert.size();j++){
             tmpP.lineTo(vert[j]);
         }
+        if(vert.size()>100)tmpP.simplify();
         tmpP.close();
         tmpP.draw();
+    }
     }
     
 }
@@ -273,8 +292,9 @@ void ScreenHandler::loadScreensPos(){
     }
     
     
-    
+   
     blurmask();    //delete tmpPath;
+    blobIdx = screenL.size();
     
 }
 

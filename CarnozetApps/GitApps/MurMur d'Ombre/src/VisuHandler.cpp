@@ -59,12 +59,12 @@ VisuClass * VisuHandler::get(const string & name){
 
 void VisuHandler::update(){
     
-
+    sH.updateBlobScreens(bH->blobs);
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->isActive&&!visuList[i]->isHighFPS){
             ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
-        visuList[i]->update(curS.width,curS.height);
+            visuList[i]->update(curS.width,curS.height);
         }
     }
 
@@ -127,14 +127,6 @@ const void VisuHandler::draw(int mode){
 
     
 
-    
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
-    
-
-    
-
     ofSetColor(255,255,255,255);
     for (int i = 0 ; i<visuList.size();i++){
 
@@ -142,11 +134,11 @@ const void VisuHandler::draw(int mode){
         ofPushView();
         ofPushStyle();
         
-        ofTranslate(0,0,zdepth/2);
-        if(visuList[i]->isActive && (mode == 0||(mode==1 && visuList[i]->isPiping) || (mode==2 &&!visuList[i]->isPiping)) &&visuList[i]->screenN>=0){
+        if(mode!=3)ofTranslate(0,0,zdepth/2);
+        if(visuList[i]->isActive && ((mode == 0 && !visuList[i]->isMasking)||(mode==1 && visuList[i]->isPiping && !visuList[i]->isMasking) || (mode==2 &&!visuList[i]->isPiping&& !visuList[i]->isMasking) || (mode==3 && visuList[i]->isMasking)) &&visuList[i]->screenN>=0){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
-                ofEnableAlphaBlending();
+                if(mode!=3)ofEnableAlphaBlending();
                 if(visuList[i]->recopy){
                     int curn = validScreen%10;
                     do{

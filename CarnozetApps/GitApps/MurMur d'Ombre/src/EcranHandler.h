@@ -11,6 +11,9 @@
 #include "Ecrans.h"
 #include "Constants.h"
 #include "ofMain.h"
+#include "ofxCvBlob.h"
+
+
 class ScreenHandler{
 public:  
     
@@ -21,6 +24,7 @@ public:
     void addScreen(vector<ofVec3f> vert);
     void registerParams();
     int getValidScreen(int which);
+    void updateBlobScreens(vector<ofxCvBlob> blobs);
     
     ofRectangle rectOfScreen(int which);
     const ofVec2f sizeOfScreen(const int which);
@@ -33,13 +37,16 @@ public:
     
     vector<Ecran *> screenL;
     ofParameterGroup screensParam;
-    ofParameter<bool> isMasking;
     
     int * scrw;
     int * scrh;
     int zdepth;
     
+    int blobIdx;
+    
     ofImage globalMask;
+    
+    
 #ifdef LIVEBLUR
     pingPongBuffer blur;
     ofShader blurX;

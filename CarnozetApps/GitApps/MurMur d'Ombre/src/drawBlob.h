@@ -21,13 +21,13 @@ public:
     
     
 
-    ofParameter<ofVec3f> pos;
+    ofParameter<ofVec3f> pos,color;
     ofParameter<ofVec2f> scale;
     ofParameter<bool> invertx,inverty;
 
     
 
-    ofParameter<bool> fill;
+    ofParameter<bool> fill,isMasking;
 
     void draw(int w, int h);
     void update(int w, int h);

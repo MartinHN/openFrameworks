@@ -18,7 +18,7 @@
 class Ecran{
 public:
     Ecran(){};
-    Ecran(int number,vector<ofVec3f> vert, int * scrw,int * scrh);
+    Ecran(int number,vector<ofVec3f> vert, int * scrw,int * scrh,bool isBlob);
     ~Ecran(){FreeClear(vl);};
     
     void calcRectMax();
@@ -30,6 +30,8 @@ public:
     int * scrw;
     int * scrh;
     int number;
+    ofParameterGroup settings;
+    ofParameter<bool> mask;
     ofParameterGroup vertices;
     list<ofParameter<ofVec3f> *> vl;
     ofRectangle rectMax;

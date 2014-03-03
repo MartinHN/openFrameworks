@@ -133,6 +133,7 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(isPipe,false,false,true);
     MYPARAM(pipeblur, 0.f,0.f,25.f);
     MYPARAM(hidePipe,false,false,true);
+    MYPARAM(pipeMask,false,false,true);
 
     settings.add(camera2.settings);
     
@@ -285,7 +286,9 @@ void testApp::draw(){
     ofEnableAlphaBlending();
     camera2.begin();
       ofSetColor(255,255,255,255);  
-
+    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
         //Draw only for pipe
     int modeVisu = isPipe?1:0;
     visuHandler.draw(modeVisu);
@@ -337,7 +340,7 @@ if(isPipe){
     
         finalRender.src->begin();
     if(hidePipe) {
-        ofSetColor(0);
+        ofSetColor(0,0,0,255);
         ofRect(0,0,scrw,scrh);
         ofSetColor(255);
     }
@@ -349,7 +352,6 @@ if(isPipe){
               ofPushView();
               ofEnableAlphaBlending();
               camera2.begin();
-              
               //draw reciever of pipe
               visuHandler.draw(2);
               
@@ -432,30 +434,45 @@ if(isPipe){
     
     }
     
-    
-
-
-   
-        
-//        glFinish();
-    
-       
-                  
 
     
     ofSetColor(255);
     
+    bool oneMask = false;
+    for (int i = 0 ; i<visuHandler.visuList.size();i++){
+        if(visuHandler.visuList[i]->isMasking){
+            oneMask=true;
+            break;
+        }
+    }
+    if(!oneMask){
+        for(int i = 0 ; i< visuHandler.sH.screenL.size();i++){
+            if(visuHandler.sH.screenL[i]->mask){
+                oneMask=true;
+                break;
 
-    
-
-    if(visuHandler.sH.isMasking){
-        visuHandler.sH.drawMask();
-        ofSetColor(0);
-        glBlendEquation(GL_ADD);
-        glBlendFunc(GL_DST_COLOR,GL_ZERO);
+            }
+        }
+    }
+    if(!oneMask){
+        oneMask = pipeMask;
 
     }
-
+    glBlendEquation(GL_FUNC_ADD);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    if(oneMask){
+        ofSetColor(0);
+        ofRect(0, 0, scrw, scrh);
+        ofSetColor(255);
+        if(pipeMask)visuHandler.pipePP.src->draw(0,0,scrw,scrh);
+        visuHandler.draw(3);  
+        
+        visuHandler.sH.drawMask();
+        
+        glBlendEquation(GL_ADD);
+        glBlendFunc(GL_DST_COLOR,GL_ZERO);
+    }
 
     ofSetColor(255);
     finalRender.src->draw(0,0,ofGetWidth(),ofGetHeight());
@@ -469,11 +486,11 @@ if(isPipe){
         ofDrawBitmapString("Fps: " + ofToString( ofGetFrameRate()) + "thr :" + ofToString(threshold), 15,15);
     }
     else{
-        ofSetColor(0,0,0);
-        ofRect(0, 00, 1000, 25);
-        ofSetColor(255, 255, 255);
-        ofDrawBitmapString("Un Des Sens : www.undessens.org",50,40);
-        ofDrawBitmapString(" www.facebook.com/AssoUnDesSens",500,40);
+//        ofSetColor(0,0,0);
+//        ofRect(0, 00, 1000, 25);
+//        ofSetColor(255, 255, 255);
+//        ofDrawBitmapString("Un Des Sens : www.undessens.org",50,40);
+//        ofDrawBitmapString(" www.facebook.com/AssoUnDesSens",500,40);
     }
     
     

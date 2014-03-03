@@ -8,16 +8,18 @@
 
 #include "Ecrans.h"
 
-Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin):number(number){
+Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isBlob):number(number){
 
     scrw = scrwin;
     scrh = scrhin;
     
     vertices.setName("screen"+ofToString(number));
+    if(!isBlob){vertices.setSerializable(false);};
     for (int i = 0 ; i < vert.size();i++){
          
         vl.push_back(new ofParameter<ofVec3f>());
-        vl.back()->set(vert[i]);
+        if(isBlob) vl.back()->set(vert[i]/ofVec2f(320,240));
+        else vl.back()->set(vert[i]);
         vl.back()->setName("p"+ofToString(i));
         vl.back()->setMin(ofVec3f(0));
         vl.back()->setMax(ofVec3f(1));
@@ -26,11 +28,12 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin):number(
     
     
     calcRectMax();
+    
 #ifdef HOMOGRAPHY
     screenWarp=Warp();
     screenWarp.setSrc(ofPoint(0,0), ofPoint(rectMax.width,0), ofPoint(rectMax.width,rectMax.height), ofPoint(0,rectMax.height));
     ofVec2f scale(*scrw,*scrh);
-    if(vert.size()<4)ofLogWarning("less than 4 vertices for screen : "+ofToString(number));
+    if(vert.size()!=4);//ofLogWarning("more/less than 4 vertices for screen : "+ofToString(number));
     else screenWarp.setDst(vert[0]*scale,vert[1]*scale,vert[2]*scale, vert[3]*scale);
 #endif
 
@@ -72,17 +75,21 @@ void Ecran::updateMatrix(ofVec3f & dummy){
 
 
 void Ecran::registerParams(){
+    MYPARAM(mask,true,false,true);
     for(std::list<ofParameter<ofVec3f>*>::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         (*vv)->removeListener(this,&Ecran::updateMatrix);
     }
     
     vertices.clear();
-    vertices.setName("screen"+ofToString(number));
+    vertices.setName("vertices");
+    
     for (std::list<ofParameter<ofVec3f>* >::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         (*vv)->setSerializable(false);
         vertices.add(**vv);
-        (*vv)->addListener(this,&Ecran::updateMatrix);
+        if(vl.size()==4)(*vv)->addListener(this,&Ecran::updateMatrix);
     }
+    settings.setName("screen"+ofToString(number));
+    settings.add(vertices);
 }
 
 void Ecran::calcRectMax(){

@@ -10,10 +10,10 @@
 		<alphablur>100</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
-		<isPipe>1</isPipe>
+		<isPipe>0</isPipe>
 		<pipeblur>13.25</pipeblur>
 		<hidePipe>0</hidePipe>
-		<pipeMask>1</pipeMask>
+		<pipeMask>0</pipeMask>
 		<camera>
 			<alpha>1</alpha>
 			<distance>1</distance>
@@ -77,7 +77,7 @@
 			<fill>1</fill>
 		</background>
 		<particles>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
@@ -166,12 +166,12 @@
 			</globalForce>
 		</particles>
 		<metaBalls>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isPiping>0</isPiping>
-			<isMasking>1</isMasking>
+			<isMasking>0</isMasking>
 			<rayon>0.48</rayon>
 			<curFamilly>2</curFamilly>
 			<color>255, 255, 255, 255</color>
@@ -196,7 +196,7 @@
 			<isMapping>1</isMapping>
 			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
-			<usePointEmitter>1</usePointEmitter>
+			<usePointEmitter>0</usePointEmitter>
 			<noiseF>0, 0</noiseF>
 			<emitter>0, 0</emitter>
 			<emission>0</emission>
@@ -208,13 +208,15 @@
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>1</isPiping>
-			<isMasking>1</isMasking>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
 			<fill>1</fill>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
 			<pos>0.5, 0.5, 0.5</pos>
 			<scale>1, 1</scale>
+			<color>0.22449, 1, 1</color>
+			<alpha>0</alpha>
 		</drawBlob>
 		<boule2gomme>
 			<isActive>0</isActive>

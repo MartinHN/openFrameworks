@@ -518,6 +518,7 @@ void testApp::keyPressed(int key){
          case'v':
              gui.visuSettings = !gui.visuSettings;
              break;
+ 
      }
 }
 #endif

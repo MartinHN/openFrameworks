@@ -38,7 +38,7 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
 }
 
 void CamHandler::updateScreenSize(int w, int h){
-    camera.setFov(2*ofRadToDeg(atan(h*1.0/(*zdepth))));//50
+    camera.setFov(2.0*ofRadToDeg(atan(h*1.0/(*zdepth))));//50
     camera.setAspectRatio(w*1.0/(h));
 }
 

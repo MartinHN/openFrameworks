@@ -75,7 +75,7 @@ void Ecran::updateMatrix(ofVec3f & dummy){
 
 
 void Ecran::registerParams(){
-    MYPARAM(mask,true,false,true);
+    MYPARAM(mask,false,false,true);
     for(std::list<ofParameter<ofVec3f>*>::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         (*vv)->removeListener(this,&Ecran::updateMatrix);
     }

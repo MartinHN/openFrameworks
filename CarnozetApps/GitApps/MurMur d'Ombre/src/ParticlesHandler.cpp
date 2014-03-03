@@ -480,7 +480,7 @@ void Particles::changeOrigins(int &type){
         case 1:
         {
             int zsplit = 2;
-            textureRes3 = pow(numParticles,1.0/3);
+            textureRes3 = (int)pow(numParticles,1.0/3);
             numParticles= textureRes3*textureRes3*textureRes3;
             textureRes = sqrt((float)numParticles);
             int count=0;

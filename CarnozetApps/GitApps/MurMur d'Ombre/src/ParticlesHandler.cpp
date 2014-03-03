@@ -255,7 +255,7 @@ void Particles::update(int w, int h){
                     if(forces[i]->name=="fieldForce"){
                         forces[i]->shader.setUniform2f("inres",dad->inw,dad->inh);
             #ifdef syphon
-                        forces[i]->shader.setUniformTexture("fieldData",dad->bH->syphonTex.src->getTextureReference(), 2);
+                        forces[i]->shader.setUniformTexture("fieldData",dad->pipePP.src->getTextureReference(), 2);
             #endif
                             }
                     if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size())

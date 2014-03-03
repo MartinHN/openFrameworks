@@ -137,13 +137,15 @@ bH.setup(inw,inh,&blurX,&blurY);
 //    settings.add(finalblur);
     
     visuHandler.addVisu(new background(&visuHandler));
-    visuHandler.addVisu(new boule2gomme(&visuHandler));
+    
     visuHandler.addVisu(new Particles(&visuHandler));
     visuHandler.addVisu(new metaBalls(&visuHandler));
     visuHandler.addVisu(new AutoTree(&visuHandler));
+    
     visuHandler.addVisu(new BallManager(&visuHandler));
+    visuHandler.addVisu(new drawBlob(&visuHandler));
     
-    
+    visuHandler.addVisu(new boule2gomme(&visuHandler));
     
 
     visuHandler.registerParams();

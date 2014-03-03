@@ -30,9 +30,13 @@ public:
     
     ofParameter<float> smooth;
     ofParameter<bool> pipe;
+    ofParameter<bool> fill;
+    ofParameter<bool> drawb;
     
     void draw(int w, int h);
     void update(int w, int h);
+    
+    void drawMe(int w,int h);
     
     
 };

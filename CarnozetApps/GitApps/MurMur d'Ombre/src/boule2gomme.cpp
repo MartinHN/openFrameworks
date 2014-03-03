@@ -24,8 +24,8 @@ void boule2gomme::update(int w, int h){
 
 void boule2gomme::draw(int w, int h){
 
-    
-    dad->pipeFbo.draw(0,0);
+    ofSetColor(255);
+    dad->pipePP.dst->draw(0,0);
 //    ofVec2f scale(w,h);
 //    vector<AttrStruct> * points =  &dad->attr->staticA;
 //     vector<AttrStruct> * opoints =  &dad->attr->destA;
@@ -39,11 +39,14 @@ void boule2gomme::draw(int w, int h){
 //        ofNoFill();
 //        ofEllipse(scale*opoints->at(i).p,rayon,rayon);
 //    }
-//#ifdef syphon
-//    ofSetColor(255);
-////    dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);
-//    dad->bH->syphonTex.src->draw(0,0,w/2,h/2);
-////    ofTranslate(0,h/2);
+    
+    ofRect(50,50,50,50);
+//    dad->bH->blobClient.draw(600,0);
+//    dad->bH->gs.draw(320,240);
+    
+//    dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);
+    //dad->bH->syphonTex.src->draw(0,0,w/2,h/2);
+//    ofTranslate(0,h/2);
 //    ofSetColor(0,255,0);
 //    vector<ofPolyline> pp = dad->bH->getBlobs(w/2,h/2);
 //    int max = pp.size();
@@ -62,10 +65,10 @@ void boule2gomme::draw(int w, int h){
 //    }
 //    
 //    ofSetColor(255,0,0);
-//    vector<ofVec3f> po = dad->bH->getExtrems(w/2,h/2);
+//    vector<ofVec3f> po = dad->bH->arms;
 //    for (int  i = 0 ; i< po.size();i++){
 //
 //        ofRect(po[i], 2*rayon,2* rayon);
 //    }
-//#endif
+
 }

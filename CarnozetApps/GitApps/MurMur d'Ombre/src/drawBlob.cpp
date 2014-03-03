@@ -33,7 +33,7 @@ void drawBlob::update(int w, int h){
 void drawBlob::draw(int w, int h){
     
 
-    ofSetColor(255);
+    ofSetColor(color->x,color->y,color->z,255);
     vector<ofPath> paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
     ofPushMatrix();
     if(fill)ofFill();

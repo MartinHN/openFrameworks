@@ -40,7 +40,12 @@ AutoTree::AutoTree(VisuHandler * v):VisuClass(v){
     
     
     MYPARAM(initTrig,false,false,true);
-    initTrig.addListener(this, &AutoTree::startStop);
+    //initTrig.addListener(this, &AutoTree::startStop);
+    MYPARAM(addPoint,false,false,true);
+    addPoint.addListener(this, &AutoTree::addNewPoint);
+    MYPARAM(debugMode,false,false,true);
+    MYPARAM(reset,false,false,true);
+    reset.addListener(this, &AutoTree::resetAll);
     
 //    
 //    MYPARAM(addTrig,false,false,true);
@@ -71,6 +76,7 @@ void AutoTree::init(){
     
 }
 
+//--------------------------------------------------------------
 void AutoTree::clear(){
  introPhase = 0;
     list.clear();
@@ -82,6 +88,8 @@ void AutoTree::clear(){
     
 }
 
+
+//--------------------------------------------------------------
 void AutoTree::startStop(bool & start){
     
     
@@ -90,7 +98,8 @@ void AutoTree::startStop(bool & start){
         
         clear();
         init();
-        reset();
+        bool isReset = true;
+        resetAll(isReset);
         
     }
     else
@@ -104,6 +113,7 @@ void AutoTree::startStop(bool & start){
     
 }
 
+//--------------------------------------------------------------
 void AutoTree::update(int w, int h){
     width = w;
     height = h;
@@ -214,15 +224,18 @@ void AutoTree::draw(int width, int height)
     }
     
 
-
-        
-    
    // myfbo.updateTexture();
     
     ofEnableBlendMode(OF_BLENDMODE_MULTIPLY);
     ofSetColor(255);
     myfbo.draw(0, 0,width,height);
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    
+    if(debugMode){
+    ofSetColor(255, 0, 0);
+    ofNoFill();
+    ofCircle(pointToBegin->x*width, pointToBegin->y*height,30);
+    }
     
     ofPopMatrix();
 }
@@ -269,64 +282,88 @@ void AutoTree::createBranche(ofPoint p, float a, int l,int tot,  bool isEnd){
 }
 
 //--------------------------------------------------------------
-void AutoTree::reset(){
+void AutoTree::resetAll(bool &isReset){
     
     
-    float n = 3.0f;
-    float angle = 2*PI/n;
-    float curAngle = ofRandomuf()*3.14;
+    list.clear();
+    myfbo.allocate(width,height, GL_RGBA);
     
-//    if(pointToBegin->x * pointToBegin->y == 0 )
-        
-    if(dad->attr->getType(0).size()>0)
-        pointToBegin = dad->attr->getType(0)[0]*ofVec2f(width,height);
+    myfbo.begin();
+    ofClear(0, 0, 0, 255);
+    myfbo.end();
+    list.clear();
     
+    initTrig = false;
+    introPhase = 0;
     
-    for(int i=0; i<n; i++){
-        
-        float finalAngle = curAngle ;
-        Branche b = Branche( pointToBegin.get()*ofVec2f(width,height),finalAngle,0, 200, false, &imagePart);
-        b.lifeTime = 13 + ofRandomuf()*30.0f;
-        b.finalLength = b.lifeTime;
-        if((i+1)%2 == 0 ){
-            //b.angle *= -1.0f;
-            b.clockWise = true;
+}
+
+//--------------------------------------------------------------
+void AutoTree::addNewPoint(bool &newPoint){
+    
+    if(newPoint){
+    
+        if(list.size()==0 && !initTrig)
+        {
+            initTrig = true;
+            introPhase = 0;
         }
-        list.push_back(b);
+        
+        float n = 3.0f;
+        float angle = 2*PI/n;
+        float curAngle = ofRandomuf()*3.14;
+        
+    //    if(pointToBegin->x * pointToBegin->y == 0 )
+    //    if(dad->attr->getType(0).size()>0)
+    //        pointToBegin = dad->attr->getType(0)[0]*ofVec2f(width,height);
         
         
-        curAngle +=angle;
+        for(int i=0; i<n; i++){
+            
+            float finalAngle = curAngle ;
+            Branche b = Branche( pointToBegin.get()*ofVec2f(width,height),finalAngle,0, 200, false, &imagePart);
+            b.lifeTime = 13 + ofRandomuf()*30.0f;
+            b.finalLength = b.lifeTime;
+            if((i+1)%2 == 0 ){
+                //b.angle *= -1.0f;
+                b.clockWise = true;
+            }
+            list.push_back(b);
+            
+            
+            curAngle +=angle;
+            
+            
+        }
         
         
     }
     
-
     
-//    Branche b = Branche( p,1.47f, 50, false, &imageLeaf);
-//    
-//    b.lifeTime = 50;
-//    b.finalLength = 50;
-//    list.push_back(b);
-//    
-//
-//    
-//    b = Branche( p,0.8, 150, true, &imageLeaf);
-//        b.lifeTime = 40;
-//    b.finalLength =40;
-//    list.push_back(b);
-//    
-//
-//    
-//    b = Branche( p , 2.2f, 150, false, &imageLeaf);
-//    
-//    b.lifeTime = 45; 
-//    b.finalLength = 45;
-//    list.push_back(b);
     
-
-    
+    //    Branche b = Branche( p,1.47f, 50, false, &imageLeaf);
+    //
+    //    b.lifeTime = 50;
+    //    b.finalLength = 50;
+    //    list.push_back(b);
+    //
+    //
+    //
+    //    b = Branche( p,0.8, 150, true, &imageLeaf);
+    //        b.lifeTime = 40;
+    //    b.finalLength =40;
+    //    list.push_back(b);
+    //
+    //
+    //
+    //    b = Branche( p , 2.2f, 150, false, &imageLeaf);
+    //
+    //    b.lifeTime = 45;
+    //    b.finalLength = 45;
+    //    list.push_back(b);
     
 
+    
     
 }
 

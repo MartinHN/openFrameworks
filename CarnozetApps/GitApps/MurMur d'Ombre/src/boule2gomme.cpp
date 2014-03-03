@@ -26,7 +26,7 @@ void boule2gomme::draw(int w, int h){
 
     ofSetColor(255);
     
-    dad->pipePP.src->draw(0,300);
+    dad->bH->syphonTex.src->draw(0,300);
     
     
     dad->pipePP.dst->draw(0,540);

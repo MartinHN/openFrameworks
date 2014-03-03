@@ -3,6 +3,8 @@
 
 
 #define CAMCOLOR
+
+//#define STANDALONEMODE
 //#define Debugcam
 //#define localcamera
 //#define testvid

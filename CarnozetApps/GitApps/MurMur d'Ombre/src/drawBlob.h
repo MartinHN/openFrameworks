@@ -23,6 +23,7 @@ public:
 
     ofParameter<ofVec3f> pos;
     ofParameter<ofVec2f> scale;
+    ofParameter<bool> invertx,inverty;
 
     
 

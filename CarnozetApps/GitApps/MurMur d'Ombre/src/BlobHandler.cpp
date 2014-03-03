@@ -43,24 +43,24 @@ void BlobHandler::update(){
     centroids = compCentroid();
     boxes = compBounds();
     
-    blurblob();
+//    blurblob();
 
 }
 
 void BlobHandler::registerParams(){
     settings.setName("blobsettings");
-    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
-    MYPARAM(vidThreshold, 0.f, 0.f, 255.f);
-    MYPARAM(invertBW,false,false,true);
-    MYPARAM(minSide,0.5f,0.f,1.f);
-    MYPARAM(maxSide,0.5f,0.f,1.f);
+//    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
+    MYPARAM(vidThreshold, 70.f, 0.f, 255.f);
+    MYPARAM(invertBW,true,false,true);
+    MYPARAM(minSide,0.f,0.f,1.f);
+    MYPARAM(maxSide,1.f,0.f,1.f);
     MYPARAM(maxBlobs, 1,0,4);
     MYPARAM(findHoles,false,false,true);
     MYPARAM(simplification,0.f,0.f,50.f);
     MYPARAM(smooth,0.f,0.f,10.f);
     MYPARAM(polyMaxPoints, 0,0,200);
     MYPARAM(maxLengthExtrem, 15.f,0.f,100.f);
-    MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
+//    MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
 }
 
 
@@ -122,6 +122,8 @@ vector<ofVec3f> BlobHandler::compCentroid(float w, float h){
     vector<ofVec3f> res;
     ofVec3f scale(inw/w,inh/h);
     for (int i = 0 ; i< blobs.size();i++){
+       
+        
         res.push_back(blobs[i].centroid/scale);
     }
     return res;
@@ -137,13 +139,16 @@ vector<ofRectangle> BlobHandler::compBounds(float w, float h){
 }
 
 
-vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
+vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
     vector<ofPolyline> res;
        ofVec3f scale(inw/w,inh/h);
     for (int i = 0 ; i< blobs.size();i++){
         ofPolyline pp ;
         for(int j = 0 ; j < blobs[i].nPts;j++){
-        pp.lineTo(blobs[i].pts[j]/scale);
+            ofPoint p = blobs[i].pts[j]/scale;
+            if(invx)p.x = w-p.x;
+            if(invx)p.y = h-p.y;
+        pp.lineTo(p);
         }
         if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
         if(simplification>0){
@@ -159,9 +164,9 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
     return res;
 }
 
-vector<ofPath> BlobHandler::getPaths(float w, float h){
+vector<ofPath> BlobHandler::getPaths(float w, float h,bool invx,bool invy){
     vector<ofPath> res;
-    vector<ofPolyline> p = getBlobs(w,h);
+    vector<ofPolyline> p = getBlobs(w,h,invx,invy);
     for (int i = 0 ; i< p.size();i++){
         ofPath pp ;
         
@@ -232,6 +237,7 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
                 if(idx>tmpspaced.size())idx-tmpspaced.size();
                 ofPoint p =tmpspaced.getPointAtIndexInterpolated(idx);
                 if(abs((p-tmpspaced.getCentroid2D()).getNormalized().dot(ofVec2f(1,0)))>cos(ofDegToRad(80))){
+                
                 res.push_back(p*ofVec2f(w,h));
                 }
                 
@@ -248,37 +254,37 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     return res;
 }
 
-void BlobHandler::blurblob(){
-    ofPushMatrix();
-    ofPushStyle();
-    ofPushView();
-    
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
-    gs.dilate_3x3();
-    
-    syphonTex.dst->begin();
-    ofSetColor(255);
-    blurX->begin();
-    blurX->setUniform1f("blurAmnt", blobBlur);
-    gs.draw(0,0,inw,inh);
-    blurX->end();
-    syphonTex.dst->end();
-    glFlush();
-    
-    syphonTex.swap();
-    
-    syphonTex.dst->begin();
-    blurY->begin();
-    blurY->setUniform1f("blurAmnt", blobBlur);
-    syphonTex.src->draw(0,0,inw,inh);
-    blurY->end();
-    syphonTex.dst->end();
-    syphonTex.swap();
-    ofPopMatrix();
-    ofPopStyle();
-    ofPopView();
-}
+//void BlobHandler::blurblob(){
+//    ofPushMatrix();
+//    ofPushStyle();
+//    ofPushView();
+//    
+//    glBlendEquation(GL_FUNC_ADD_EXT);
+//    
+//    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
+//    gs.dilate_3x3();
+//    
+//    syphonTex.dst->begin();
+//    ofSetColor(255);
+//    blurX->begin();
+//    blurX->setUniform1f("blurAmnt", blobBlur);
+//    gs.draw(0,0,inw,inh);
+//    blurX->end();
+//    syphonTex.dst->end();
+//    glFlush();
+//    
+//    syphonTex.swap();
+//    
+//    syphonTex.dst->begin();
+//    blurY->begin();
+//    blurY->setUniform1f("blurAmnt", blobBlur);
+//    syphonTex.src->draw(0,0,inw,inh);
+//    blurY->end();
+//    syphonTex.dst->end();
+//    syphonTex.swap();
+//    ofPopMatrix();
+//    ofPopStyle();
+//    ofPopView();
+//}
 
 

@@ -12,6 +12,8 @@
 drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
 
     MYPARAM(fill,true,false,true);
+    MYPARAM(invertx,false,false,true);
+    MYPARAM(inverty,false,false,true);
 
     MYPARAM(pos,ofVec3f(0.5),ofVec3f(0),ofVec3f(1));
     MYPARAM(scale,ofVec2f(1),ofVec2f(0),ofVec2f(2));
@@ -31,7 +33,7 @@ void drawBlob::update(int w, int h){
 void drawBlob::draw(int w, int h){
     ofSetColor(255);
 
-    vector<ofPath> paths = dad->bH->getPaths(w*scale->x , h*scale->y);
+    vector<ofPath> paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
     ofPushMatrix();
     if(fill)ofFill();
     else ofNoFill();

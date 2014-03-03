@@ -305,22 +305,21 @@ finalRender.dst->end();
     
     //PIPE
 if(isPipe){
-    
-
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_ONE,GL_ZERO);
+
      ofSetColor(255);
-    visuHandler.pipePP.dst->begin();
+    visuHandler.pipePP.src->begin();
           blurX.begin();
-          blurX.setUniform1f("blurAmnt", pipeblur);
-    ofSetColor(0,0,0,255);
-    ofRect(0,0,inw,inh);
+          blurX.setUniform1f("blurAmnt", pipeblur*2.);
             finalRender.src->draw(0,0,inw,inh);
           blurX.end();        
-    visuHandler.pipePP.dst->end();
-    visuHandler.pipePP.swap();
-              
+    visuHandler.pipePP.src->end();
+//    visuHandler.pipePP.swap();
+
+
+    ofSetColor(255);      
     visuHandler.pipePP.dst->begin();
          blurY.begin();
          blurY.setUniform1f("blurAmnt", pipeblur);
@@ -1128,7 +1127,7 @@ void testApp::oscBlobUpdate(){
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
     
-        points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
+        points.push_back(ofPoint(x*1.0/scrw,y*1.0/scrh,0));
 //    points.push_back(ofPoint(0.2,0.2,0));
 
     if(points.size()>0)attrctl.addPoints(points,0);

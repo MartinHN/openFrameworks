@@ -26,14 +26,16 @@ public:
     
 //    void computePoly();
     void update();
-    void blurblob();
+//    void blurblob();
     void compBlob();
     void registerParams();
     vector<ofVec3f> compCentroid(float w=1,float h=1);
     vector<ofRectangle> compBounds(float w=1, float h=1);
-    vector<ofPolyline> getBlobs(float w=1,float h=1);
     vector<ofVec3f> compExtrems(float w=1, float h=1);
-    vector<ofPath> getPaths(float w=1,float h = 1);
+    
+    
+    vector<ofPolyline> getBlobs(float w=1,float h=1,bool invx = false,bool invy = false);
+    vector<ofPath> getPaths(float w=1,float h = 1,bool invx = false,bool invy = false);
 
     
     vector<ofVec3f> arms;
@@ -59,7 +61,7 @@ public:
 
     ofParameter<float> vidThreshold;
     ofParameterGroup settings;
-    ofParameter<float> blobBlur;
+//    ofParameter<float> blobBlur;
     
     
     

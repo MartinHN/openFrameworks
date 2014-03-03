@@ -63,7 +63,7 @@ void AttrCtl::addPoints(vector<ofPoint> curcentroids,int type){
 
 
     for(int i = 0 ; i< curcentroids.size() ; i++){
-        AttrStruct p = AttrStruct(ofPoint(1-curcentroids[i].x,curcentroids[i].y,curcentroids[i].z+zoffset),type,0);
+        AttrStruct p = AttrStruct(ofPoint(curcentroids[i].x,curcentroids[i].y,curcentroids[i].z+zoffset),type,0);
         for(int k = 0 ; k< zones.size();k++){
             if(zones[k].inside(p.p)){
                 p.zone=k+1;
@@ -150,7 +150,7 @@ void AttrCtl::staticpoints(){
     for(int i=0;i<mirrorFam.size();i++){
         for(int j = 0 ; j< destA.size();j++){
             if(destA[j].type==mirrorFam[i])
-                staticA.push_back(AttrStruct(ofPoint(1-destA[j].p.x,destA[j].p.y,destA[j].p.z),destA[j].type,destA[j].zone));
+                staticA.push_back(AttrStruct(ofPoint(destA[j].p.x,1-destA[j].p.y,destA[j].p.z),destA[j].type,destA[j].zone));
         }
         
     }
@@ -160,7 +160,7 @@ void AttrCtl::staticpoints(){
     for(int i=0;i<mirrorFam.size();i++){
         for(int j = 0 ; j< destA.size();j++){
             if(destA[j].type==mirrorFam[i])
-                staticA.push_back(AttrStruct(ofPoint(1-destA[j].p.x,destA[j].p.y,destA[j].p.z),destA[j].type,destA[j].zone));
+                staticA.push_back(AttrStruct(ofPoint(destA[j].p.x,destA[j].p.y,1-destA[j].p.z),destA[j].type,destA[j].zone));
         }
         
     }

@@ -188,7 +188,7 @@ public:
     ofParameterGroup globalParam;    
     ofParameterGroup settings;
     ofParameter<float> finalblur;
-    ofParameter<float> brightness,saturation,contrast;
+    ofParameter<float> brightness,brightnessM,saturation,contrast;
     ofParameter<int> rback,bback,gback;
     ofParameter<int> alphablur;
     ofParameter<float> brightness2,saturation2,contrast2;

@@ -124,6 +124,8 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(saturation, 1.f, 0.f, 2.f);
     MYPARAM(contrast, 1.f, 0.f, 2.f);
     MYPARAM(brightness, 1.f, 0.f, 2.f);
+    MYPARAM(brightnessM,100.f,0.f,100.f);
+    brightnessM.setSerializable(false);
     MYPARAM(rback, 255, 0, 255);
     MYPARAM(gback, 255, 0, 255);
     MYPARAM(bback, 255, 0, 255);
@@ -134,6 +136,7 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(pipeblur, 0.f,0.f,25.f);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
+
 
     settings.add(camera2.settings);
     
@@ -405,7 +408,7 @@ if(isPipe){
             colorMod.begin();
             colorMod.setUniform1f("contrast",contrast); 
             colorMod.setUniform1f("saturation",saturation); 
-            colorMod.setUniform1f("brightness",brightness); 
+            colorMod.setUniform1f("brightness",brightness*brightnessM); 
             finalRender.src->draw(0,0);
 //    ofRect(0,0,ofGetHeight()/2,300);
             colorMod.end();

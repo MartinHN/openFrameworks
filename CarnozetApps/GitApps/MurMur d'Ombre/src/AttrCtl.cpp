@@ -27,7 +27,7 @@ void AttrCtl::update(){
 
 void AttrCtl::registerParam(){
     settings.setName("attrCtl");
-    
+    MYPARAM(isAttr,true,false,true);
     MYPARAM(zoffset,0.5f,0.f,1.f);
     MYPARAM(attrmirrorx,4,0,16);
     MYPARAM(attrmirrory,0,0,16);
@@ -81,9 +81,11 @@ void AttrCtl::addPoints(vector<ofPoint> curcentroids,int type){
 
 vector<ofPoint> AttrCtl::getAll(){
     vector<ofPoint> res;
+    if(isAttr){
     for(int i = 0 ; i< destA.size() ; i++){
         res.push_back(destA[i].p);
         
+    }
     }
     return res;
 }
@@ -91,6 +93,8 @@ vector<ofPoint> AttrCtl::getAll(){
 vector<ofPoint> AttrCtl::getType(int f){
     vector<ofPoint> res;
     vector<int> targetf;
+    
+    if(isAttr){
     
     if(f<0){
      return res;
@@ -107,6 +111,8 @@ vector<ofPoint> AttrCtl::getType(int f){
 
     for(int i = 0 ; i< destA.size() ; i++){
         if(destA[i].type==f){res.push_back(destA[i].p);}
+        
+    }
         
     }
     return res;

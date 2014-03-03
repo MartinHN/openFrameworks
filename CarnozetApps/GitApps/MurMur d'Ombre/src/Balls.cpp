@@ -177,9 +177,12 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
                 speed.x *= -0.99f;
             }
             if(pos.y < 0.0 ){
-                speed.y *= -0.90f;}
+                speed.y *= -0.90f;
+                speed.x += 0.002*ofRandomf();
+            }
             if( pos.y > 1.0){
                 speed.y *= -0.90f;
+                speed.x += 0.002*ofRandomf();
             }
             
         }
@@ -196,12 +199,19 @@ void BouncingBall::draw(int w,int h){
     
     
     ofPushMatrix();
+    int alpha = 255;
     
-    ofSetColor(color.r, color.g, color.b, 255);
+    if(*dieMode==2 && lifeTime<25){
+        
+        alpha = (int) lifeTime*10;
+        
+    }
+    
+    ofSetColor(color.r, color.g, color.b, alpha);
     ofFill();
     
     if(bounce){
-        ofSetColor(255, 0, 0, 255);
+        
         imgPart->draw(pos.x*w - size/2.0f, pos.y*h - size/2.0f, size, size );
 //        ofSetColor(color.r, color.g, color.b, 100);
 //        ofCircle(pos.x*w, pos.y*h, size);

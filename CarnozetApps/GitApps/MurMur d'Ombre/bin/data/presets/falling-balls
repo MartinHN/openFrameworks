@@ -19,6 +19,9 @@
 			<isLooking>0</isLooking>
 		</camera>
 	</global>
+	<VisuHandler>
+		<pipeblur>0</pipeblur>
+	</VisuHandler>
 	<blobsettings>
 		<blobBlur>0</blobBlur>
 		<vidThreshold>0</vidThreshold>
@@ -63,14 +66,6 @@
 			<ratio>1</ratio>
 			<fill>1</fill>
 		</background>
-		<boule2gomme>
-			<isActive>0</isActive>
-			<screenN>0</screenN>
-			<recopy>1</recopy>
-			<isMapping>1</isMapping>
-			<rayon>2</rayon>
-			<center>0.5, 0.5</center>
-		</boule2gomme>
 		<particles>
 			<isActive>0</isActive>
 			<screenN>0</screenN>
@@ -175,6 +170,9 @@
 			<isMapping>1</isMapping>
 			<pointToBegin>0.5, 0.5</pointToBegin>
 			<initTrig>0</initTrig>
+			<addPoint>1</addPoint>
+			<debugMode>0</debugMode>
+			<reset>1</reset>
 		</AutoTree>
 		<BallManager>
 			<isActive>1</isActive>
@@ -184,7 +182,33 @@
 			<usePointEmitter>1</usePointEmitter>
 			<noiseF>0, 0.0255102</noiseF>
 			<emitter>0.290816, 0</emitter>
+			<emission>0.225</emission>
 			<mode>3</mode>
+			<lifeTime>250</lifeTime>
 		</BallManager>
+		<drawBlob>
+			<isActive>0</isActive>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<pipe>1</pipe>
+			<drawb>1</drawb>
+			<fill>1</fill>
+			<smooth>0</smooth>
+			<screen1>0</screen1>
+			<pos1>0.5, 0.5, 0.5</pos1>
+			<scale1>1, 1</scale1>
+			<screen2>-1</screen2>
+			<pos2>0.5, 0.5, 0</pos2>
+			<scale2>1, 1</scale2>
+		</drawBlob>
+		<boule2gomme>
+			<isActive>0</isActive>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<rayon>2</rayon>
+			<center>0.5, 0.5</center>
+		</boule2gomme>
 	</Visu>
 </OF>

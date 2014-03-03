@@ -24,10 +24,10 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(emitter,ofVec2f(0),ofVec2f(0),ofVec2f(1));
     MYPARAM(emission,0.0,0.0f,1.0f);
     MYPARAM(mode,0,0,10);
-    MYPARAM(lifeTime,0,0,2000);
+    MYPARAM(lifeTime,100,0,2000);
     
     mode.addListener(this,&BallManager::changeMode);
-    int m = 3;
+    int m = 0;
     changeMode(m);
 }
 
@@ -296,6 +296,21 @@ void BallManager::changeMode(int & m){
     
     
     switch (m) {
+            case 0:
+                //TOr
+                setNum(0);
+                drawGrid = false;
+                drawPart = false;
+                useGrid =true;
+                gridForce = 0.0;
+                useBorder = false;
+                useTor = true;
+                insideMode = false;
+                dieMode = 0;
+                emission = 0.0;
+                usePointEmitter = false;
+                gravity = ofVec2f(0.0, 0.0);
+            break;
             case 1:{
                 //TOr
                 setNum(1);
@@ -356,7 +371,7 @@ void BallManager::changeMode(int & m){
                 insideMode = false;
                 dieMode = 1;
                 emission = 0.3;
-                usePointEmitter = true;
+                usePointEmitter = false;
                 gridForce = 0.1;
                 gravity = ofVec2f(0, 0.0);
                 }

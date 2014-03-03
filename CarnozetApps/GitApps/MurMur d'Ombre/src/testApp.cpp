@@ -1147,8 +1147,9 @@ void testApp::mouseReleased(int x, int y, int button){
 
 
 void testApp::saveState(string & s){
+#ifdef GUIMODE
     if(s!=""){
-        string abspath = ofToDataPath("presets/"+ofToString(loadName));
+        string abspath = ofToDataPath("presets/filage/"+ofToString(loadName));
         if(s.find("/")!=string::npos) {abspath = s;}
         else{ofLogWarning("saving to local : " + abspath);}
         cout<<"saving to " + abspath<<endl;
@@ -1159,7 +1160,7 @@ void testApp::saveState(string & s){
     else{
         ofLogWarning("no argument for save state");
     }
-    
+#endif
 }
 
 
@@ -1167,8 +1168,10 @@ void testApp::saveState(string & s){
 
 
 void testApp::loadState(string & s){
+#if defined GUIMODE || defined STANDALONEMODE
+    
     if(s!=""){
-        string abspath = ofToDataPath("presets/"+ofToString(loadName));
+        string abspath = ofToDataPath("presets/filage"+ofToString(loadName));
         if(s.find("/")!=string::npos) {abspath = s;}
         else{ofLogWarning("loading from local : " + abspath);}
         ofXml xml;
@@ -1179,6 +1182,6 @@ void testApp::loadState(string & s){
     else{
         ofLogWarning("no argument for load state");
     }
-    
+  #endif  
 }
 

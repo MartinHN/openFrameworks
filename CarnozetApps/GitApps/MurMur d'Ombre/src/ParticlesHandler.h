@@ -114,7 +114,7 @@ public:
     
     ofImage gradient;
     
-    ofParameter<int> netCompRatio;
+
     
 };
 

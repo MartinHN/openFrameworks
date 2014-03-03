@@ -147,7 +147,7 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
         for(int j = 0 ; j < blobs[i].nPts;j++){
             ofPoint p = blobs[i].pts[j]/scale;
             if(invx)p.x = w-p.x;
-            if(invx)p.y = h-p.y;
+            if(invy)p.y = h-p.y;
         pp.lineTo(p);
         }
         if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}

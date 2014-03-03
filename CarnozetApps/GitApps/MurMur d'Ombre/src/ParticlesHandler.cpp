@@ -69,7 +69,7 @@ void Force::updateShader(){
 Particles::Particles(VisuHandler * v):VisuClass(v){
     setup();
     isHighFPS = true;
-    netCompRatio = 8;
+
 
 }
 
@@ -117,8 +117,8 @@ void Particles::setup(){
     MYPARAM(gradtype , 2,0,2);
     MYPARAM(gradNum,0,0,20);
     MYPARAM(mingrad,0.f,-1.f,1.f);
-    MYPARAM(maxgrad,1,-1.f,1.f);
-    MYPARAM(netCompRatio,8,3,20);
+    MYPARAM(maxgrad,1,-1.f,3.f);
+
 #ifdef PMOD
     MYPARAM(origintype,1,0,2);
 #ifndef GUIMODE
@@ -223,7 +223,7 @@ void Particles::update(int w, int h){
     
     for(int i = 0 ; i < forces.size();i++){
         if(forces[i]->isActive&&forces[i]->name.find("net")!=string::npos){
-//            for(int j = 0 ; j<netCompRatio;j++){
+
             velPingPong.dst->begin();
             forces[i]->shader.begin();
             forces[i]->shader.setUniformTexture("posData",posPingPong.src->getTextureReference(), 1);

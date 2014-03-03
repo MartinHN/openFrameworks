@@ -85,14 +85,14 @@
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
 			<numParticles>209764</numParticles>
-			<particleSize>7.05</particleSize>
-			<alphaparticle>0.84</alphaparticle>
+			<particleSize>10.05</particleSize>
+			<alphaparticle>0.58</alphaparticle>
 			<partcolor>0, 0, 1</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>6</gradNum>
 			<mingrad>-0.4</mingrad>
 			<maxgrad>2.8</maxgrad>
-			<origintype>1</origintype>
+			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
 				<k>0</k>
@@ -109,10 +109,10 @@
 			</neth>
 			<origin>
 				<isActive>1</isActive>
-				<k>0.0306122</k>
-				<z>0.0561224</z>
-				<freeze>0</freeze>
-				<damp>0.9</damp>
+				<k>0.0548469</k>
+				<z>0.117347</z>
+				<freeze>0.281633</freeze>
+				<damp>0.984694</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
@@ -151,8 +151,8 @@
 			<fieldForce>
 				<isActive>1</isActive>
 				<k>0</k>
-				<velouty>0.03</velouty>
-				<veloutz>0.03</veloutz>
+				<velouty>0.0204082</velouty>
+				<veloutz>0.0204082</veloutz>
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
@@ -205,7 +205,7 @@
 		</BallManager>
 		<drawBlob>
 			<isActive>1</isActive>
-			<screenN>9</screenN>
+			<screenN>1</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isPiping>1</isPiping>
@@ -213,9 +213,9 @@
 			<fill>1</fill>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
-			<pos>0.22449, 0.556122, 0.5</pos>
-			<scale>1.28571, 1.36735</scale>
-			<color>0.959184, 1, 1</color>
+			<pos>0.52551, 0.545918, 0.545918</pos>
+			<scale>0.765306, 0.77551</scale>
+			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>
 		<boule2gomme>

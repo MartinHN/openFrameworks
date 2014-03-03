@@ -22,11 +22,6 @@ void Gui::load(ofParameterGroup & pgtmp){
     baseC++;
     int h = guiParam.back()->getHeight() + 10;
     
-    guiParam.push_back(new ofxPanel());
-    guiParam.back()->setup(pgtmp.getGroup("VisuHandler"),pgtmp.getGroup("VisuHandler").getName(),(baseC)*PARAMW);
-    
-    baseC++;
-    h += guiParam.back()->getHeight() + 10;
 
     guiParam.push_back(new ofxPanel());
     guiParam.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW);
@@ -57,7 +52,7 @@ void Gui::load(ofParameterGroup & pgtmp){
         ofAbstractParameter * p = &pgtmp2.get(i); 
         if(p->type()==typeid(ofParameterGroup).name()){
             guiVisu.push_back(new ofxPanel());
-            guiVisu.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),(int)((baseC)*PARAMW)%(int)(ofGetWidth()*(4./5)),3*PARAMW*int((baseC)*PARAMW/(ofGetWidth()*(4./5))));
+            guiVisu.back()->setup(pgtmp2.getGroup(i),pgtmp2.getName(),PARAMW*(int)(baseC)%(int)(ofGetWidth()*(4./5)),ofGetHeight()/2*int((baseC)*PARAMW/(ofGetWidth()*(4./5))));
             guiVisu.back()->minimizeAll();
             guiVisu.back()->getShape();
             baseC++;

@@ -195,6 +195,10 @@ public:
 
     ofParameter<bool> isGloom;
     ofParameter<int> bloomsize;
+    
+    ofParameter<bool> isPipe,hidePipe;
+    ofParameter<float> pipeblur;
+    
     int zdepth;
     int inw;
     int inh;

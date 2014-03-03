@@ -20,23 +20,18 @@ public:
     ~drawBlob(){};
     
     
-    ofParameter<int> screen1;
-    ofParameter<ofVec3f> pos1;
-    ofParameter<ofVec2f> scale1;
+
+    ofParameter<ofVec3f> pos;
+    ofParameter<ofVec2f> scale;
+    ofParameter<bool> invertx,inverty;
+
     
-    ofParameter<int> screen2;
-    ofParameter<ofVec3f> pos2;
-    ofParameter<ofVec2f> scale2;
-    
-    ofParameter<float> smooth;
-    ofParameter<bool> pipe;
+
     ofParameter<bool> fill;
-    ofParameter<bool> drawb;
-    
+
     void draw(int w, int h);
     void update(int w, int h);
     
-    void drawMe(int w,int h);
     
     
 };

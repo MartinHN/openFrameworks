@@ -130,6 +130,9 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(alphablur, 100, 0, 255);
     MYPARAM(bloomsize,0,0,10);
     MYPARAM(isGloom,false,false,true);
+    MYPARAM(isPipe,false,false,true);
+    MYPARAM(pipeblur, 0.f,0.f,25.f);
+    MYPARAM(hidePipe,false,false,true);
 
     settings.add(camera2.settings);
     
@@ -154,7 +157,7 @@ bH.setup(inw,inh,&blurX,&blurY);
 
 
     globalParam.add(settings);
-    globalParam.add(visuHandler.settings);
+
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
     globalParam.add(visuHandler.sH.screensParam);
@@ -254,8 +257,11 @@ void testApp::draw(){
     glBlendEquation(GL_FUNC_ADD);
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-
-
+//
+//
+//    
+//    glBlendEquation(GL_FUNC_ADD_EXT);
+    
 
 
     finalRender.dst->begin();
@@ -277,13 +283,14 @@ void testApp::draw(){
     ofPushMatrix();
     ofPushView();
     ofEnableAlphaBlending();
-          camera2.begin();
-        
+    camera2.begin();
+      ofSetColor(255,255,255,255);  
 
-        //NEW POSITION for VISU
-        visuHandler.draw();
+        //Draw only for pipe
+    int modeVisu = isPipe?1:0;
+    visuHandler.draw(modeVisu);
           
-  camera2.end();
+    camera2.end();
     ofPopMatrix();
     ofPopView();
     
@@ -296,7 +303,78 @@ finalRender.dst->end();
     finalRender.swap();
     
     
+    //PIPE
+if(isPipe){
+    glBlendEquation(GL_FUNC_ADD_EXT);
     
+    glBlendFunc(GL_ONE,GL_ZERO);
+
+     ofSetColor(255);
+    visuHandler.pipePP.src->begin();
+          blurX.begin();
+          blurX.setUniform1f("blurAmnt", pipeblur*2.);
+            finalRender.src->draw(0,0,inw,inh);
+          blurX.end();        
+    visuHandler.pipePP.src->end();
+//    visuHandler.pipePP.swap();
+
+
+    ofSetColor(255);      
+    visuHandler.pipePP.dst->begin();
+         blurY.begin();
+         blurY.setUniform1f("blurAmnt", pipeblur);
+              
+           visuHandler.pipePP.src->draw(0,0);
+              
+          blurY.end();        
+     visuHandler.pipePP.dst->end();
+    visuHandler.pipePP.swap();
+              
+          
+    glBlendEquation(GL_FUNC_ADD);
+    
+    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+    
+        finalRender.src->begin();
+    if(hidePipe) {
+        ofSetColor(0);
+        ofRect(0,0,scrw,scrh);
+        ofSetColor(255);
+    }
+    
+             
+    
+
+              ofPushMatrix();
+              ofPushView();
+              ofEnableAlphaBlending();
+              camera2.begin();
+              
+              //draw reciever of pipe
+              visuHandler.draw(2);
+              
+              camera2.end();
+              ofPopMatrix();
+              ofPopView();
+
+            finalRender.src->end();
+          
+                   
+              
+//              visuHandler.pipePP.dst->begin();
+//              
+//              visuHandler.pipePP.src->draw(0,0);
+//              
+//              visuHandler.pipePP.dst->end();
+              
+              
+              
+          
+
+      }
+    
+    
+    //FinalTOUCH
     glBlendEquation(GL_FUNC_ADD_EXT);
     
     glBlendFunc(GL_ONE,GL_ZERO);
@@ -1049,7 +1127,7 @@ void testApp::oscBlobUpdate(){
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
     
-        points.push_back(ofPoint(1.0-x*1.0/scrw,y*1.0/scrh,0));
+        points.push_back(ofPoint(x*1.0/scrw,y*1.0/scrh,0));
 //    points.push_back(ofPoint(0.2,0.2,0));
 
     if(points.size()>0)attrctl.addPoints(points,0);

@@ -156,7 +156,7 @@ void Particles::setup(){
     forces.push_back(new Force("gravity",true));
     forces[forces.size()-1]->addParameter("r",.50f,0.f,.5f);
     forces[forces.size()-1]->addParameter("mass",.001f,-.0002f,.02f);
-        forces[forces.size()-1]->addParameter("rin",.50f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("rin",.50f,0.f,.5f);
     forces[forces.size()-1]->addParameter("massin",.00f,-.0002f,.0002f);
     forces[forces.size()-1]->addParameter("damp",1.f,.60f,1.0f);
 

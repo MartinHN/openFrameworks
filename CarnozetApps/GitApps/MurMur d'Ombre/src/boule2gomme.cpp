@@ -25,20 +25,23 @@ void boule2gomme::update(int w, int h){
 void boule2gomme::draw(int w, int h){
 
     ofSetColor(255);
-    dad->pipePP.dst->draw(0,0);
-//    ofVec2f scale(w,h);
-//    vector<AttrStruct> * points =  &dad->attr->staticA;
-//     vector<AttrStruct> * opoints =  &dad->attr->destA;
-//    ofSetColor(255,0,0);
-////    ofRect(0,0,w,h);
-//    ofFill();
-//    for(int i = 0 ; i<points->size();i++)
-//        ofEllipse(scale*points->at(i).p,rayon,rayon);
-//    for(int i = 0 ; i<opoints->size();i++){
-//        ofSetColor(opoints->at(i).type==0?255:0, opoints->at(i).type==1?255:0, opoints->at(i).type==2?255:0);
-//        ofNoFill();
-//        ofEllipse(scale*opoints->at(i).p,rayon,rayon);
-//    }
+    dad->pipePP.src->draw(0,300);
+    
+    
+    dad->pipePP.dst->draw(0,540);
+    ofVec2f scale(w,h);
+    vector<AttrStruct> * points =  &dad->attr->staticA;
+     vector<AttrStruct> * opoints =  &dad->attr->destA;
+    ofSetColor(255,0,0);
+//    ofRect(0,0,w,h);
+    ofFill();
+    for(int i = 0 ; i<points->size();i++)
+        ofEllipse(scale*points->at(i).p,rayon,rayon);
+    for(int i = 0 ; i<opoints->size();i++){
+        ofSetColor(opoints->at(i).type==0?255:0, opoints->at(i).type==1?255:0, opoints->at(i).type==2?255:0);
+        ofNoFill();
+        ofEllipse(scale*opoints->at(i).p,rayon,rayon);
+    }
     
     ofRect(50,50,50,50);
 //    dad->bH->blobClient.draw(600,0);

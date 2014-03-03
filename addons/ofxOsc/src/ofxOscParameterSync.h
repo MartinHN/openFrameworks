@@ -20,11 +20,11 @@ public:
 	/// the remote and local ports must be different to avoid collisions
 	void setup(ofParameterGroup & group, int localPort, string remoteHost, int remotePort);
 	void update();
-
+    bool updatingParameter;
 private:
 	void parameterChanged( ofAbstractParameter & parameter );
 	ofxOscSender sender;
 	ofxOscReceiver receiver;
 	ofParameterGroup * syncGroup;
-	bool updatingParameter;
+	
 };

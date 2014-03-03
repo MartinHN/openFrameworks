@@ -25,6 +25,7 @@ void boule2gomme::update(int w, int h){
 void boule2gomme::draw(int w, int h){
 
     ofSetColor(255);
+    
     dad->pipePP.src->draw(0,300);
     
     

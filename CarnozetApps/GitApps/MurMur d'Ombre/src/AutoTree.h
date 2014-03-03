@@ -66,12 +66,12 @@ public:
     
     void createBranche(ofPoint p, float a, int l,int tot,  bool isEnd);
     
-    void reset( );
-    
+    void resetAll( bool &isReset);
     
     void startStop(bool & start);
     void init();
     void clear();
+    void addNewPoint(bool &newPoint);
     
     int width, height;
     
@@ -86,6 +86,9 @@ public:
      ofParameter<ofVec2f> pointToBegin;
     ofParameter<bool> initTrig;
     ofParameter<bool> addTrig;
+    ofParameter<bool> addPoint;
+    ofParameter<bool> debugMode;
+    ofParameter<bool> reset;
     
 };
 

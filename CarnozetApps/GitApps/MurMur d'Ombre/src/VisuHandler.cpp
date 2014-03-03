@@ -21,7 +21,7 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     allParams.clear();
     allParams.setName("Visu");
-    settings.setName("VisuHandler");
+
     
     zdepth = zdepthin;
     inw=inwin;
@@ -100,7 +100,7 @@ void VisuHandler::registerParams(){
     bH->registerParams();
         attr->registerParam();
     
-    MYPARAM(pipeblur,0.f,0.f,25.f);
+   
     
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
@@ -123,7 +123,7 @@ const void VisuHandler::printallp(ofParameterGroup p){
     } 
 }
 
-const void VisuHandler::draw(){
+const void VisuHandler::draw(int mode){
 
     
 
@@ -132,10 +132,7 @@ const void VisuHandler::draw(){
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
     
-    pipePP.src->begin();
-    ofSetColor(0,0,0,255);
-    ofRect(0,0,inw,inh);
-    pipePP.src->end();
+
     
 
     ofSetColor(255,255,255,255);
@@ -146,7 +143,7 @@ const void VisuHandler::draw(){
         ofPushStyle();
         
         ofTranslate(0,0,zdepth/2);
-        if(visuList[i]->isActive&&visuList[i]->screenN>=0){
+        if(visuList[i]->isActive && (mode == 0||(mode==1 && visuList[i]->isPiping) || (mode==2 &&!visuList[i]->isPiping)) &&visuList[i]->screenN>=0){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
                 ofEnableAlphaBlending();
@@ -194,50 +191,14 @@ const void VisuHandler::draw(){
     ofSetColor(255);
     
     
-    if(pipeblur>0){
-        
-        pipePP.dst->begin();
-        bH->blurX->begin();
-        bH->blurX->setUniform1f("blurAmnt", pipeblur);
-        
-        pipePP.src->draw(0,0);
-        
-        bH->blurX->end();        
-        pipePP.dst->end();
-        pipePP.swap();
-        
-        pipePP.dst->begin();
-        bH->blurY->begin();
-        bH->blurY->setUniform1f("blurAmnt", pipeblur);
-        
-        pipePP.src->draw(0,0);
-        
-        bH->blurY->end();        
-        pipePP.dst->end();
-        pipePP.swap();
-        
-        
-        pipePP.dst->begin();
- 
-        pipePP.src->draw(0,0);
-       
-        pipePP.dst->end();
-        
-        
-        
-    }
-
+    
 }
 
 ofParameterGroup * VisuHandler::getParamPtr(){
     return &allParams;
 }
 
-//VisuClass * get(const string name){
-//    for(int i = 0 ; i<visuList[i]
-//    
-//    
-//}
+
 
 void VisuHandler::addVisu(VisuClass * v){
     visuList.push_back(v);

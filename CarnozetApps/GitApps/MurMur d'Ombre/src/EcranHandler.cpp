@@ -48,6 +48,8 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
     delete pos;
 #endif
     
+    
+    
 
 }
 
@@ -74,7 +76,7 @@ int ScreenHandler::getValidScreen(int which){
     int k = 1;
     int idx = which%10;
     int res = -1;
-    
+    if(which>=0){
     do{
 
         if(idx<screenL.size()){
@@ -85,6 +87,7 @@ int ScreenHandler::getValidScreen(int which){
         k*=10;
         idx = (which/k) %10;
     }while(idx>0);
+    }
     return res;
 }
 

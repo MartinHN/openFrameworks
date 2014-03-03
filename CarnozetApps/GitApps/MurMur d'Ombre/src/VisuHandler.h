@@ -53,7 +53,7 @@ public:
     void setup(AttrCtl *attrctl,BlobHandler* bHin,int inw,int inh,int zdepthin,int * scrw,int * scrh);
     void update();
     void updateHighFPS();
-    const void draw();
+    const void draw(int mode);
     void registerParams();
     void saveState(string & s);
     void loadState(string & s);
@@ -92,10 +92,7 @@ public:
     
   
     pingPongBuffer pipePP;
-  
-    
-    ofParameterGroup settings;
-    ofParameter<float> pipeblur;
+
 
     
 };

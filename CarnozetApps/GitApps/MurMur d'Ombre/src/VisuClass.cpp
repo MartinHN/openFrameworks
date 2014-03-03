@@ -21,6 +21,8 @@ VisuClass::VisuClass(VisuHandler * vh){
     isHighFPS = false;
     MYPARAM(isMapping,true,false,true);
     
+    MYPARAM(isPiping,false,false,true);
+    
     
 }
 

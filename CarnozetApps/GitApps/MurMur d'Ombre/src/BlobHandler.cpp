@@ -56,7 +56,8 @@ void BlobHandler::registerParams(){
     MYPARAM(maxSide,0.5f,0.f,1.f);
     MYPARAM(maxBlobs, 1,0,4);
     MYPARAM(findHoles,false,false,true);
-    MYPARAM(simplification,0.5f,0.f,100.f);
+    MYPARAM(simplification,0.f,0.f,50.f);
+    MYPARAM(smooth,0.f,0.f,10.f);
     MYPARAM(polyMaxPoints, 0,0,200);
     MYPARAM(maxLengthExtrem, 15.f,0.f,100.f);
     MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
@@ -145,7 +146,13 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
         pp.lineTo(blobs[i].pts[j]/scale);
         }
         if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
-        else{pp.simplify(simplification);}
+        if(simplification>0){
+            pp.simplify(simplification);
+        
+        }
+        if(smooth>0){
+            pp = pp.getSmoothed(smooth);
+        }
 //        pp.setClosed(true);
         res.push_back(pp);
     }
@@ -154,16 +161,14 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h){
 
 vector<ofPath> BlobHandler::getPaths(float w, float h){
     vector<ofPath> res;
-    ofVec3f scale(inw/w,inh/h);
-    for (int i = 0 ; i< blobs.size();i++){
+    vector<ofPolyline> p = getBlobs(w,h);
+    for (int i = 0 ; i< p.size();i++){
         ofPath pp ;
-        for(int j = 0 ; j < blobs[i].nPts;j++){
-            pp.lineTo(blobs[i].pts[j]/scale);
+        
+        for(int j = 0 ; j < p[i].size();j++){
+            pp.lineTo(p[i][j]);
         }
-        pp.simplify(simplification);
-//        if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
-//        else{pp.simplify(simplification);}
-        //        pp.setClosed(true);
+
         res.push_back(pp);
     }
     return res;

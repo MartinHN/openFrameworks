@@ -61,10 +61,12 @@ public:
     ofParameterGroup settings;
     ofParameter<float> blobBlur;
     
+    
+    
     ofParameter<float> minSide, maxSide,maxLengthExtrem;
     ofParameter<int> maxBlobs,polyMaxPoints;
     ofParameter<bool> findHoles,invertBW;
-    ofParameter<float> simplification;
+    ofParameter<float> simplification,smooth;
     ofParameter<ofVec4f> crop;
 };
 

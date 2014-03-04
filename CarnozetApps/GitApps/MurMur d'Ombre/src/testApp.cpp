@@ -152,7 +152,9 @@ bH.setup(inw,inh,&blurX,&blurY);
     visuHandler.addVisu(new BallManager(&visuHandler));
     visuHandler.addVisu(new drawBlob(&visuHandler));
     
+    visuHandler.addVisu(new VideoPlayer(&visuHandler));
     visuHandler.addVisu(new boule2gomme(&visuHandler));
+    
     
 
     visuHandler.registerParams();
@@ -408,7 +410,7 @@ if(isPipe){
             colorMod.begin();
             colorMod.setUniform1f("contrast",contrast); 
             colorMod.setUniform1f("saturation",saturation); 
-            colorMod.setUniform1f("brightness",brightness*brightnessM); 
+            colorMod.setUniform1f("brightness",brightness*brightnessM/100.); 
             finalRender.src->draw(0,0);
 //    ofRect(0,0,ofGetHeight()/2,300);
             colorMod.end();

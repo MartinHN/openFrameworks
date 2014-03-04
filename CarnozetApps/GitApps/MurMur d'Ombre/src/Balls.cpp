@@ -158,14 +158,18 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         speed += *gravity;
         pos = pos +  speed*t ;
         
-        //Use a grid and attract the grid
+
 
         
-        // Is boucing over the edges ?
+        // Die mode 1 : die out of the border OR if the speed is null
         
         if(*dieMode == 1 && ( pos.x > 1.0 || pos.y > 1.0 || pos.x < 0.0 || pos.y < 0.0)){
             isDying = 0;
         }
+        if(*dieMode== 1 && speed.length()<0.0001)
+            isDying = 0;
+            
+        // Is boucing over the edges ?
         
         bool isUsedTor = *(useTor);
         if( isUsedTor)

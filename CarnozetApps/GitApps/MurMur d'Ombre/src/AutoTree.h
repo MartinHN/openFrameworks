@@ -31,14 +31,14 @@ public:
     int totalLength;
     
     void draw();
-    void update();
-    
+    void update(ofPolyline poly, bool mode);
     
     bool isGrowing;
     bool isChildCreated;
     float lifeTime;
     
-    ofPolyline shape;
+    int lastTimeBouncing;
+    
     bool clockWise;
     
     ofImage* leaf;
@@ -55,40 +55,34 @@ public:
     AutoTree(VisuHandler * v);
     AutoTree(int w, int h, bool autostart, ofPath* pathin);
     
-    
     void update(int w, int h);
     void draw(int w, int h);
     
-    
-    vector<Branche> list;
-    
-    ofFbo myfbo;
-    
     void createBranche(ofPoint p, float a, int l,int tot,  bool isEnd);
-    
     void resetAll( bool &isReset);
-    
     void startStop(bool & start);
     void init();
     void clear();
     void addNewPoint(bool &newPoint);
+    void switchMode(bool &isInside);
+    
+    vector<Branche> list;
+    ofFbo myfbo;
     
     int width, height;
     
     int count;
     int introPhase;
    
-    
     ofImage imagePart;
     
-    ofPath* path;
-    
-     ofParameter<ofVec2f> pointToBegin;
+    ofParameter<ofVec2f> pointToBegin;
     ofParameter<bool> initTrig;
     ofParameter<bool> addTrig;
     ofParameter<bool> addPoint;
     ofParameter<bool> debugMode;
     ofParameter<bool> reset;
+    ofParameter<bool> insideMode;
     
 };
 

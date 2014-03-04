@@ -38,7 +38,7 @@ void BallManager::update(int w,int h){
     sizedPolyline.clear();
     ofPolyline middlePolyline;
     if(dad->bH->getBlobs().size()>0)
-    middlePolyline = dad->bH->getBlobs().front();
+    middlePolyline = dad->bH->getBlobs(320,240).front();
     middlePolyline.simplify(7.0f);
     
     ofPolyline smallPolyline;
@@ -48,8 +48,8 @@ void BallManager::update(int w,int h){
     for(int i=0; i<middlePolyline.size(); i++)
     {
         
-        ofPoint p = middlePolyline[i]/ofPoint(320.0, 240.0);
-        ofPoint p2 = p*ofPoint(ofGetWidth(), ofGetHeight());
+        ofPoint p = middlePolyline[i]/ofPoint(320, 240);
+        ofPoint p2 = p*ofPoint(w, h);
         smallPolyline.lineTo(p);
         sizedPolyline.lineTo(p2);
         
@@ -58,7 +58,7 @@ void BallManager::update(int w,int h){
     sizedPolyline.close();
     
     bool isblob;
-    if(dad->bH->getBlobs().size()>0) isblob = dad->bH->getBlobs().front().size()> 0;
+    if(dad->bH->getBlobs().size()>0) isblob = dad->bH->getBlobs(w,h).front().size()> 0;
     
     if(isblob && !usePointEmitter)
     {
@@ -73,6 +73,12 @@ void BallManager::update(int w,int h){
         {
             ofPoint finalEmitter = newcentroid;
             ofPoint speed = centroidSpeed;
+            
+            speed.normalize();
+            
+            speed = speed * 0.1;
+            
+
             
             ofPoint pos = finalEmitter + ofPoint( 0.04*ofRandomf(), 0.04*ofRandomf());
             ofColor color ;
@@ -370,7 +376,7 @@ void BallManager::changeMode(int & m){
                 gridForce = 0.2;
                 insideMode = false;
                 dieMode = 1;
-                emission = 0.3;
+                emission = 0.9;
                 usePointEmitter = false;
                 gridForce = 0.1;
                 gravity = ofVec2f(0, 0.0);

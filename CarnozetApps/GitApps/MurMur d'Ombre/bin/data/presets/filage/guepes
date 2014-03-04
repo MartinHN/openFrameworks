@@ -98,7 +98,7 @@
 			<gradNum>0</gradNum>
 			<mingrad>0</mingrad>
 			<maxgrad>1</maxgrad>
-			<origintype>1</origintype>
+			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
 				<k>0.103061</k>

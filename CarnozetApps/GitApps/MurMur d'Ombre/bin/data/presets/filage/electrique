@@ -89,7 +89,7 @@
 			<mingrad>-0.25</mingrad>
 			<maxgrad>0.04</maxgrad>
 			<netCompRatio>8</netCompRatio>
-			<origintype>1</origintype>
+			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
 				<k>0.103061</k>

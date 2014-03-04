@@ -101,6 +101,7 @@
 			<gradNum>2</gradNum>
 			<mingrad>-0.4</mingrad>
 			<maxgrad>2.8</maxgrad>
+			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>

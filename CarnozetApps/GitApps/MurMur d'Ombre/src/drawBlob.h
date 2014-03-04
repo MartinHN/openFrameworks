@@ -26,11 +26,15 @@ public:
     ofParameter<bool> invertx,inverty;
     ofParameter<float> alpha;
     
+    ofParameter<float> alphapos;
+    
 
     ofParameter<bool> drawZones,isMasking;
 
     void draw(int w, int h);
     void update(int w, int h);
+    
+    ofVec3f realPos;
     
     
     

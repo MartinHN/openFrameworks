@@ -95,7 +95,6 @@ ofImage * VisuHandler::getSharedImg(int i){
 
 
 
-
 void VisuHandler::registerParams(){
     bH->registerParams();
         attr->registerParam();

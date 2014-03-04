@@ -38,6 +38,12 @@
 
 //#define IS_VIDEO
 
+//bool sortOnZ(ofVec3f a,ofVec3f b){
+//    return a.z>b.z;
+//}
+static bool sortOnXYZ(ofVec3f a,ofVec3f b){
+    return a.z>b.z&&a.x>b.x&&a.y>b.y;
+}
 
 
 class VisuHandler{

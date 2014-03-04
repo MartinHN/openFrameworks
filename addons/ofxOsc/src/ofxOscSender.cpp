@@ -89,7 +89,7 @@ void ofxOscSender::sendMessage( ofxOscMessage& message )
 }
 
 void ofxOscSender::sendParameter( const ofAbstractParameter & parameter){
-	if(!parameter.isSerializable()) return;
+//	if(!parameter.isSerializable()) return;
 	if(parameter.type()==typeid(ofParameterGroup).name()){
 		string address = "/";
 		const vector<string> hierarchy = parameter.getGroupHierarchyNames();

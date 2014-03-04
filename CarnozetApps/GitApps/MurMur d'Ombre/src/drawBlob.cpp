@@ -19,7 +19,7 @@ drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
     MYPARAM(scale,ofVec2f(1),ofVec2f(0),ofVec2f(2));
     MYPARAM(color,ofVec3f(255),ofVec3f(0),ofVec3f(255));
     MYPARAM(alpha,255.f,0.f,255.f);
-
+    
     
     settings.setName("drawBlob");
 }

@@ -387,6 +387,10 @@
 		F20CC4501885C66F00FDBDC2 /* Ecrans.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC44E1885C66F00FDBDC2 /* Ecrans.cpp */; };
 		F20CC45D1885D73E00FDBDC2 /* VisuClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC45B1885D73E00FDBDC2 /* VisuClass.cpp */; };
 		F20CC4631885DBD600FDBDC2 /* Baton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC4611885DBD600FDBDC2 /* Baton.cpp */; };
+		F213706718C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
+		F213706818C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
+		F213706918C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
+		F213706A18C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
 		F220C7B418A65D1900B8EA9F /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F220C7B218A65D1900B8EA9F /* Gui.cpp */; };
 		F222D98218A52F2300450D5F /* blurXa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98018A52F2100450D5F /* blurXa.frag */; };
 		F222D98318A52F2300450D5F /* blurYa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98118A52F2200450D5F /* blurYa.frag */; };
@@ -734,6 +738,8 @@
 		F20CC45E1885DAD600FDBDC2 /* visuWarper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = visuWarper.h; sourceTree = "<group>"; };
 		F20CC4611885DBD600FDBDC2 /* Baton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Baton.cpp; sourceTree = "<group>"; };
 		F20CC4621885DBD600FDBDC2 /* Baton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Baton.h; sourceTree = "<group>"; };
+		F213706518C5490E00F2195A /* VideoPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoPlayer.cpp; sourceTree = "<group>"; };
+		F213706618C5490E00F2195A /* VideoPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoPlayer.h; sourceTree = "<group>"; };
 		F220C7B218A65D1900B8EA9F /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui.cpp; sourceTree = "<group>"; };
 		F220C7B318A65D1900B8EA9F /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gui.h; sourceTree = "<group>"; };
 		F222D98018A52F2100450D5F /* blurXa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurXa.frag; sourceTree = "<group>"; };
@@ -1745,6 +1751,8 @@
 		F2D52E0F17BB853500E384AB /* Visux */ = {
 			isa = PBXGroup;
 			children = (
+				F213706518C5490E00F2195A /* VideoPlayer.cpp */,
+				F213706618C5490E00F2195A /* VideoPlayer.h */,
 				F2901AEB18C22C9600B2D50E /* BallManager.cpp */,
 				F2901AEC18C22C9600B2D50E /* BallManager.h */,
 				F2901AED18C22C9600B2D50E /* Balls.cpp */,
@@ -2270,6 +2278,7 @@
 				F2901AF718C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFB18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 				F2F8117B18C3734700965B1B /* drawBlob.cpp in Sources */,
+				F213706918C5490E00F2195A /* VideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2373,6 +2382,7 @@
 				F2901AF618C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFA18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 				F2F8117A18C3734700965B1B /* drawBlob.cpp in Sources */,
+				F213706818C5490E00F2195A /* VideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2476,6 +2486,7 @@
 				F2901AF518C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AF918C22C9600B2D50E /* CircleLine.cpp in Sources */,
 				F2F8117918C3734700965B1B /* drawBlob.cpp in Sources */,
+				F213706718C5490E00F2195A /* VideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2579,6 +2590,7 @@
 				F2901AF818C22C9600B2D50E /* Balls.cpp in Sources */,
 				F2901AFC18C22C9600B2D50E /* CircleLine.cpp in Sources */,
 				F2F8117C18C3734700965B1B /* drawBlob.cpp in Sources */,
+				F213706A18C5490E00F2195A /* VideoPlayer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -3,54 +3,36 @@
 //--------------------------------------------------------------
 void testApp::setup(){
 
-    numEcran = 3;
-    ofPolyline poly;
     
-    //Ecran carré jardin
-    poly.lineTo(100, 600);
-    poly.lineTo(200, 600);
-    poly.lineTo(200, 700);
-    poly.lineTo(100, 700);
-    poly.close();
-    listOfPoly.push_back(poly);
-    poly.clear();
+    Screen src;
     
+    src = Screen(ofPoint(100,200), ofPoint(200,600),ofPoint(200, 700), ofPoint(100,700));
+    listOfScreen.push_back(src);
     
-    //Ecran triangle toit
-    poly.lineTo(100, 100);
-    poly.lineTo(200, 100);
-    poly.lineTo(200, 200);
-    poly.lineTo(100, 200);
-    poly.close();
-    listOfPoly.push_back(poly);
-    poly.clear();
+    src = Screen(ofPoint(100,100), ofPoint(200,100),ofPoint(200, 200), ofPoint(100,200));
+    listOfScreen.push_back(src);
     
-    //Ecran rectangle bandeau cour
-    poly.lineTo(900, 100);
-    poly.lineTo(950, 100);
-    poly.lineTo(950, 500);
-    poly.lineTo(900, 500);
-    poly.close();
-    listOfPoly.push_back(poly);
-    poly.clear();
+    src = Screen(ofPoint(900,100), ofPoint(950,100),ofPoint(950, 500), ofPoint(900,500));
+    listOfScreen.push_back(src);
     
-    //Ecran rectangle cour
-    poly.lineTo(900, 600);
-    poly.lineTo(950, 600);
-    poly.lineTo(950, 800);
-    poly.lineTo(900, 800);
-    poly.close();
-    listOfPoly.push_back(poly);
-    poly.clear();
-
-    //Ecran central 
-    poly.lineTo(500, 100);
-    poly.lineTo(550, 100);
-    poly.lineTo(550, 300);
-    poly.lineTo(500, 300);
-    poly.close();
-    listOfPoly.push_back(poly);
-    poly.clear();
+    src = Screen(ofPoint(900,600), ofPoint(950,800),ofPoint(950, 800), ofPoint(900,800));
+    listOfScreen.push_back(src);
+    
+    src = Screen(ofPoint(500,100), ofPoint(550,100),ofPoint(550, 300), ofPoint(500,300));
+    listOfScreen.push_back(src);
+    
+    activeScreen = -1;
+    
+    gui.setup();
+    suppr.addListener(this, &testApp::deleteScreen);
+    add.addListener(this, &testApp::addScreen);
+    reset.addListener(this, &testApp::resetScreen);
+    save.addListener(this, &testApp::savePng);
+    
+    gui.add(suppr.setup("Suppr", 0));
+    gui.add(add.setup("Add", 0));
+    gui.add(reset.setup("Reset", 0));
+    gui.add(save.setup("Save", 0));
     
     
 }
@@ -64,40 +46,48 @@ void testApp::update(){
 void testApp::draw(){
 
     ofBackground(0);
+    gui.draw();
     
-    ofSetColor(255);
-    ofFill();
-    
-    pa.clear();
-    
-    
-    for(int i=0; i<listOfPoly.size(); i++)
-    {
+    for(int i=0; i<listOfScreen.size(); i++){
         
-        ofPolyline poly = listOfPoly.at(i);
-        
-        for(int j=0; j<poly.size(); j++)
-        {
-            
-            ofPoint p = poly[j];
-            
-            pa.lineTo(p);
-            
-            
-        }
-        
-        pa.setFillColor(255);
-        pa.close();
-        
-        
-        
-        
-        
-        
+        listOfScreen.at(i).draw();
+
         
     }
-    pa.draw();
     
+
+    
+    
+}
+
+//--------------------------------------------------------------
+void testApp::deleteScreen(){
+    
+    if(activeScreen >= 0){
+        listOfScreen.erase(listOfScreen.begin()+activeScreen);}
+}
+
+//--------------------------------------------------------------
+void testApp::addScreen(){
+   
+    ofPoint p1 = ofPoint( ofGetScreenWidth()/2 - ofRandom(100), ofGetScreenHeight()/2 - ofRandom(100));
+    ofPoint p2 = ofPoint( ofGetScreenWidth()/2 + ofRandom(100), ofGetScreenHeight()/2 - ofRandom(100));
+    ofPoint p3 = ofPoint( ofGetScreenWidth()/2 + ofRandom(100), ofGetScreenHeight()/2 + ofRandom(100));
+    ofPoint p4 = ofPoint( ofGetScreenWidth()/2 - ofRandom(100), ofGetScreenHeight()/2 + ofRandom(100));
+    Screen src = Screen(p1, p2, p3, p4);
+    
+    listOfScreen.push_back(src);
+    
+}
+
+//--------------------------------------------------------------
+void testApp::resetScreen(){
+    
+    if(activeScreen>=0){
+        
+        listOfScreen.at(activeScreen).reset();
+        
+    }
     
 }
 
@@ -105,6 +95,61 @@ void testApp::draw(){
 void testApp::savePng(){
     
     ofSaveScreen("mask.png");
+    
+    saveXml();
+    
+    
+    
+    
+}
+
+//--------------------------------------------------------------
+void testApp::saveXml(){
+    
+    xml.clear();
+    xml.addTag("ecranList");   
+    xml.pushTag("ecranList");
+    
+    
+    for(int i=0; i<listOfScreen.size(); i++)
+    {
+        
+        Screen src = listOfScreen.at(i);
+        
+        xml.addTag(ofToString("ecran").append(ofToString(i)));
+        xml.pushTag(ofToString("ecran").append(ofToString(i)));
+       
+        
+        
+        for (int j=0; j<src.listOfPoint.size(); j++)
+        {
+            
+            
+            xml.addTag(ofToString("point").append(ofToString(j)));
+            xml.pushTag(ofToString("point").append(ofToString(j)));
+            
+            
+            xml.setValue("x", src.listOfPoint.at(j).x);
+            xml.setValue("y", src.listOfPoint.at(j).y);
+            
+
+            
+            xml.popTag();
+            
+            
+        }
+        
+        xml.popTag();
+        
+       
+        
+        
+        
+        
+    }
+    
+    xml.popTag();
+    xml.save("test");
     
     
 }
@@ -115,6 +160,9 @@ void testApp::keyPressed(int key){
     switch (key) {
         case 'x':
             savePng();
+            break;
+        case 's':
+            ofSetFullscreen(true);
             break;
             
         default:
@@ -138,38 +186,10 @@ void testApp::mouseMoved(int x, int y ){
 void testApp::mouseDragged(int x, int y, int button){
 
     ofPoint mouse = ofPoint(x,y);
-    float thresh = 15.0f;
-    bool quit = false;
     
-    for(int i=0;i<listOfPoly.size(); i++)
-    {
+    if(activeScreen>=0){
         
-        if(quit) break;
-        
-        ofPolyline poly = listOfPoly.at(i);
-        
-        
-        
-        for(int j=0; j<poly.size(); j++)
-        {
-            
-            if(quit) break;
-            ofPoint p = poly[j];
-            
-            float dist = p.distance(mouse);
-            
-            if(dist < thresh)
-            {
-                listOfPoly.at(i)[j] = mouse;
-                quit = true;
-            }
-            
-            
-            
-        }
-        
-        
-        
+        listOfScreen.at(activeScreen).dragPoint(mouse);
         
     }
     
@@ -179,6 +199,86 @@ void testApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
    
+    if( button == 0 ){
+    
+        ofPoint mouse = ofPoint(x,y);
+        ofPolyline poly;
+        poly.clear();
+        bool activeOther = true;
+
+        
+        //Be sure the screen is not already active
+        if(activeScreen>=0)
+        {
+        
+            for(int j=0; j<(listOfScreen.at(activeScreen).listOfPoint.size()); j++)
+            {
+                
+                poly.lineTo(listOfScreen.at(activeScreen).listOfPoint.at(j));
+            }
+            
+            if(poly.inside(mouse)){
+                
+                activeOther = false;
+                listOfScreen.at(activeScreen).findClosest(mouse);
+            }
+            else
+            {
+                activeOther = true;
+                
+                
+            }
+            
+        }
+        
+        
+        
+        if(activeOther)
+        {
+            activeScreen = -1;
+            poly.clear();
+            for(int i=0; i<listOfScreen.size(); i++)
+            {
+                
+                for(int j=0; j<(listOfScreen.at(i).listOfPoint.size()); j++)
+                {
+                    
+                    poly.lineTo(listOfScreen.at(i).listOfPoint.at(j));
+                }
+                poly.close();
+                
+                if( poly.inside(mouse))
+                {
+                    activeScreen = i;
+                    break;                
+                }
+
+                poly.clear();
+                
+            }
+            
+            for(int i=0; i<listOfScreen.size(); i++)
+            {
+            
+                if( activeScreen == i)
+                {
+                    listOfScreen.at(i).isActive = true;
+                    listOfScreen.at(i).findClosest(mouse);
+                }
+                else
+                {
+                    listOfScreen.at(i).isActive = false;
+                    listOfScreen.at(i).activePoint = -1;
+                }
+                
+
+                
+            }
+            
+        }
+        
+    }
+    
 
 }
 

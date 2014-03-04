@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxXmlSettings.h"
+#include "Screen.h"
+#include "ofxGui.h"
 
 class testApp : public ofBaseApp{
 
@@ -20,14 +22,26 @@ class testApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        vector<ofPolyline> listOfPoly;
-        ofPath pa;
-        int numEcran;
+        vector<Screen> listOfScreen;
+        int activeScreen;
     
         void saveXml();
         void savePng();
     
         ofxXmlSettings xml;
+    
+        //GUI
+        ofxPanel gui;
+        ofxButton suppr;
+        ofxButton add;
+        ofxButton reset;
+        ofxButton save;
+    
+        //Screen management
+        void addScreen();
+        void deleteScreen();
+        void resetScreen();
+
     
 		
 };

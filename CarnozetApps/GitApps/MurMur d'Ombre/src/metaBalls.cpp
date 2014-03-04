@@ -12,6 +12,7 @@
 metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
     MYPARAM(rayon,0.f,0.f,1.f);
     MYPARAM(curFamilly,0,0,3);
+    MYPARAM(alpha,0.f,0.f,1.f);
     MYPARAM(color,ofVec4f(0),ofVec4f(0),ofVec4f(255));
     settings.setName("metaBalls");
     metaBall.loadImage("visu/point.png");
@@ -20,8 +21,30 @@ metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
 
 
 void metaBalls::update(int w, int h){
+
+    dpoints =  dad->attr->getType(curFamilly);
+    ofVec2f scale(w,h);
+    ofSort(dpoints,sortOnXYZ);
     
-    points =  dad->attr->getType(curFamilly);
+    for (int i = 0 ; i<dpoints.size() ; i++){
+        if(i<points.size()){
+            points[i]=points[i]*alpha + dpoints[i]*(1.-alpha);
+        }
+        else{
+            if(points.size() == 0){
+                points.push_back(ofVec3f(0,0));
+            }
+            else  points.push_back(points.back());
+        }
+        
+    }
+    
+    int del = dpoints.size() - points.size();
+    
+    for (int i = 0 ;i < del ; i++){
+             points.pop_back();
+             
+    }
     
 }
 

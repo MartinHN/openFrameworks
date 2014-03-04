@@ -457,12 +457,7 @@ void Particles::changeGrad(int & i){
         gradient.loadImage("gradients/"+gradDir.getFile(i).getFileName());}
 }
 
-bool sortOnZ(ofVec3f a,ofVec3f b){
-    return a.z>b.z;
-}
-bool sortOnXYZ(ofVec3f a,ofVec3f b){
-    return a.z>b.z&&a.x>b.x&&a.y>b.y;
-}
+
 
 
 void Particles::changeOrigins(int &type){

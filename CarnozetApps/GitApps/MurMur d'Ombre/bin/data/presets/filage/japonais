@@ -1,13 +1,13 @@
 <OF>
 	<global>
-		<finalblur>0</finalblur>
+		<finalblur>2.75</finalblur>
 		<saturation>1</saturation>
 		<contrast>1</contrast>
 		<brightness>1</brightness>
 		<rback>0</rback>
 		<gback>0</gback>
 		<bback>0</bback>
-		<alphablur>127</alphablur>
+		<alphablur>253</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
@@ -31,7 +31,7 @@
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
-		<smooth>0</smooth>
+		<smooth>3.65</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
 	</blobsettings>
@@ -50,34 +50,34 @@
 			<mask>0</mask>
 		</screen0>
 		<screen1>
-			<mask>1</mask>
+			<mask>0</mask>
 		</screen1>
 		<screen2>
-			<mask>1</mask>
+			<mask>0</mask>
 		</screen2>
 		<screen3>
-			<mask>1</mask>
+			<mask>0</mask>
 		</screen3>
 	</screens>
 	<Visu>
 		<background>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
-			<type>6</type>
+			<type>0</type>
 			<followFam>-1</followFam>
-			<alpha>0.3</alpha>
+			<alpha>0.46</alpha>
 			<center>0.5, 0.5</center>
-			<color>107.985, 106.684, 106.684, 255</color>
+			<color>0, 0, 0, 255</color>
 			<scale>1</scale>
 			<ratio>1</ratio>
 			<fill>1</fill>
 		</background>
 		<particles>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
@@ -205,17 +205,17 @@
 		</BallManager>
 		<drawBlob>
 			<isActive>1</isActive>
-			<screenN>9</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isPiping>1</isPiping>
 			<isMasking>0</isMasking>
 			<fill>1</fill>
-			<invertx>0</invertx>
-			<inverty>0</inverty>
-			<pos>0.22449, 0.556122, 0.5</pos>
-			<scale>1.28571, 1.36735</scale>
-			<color>0.959184, 1, 1</color>
+			<invertx>1</invertx>
+			<inverty>1</inverty>
+			<pos>0.744898, 0.270408, 0.5</pos>
+			<scale>0.44898, 0.459184</scale>
+			<color>74.1582, 74.1582, 135.306</color>
 			<alpha>255</alpha>
 		</drawBlob>
 		<boule2gomme>

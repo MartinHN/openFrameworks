@@ -28,7 +28,6 @@ void boule2gomme::draw(int w, int h){
     
     dad->bH->syphonTex.src->draw(0,300);
     
-    
     dad->pipePP.dst->draw(0,540);
     ofVec2f scale(w,h);
     vector<AttrStruct> * points =  &dad->attr->staticA;

@@ -35,14 +35,23 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
 //-------------------------------------------------------------
 void BallManager::update(int w,int h){
 
+    globalWidth = w;
+    globalHeight = h;
+    
     sizedPolyline.clear();
     ofPolyline middlePolyline;
+    ofPolyline secMiddlePolyline;
     if(dad->bH->getBlobs().size()>0)
-    middlePolyline = dad->bH->getBlobs(320,240).front();
+        middlePolyline = dad->bH->getBlobs(320,240).front();
+    if(dad->bH->getBlobs().size()>1)
+        secMiddlePolyline = dad->bH->getBlobs(320,240).at(1);
+    
     middlePolyline.simplify(7.0f);
     
     ofPolyline smallPolyline;
     smallPolyline.clear();
+    ofPolyline secSmallPolyline;
+    secSmallPolyline.clear();
     
     
     for(int i=0; i<middlePolyline.size(); i++)
@@ -55,10 +64,23 @@ void BallManager::update(int w,int h){
         
     }
     smallPolyline.close();
+    
+    for(int i=0; i<secMiddlePolyline.size(); i++)
+    {
+        
+        ofPoint p = secMiddlePolyline[i]/ofPoint(320, 240);
+        
+        secSmallPolyline.lineTo(p);
+        
+    }
+    secSmallPolyline.close();
     sizedPolyline.close();
     
+    
     bool isblob;
+    bool is2blob = false;
     if(dad->bH->getBlobs().size()>0) isblob = dad->bH->getBlobs(w,h).front().size()> 0;
+    if(dad->bH->getBlobs().size()>1 )is2blob = true;
     
     if(isblob && !usePointEmitter)
     {
@@ -115,7 +137,34 @@ void BallManager::update(int w,int h){
     for( vector<BouncingBall>::iterator it = listOfBalls.begin(); it < listOfBalls.end() ; )
     {
         
-        int res = it->update(smallPolyline, ofGetWidth(), ofGetHeight());
+        int res;
+        
+        // ONE BLOB
+        if(!is2blob){
+        
+        res = it->update(smallPolyline, w, h);
+            
+        }
+        // TWO BLOB
+        else if(useGrid){
+            
+            ofPoint c1 = smallPolyline.getCentroid2D();
+            ofPoint c2 = secSmallPolyline.getCentroid2D();
+            ofPoint pos = it->pos;
+            
+            if( c1.distance(pos) < c2.distance(pos) ){
+                
+                it->update(smallPolyline, w, h);
+                
+            }
+            else{
+                
+                it->update(secSmallPolyline, w, h);
+            }
+            
+            
+        }
+        
         
         if(res == 0)
         {
@@ -321,7 +370,7 @@ void BallManager::changeMode(int & m){
                 //TOr
                 setNum(1);
                 setNum(30);
-                calcGrid(ofGetWidth(), ofGetHeight());
+                calcGrid(globalWidth, globalHeight);
                 drawGrid = true;
                 drawPart = true;
                 useGrid =true;
@@ -384,8 +433,25 @@ void BallManager::changeMode(int & m){
             break;
             case 5 : {
                 // Grid
-                setNum(50);
-                calcGrid(ofGetWidth(), ofGetHeight());
+                setNum(25);
+                calcGrid(globalWidth, globalHeight);
+                drawPart = false;
+                drawGrid = true;
+                useGrid = true;
+                useBorder = false;
+                useTor = false;
+                gridForce = 0.9;
+                insideMode = false;
+                dieMode = 0;
+                emission = 0.0;
+                usePointEmitter = false;
+                gravity = ofVec2f(0, 0);
+            }
+                break;
+            case 6 : {
+                // Grid dying if it is inside
+                setNum(25);
+                calcGrid(globalWidth, globalHeight);
                 drawPart = false;
                 drawGrid = true;
                 useGrid = true;
@@ -399,23 +465,40 @@ void BallManager::changeMode(int & m){
                 gravity = ofVec2f(0, 0);
             }
                 break;
-            case 6 : {
-                // Grid dying if it is inside
-                setNum(100);
-                calcGrid(ofGetWidth(), ofGetHeight());
-                drawPart = false;
-                drawGrid = true;
-                useGrid = true;
-                useBorder = false;
-                useTor = false;
-                gridForce = 0.7;
-                insideMode = false;
-                dieMode = 3;
-                emission = 0.0;
-                usePointEmitter = false;
-                gravity = ofVec2f(0, 0);
-            }
-                break;
+        case 7 : {
+            // Grid dying if it is inside
+            setNum(40);
+            calcGrid(globalWidth, globalHeight);
+            drawPart = false;
+            drawGrid = true;
+            useGrid = true;
+            useBorder = false;
+            useTor = false;
+            gridForce = 0.4;
+            insideMode = false;
+            dieMode = 0;
+            emission = 0.0;
+            usePointEmitter = false;
+            gravity = ofVec2f(0, 0);
+        }
+            break;
+        case 8 : {
+            // Grid dying if it is inside
+            setNum(50);
+            calcGrid(globalWidth, globalHeight);
+            drawPart = false;
+            drawGrid = true;
+            useGrid = true;
+            useBorder = false;
+            useTor = false;
+            gridForce = 0.2;
+            insideMode = false;
+            dieMode = 0;
+            emission = 0.0;
+            usePointEmitter = false;
+            gravity = ofVec2f(0, 0);
+        }
+            break;
             
             
             

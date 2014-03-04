@@ -76,7 +76,7 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
     
     //--- is Boucing ? ----
     
-    bool isInside = poly.inside(pos);
+    bool isInside = (poly.inside(pos) && !*useGrid);
     
     if(isInside != *(insideMode))
     {
@@ -127,10 +127,24 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         float damping = 0.95;
         float mass = 10;
         
+        
+        
+        
         //origin
         if(*useGrid)
         {
-        ofPoint force = ( origin - pos) * (*gridForce);
+        
+            
+            ofPoint centroidBlob = poly.getCentroid2D();
+            
+            float originForce = 0.7;
+            
+            
+            
+        ofPoint force = ( origin - pos )* originForce;
+            
+        force += ( centroidBlob - pos) * (*gridForce);
+        
         speed = damping * ( speed + force/mass);
         }
         
@@ -143,6 +157,8 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         //gravity
         speed += *gravity;
         pos = pos +  speed*t ;
+        
+        //Use a grid and attract the grid
 
         
         // Is boucing over the edges ?

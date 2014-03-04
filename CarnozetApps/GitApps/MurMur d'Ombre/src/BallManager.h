@@ -37,6 +37,10 @@ public:
     ofPolyline sizedPolyline;
     ofPoint centroidPoly;
     ofVec2f centroidSpeed;
+    
+    //Width and heigth
+    int globalWidth;
+    int globalHeight;
 
     
     //Grid

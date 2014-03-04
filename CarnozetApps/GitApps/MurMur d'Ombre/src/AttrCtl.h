@@ -59,6 +59,6 @@ class AttrCtl{
     ofParameter<int> attrmirrorx;
     ofParameter<int> attrmirrory;
     ofParameter<int> attrmirrorz;
-    ofParameter<bool> isAttr;
+    ofParameter<bool> isAttr,invx,invy;
 
 };

@@ -29,6 +29,8 @@ void AttrCtl::registerParam(){
     settings.setName("attrCtl");
     MYPARAM(isAttr,true,false,true);
     MYPARAM(zoffset,0.5f,0.f,1.f);
+    MYPARAM(invx,false,false,true);
+    MYPARAM(invy,false,false,true);
     MYPARAM(attrmirrorx,4,0,16);
     MYPARAM(attrmirrory,0,0,16);
     MYPARAM(attrmirrorz,0,0,16);
@@ -111,8 +113,12 @@ vector<ofPoint> AttrCtl::getType(int f,int z){
 //    if(map2blob)
     for(int i = 0 ; i< destA.size() ; i++){
         if(destA[i].type==f){
-            if(z==0 || zones[z-1].inside(destA[i].p))
+            if(z==0 || zones[z-1].inside(destA[i].p)){
+                
             res.push_back(destA[i].p);
+            if(invx)res.back().x = 1- res.back().x;
+            if(invy)res.back().y = 1- res.back().y;
+            }
         }
         
     }

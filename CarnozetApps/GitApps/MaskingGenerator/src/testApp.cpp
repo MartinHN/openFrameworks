@@ -45,7 +45,7 @@ void testApp::update(){
 //--------------------------------------------------------------
 void testApp::draw(){
 
-    ofBackground(0);
+    ofBackground(100);
     gui.draw();
     
     for(int i=0; i<listOfScreen.size(); i++){
@@ -88,7 +88,7 @@ void testApp::addScreen(){
 void testApp::resetScreen(){
     
     if(activeScreen>=0){
-        
+            
         listOfScreen.at(activeScreen).reset();
         
     }

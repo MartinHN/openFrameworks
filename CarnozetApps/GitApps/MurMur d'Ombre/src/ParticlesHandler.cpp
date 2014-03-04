@@ -25,8 +25,11 @@ Force::Force(string namein,bool isAttr){
     isActive = false;
     
     attrFamilly = -2;
-    if(isAttr) {    MYPARAM(attrFamilly,0,-1,13);
-    pl.push_back(&attrFamilly);}
+    if(isAttr) {    
+        MYPARAM(attrFamilly,0,-1,13);
+        MYPARAM(attrZone,0,0,3);
+    pl.push_back(&attrFamilly);
+    pl.push_back(&attrZone);}
     
 }
 
@@ -244,7 +247,8 @@ void Particles::update(int w, int h){
         }
         else if(forces[i]->isActive ){
             int j = 0;
-            vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly);
+            vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,forces[i]->attrZone);
+//            dad->sH.mapN2S(curattr,screenN);
             if((forces[i]->attrFamilly>-2?curattr.size()>0:1)){
                 do{
                     velPingPong.dst->begin();
@@ -258,9 +262,9 @@ void Particles::update(int w, int h){
                         forces[i]->shader.setUniformTexture("fieldData",dad->pipePP.src->getTextureReference(), 2);
             #endif
                             }
-                    if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size())
+                    if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size()){
                         forces[i]->shader.setUniform3f("attr",curattr[j].x,curattr[j].y,curattr[j].z);
-                    
+                    }
                     forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
                     if(origintype==1)forces[i]->shader.setUniform1i("resolution",textureRes3);
                     else forces[i]->shader.setUniform1i("resolution",textureRes);

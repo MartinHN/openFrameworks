@@ -40,7 +40,7 @@ public:
     vector<ofAbstractParameter *> pl;
     ofShader shader;
     ofParameter<bool> isActive;
-    ofParameter<int> attrFamilly;
+    ofParameter<int> attrFamilly,attrZone;
     template<typename ParameterType>
     void addParameter(string name,ParameterType v,ParameterType min,ParameterType max);
 

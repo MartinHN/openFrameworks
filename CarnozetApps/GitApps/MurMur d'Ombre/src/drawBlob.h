@@ -27,7 +27,7 @@ public:
     ofParameter<float> alpha;
     
 
-    ofParameter<bool> fill,isMasking;
+    ofParameter<bool> drawZones,isMasking;
 
     void draw(int w, int h);
     void update(int w, int h);

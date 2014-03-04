@@ -31,6 +31,8 @@ public:
     void blurmask();
     void drawMask();
     
+    void mapN2S(vector<ofPoint> & p,int s);
+    
 //    void writeFile();
     
     Boolean isEditingScreens;

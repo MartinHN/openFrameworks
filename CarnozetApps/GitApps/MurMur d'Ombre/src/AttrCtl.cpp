@@ -90,7 +90,7 @@ vector<ofPoint> AttrCtl::getAll(){
     return res;
 }
 
-vector<ofPoint> AttrCtl::getType(int f){
+vector<ofPoint> AttrCtl::getType(int f,int z){
     vector<ofPoint> res;
     vector<int> targetf;
     
@@ -110,7 +110,10 @@ vector<ofPoint> AttrCtl::getType(int f){
 }while (f>10&&curf>0);
 
     for(int i = 0 ; i< destA.size() ; i++){
-        if(destA[i].type==f){res.push_back(destA[i].p);}
+        if(destA[i].type==f){
+            if(z==0 || zones[z-1].inside(destA[i].p))
+            res.push_back(destA[i].p);
+        }
         
     }
         

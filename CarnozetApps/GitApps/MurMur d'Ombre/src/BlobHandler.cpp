@@ -60,7 +60,7 @@ void BlobHandler::registerParams(){
     MYPARAM(smooth,0.f,0.f,10.f);
     MYPARAM(polyMaxPoints, 0,0,200);
     MYPARAM(maxLengthExtrem, 15.f,0.f,100.f);
-//    MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
+    MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
 }
 
 

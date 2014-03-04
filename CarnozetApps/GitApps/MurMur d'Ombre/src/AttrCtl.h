@@ -9,6 +9,7 @@
 #pragma once
 #include "ofMain.h"
 #include "Constants.h"
+
 #define MAXATTRACTORS 16
 
 
@@ -44,7 +45,7 @@ class AttrCtl{
     void clearPoints();
     void zoneChanged(ofVec4f & dumb);
     
-    vector<ofPoint> getType(int f);
+    vector<ofPoint> getType(int f,int zone = 0);
     vector<ofPoint> getAll();
     
     ofParameterGroup settings;

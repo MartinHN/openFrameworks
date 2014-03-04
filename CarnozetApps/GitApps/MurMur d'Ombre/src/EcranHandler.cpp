@@ -249,6 +249,17 @@ void ScreenHandler::drawMask(){
     }
     
 }
+
+
+void ScreenHandler::mapN2S(vector<ofPoint> & p,int s){
+    ofRectangle rr = rectOfScreen(getValidScreen(s));
+    for(int i = 0 ; i < p.size();i++){
+        
+        p[i].x = ofMap(p[i].x,rr.getMinX()*1.0/(*scrw),rr.getMaxX()*1.0/(*scrw),0,1);
+        p[i].y = ofMap(p[i].y,rr.getMinY()*1.0/(*scrh),rr.getMaxY()*1.0/(*scrh),0,1);
+    }
+}
+
 void ScreenHandler::loadScreensPos(){
    
     vector<ofVec3f> vertglob;

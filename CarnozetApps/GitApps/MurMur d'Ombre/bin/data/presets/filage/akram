@@ -34,10 +34,13 @@
 		<smooth>0</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
+		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
 	<attrCtl>
 		<isAttr>1</isAttr>
 		<zoffset>0.5</zoffset>
+		<invx>0</invx>
+		<invy>0</invy>
 		<attrmirrorx>4</attrmirrorx>
 		<attrmirrory>0</attrmirrory>
 		<attrmirrorz>0</attrmirrorz>
@@ -98,6 +101,7 @@
 			<gradNum>6</gradNum>
 			<mingrad>-0.4</mingrad>
 			<maxgrad>2.8</maxgrad>
+			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
@@ -123,6 +127,7 @@
 			<rotation>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<type>0</type>
 				<r>0.2</r>
 				<speed>0</speed>
@@ -131,6 +136,7 @@
 			<gravity>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<r>0.5</r>
 				<mass>0.001</mass>
 				<rin>0.5</rin>
@@ -140,6 +146,7 @@
 			<smoothyGrav>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<r>0.5</r>
 				<mass>0.1</mass>
 				<rin>0.5</rin>
@@ -149,6 +156,7 @@
 			<spring>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<k>0.03</k>
 				<l0>0.01</l0>
 				<z>0</z>
@@ -216,11 +224,11 @@
 			<isMapping>1</isMapping>
 			<isPiping>1</isPiping>
 			<isMasking>0</isMasking>
-			<fill>1</fill>
+			<drawZones>0</drawZones>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
 			<pos>0.52551, 0.545918, 0.545918</pos>
-			<scale>0.765306, 0.77551</scale>
+			<scale>0.765555, 1.11399</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>

@@ -135,6 +135,7 @@ void AttrCtl::smooth(){
     
     smoothedA.clear();
     
+    
     for(int i=0;i<destA.size();i++){
             smoothedA.push_back(destA[i]);
         

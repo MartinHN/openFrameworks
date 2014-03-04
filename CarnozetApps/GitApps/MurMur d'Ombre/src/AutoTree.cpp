@@ -232,8 +232,9 @@ void AutoTree::draw(int width, int height)
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     
     if(debugMode){
-    ofSetColor(255, 0, 0);
+    ofSetColor(255, 255, 100);
     ofNoFill();
+        ofSetLineWidth(4);
     ofCircle(pointToBegin->x*width, pointToBegin->y*height,30);
     }
     

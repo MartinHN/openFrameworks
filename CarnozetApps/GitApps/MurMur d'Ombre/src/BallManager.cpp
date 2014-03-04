@@ -416,7 +416,6 @@ void BallManager::changeMode(int & m){
             break;
             case 4 : {
                 // Tor with time
-                setNum(0);
                 drawPart = true;
                 drawGrid = false;
                 useGrid = false;

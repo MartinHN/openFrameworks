@@ -46,6 +46,8 @@ AutoTree::AutoTree(VisuHandler * v):VisuClass(v){
     MYPARAM(debugMode,false,false,true);
     MYPARAM(reset,false,false,true);
     reset.addListener(this, &AutoTree::resetAll);
+    MYPARAM(insideMode, false, false, true);
+    insideMode.addListener(this, &AutoTree::switchMode);
     
 //    
 //    MYPARAM(addTrig,false,false,true);
@@ -137,10 +139,17 @@ void AutoTree::draw(int width, int height)
     int newBrancheL;
     bool endOfBranche = false;
     
+    ofPolyline blob;
+    blob.clear();
+    
+    if(dad->bH->getBlobs().size()>0 && insideMode)
+        blob = dad->bH->getBlobs(320,240).front();
+    
     //INtro
     if(initTrig )
     {
-        int duree = 100; // 600
+        int duree = 600; // 600
+        float finalSize = 60.0f;
         introPhase++;
         
         if(introPhase< duree)
@@ -148,7 +157,7 @@ void AutoTree::draw(int width, int height)
         
             //--INTRO
             
-            float size = introPhase*0.6f;
+            float size = (finalSize/(duree*1.0f))*(introPhase*1.0f);
             
             myfbo.begin();
             //ofClear(0, 0, 0, 255);
@@ -172,8 +181,9 @@ void AutoTree::draw(int width, int height)
                 pos = pos/ofPoint(width, height);
                 pos = pos*ofPoint(320,240);
                 
-                it->update();
+                it->update(blob, insideMode);
                 
+                // Branche is over
                 if(it->lifeTime < 1 && !(it->isChildCreated)  )
                 {
                     
@@ -189,6 +199,7 @@ void AutoTree::draw(int width, int height)
                     
                     
                 }
+                // Branche is growing
                 else
                 {
                     ofEnableAlphaBlending();
@@ -204,6 +215,8 @@ void AutoTree::draw(int width, int height)
             
             myfbo.end();
             
+            
+            //Create new branche
             if(newBranche.size()>0)
             {
                 
@@ -235,19 +248,20 @@ void AutoTree::draw(int width, int height)
     if(debugMode){
     ofSetColor(255, 255, 100);
     ofNoFill();
-        ofSetLineWidth(4);
+    ofSetLineWidth(4);
     ofCircle(pointToBegin->x*width, pointToBegin->y*height,30);
     }
     
     ofPopMatrix();
 }
 
+//--------------------------------------
+void AutoTree::switchMode(bool &isInside){
+    
+}
+
 //--------------------------------------------------------------
 void AutoTree::createBranche(ofPoint p, float a, int l,int tot,  bool isEnd){
-    
-    
-    ///path = dad->bH->getBlobs();
-    
     
     
     int nb;
@@ -394,20 +408,21 @@ Branche::Branche( ofPoint b, float a, int actualL,int totalL, bool isClockWise, 
     length = 0.0f;
     
     leaf = img;
+    
+    lastTimeBouncing = 0;
         
 }
 
 
 
-void Branche::update(){
+void Branche::update(ofPolyline poly, bool insideMode){
     
     int maxLife = 200;
     
     float speed = 0.2f; //0.2f
     
     if(isGrowing){
-//        lifeTime -=speed;
-//        length +=speed;
+
         lifeTime -= speed;
         length += speed;
         
@@ -417,17 +432,35 @@ void Branche::update(){
         if (clockWise) curve *= -1.0f;
         
         angle +=  curve;
+        
+        //bounce inside the blob
+        if(insideMode )
+        {
+            
+            if(lastTimeBouncing>0)
+                lastTimeBouncing--;
+            
+            if(poly.inside(end) && lastTimeBouncing==0)
+            {
+                angle *= -1.0f;
+                lastTimeBouncing = 25;
+                clockWise = !clockWise;
+            }
+            
+        }
+        
+        
     }
     if (lifeTime<0 ){
+        
         isGrowing = false;
         isChildCreated = true;
     }
     
     if(isGrowing)
     {
-        
         end = ofPoint( begin.x + length*cos(-angle), begin.y + length*sin(-angle));
-        shape.addVertex(end);
+    
     }
     
     

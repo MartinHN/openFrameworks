@@ -51,6 +51,10 @@ void testApp::draw(){
     for(int i=0; i<listOfScreen.size(); i++){
         
         listOfScreen.at(i).draw();
+        ofDrawBitmapString(ofToString(i),listOfScreen.at(i).centroid.x, listOfScreen.at(i).centroid.y);
+        for (int j = 0 ;j< 4 ; j++){
+        ofDrawBitmapString(ofToString(j),listOfScreen.at(i).listOfPoint[j] );
+        }
 
         
     }
@@ -116,8 +120,8 @@ void testApp::saveXml(){
         
         Screen src = listOfScreen.at(i);
         
-        xml.addTag(ofToString("ecran").append(ofToString(i)));
-        xml.pushTag(ofToString("ecran").append(ofToString(i)));
+        xml.addTag(ofToString("ecran"));
+        xml.pushTag(ofToString("ecran"),i);
        
         
         
@@ -125,12 +129,12 @@ void testApp::saveXml(){
         {
             
             
-            xml.addTag(ofToString("point").append(ofToString(j)));
-            xml.pushTag(ofToString("point").append(ofToString(j)));
+            xml.addTag(ofToString("p"));  
+            xml.pushTag(ofToString("p"),j);
             
             
-            xml.setValue("x", src.listOfPoint.at(j).x);
-            xml.setValue("y", src.listOfPoint.at(j).y);
+            xml.setValue("x", src.listOfPoint.at(j).x/ofGetWidth());
+            xml.setValue("y", src.listOfPoint.at(j).y/ofGetHeight());
             
 
             

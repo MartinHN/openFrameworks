@@ -84,6 +84,7 @@ void AutoTree::clear(){
     list.clear();
     
     if(myfbo.isAllocated()){
+        myfbo.allocate(1,1,GL_RGBA);
       //  myfbo = ofFbo();
       // myfbo.~ofFbo();
     }

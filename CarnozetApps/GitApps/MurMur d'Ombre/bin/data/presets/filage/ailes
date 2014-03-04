@@ -4,12 +4,16 @@
 		<saturation>1</saturation>
 		<contrast>1</contrast>
 		<brightness>1</brightness>
-		<rback>255</rback>
-		<gback>255</gback>
-		<bback>255</bback>
-		<alphablur>170</alphablur>
+		<rback>0</rback>
+		<gback>0</gback>
+		<bback>0</bback>
+		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
+		<isPipe>1</isPipe>
+		<pipeblur>0</pipeblur>
+		<hidePipe>0</hidePipe>
+		<pipeMask>0</pipeMask>
 		<camera>
 			<alpha>1</alpha>
 			<distance>1</distance>
@@ -19,77 +23,86 @@
 			<isLooking>0</isLooking>
 		</camera>
 	</global>
-	<VisuHandler>
-		<pipeblur>255</pipeblur>
-	</VisuHandler>
 	<blobsettings>
-		<blobBlur>0</blobBlur>
-		<vidThreshold>0</vidThreshold>
+		<vidThreshold>36.975</vidThreshold>
 		<invertBW>0</invertBW>
-		<minSide>0.5</minSide>
-		<maxSide>0.5</maxSide>
+		<minSide>0.075</minSide>
+		<maxSide>1</maxSide>
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0.5</simplification>
+		<smooth>3.65</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
-		<crop>0, 0, 0, 0</crop>
+		<crop>0, 0, 0, 100</crop>
 	</blobsettings>
 	<attrCtl>
+		<isAttr>1</isAttr>
 		<zoffset>0.5</zoffset>
+		<invx>1</invx>
+		<invy>0</invy>
 		<attrmirrorx>4</attrmirrorx>
 		<attrmirrory>0</attrmirrory>
 		<attrmirrorz>0</attrmirrorz>
-		<zonefamilly1>0, 0, 1, 1</zonefamilly1>
+		<zonefamilly1>0, 0, 1, 0.653061</zonefamilly1>
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screens>
-		<isMasking>0</isMasking>
-		<screen0/>
-		<screen1/>
-		<screen2/>
-		<screen3/>
+		<screen0>
+			<mask>0</mask>
+		</screen0>
+		<screen1>
+			<mask>1</mask>
+		</screen1>
+		<screen2>
+			<mask>0</mask>
+		</screen2>
+		<screen3>
+			<mask>0</mask>
+		</screen3>
+		<screen4>
+			<mask>0</mask>
+		</screen4>
+		<screen5>
+			<mask>0</mask>
+		</screen5>
 	</screens>
 	<Visu>
 		<background>
-			<isActive>1</isActive>
-			<screenN>0</screenN>
-			<recopy>1</recopy>
-			<isMapping>1</isMapping>
-			<type>0</type>
-			<followFam>-1</followFam>
-			<alpha>0.3</alpha>
-			<center>0.5, 0.5</center>
-			<color>0, 0, 0, 255</color>
-			<scale>1</scale>
-			<ratio>1</ratio>
-			<fill>1</fill>
-		</background>
-		<boule2gomme>
 			<isActive>0</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<rayon>2</rayon>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
+			<type>0</type>
+			<followFam>-1</followFam>
+			<alpha>0.3</alpha>
 			<center>0.5, 0.5</center>
-		</boule2gomme>
+			<color>255, 255, 255, 255</color>
+			<scale>1</scale>
+			<ratio>1</ratio>
+			<fill>1</fill>
+		</background>
 		<particles>
 			<isActive>1</isActive>
-			<screenN>0</screenN>
+			<screenN>1</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
-			<numParticles>204304</numParticles>
-			<particleSize>2.85</particleSize>
-			<alphaparticle>2.36</alphaparticle>
+			<numParticles>43681</numParticles>
+			<particleSize>3.07317</particleSize>
+			<alphaparticle>1.30732</alphaparticle>
 			<partcolor>0, 0, 255</partcolor>
 			<gradtype>0</gradtype>
 			<gradNum>0</gradNum>
 			<mingrad>0</mingrad>
 			<maxgrad>1</maxgrad>
-			<netCompRatio>8</netCompRatio>
-			<origintype>1</origintype>
+			<map2blob>0</map2blob>
+			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
 				<k>0.00816326</k>
@@ -106,14 +119,15 @@
 			</neth>
 			<origin>
 				<isActive>1</isActive>
-				<k>0.067602</k>
-				<z>0.137755</z>
-				<freeze>0</freeze>
-				<damp>0.5</damp>
+				<k>0.100672</k>
+				<z>0.261075</z>
+				<freeze>0.318168</freeze>
+				<damp>1</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<type>0</type>
 				<r>0.2</r>
 				<speed>0</speed>
@@ -121,16 +135,18 @@
 			</rotation>
 			<gravity>
 				<isActive>1</isActive>
-				<attrFamilly>0</attrFamilly>
-				<r>0.160714</r>
+				<attrFamilly>1</attrFamilly>
+				<attrZone>1</attrZone>
+				<r>0.101792</r>
 				<mass>0.00454082</mass>
-				<rin>0.0969388</rin>
+				<rin>0.0470383</rin>
 				<massin>0</massin>
-				<damp>1</damp>
+				<damp>0.960179</damp>
 			</gravity>
 			<smoothyGrav>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<r>0.989796</r>
 				<mass>0.0285714</mass>
 				<rin>0.0637755</rin>
@@ -140,6 +156,7 @@
 			<spring>
 				<isActive>0</isActive>
 				<attrFamilly>0</attrFamilly>
+				<attrZone>0</attrZone>
 				<k>0.03</k>
 				<l0>0.01</l0>
 				<z>0</z>
@@ -155,10 +172,10 @@
 				<maxv>0.8</maxv>
 			</fieldForce>
 			<globalForce>
-				<isActive>0</isActive>
-				<f>0.994153</f>
+				<isActive>1</isActive>
+				<f>0.992185</f>
 				<fmin>1</fmin>
-				<vmax>1</vmax>
+				<vmax>0.118965</vmax>
 				<vmin>0</vmin>
 			</globalForce>
 		</particles>
@@ -167,6 +184,8 @@
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>1</isMasking>
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
 			<color>0, 0, 0, 0</color>
@@ -176,14 +195,21 @@
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
 			<pointToBegin>0.5, 0.5</pointToBegin>
 			<initTrig>0</initTrig>
+			<addPoint>0</addPoint>
+			<debugMode>0</debugMode>
+			<reset>0</reset>
 		</AutoTree>
 		<BallManager>
 			<isActive>1</isActive>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
 			<usePointEmitter>1</usePointEmitter>
 			<noiseF>0, 0.0255102</noiseF>
 			<emitter>0.290816, 0</emitter>
@@ -191,5 +217,38 @@
 			<mode>3</mode>
 			<lifeTime>190</lifeTime>
 		</BallManager>
+		<drawBlob>
+			<isActive>0</isActive>
+			<screenN>1</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
+			<drawZones>1</drawZones>
+			<invertx>1</invertx>
+			<inverty>0</inverty>
+			<pos>0.497262, 0.50224, 0.5</pos>
+			<scale>0.974614, 0.974614</scale>
+			<color>74.1582, 255, 255</color>
+			<alpha>2.4878</alpha>
+		</drawBlob>
+		<VideoPlayer>
+			<isActive>0</isActive>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
+		</VideoPlayer>
+		<boule2gomme>
+			<isActive>0</isActive>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isPiping>0</isPiping>
+			<isMasking>0</isMasking>
+			<rayon>2</rayon>
+			<center>0.5, 0.5</center>
+		</boule2gomme>
 	</Visu>
 </OF>

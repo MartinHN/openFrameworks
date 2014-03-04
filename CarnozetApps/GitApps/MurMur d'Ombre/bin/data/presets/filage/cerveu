@@ -26,7 +26,7 @@
 	<blobsettings>
 		<vidThreshold>0</vidThreshold>
 		<invertBW>0</invertBW>
-		<minSide>0</minSide>
+		<minSide>0.055</minSide>
 		<maxSide>0.98</maxSide>
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
@@ -53,7 +53,7 @@
 			<mask>0</mask>
 		</screen0>
 		<screen1>
-			<mask>1</mask>
+			<mask>0</mask>
 		</screen1>
 		<screen2>
 			<mask>0</mask>

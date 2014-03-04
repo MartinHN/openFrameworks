@@ -121,6 +121,7 @@ void Particles::setup(){
     MYPARAM(gradNum,0,0,20);
     MYPARAM(mingrad,0.f,-1.f,1.f);
     MYPARAM(maxgrad,1,-1.f,3.f);
+    MYPARAM(map2blob,true,false,true);
 
 #ifdef PMOD
     MYPARAM(origintype,1,0,2);
@@ -248,7 +249,11 @@ void Particles::update(int w, int h){
         else if(forces[i]->isActive ){
             int j = 0;
             vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,forces[i]->attrZone);
-//            dad->sH.mapN2S(curattr,screenN);
+            if(map2blob){
+                VisuClass * vvv = dad->get("drawBlob");
+                
+            dad->sH.mapN2S(curattr,vvv->screenN);
+            }
             if((forces[i]->attrFamilly>-2?curattr.size()>0:1)){
                 do{
                     velPingPong.dst->begin();

@@ -105,6 +105,7 @@ public:
     ofParameter<float>      mingrad;
     ofParameter<float>      maxgrad;
     ofParameter<int>        gradNum;
+    ofParameter<bool> map2blob;
     
     
     

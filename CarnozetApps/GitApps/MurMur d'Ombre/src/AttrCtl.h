@@ -7,8 +7,10 @@
 //
 
 #pragma once
+
 #include "ofMain.h"
 #include "Constants.h"
+
 
 #define MAXATTRACTORS 16
 
@@ -58,4 +60,5 @@ class AttrCtl{
     ofParameter<int> attrmirrory;
     ofParameter<int> attrmirrorz;
     ofParameter<bool> isAttr;
+
 };

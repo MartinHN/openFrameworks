@@ -108,7 +108,7 @@ vector<ofPoint> AttrCtl::getType(int f,int z){
     curf = f/(pow(10.,k));
 
 }while (f>10&&curf>0);
-
+//    if(map2blob)
     for(int i = 0 ; i< destA.size() ; i++){
         if(destA[i].type==f){
             if(z==0 || zones[z-1].inside(destA[i].p))
@@ -118,6 +118,8 @@ vector<ofPoint> AttrCtl::getType(int f,int z){
     }
         
     }
+    
+
     return res;
 }
 

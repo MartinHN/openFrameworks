@@ -12,7 +12,7 @@
 #include "VisuHandler.h"
 
 VisuHandler::VisuHandler(){
-  
+    
     
 }
 
@@ -21,7 +21,7 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     allParams.clear();
     allParams.setName("Visu");
-
+    
     
     zdepth = zdepthin;
     inw=inwin;
@@ -31,8 +31,8 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     beat=0;
     attr = attrctl;
     
-//    sharedImg.push_back(ofImage("images/background.png"));
-  
+    //    sharedImg.push_back(ofImage("images/background.png"));
+    
     
     sH.setup(scrw,scrh,zdepth);
     sH.loadScreensPos();
@@ -40,10 +40,10 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     bH = bHin;
     
     pipePP.allocate(inw, inh);
-
     
-
-
+    
+    
+    
 }
 
 
@@ -67,13 +67,13 @@ void VisuHandler::update(){
             visuList[i]->update(curS.width,curS.height);
         }
     }
-
+    
     
 }
 
 
 void VisuHandler::updateHighFPS(){
-   
+    
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->isActive&&visuList[i]->isHighFPS){
@@ -97,17 +97,17 @@ ofImage * VisuHandler::getSharedImg(int i){
 
 void VisuHandler::registerParams(){
     bH->registerParams();
-        attr->registerParam();
+    attr->registerParam();
     
-   
+    
     
     for(int i = 0 ; i< visuList.size();i++){
         visuList[i]->registerParam();
         allParams.add(visuList[i]->settings);
     }
-
-
-
+    
+    
+    
 }
 
 
@@ -123,21 +123,41 @@ const void VisuHandler::printallp(ofParameterGroup p){
 }
 
 const void VisuHandler::draw(int mode){
-
     
-
+    
+    
     ofSetColor(255,255,255,255);
     for (int i = 0 ; i<visuList.size();i++){
-
+        
         ofPushMatrix();
         ofPushView();
         ofPushStyle();
         
-        if(mode!=3)ofTranslate(0,0,zdepth/2);
-        if(visuList[i]->isActive && ((mode == 0 && !visuList[i]->isMasking)||(mode==1 && visuList[i]->isPiping && !visuList[i]->isMasking) || (mode==2 &&!visuList[i]->isPiping&& !visuList[i]->isMasking) || (mode==3 && visuList[i]->isMasking)) &&visuList[i]->screenN>=0){
+        if(mode!=2)ofTranslate(0,0,zdepth/2);
+        bool isOk = false;
+        
+        if(!visuList[i]->isMasking){
+            switch (mode){
+                case 0:
+                    if(visuList[i]->isActive){isOk=true;}
+                    break;
+                    
+                case 1:
+                    if(visuList[i]->isPiping){ isOk=true;}
+                    break;
+                default:
+                    break;
+                    
+            }      
+            
+        }
+        else if (mode == 2) {isOk=true;}
+        
+        
+        if(isOk){
             int validScreen = sH.getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
-                if(mode!=3)ofEnableAlphaBlending();
+                if(mode!=2)ofEnableAlphaBlending();
                 if(visuList[i]->recopy){
                     int curn = validScreen%10;
                     do{
@@ -166,16 +186,16 @@ const void VisuHandler::draw(int mode){
                     else ofTranslate(-curR.x,-curR.y);
                     
                 }
-
-
+                
+                
+            }
+            
         }
-
-    }
         ofPopStyle();
         ofPopView();
         ofPopMatrix();
-
-
+        
+        
     }
     
     
@@ -198,7 +218,7 @@ void VisuHandler::addVisu(VisuClass * v){
 
 void VisuHandler::updateScreenSize(){
     
-
+    
     for (int i = 0 ; i< sH.screenL.size();i++){
         sH.screenL[i]->calcRectMax();
     }

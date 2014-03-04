@@ -4,20 +4,20 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-//    ofSetDataPathRoot("../Resources/data/");
+    //    ofSetDataPathRoot("../Resources/data/");
     
-    #ifndef GUIMODE
+#ifndef GUIMODE
     
- 
+    
     isFPS = true;
-
+    
     
     ofSetLogLevel(OF_LOG_VERBOSE);
-
+    
     isFullScreen=false;
-
-
-
+    
+    
+    
     ofBackground(0);
     glDisable(GL_DEPTH_TEST);
     ofEnableAlphaBlending();
@@ -27,10 +27,10 @@ void testApp::setup(){
     ofEnableArbTex();
     glEnable(GL_POINT_SPRITE);
     glPointParameteri(	GL_POINT_SPRITE_COORD_ORIGIN,GL_UPPER_LEFT);
-
-ofSetVerticalSync(false);
-     ofSetFrameRate(FPS);
-   
+    
+    ofSetVerticalSync(false);
+    ofSetFrameRate(FPS);
+    
     width = ofGetWindowWidth();
     height = ofGetWindowHeight();
     
@@ -38,21 +38,21 @@ ofSetVerticalSync(false);
     inh=240;
     videow=320;
     videoh=240;
-
+    
     //Zdepth
     zdepth=1000;    
-
+    
     
 #ifdef testvid
     vidplay.loadMovie("bien.mov");
     vidplay.play();
     threshold=55;
 #endif
-
-
-
     
-
+    
+    
+    
+    
     receiver.setup(12345);
     
     
@@ -64,38 +64,38 @@ ofSetVerticalSync(false);
     gloom.load("","shaders/gloom.frag");
     
     finalRender.allocate(scrw,scrh,GL_RGB);
-        
-
+    
+    
     drawcam=true;
     isAtt=false;
-
+    
     
     
 #if defined  localcamera || defined testvid || defined blobcomp
-
+    
     colorImg.allocate(inw,inh);
-   grayImage.allocate(inw,inh);
+    grayImage.allocate(inw,inh);
     grayDiff.allocate(inw,inh);
-
+    
     bLearnBakground=true;
- 
+    
 #endif  
     
-
-
+    
+    
     finalblur=0;
-
-
-
+    
+    
+    
     attrctl = AttrCtl();  
-bH.setup(inw,inh,&blurX,&blurY);
-
+    bH.setup(inw,inh,&blurX,&blurY);
+    
 #endif  
     
     visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh);
-
+    
 #ifndef GUIMODE 
-
+    
 #ifndef LIVEBLUR
     foreground.push_back(visuHandler.sH.globalMask);
 #endif
@@ -105,7 +105,7 @@ bH.setup(inw,inh,&blurX,&blurY);
 #endif
     
     polyBlob.allocate(inw,inh,GL_RGB32F);
-//    Shadow.load("","shaders/Shadow.frag");
+    //    Shadow.load("","shaders/Shadow.frag");
     
 #endif
     camera2.setup(&scrw,&scrh, &zdepth);
@@ -136,12 +136,12 @@ bH.setup(inw,inh,&blurX,&blurY);
     MYPARAM(pipeblur, 0.f,0.f,25.f);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
-
-
+    
+    
     settings.add(camera2.settings);
     
     
-//    settings.add(finalblur);
+    //    settings.add(finalblur);
     
     visuHandler.addVisu(new background(&visuHandler));
     
@@ -156,38 +156,38 @@ bH.setup(inw,inh,&blurX,&blurY);
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     
     
-
+    
     visuHandler.registerParams();
     visuHandler.sH.registerParams();
     
-
-
+    
+    
     globalParam.add(settings);
-
+    
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
     globalParam.add(visuHandler.sH.screensParam);
     globalParam.add(visuHandler.allParams);
     
     
-
+    
 #ifdef GUIMODE
     paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
 #else
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
 #endif
-//    string savename = "lolo";
-//    visuHandler.saveState(savename);
-
+    //    string savename = "lolo";
+    //    visuHandler.saveState(savename);
+    
 #ifdef GUIMODE
-         ofSetFrameRate(8);
-//    gui.load(visuHandler.allParams);
-//    gui.loadOne(settings);
+    ofSetFrameRate(8);
+    //    gui.load(visuHandler.allParams);
+    //    gui.loadOne(settings);
     gui.load(globalParam);
     
     
 #endif
-
+    
 }
 
 
@@ -206,7 +206,7 @@ void testApp::update(){
     bH.update();
     
     
-//    attrctl.clearPoints();
+    //    attrctl.clearPoints();
     
     attrctl.addPoints(bH.centroids, 1);
     attrctl.addPoints(bH.arms, 2);
@@ -223,14 +223,14 @@ void testApp::update(){
     }
     
     paramSync.update();
-        
-    oscUpdate();
-  
-   
     
-
+    oscUpdate();
+    
+    
+    
+    
 #endif 
-
+    
     
 } 
 
@@ -261,163 +261,133 @@ void testApp::draw(){
     
     
     glBlendEquation(GL_FUNC_ADD);
-    
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-//
-//
-//    
-//    glBlendEquation(GL_FUNC_ADD_EXT);
     
-
-
     finalRender.dst->begin();
     
     ofSetColor(rback,gback,bback,alphablur);
     ofRect(0,0,scrw,scrh);
     
     
-        if(isAtt){
-
-            for( int k=0;k<attrctl.destA.size() ; k++){
-                ofSetColor(attrctl.destA[k].type==0?255:0,attrctl.destA[k].type==1?255:0,attrctl.destA[k].type==2?255:0);
-                ofCircle(attrctl.destA[k].p.x*width,attrctl.destA[k].p.y*height,20);
-            }
-            
+    if(isAtt){
+        
+        for( int k=0;k<attrctl.destA.size() ; k++){
+            ofSetColor(attrctl.destA[k].type==0?255:0,attrctl.destA[k].type==1?255:0,attrctl.destA[k].type==2?255:0);
+            ofCircle(attrctl.destA[k].p.x*width,attrctl.destA[k].p.y*height,20);
         }
-         
+        
+    }
+    
     
     ofPushMatrix();
     ofPushView();
     ofEnableAlphaBlending();
     camera2.begin();
-      ofSetColor(255,255,255,255);  
+    ofSetColor(255,255,255,255);  
     
-    glBlendEquation(GL_FUNC_ADD);
-    
+    glBlendEquation(GL_FUNC_ADD);            
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-        //Draw only for pipe
+    
+    
+    //Draw only for pipe
     int modeVisu = isPipe?1:0;
     visuHandler.draw(modeVisu);
-          
+    
     camera2.end();
     ofPopMatrix();
     ofPopView();
     
-
-
-
-
-finalRender.dst->end();
+    finalRender.dst->end();
     
     finalRender.swap();
     
     
     //PIPE
-if(isPipe){
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    
-    glBlendFunc(GL_ONE,GL_ZERO);
-
-     ofSetColor(255);
-    visuHandler.pipePP.src->begin();
-          blurX.begin();
-          blurX.setUniform1f("blurAmnt", pipeblur*2.);
-            finalRender.src->draw(0,0,inw,inh);
-          blurX.end();        
-    visuHandler.pipePP.src->end();
-//    visuHandler.pipePP.swap();
-
-
-    ofSetColor(255);      
-    visuHandler.pipePP.dst->begin();
-         blurY.begin();
-         blurY.setUniform1f("blurAmnt", pipeblur);
-              
-           visuHandler.pipePP.src->draw(0,0);
-              
-          blurY.end();        
-     visuHandler.pipePP.dst->end();
-    visuHandler.pipePP.swap();
-              
-          
-    glBlendEquation(GL_FUNC_ADD);
-    
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-        finalRender.src->begin();
-    if(hidePipe) {
-        ofSetColor(0,0,0,255);
-        ofRect(0,0,scrw,scrh);
+    if(isPipe){
+        glBlendEquation(GL_FUNC_ADD_EXT);
+        glBlendFunc(GL_ONE,GL_ZERO);
         ofSetColor(255);
+        
+        visuHandler.pipePP.src->begin();
+        blurX.begin();
+        blurX.setUniform1f("blurAmnt", pipeblur*2.);
+        finalRender.src->draw(0,0,inw,inh);
+        blurX.end();        
+        visuHandler.pipePP.src->end();
+        ofSetColor(255);      
+        visuHandler.pipePP.dst->begin();
+        blurY.begin();
+        blurY.setUniform1f("blurAmnt", pipeblur);
+        
+        visuHandler.pipePP.src->draw(0,0);
+        
+        blurY.end();        
+        visuHandler.pipePP.dst->end();
+        visuHandler.pipePP.swap();
+        
+        
+        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        
+        finalRender.src->begin();
+        if(hidePipe) {
+            ofSetColor(0,0,0,255);
+            ofRect(0,0,scrw,scrh);
+            ofSetColor(255);
+        }
+        
+        ofPushMatrix();
+        ofPushView();
+        ofEnableAlphaBlending();
+        camera2.begin();
+        //draw reciever of pipe
+        visuHandler.draw(0);
+        
+        camera2.end();
+        ofPopMatrix();
+        ofPopView();
+        
+        finalRender.src->end();
+        
+        
     }
-    
-             
-    
-
-              ofPushMatrix();
-              ofPushView();
-              ofEnableAlphaBlending();
-              camera2.begin();
-              //draw reciever of pipe
-              visuHandler.draw(2);
-              
-              camera2.end();
-              ofPopMatrix();
-              ofPopView();
-
-            finalRender.src->end();
-          
-                   
-              
-//              visuHandler.pipePP.dst->begin();
-//              
-//              visuHandler.pipePP.src->draw(0,0);
-//              
-//              visuHandler.pipePP.dst->end();
-              
-              
-              
-          
-
-      }
     
     
     //FinalTOUCH
     glBlendEquation(GL_FUNC_ADD_EXT);
-    
     glBlendFunc(GL_ONE,GL_ZERO);
     
-
-            finalRender.dst->begin();
-            blurX.begin();
-            blurX.setUniform1f("blurAmnt",finalblur);
-            finalRender.src->draw(0,0); 
-            blurX.end();
-            finalRender.dst->end();
-            
-            finalRender.swap();
-
-            finalRender.dst->begin();
-            blurY.begin();
-            blurY.setUniform1f("blurAmnt",finalblur);            
-            finalRender.src->draw(0,0);
-            blurY.end();        
-            finalRender.dst->end();
-            
-            finalRender.swap();
-
-            finalRender.dst->begin();
-            colorMod.begin();
-            colorMod.setUniform1f("contrast",contrast); 
-            colorMod.setUniform1f("saturation",saturation); 
-            colorMod.setUniform1f("brightness",brightness*brightnessM/100.); 
-            finalRender.src->draw(0,0);
-//    ofRect(0,0,ofGetHeight()/2,300);
-            colorMod.end();
-            finalRender.dst->end();
-
-            finalRender.swap();
-            
+    
+    finalRender.dst->begin();
+    blurX.begin();
+    blurX.setUniform1f("blurAmnt",finalblur);
+    finalRender.src->draw(0,0); 
+    blurX.end();
+    finalRender.dst->end();
+    
+    finalRender.swap();
+    
+    finalRender.dst->begin();
+    blurY.begin();
+    blurY.setUniform1f("blurAmnt",finalblur);            
+    finalRender.src->draw(0,0);
+    blurY.end();        
+    finalRender.dst->end();
+    
+    finalRender.swap();
+    
+    finalRender.dst->begin();
+    colorMod.begin();
+    colorMod.setUniform1f("contrast",contrast); 
+    colorMod.setUniform1f("saturation",saturation); 
+    colorMod.setUniform1f("brightness",brightness*brightnessM/100.); 
+    finalRender.src->draw(0,0);
+    //    ofRect(0,0,ofGetHeight()/2,300);
+    colorMod.end();
+    finalRender.dst->end();
+    
+    finalRender.swap();
+    
     if(bloomsize>0){
         finalRender.dst->begin();
         bloom.begin();
@@ -436,11 +406,10 @@ if(isPipe){
         finalRender.dst->end();
         
         finalRender.swap();
-
-    
+        
     }
     
-
+    
     
     ofSetColor(255);
     
@@ -456,13 +425,13 @@ if(isPipe){
             if(visuHandler.sH.screenL[i]->mask){
                 oneMask=true;
                 break;
-
+                
             }
         }
     }
     if(!oneMask){
         oneMask = pipeMask;
-
+        
     }
     glBlendEquation(GL_FUNC_ADD);
     
@@ -472,7 +441,7 @@ if(isPipe){
         ofRect(0, 0, scrw, scrh);
         ofSetColor(255);
         if(pipeMask)visuHandler.pipePP.src->draw(0,0,scrw,scrh);
-        visuHandler.draw(3);  
+        visuHandler.draw(2);  
         
         visuHandler.sH.drawMask();
     }
@@ -480,14 +449,14 @@ if(isPipe){
         ofSetColor(255);
         ofRect(0, 0, scrw, scrh);
     }
-        glBlendEquation(GL_ADD);
-        glBlendFunc(GL_DST_COLOR,GL_ZERO);
+    glBlendEquation(GL_ADD);
+    glBlendFunc(GL_DST_COLOR,GL_ZERO);
     
-
+    
     ofSetColor(255);
     finalRender.src->draw(0,0,ofGetWidth(),ofGetHeight());
     
-
+    
     
     if(isFPS){
         ofSetColor(0,0,0,!isFPS?0:255);
@@ -496,35 +465,35 @@ if(isPipe){
         ofDrawBitmapString("Fps: " + ofToString( ofGetFrameRate()) + "thr :" + ofToString(threshold), 15,15);
     }
     else{
-//        ofSetColor(0,0,0);
-//        ofRect(0, 00, 1000, 25);
-//        ofSetColor(255, 255, 255);
-//        ofDrawBitmapString("Un Des Sens : www.undessens.org",50,40);
-//        ofDrawBitmapString(" www.facebook.com/AssoUnDesSens",500,40);
+        //        ofSetColor(0,0,0);
+        //        ofRect(0, 00, 1000, 25);
+        //        ofSetColor(255, 255, 255);
+        //        ofDrawBitmapString("Un Des Sens : www.undessens.org",50,40);
+        //        ofDrawBitmapString(" www.facebook.com/AssoUnDesSens",500,40);
     }
+    //    cout << ofGetFrameNum()<< endl;
     
-    
- #endif
+#endif
     
     
 }
 #ifdef GUIMODE
 void testApp::keyPressed(int key){
-     switch (key){
-         case 's':
-         {ofFileDialogResult filep = ofSystemSaveDialog("preset","save preset file");
-             saveName = filep.getPath();}
-             break;
-         case 'l':
-         {ofFileDialogResult filep = ofSystemLoadDialog("load preset");
-             loadName = filep.getPath();}
-             break;
-
-         case'v':
-             gui.visuSettings = !gui.visuSettings;
-             break;
- 
-     }
+    switch (key){
+        case 's':
+        {ofFileDialogResult filep = ofSystemSaveDialog("preset","save preset file");
+            saveName = filep.getPath();}
+            break;
+        case 'l':
+        {ofFileDialogResult filep = ofSystemLoadDialog("load preset");
+            loadName = filep.getPath();}
+            break;
+            
+        case'v':
+            gui.visuSettings = !gui.visuSettings;
+            break;
+            
+    }
 }
 #endif
 
@@ -533,16 +502,16 @@ void testApp::keyPressed(int key){
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
     int k = 0;
-
+    
     switch (key){
-
-
+            
+            
 #ifdef blobcomp
-            case 'b':
+        case 'b':
             bLearnBakground=true;
             break;
 #endif
-
+            
         case 's':
             isFullScreen=!isFullScreen;
             ofSetFullscreen(isFullScreen);
@@ -550,22 +519,22 @@ void testApp::keyPressed(int key){
             
             
             
-            case'a':
+        case'a':
             isAtt=!isAtt;
             break;
             
-            case'+':
+        case'+':
             threshold+=1;
             break;
             
-            case'-':
+        case'-':
             threshold-=1;
             break;
             
-            case 356:
+        case 356:
             camera2.ypr+=ofVec2f(5,0);
             break;
-
+            
         case 357:
             camera2.ypr=ofVec2f(camera2.ypr.get().x,ofClamp(camera2.ypr.get().y+5,-90,90));
             break;
@@ -577,14 +546,14 @@ void testApp::keyPressed(int key){
         case 359:
             camera2.ypr=ofVec2f(camera2.ypr.get().x,ofClamp(camera2.ypr.get().y-5,-90,90));
             break;
-        
+            
         case ' ':
 #if defined testvid || defined localcamera
             vidplay.setPaused(!vidplay.isPaused());
 #endif
             break;
             
-
+            
         case 'c':
             drawcam=!drawcam;
             break;   
@@ -596,7 +565,7 @@ void testApp::keyPressed(int key){
                 Particles * ptmp =(Particles *)visuHandler.get("particles") ;
                 ptmp->initFbo();
             };
-
+            
         default :
             break;
     }
@@ -613,8 +582,8 @@ void testApp::windowResized(int w, int h){
     scrw=width=w;
     scrh=height=h;
     
-
- 
+    
+    
     visuHandler.updateScreenSize();
     finalRender.allocate(width,height,GL_RGB);
     camera2.updateScreenSize(w, h);
@@ -626,29 +595,29 @@ void testApp::windowResized(int w, int h){
 void testApp::oscUpdate(){
     ofxOscMessage m;
     while(receiver.getNextMessage(&m)){
- 
+        
         
 #ifndef PVISU
         if(m.getAddress() == "/polyline"){
             
-    #ifdef blobosc  
-       // polylastt = ofGetElapsedMillis();
+#ifdef blobosc  
+            // polylastt = ofGetElapsedMillis();
             polyline.clear();
-                      
+            
             int n=m.getArgAsInt32(0);
-           
+            
             if(n>0){
-            for(int k=1;k<n+1;k++){
-                ofPoint inp=ofPoint(1-m.getArgAsFloat(2*k-1),1-m.getArgAsFloat(2*k));
-                
-                if(f.blobxinvert)inp.x=1- inp.x;
-                if(f.blobyinvert)inp.y=1- inp.y;
-                
-                
-                polyline.lineTo(inw/2.0+inw*(inp.x-.5)/camrot.x,inh/2+inh*(inp.y-.5)/camrot.x);
-            }
-            polyline.close();
-           // printf("%f\n",ofGetElapsedTimef());
+                for(int k=1;k<n+1;k++){
+                    ofPoint inp=ofPoint(1-m.getArgAsFloat(2*k-1),1-m.getArgAsFloat(2*k));
+                    
+                    if(f.blobxinvert)inp.x=1- inp.x;
+                    if(f.blobyinvert)inp.y=1- inp.y;
+                    
+                    
+                    polyline.lineTo(inw/2.0+inw*(inp.x-.5)/camrot.x,inh/2+inh*(inp.y-.5)/camrot.x);
+                }
+                polyline.close();
+                // printf("%f\n",ofGetElapsedTimef());
             }
             else{
                 polyline. lineTo(-1,-1);
@@ -657,96 +626,96 @@ void testApp::oscUpdate(){
                 //polyline.clear();
             }
             
-           #endif
+#endif
         }
         
-
+        
         else
-            #endif
+#endif
             if(m.getAddress() == "/attractors"){
-            vector<ofPoint> points;
-            vector<int> familly;
-            for(int i=0;i<(m.getNumArgs()-1)/3;i++){
-                familly.push_back(m.getArgAsInt32(1+i*3));
-                
-                points.push_back(ofPoint(m.getArgAsFloat(2+i*3),m.getArgAsFloat(3+i*3)));
+                vector<ofPoint> points;
+                vector<int> familly;
+                for(int i=0;i<(m.getNumArgs()-1)/3;i++){
+                    familly.push_back(m.getArgAsInt32(1+i*3));
+                    
+                    points.push_back(ofPoint(m.getArgAsFloat(2+i*3),m.getArgAsFloat(3+i*3)));
+                }
+                //            attrctl.update(points,familly);
             }
-//            attrctl.update(points,familly);
-        }
-
-//        else if(m.getAddress() == "/gravity"){
-//            f.gravity=m.getArgAsFloat(0)==1;
-//        }
+        
+        //        else if(m.getAddress() == "/gravity"){
+        //            f.gravity=m.getArgAsFloat(0)==1;
+        //        }
         
         
         
         
-        else if(m.getAddress()=="/finalblur"){
-            finalblur=m.getArgAsFloat(0);
-            
-        }
+            else if(m.getAddress()=="/finalblur"){
+                finalblur=m.getArgAsFloat(0);
+                
+            }
         
         //CAMERA
         
-        else if(m.getAddress()=="/camrotx"){
-            camdest.y=m.getArgAsFloat(0);
-        }
-        else if(m.getAddress()=="/camroty"){
-            camdest.z=m.getArgAsFloat(0);
-        }
-        else if(m.getAddress()=="/camrotz"){
-            camdest.w=m.getArgAsFloat(0);
-        }
+            else if(m.getAddress()=="/camrotx"){
+                camdest.y=m.getArgAsFloat(0);
+            }
+            else if(m.getAddress()=="/camroty"){
+                camdest.z=m.getArgAsFloat(0);
+            }
+            else if(m.getAddress()=="/camrotz"){
+                camdest.w=m.getArgAsFloat(0);
+            }
         
-        else if(m.getAddress()=="/camdist"){
-            camdest.x=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/alphacam"){
-            alphacamrot=m.getArgAsFloat(0)/100.0;
-        }
+            else if(m.getAddress()=="/camdist"){
+                camdest.x=m.getArgAsFloat(0)/100.0;
+            }
+            else if(m.getAddress()=="/alphacam"){
+                alphacamrot=m.getArgAsFloat(0)/100.0;
+            }
         
-        else if(m.getAddress()=="/brightness"){
-            brightness=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/saturation"){
-            saturation=m.getArgAsFloat(0)/100.0;
-        }
-        else if(m.getAddress()=="/contrast"){
-           contrast=m.getArgAsFloat(0)/100.0;
-        }
+            else if(m.getAddress()=="/brightness"){
+                brightness=m.getArgAsFloat(0)/100.0;
+            }
+            else if(m.getAddress()=="/saturation"){
+                saturation=m.getArgAsFloat(0)/100.0;
+            }
+            else if(m.getAddress()=="/contrast"){
+                contrast=m.getArgAsFloat(0)/100.0;
+            }
         
-               
         
-//        
-//        
-//        
-//        else if (m.getAddress()=="/MyLiveSet/y"){
-//            f.yori=scrh/2-m.getArgAsFloat(0)*300.0;
-//        }
         
-//        else if(m.getAddress()=="/drawBlob"){
-//            drawBlob=m.getArgAsFloat(0)==1;
-//        }
-    
+        //        
+        //        
+        //        
+        //        else if (m.getAddress()=="/MyLiveSet/y"){
+        //            f.yori=scrh/2-m.getArgAsFloat(0)*300.0;
+        //        }
         
-        else if(m.getAddress()=="/beat"){
-            visuHandler.beat=m.getArgAsFloat(0);
-        }
-        else if(m.getAddress()=="/visufollowcam"){
-            visuHandler.visufollowcam=m.getArgAsFloat(0)==1;
-        }
-
-        else if(m.getAddress()=="/audioenv"){
-            visuHandler.audioenv=m.getArgAsFloat(0);
-        }
-
+        //        else if(m.getAddress()=="/drawBlob"){
+        //            drawBlob=m.getArgAsFloat(0)==1;
+        //        }
+        
+        
+            else if(m.getAddress()=="/beat"){
+                visuHandler.beat=m.getArgAsFloat(0);
+            }
+            else if(m.getAddress()=="/visufollowcam"){
+                visuHandler.visufollowcam=m.getArgAsFloat(0)==1;
+            }
+        
+            else if(m.getAddress()=="/audioenv"){
+                visuHandler.audioenv=m.getArgAsFloat(0);
+            }
+        
         
         
     }
-
-
-}
     
+    
+}
+
 
 
 
@@ -767,7 +736,7 @@ void testApp::exit(){
 #ifndef PVISU
 void testApp::readObj(const char * path){
     int maxmesh=numParticles;
-   float* oritab= new float[3*maxmesh];
+    float* oritab= new float[3*maxmesh];
     for(int k = 0 ; k<3*maxmesh;k++){
         oritab[k] = 0;
     }
@@ -777,78 +746,78 @@ void testApp::readObj(const char * path){
     ofBuffer buf = f.readToBuffer();
     buf.getFirstLine();
     //Boolean initvertex=true;
-
+    
     
     //ofVec3f minpoint=ofVec3f(999999,9999999,9999999);
     
-
+    
     
     
     
     int numvertex = 0;
-//    while(!buf.isLastLine()&&numvertex<maxmesh){
-//        
-//        string sbuf=buf.getNextLine();
-//        if(sbuf[0]=='v'){
-//            
-//            //if(initvertex){initvertex=false;}
-//            char vbuf[20];
-//            int i =2;
-//            for (int k=0 ,z=0;k<3;k++,z=0){
-//                
-//                while((char)sbuf[i]!='\0'&&(char)sbuf[i]!=' '){
-//                    vbuf[z]=(char)sbuf[i];
-//                    z++;
-//                    i++;
-//                }
-//                vbuf[z]='\0';
-//                i++;
-//                float mult=0.31;
-//                switch (k) {
-//                        
-//                    case 0:
-//                        oritab[numvertex*3]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0));
-//                       // minpoint.x=oritab[numvertex*3]<minpoint.x?oritab[numvertex*3]:minpoint.x;
-//                        break;
-//                    case 1:
-//                        oritab[numvertex*3+1]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0));
-//                       // minpoint.y=oritab[numvertex*3+1]<minpoint.y?oritab[numvertex*3+1]:minpoint.y;
-//                        break;
-//                    case 2:
-//                        oritab[numvertex*3+2]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0)+0.5);
-//                        //minpoint.z=oritab[numvertex*3+2]<minpoint.z?oritab[numvertex*3+2]:minpoint.z;
-//                        break;
-//                        
-//                    default:
-//                        break;
-//                }
-//            } 
-//           // if(numvertex%100==0)ofSleepMillis(1);
-//             particleStates[numvertex]=true;
-//            numvertex++;
-//        }
-//        
-//    }
+    //    while(!buf.isLastLine()&&numvertex<maxmesh){
+    //        
+    //        string sbuf=buf.getNextLine();
+    //        if(sbuf[0]=='v'){
+    //            
+    //            //if(initvertex){initvertex=false;}
+    //            char vbuf[20];
+    //            int i =2;
+    //            for (int k=0 ,z=0;k<3;k++,z=0){
+    //                
+    //                while((char)sbuf[i]!='\0'&&(char)sbuf[i]!=' '){
+    //                    vbuf[z]=(char)sbuf[i];
+    //                    z++;
+    //                    i++;
+    //                }
+    //                vbuf[z]='\0';
+    //                i++;
+    //                float mult=0.31;
+    //                switch (k) {
+    //                        
+    //                    case 0:
+    //                        oritab[numvertex*3]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0));
+    //                       // minpoint.x=oritab[numvertex*3]<minpoint.x?oritab[numvertex*3]:minpoint.x;
+    //                        break;
+    //                    case 1:
+    //                        oritab[numvertex*3+1]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0));
+    //                       // minpoint.y=oritab[numvertex*3+1]<minpoint.y?oritab[numvertex*3+1]:minpoint.y;
+    //                        break;
+    //                    case 2:
+    //                        oritab[numvertex*3+2]=(float)(ofClamp(atof(vbuf)*mult,0.0,1.0)+0.5);
+    //                        //minpoint.z=oritab[numvertex*3+2]<minpoint.z?oritab[numvertex*3+2]:minpoint.z;
+    //                        break;
+    //                        
+    //                    default:
+    //                        break;
+    //                }
+    //            } 
+    //           // if(numvertex%100==0)ofSleepMillis(1);
+    //             particleStates[numvertex]=true;
+    //            numvertex++;
+    //        }
+    //        
+    //    }
     
- 
+    
     f.close();
     for(int k=numvertex;k<numParticles;k++){
-               oritab[3*k]=0.5;
-                oritab[3*k+1]=0.5;
-                oritab[3*k+2]=0.5;
+        oritab[3*k]=0.5;
+        oritab[3*k+1]=0.5;
+        oritab[3*k+2]=0.5;
         
     }
-//    for(int k=0;k<numvertex;k++){
-//        oritab[3*k]-=minpoint.x;
-//        oritab[3*k+1]-=minpoint.y;
-//        oritab[3*k+2]-=minpoint.z;
-//    }
+    //    for(int k=0;k<numvertex;k++){
+    //        oritab[3*k]-=minpoint.x;
+    //        oritab[3*k+1]-=minpoint.y;
+    //        oritab[3*k+2]-=minpoint.z;
+    //    }
     
     origins.getTextureReference().loadData(oritab,textureRes,textureRes,GL_RGB);
     
-       
-       
-       
+    
+    
+    
     delete [] oritab;
 }
 
@@ -881,7 +850,7 @@ void testApp::reset(){
 
 
 
- 
+
 
 
 
@@ -900,11 +869,11 @@ void testApp::changeOrigin(int type){
                     oritab[i*3 + 2] = 0.5;
                 }
             }
-               origins.getTextureReference().loadData(oritab,textureRes,textureRes,GL_RGB);
+            origins.getTextureReference().loadData(oritab,textureRes,textureRes,GL_RGB);
             
             
         }
-               
+            
             break;
             
         case 1:
@@ -923,21 +892,21 @@ void testApp::changeOrigin(int type){
                     oritab[3*(k*numangl+j)+1]=y;
                     oritab[3*(k*numangl+j)+2]=z;
                     
- 
+                    
                     
                 }
-                             }
+            }
             origins.getTextureReference().loadData(oritab,textureRes,textureRes,GL_RGB);
-
-
             
-           
+            
+            
+            
         }   
-             break;
+            break;
         case 2:
         {
- 
-
+            
+            
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
                     int i = textureRes * y + x;
@@ -948,65 +917,65 @@ void testApp::changeOrigin(int type){
                 }
             }
             
-
+            
             origins.getTextureReference().loadData(oritab, textureRes, textureRes, GL_RGB);
             
-          
+            
         }
             break;
         case 3:
         {
-//            ofxAssimpModelLoader model;
-//            model.loadModel("obj/text-100170.obj",false);
-//            ofMesh mesh  = model.getMesh(0);
-////            mesh.getBoundingBox()
-//               model.clear();
-//            float scale = 0.1;
-//            ofVec3f pos = ofVec3f(0.5,0,0.5);
-//            ofVec3f min, max;
-//            min = ofVec3f(99999,99999,99999);
-//            max = ofVec3f(-9999,-9999,-9999);
-//            
-//            for (int i = 0 ; i< mesh.getNumVertices();i++){
-//                min.x = mesh.getVertex(i).x<min.x?mesh.getVertex(i).x:min.x;
-//                min.y = mesh.getVertex(i).y<min.y?mesh.getVertex(i).y:min.y;
-//                min.z = mesh.getVertex(i).z<min.z?mesh.getVertex(i).z:min.z;
-//                
-//                max.x = mesh.getVertex(i).x>max.x?mesh.getVertex(i).x:max.x;
-//                max.y = mesh.getVertex(i).y>max.y?mesh.getVertex(i).y:max.y;
-//                max.z = mesh.getVertex(i).z>max.z?mesh.getVertex(i).z:max.z;
-//            }
-//            
-//            
-//            pos = -(min+max)/2.;
-//            scale = 1./(max.x-min.x);
-//            for (int i = 0 ; i<(textureRes-1)*(textureRes-1);i++){
-//
-//                if(i< mesh.getNumVertices()){
-//                    oritab[i*3 + 0] = (Float32)CLAMP(0.5+(mesh.getVertex(i).x+ pos.x)*scale ,0,1);
-//                    oritab[i*3 + 1] = (Float32)CLAMP(0.5+(mesh.getVertex(i).y+ pos.y)*scale ,0,1);
-//                    oritab[i*3 + 2] = (Float32)CLAMP(0.5+(mesh.getVertex(i).z+ pos.z)*scale ,0,1);
-//
-//                    
-//                }
-//                else{
-//                    
-//                    oritab[i*3 + 0] = 0.5;
-//                    oritab[i*3 + 1] = 0.5;
-//                    oritab[i*3 + 2] = 0.5;
-//                }
-//                
-//                                    
-//            }
-//            mesh.clear();
-//         
-//            
-//            
-//            origins.getTextureReference().loadData(oritab, textureRes, textureRes, GL_RGB);
-//
-//            
-//            
-//            
+            //            ofxAssimpModelLoader model;
+            //            model.loadModel("obj/text-100170.obj",false);
+            //            ofMesh mesh  = model.getMesh(0);
+            ////            mesh.getBoundingBox()
+            //               model.clear();
+            //            float scale = 0.1;
+            //            ofVec3f pos = ofVec3f(0.5,0,0.5);
+            //            ofVec3f min, max;
+            //            min = ofVec3f(99999,99999,99999);
+            //            max = ofVec3f(-9999,-9999,-9999);
+            //            
+            //            for (int i = 0 ; i< mesh.getNumVertices();i++){
+            //                min.x = mesh.getVertex(i).x<min.x?mesh.getVertex(i).x:min.x;
+            //                min.y = mesh.getVertex(i).y<min.y?mesh.getVertex(i).y:min.y;
+            //                min.z = mesh.getVertex(i).z<min.z?mesh.getVertex(i).z:min.z;
+            //                
+            //                max.x = mesh.getVertex(i).x>max.x?mesh.getVertex(i).x:max.x;
+            //                max.y = mesh.getVertex(i).y>max.y?mesh.getVertex(i).y:max.y;
+            //                max.z = mesh.getVertex(i).z>max.z?mesh.getVertex(i).z:max.z;
+            //            }
+            //            
+            //            
+            //            pos = -(min+max)/2.;
+            //            scale = 1./(max.x-min.x);
+            //            for (int i = 0 ; i<(textureRes-1)*(textureRes-1);i++){
+            //
+            //                if(i< mesh.getNumVertices()){
+            //                    oritab[i*3 + 0] = (Float32)CLAMP(0.5+(mesh.getVertex(i).x+ pos.x)*scale ,0,1);
+            //                    oritab[i*3 + 1] = (Float32)CLAMP(0.5+(mesh.getVertex(i).y+ pos.y)*scale ,0,1);
+            //                    oritab[i*3 + 2] = (Float32)CLAMP(0.5+(mesh.getVertex(i).z+ pos.z)*scale ,0,1);
+            //
+            //                    
+            //                }
+            //                else{
+            //                    
+            //                    oritab[i*3 + 0] = 0.5;
+            //                    oritab[i*3 + 1] = 0.5;
+            //                    oritab[i*3 + 2] = 0.5;
+            //                }
+            //                
+            //                                    
+            //            }
+            //            mesh.clear();
+            //         
+            //            
+            //            
+            //            origins.getTextureReference().loadData(oritab, textureRes, textureRes, GL_RGB);
+            //
+            //            
+            //            
+            //            
         }
             break;
         case 4:
@@ -1020,7 +989,7 @@ void testApp::changeOrigin(int type){
                     oritab[i*3 + 0] = x*1.0/textureRes;
                     oritab[i*3 + 1] = y*1.0/textureRes;
                     oritab[i*3 + 2] = sqrt((x*1.0/textureRes-0.5)*(x*1.0/textureRes-0.5))+sqrt((y*1.0/textureRes-0.5)*(y*1.0/textureRes-0.5));
-
+                    
                 }
             }
             
@@ -1036,9 +1005,9 @@ void testApp::changeOrigin(int type){
             
             
     }
-       delete [] oritab; 
+    delete [] oritab; 
     
- 
+    
 }
 
 
@@ -1047,7 +1016,7 @@ void testApp::changeOrigin(int type){
 
 
 void testApp::oscBlobUpdate(){
-   // blobHandler.update();
+    // blobHandler.update();
 #ifdef blobosc 
     
     
@@ -1073,12 +1042,12 @@ void testApp::oscBlobUpdate(){
     
     
     ofPushStyle();
-
+    
     polyBlob.src->begin();
     ofSetColor(ofColor(0,0,0,ablob));
     ofFill();
     ofRect(0,0,inw,inh);
-
+    
     ofSetColor(255);
     // ofNoFill();
     
@@ -1088,40 +1057,18 @@ void testApp::oscBlobUpdate(){
     visuHandler.drawFbo();
     
     polyBlob.src->end();
-   // if( polyline.getOutline().size()>0){
-        
-            if(f.blobblur>0){
+    // if( polyline.getOutline().size()>0){
+    
+    if(f.blobblur>0){
         polyBlob.dst->begin();
         Shadow.begin();
         Shadow.setUniformTexture("texture",polyBlob.src->getTextureReference(),0);
         Shadow.setUniform1f("offset",f.blobblur);
         Shadow.setUniform1f("direction_x",1.0);
-            Shadow.setUniform1f("brightness",brightness2);
-            Shadow.setUniform1f("saturation",saturation2);
-            Shadow.setUniform1f("contrast",contrast2);
-
-        ///Just a frame to put pixels on
-        ofSetColor(255,255,255,255);
-        glBegin(GL_QUADS);
-        glTexCoord2f(0, 0); glVertex3f(0, 0, 0);
-        glTexCoord2f(inw, 0); glVertex3f(inw, 0, 0);
-        glTexCoord2f(inw,inh); glVertex3f( inw,inh, 0);
-        glTexCoord2f(0, inh);  glVertex3f(0, inh, 0);
-        glEnd();
+        Shadow.setUniform1f("brightness",brightness2);
+        Shadow.setUniform1f("saturation",saturation2);
+        Shadow.setUniform1f("contrast",contrast2);
         
-        
-           Shadow.end();
-        polyBlob.dst->end();
-        polyBlob.swap();
-        
-        polyBlob.dst->begin();
-        Shadow.begin();
-        Shadow.setUniformTexture("texture",polyBlob.src->getTextureReference(),0);
-        Shadow.setUniform1f("offset",f.blobblur);
-        Shadow.setUniform1f("direction_x",0.0);
-            Shadow.setUniform1f("contrast",contrast2);
-            Shadow.setUniform1f("saturation",saturation2);    
-            Shadow.setUniform1f("brightness",brightness2);
         ///Just a frame to put pixels on
         ofSetColor(255,255,255,255);
         glBegin(GL_QUADS);
@@ -1135,15 +1082,37 @@ void testApp::oscBlobUpdate(){
         Shadow.end();
         polyBlob.dst->end();
         polyBlob.swap();
-            }
-
+        
+        polyBlob.dst->begin();
+        Shadow.begin();
+        Shadow.setUniformTexture("texture",polyBlob.src->getTextureReference(),0);
+        Shadow.setUniform1f("offset",f.blobblur);
+        Shadow.setUniform1f("direction_x",0.0);
+        Shadow.setUniform1f("contrast",contrast2);
+        Shadow.setUniform1f("saturation",saturation2);    
+        Shadow.setUniform1f("brightness",brightness2);
+        ///Just a frame to put pixels on
+        ofSetColor(255,255,255,255);
+        glBegin(GL_QUADS);
+        glTexCoord2f(0, 0); glVertex3f(0, 0, 0);
+        glTexCoord2f(inw, 0); glVertex3f(inw, 0, 0);
+        glTexCoord2f(inw,inh); glVertex3f( inw,inh, 0);
+        glTexCoord2f(0, inh);  glVertex3f(0, inh, 0);
+        glEnd();
+        
+        
+        Shadow.end();
+        polyBlob.dst->end();
+        polyBlob.swap();
+    }
     
-   // }
-
     
-  
+    // }
+    
+    
+    
     ofPopStyle();
-   
+    
 #endif 
     
     
@@ -1155,15 +1124,15 @@ void testApp::oscBlobUpdate(){
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
     
-        points.push_back(ofPoint(x*1.0/scrw,y*1.0/scrh,0));
-//    points.push_back(ofPoint(0.2,0.2,0));
-
+    points.push_back(ofPoint(x*1.0/scrw,y*1.0/scrh,0));
+    //    points.push_back(ofPoint(0.2,0.2,0));
+    
     if(points.size()>0)attrctl.addPoints(points,0);
-
+    
 }
 void testApp::mouseReleased(int x, int y, int button){
     vector<ofPoint> points;
-
+    
     points.clear();
     
     attrctl.addPoints(points,0);
@@ -1210,6 +1179,6 @@ void testApp::loadState(string & s){
     else{
         ofLogWarning("no argument for load state");
     }
-  #endif  
+#endif  
 }
 

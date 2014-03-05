@@ -21,8 +21,8 @@ public:
     BouncingBall();
     BouncingBall( ofPoint pos, ofVec2f speed );
     BouncingBall( ofPoint pos, ofVec2f speed , float size, ofColor col, ofImage* img,bool* useGridi,int* numCol,int* numRow,                
-                 bool* useBorderi, bool* useTori,float* gridForcei,bool* insideModei, int* dieMode, int lifeTimein, ofPoint* poly,
-                 ofVec2f* speedcentroid, ofVec2f* gravityin );
+                 bool* useBorderi, bool* useTori,ofParameter<float>* gridForcei,ofParameter<float>* userForce,ofParameter<float>* gridOpen,
+                 bool* insideModei, int* dieMode, int lifeTimein, ofPoint* poly, ofVec2f* speedcentroid, ofVec2f* gravityin );
 
     int update(ofPolyline poly, int w, int h);
     void draw(int w, int h);
@@ -57,6 +57,8 @@ public:
     
     //Lock grid
     ofParameter<float>* gridForce;
+    ofParameter<float>* userForce;
+    ofParameter<float>* gridOpen;
     
     //imageg
     ofImage* imgPart;

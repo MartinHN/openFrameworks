@@ -460,7 +460,7 @@ void Branche::update(ofPolyline poly, bool insideMode){
             
             if(poly.inside(end) && lastTimeBouncing==0)
             {
-                angle *= -1.0f;
+                angle += 3.14;
                 lastTimeBouncing = 25;
                 clockWise = !clockWise;
             }

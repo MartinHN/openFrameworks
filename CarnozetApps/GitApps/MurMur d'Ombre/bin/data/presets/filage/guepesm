@@ -26,7 +26,7 @@
 	<blobsettings>
 		<vidThreshold>0</vidThreshold>
 		<invertBW>0</invertBW>
-		<minSide>0.135</minSide>
+		<minSide>0.145</minSide>
 		<maxSide>1</maxSide>
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
@@ -71,10 +71,10 @@
 	<Visu>
 		<background>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<type>0</type>
 			<followFam>-1</followFam>
@@ -87,10 +87,10 @@
 		</background>
 		<particles>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
 			<numParticles>204304</numParticles>
@@ -135,7 +135,7 @@
 			</rotation>
 			<gravity>
 				<isActive>1</isActive>
-				<attrFamilly>0</attrFamilly>
+				<attrFamilly>1</attrFamilly>
 				<attrZone>0</attrZone>
 				<r>0.0445495</r>
 				<mass>0.000996515</mass>
@@ -145,7 +145,7 @@
 			</gravity>
 			<smoothyGrav>
 				<isActive>1</isActive>
-				<attrFamilly>0</attrFamilly>
+				<attrFamilly>1</attrFamilly>
 				<attrZone>0</attrZone>
 				<r>1</r>
 				<mass>0.0505226</mass>
@@ -181,34 +181,36 @@
 		</particles>
 		<metaBalls>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>1</isMasking>
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
+			<alpha>0</alpha>
 			<color>0, 0, 0, 0</color>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<pointToBegin>0.5, 0.5</pointToBegin>
 			<initTrig>0</initTrig>
 			<addPoint>1</addPoint>
 			<debugMode>0</debugMode>
 			<reset>1</reset>
+			<insideMode>0</insideMode>
 		</AutoTree>
 		<BallManager>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<usePointEmitter>1</usePointEmitter>
 			<noiseF>0, 0.0255102</noiseF>
@@ -216,36 +218,39 @@
 			<emission>0</emission>
 			<mode>3</mode>
 			<lifeTime>190</lifeTime>
+			<gridForce>0.2</gridForce>
+			<userForce>1</userForce>
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
+			<isPiping>1</isPiping>
 			<screenN>1</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>1</isPiping>
 			<isMasking>0</isMasking>
 			<drawZones>1</drawZones>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
 			<pos>0.52551, 0.545918, 0.545918</pos>
+			<alphapos>0.3</alphapos>
 			<scale>0.765306, 0.77551</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>
 		<VideoPlayer>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<rayon>2</rayon>
 			<center>0.5, 0.5</center>

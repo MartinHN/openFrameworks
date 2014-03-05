@@ -25,9 +25,9 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(emission,0.0,0.0f,1.0f);
     MYPARAM(mode,0,0,10);
     MYPARAM(lifeTime,100,0,2000);
-    MYPARAM(gridForce, 0.0f, 0.0f, 1.0f);
+    MYPARAM(gridForce, 0.0f, 0.0f, 3.0f);
     MYPARAM(userForce, 1.0f, 0.0f, 1.0f);
-    MYPARAM(gridOpen, 0.5f, 0.0f, 1.0f);
+    MYPARAM(gridOpen, 1.0f, 0.1f, 2.0f);
     
     
     mode.addListener(this,&BallManager::changeMode);
@@ -254,7 +254,7 @@ void BallManager::addBall(ofPoint posin, ofPoint speedin, ofColor colin, float s
     int life = (int) lifeTime + ofRandom(100);
     
     BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
-                                     ,&gridForce,&userForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
+                                     ,&gridForce,&userForce,&gridOpen, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
     listOfBalls.push_back(ball);
     
     
@@ -453,14 +453,14 @@ void BallManager::changeMode(int & m){
                 break;
             case 6 : {
                 // Grid dying if it is inside
-                setNum(25);
+                setNum(35);
                 calcGrid(globalWidth, globalHeight);
                 drawPart = false;
                 drawGrid = true;
                 useGrid = true;
                 useBorder = false;
                 useTor = false;
-                gridForce = 0.7;
+                gridForce = 0.9;
                 insideMode = false;
                 dieMode = 0;
                 emission = 0.0;
@@ -470,14 +470,14 @@ void BallManager::changeMode(int & m){
                 break;
         case 7 : {
             // Grid dying if it is inside
-            setNum(40);
+            setNum(90);
             calcGrid(globalWidth, globalHeight);
             drawPart = false;
             drawGrid = true;
             useGrid = true;
             useBorder = false;
             useTor = false;
-            gridForce = 0.4;
+            gridForce = 0.9;
             insideMode = false;
             dieMode = 0;
             emission = 0.0;

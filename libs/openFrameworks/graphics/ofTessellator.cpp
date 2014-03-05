@@ -104,6 +104,7 @@ void ofTessellator::tessellateToMesh( const vector<ofPolyline>& src, ofPolyWindi
 		ofPolyline& polyline = const_cast<ofPolyline&>(src[i]);
 
 		tessAddContour( cacheTess, bIs2D?2:3, &polyline.getVertices()[0].x, sizeof(ofPoint), polyline.size());
+        
 	}
 
 	performTessellation( polyWindingMode, dstmesh, bIs2D );

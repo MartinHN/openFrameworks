@@ -44,6 +44,7 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
     zdepth=zin;
     screensParam.setName("screens");
     
+    
 #ifdef LIVEBLUR
     blurX.load("","shaders/blurXa.frag");
     blurY.load("","shaders/blurYa.frag");
@@ -272,6 +273,7 @@ void ScreenHandler::loadScreensPos(int num){
     
     ofXml eS;
     if(eS.load("Xml/ecrans"+ofToString(num)+".xml")){
+        ofLogWarning("loading : Xml/ecrans"+ofToString(num)+".xml");
         int nS = eS.getNumChildren();
         vector<ofVec3f> vert;
         

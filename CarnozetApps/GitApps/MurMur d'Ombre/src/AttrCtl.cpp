@@ -148,9 +148,9 @@ void AttrCtl::smooth(){
 
 void AttrCtl::staticpoints(){
     staticA.clear();
-    
-    if(destA.size()==2){
-        staticA.push_back(AttrStruct((destA[1].p+destA[0].p)/2.0,destA[0].type,destA[0].zone));
+    vector<ofPoint> ppp = getType(2);
+    if(ppp.size()==2){
+        staticA.push_back(AttrStruct((ppp[1]+ppp[0])/2.0,2,0));
     }
 
     vector<int> mirrorFam = getActiveFromInt(attrmirrorx);

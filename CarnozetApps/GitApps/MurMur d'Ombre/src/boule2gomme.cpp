@@ -11,8 +11,11 @@
 
 
 boule2gomme::boule2gomme(VisuHandler * v):VisuClass(v){
-    MYPARAM(rayon,2,0,100);
-    MYPARAM(center,ofVec2f(0.5,0.5),ofVec2f(0),ofVec2f(1));
+    MYPARAM(drawZones,false,true,false);
+    MYPARAM(drawSyphon,false,true,false);
+    MYPARAM(drawPipe,false,true,false);
+    MYPARAM(drawAttr,false,true,false);
+
     settings.setName("boule2gomme");
 }
 
@@ -24,11 +27,15 @@ void boule2gomme::update(int w, int h){
 
 void boule2gomme::draw(int w, int h){
 
+    
+
     ofSetColor(255);
+    if(drawSyphon) dad->bH->syphonTex.dst->draw(0,0);
     
-    dad->bH->syphonTex.src->draw(0,300);
+    if(drawPipe)dad->pipePP.dst->draw(0,0);
     
-    dad->pipePP.dst->draw(0,540);
+    if(drawAttr){
+        int rayon = 30;
     ofVec2f scale(w,h);
     vector<AttrStruct> * points =  &dad->attr->staticA;
      vector<AttrStruct> * opoints =  &dad->attr->destA;
@@ -42,36 +49,21 @@ void boule2gomme::draw(int w, int h){
         ofNoFill();
         ofEllipse(scale*opoints->at(i).p,rayon,rayon);
     }
-    
+    }
     ofRect(50,50,50,50);
-//    dad->bH->blobClient.draw(600,0);
-//    dad->bH->gs.draw(320,240);
+
     
-//    dad->syphonTex.src->draw(center.get().x*w,center.get().y*h,scale.x/2,scale.y/2);
-    //dad->bH->syphonTex.src->draw(0,0,w/2,h/2);
-//    ofTranslate(0,h/2);
-//    ofSetColor(0,255,0);
-//    vector<ofPolyline> pp = dad->bH->getBlobs(w/2,h/2);
-//    int max = pp.size();
-//    for(int i = 0 ; i<max ;i++){
-//        ofPolyline tt = pp[i];
-//        ofNoFill();
-//        ofRect(pp[i].getBoundingBox());
-////        tt.simplify(30);
-////        tt = tt.getResampledByCount(10);
-//        for (int j = 0 ; j<tt.size();j++){
-//            if(j==0)ofSetColor(255,0,0);
-//            else ofSetColor(0,255,0);
-//            ofEllipse(tt[j],rayon,rayon);
-//        }
-//        
-//    }
-//    
-//    ofSetColor(255,0,0);
-//    vector<ofVec3f> po = dad->bH->arms;
-//    for (int  i = 0 ; i< po.size();i++){
-//
-//        ofRect(po[i], 2*rayon,2* rayon);
-//    }
+    if(drawZones){
+            
+        for(int i = 0 ; i < dad->attr->zones.size() ; i++){
+            ofNoFill();
+            ofSetColor(i==0?255:0,i==1?255:0,i==2?255:0);
+            ofRectangle rr =dad->attr->zones[i];
+            rr.x*=w;
+            rr.y*=h;
+            rr.scale(w,h);
+            ofRect(rr);
+        }
+    }   
 
 }

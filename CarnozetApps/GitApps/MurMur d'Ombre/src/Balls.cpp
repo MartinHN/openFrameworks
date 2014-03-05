@@ -45,7 +45,7 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofCol
     useGrid = useGridin;
     useBorder = useBorderin;
     useTor = useTorin;
-    gridForce = gridForcein;
+//    gridForce = gridForcein;
     insideMode = insideModein;
     dieMode = dieModein;
     lifeTime = lifeTimein;

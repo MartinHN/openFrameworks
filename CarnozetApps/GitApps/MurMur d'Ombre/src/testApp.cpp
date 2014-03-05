@@ -82,16 +82,20 @@ void testApp::setup(){
     
     
     attrctl = AttrCtl();  
-    bH.setup(inw,inh,&blurX,&blurY);
+
     
 #endif  
-    
-    visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh);
+    sH.setup(&scrw,&scrh,zdepth);
+    sH.loadScreensPos(0);
+#ifndef GUIMODE
+    bH.setup(inw,inh,&blurX,&blurY,&sH);
+#endif
+    visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh,&sH);
     
 #ifndef GUIMODE 
     
 #ifndef LIVEBLUR
-    foreground.push_back(visuHandler.sH.globalMask);
+    foreground.push_back(sH.globalMask);
 #endif
     
 #ifdef blobosc
@@ -150,7 +154,7 @@ void testApp::setup(){
     
     
     visuHandler.registerParams();
-    visuHandler.sH.registerParams();
+    
     
     
     
@@ -158,7 +162,8 @@ void testApp::setup(){
     
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
-    globalParam.add(visuHandler.sH.screensParam);
+    globalParam.add(sH.screensParam);
+    
     globalParam.add(visuHandler.allParams);
     
     
@@ -269,6 +274,7 @@ void testApp::draw(){
     //Draw only for pipe
     int modeVisu = isPipe?1:0;
     visuHandler.draw(modeVisu);
+
     
     camera2.end();
     ofPopMatrix();
@@ -398,8 +404,8 @@ void testApp::draw(){
         }
     }
     if(!oneMask){
-        for(int i = 0 ; i< visuHandler.sH.screenL.size();i++){
-            if(visuHandler.sH.screenL[i]->mask){
+        for(int i = 0 ; i< sH.screenL.size();i++){
+            if(sH.screenL[i]->mask){
                 oneMask=true;
                 break;
                 
@@ -420,7 +426,7 @@ void testApp::draw(){
         if(pipeMask)visuHandler.pipePP.src->draw(0,0,scrw,scrh);
         visuHandler.draw(2);  
         
-        visuHandler.sH.drawMask();
+        sH.drawMask();
     }
     else{
         ofSetColor(255);

@@ -252,9 +252,9 @@ void BallManager::addBall(ofPoint posin, ofPoint speedin, ofColor colin, float s
     
     int life = (int) lifeTime + ofRandom(100);
     
-    BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
-                                     ,&gridForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
-    listOfBalls.push_back(ball);
+//    BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
+//                                     ,&gridForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
+//    listOfBalls.push_back(ball);
     
     
 }

@@ -35,17 +35,6 @@
 
 
 
-
-//#define IS_VIDEO
-
-//bool sortOnZ(ofVec3f a,ofVec3f b){
-//    return a.z>b.z;
-//}
-static bool sortOnXYZ(ofVec3f a,ofVec3f b){
-    return a.z>b.z&&a.x>b.x&&a.y>b.y;
-}
-
-
 class VisuHandler{
     
     
@@ -56,7 +45,7 @@ public:
     
     
     void addVisu(VisuClass * v);
-    void setup(AttrCtl *attrctl,BlobHandler* bHin,int inw,int inh,int zdepthin,int * scrw,int * scrh);
+    void setup(AttrCtl *attrctl,BlobHandler* bHin,int inw,int inh,int zdepthin,int * scrw,int * scrh,ScreenHandler * sH);
     void update();
     void updateHighFPS();
     const void draw(int mode);
@@ -85,7 +74,7 @@ public:
     
 
     
-    ScreenHandler sH;
+    ScreenHandler * sH;
     
     vector<ofImage> sharedImg;
     ofImage* getSharedImg(int i);

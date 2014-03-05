@@ -32,6 +32,15 @@
 // http://www.comp.nus.edu/~ashwinna/docs/PingPong_FBO.pdf
 // http://www.seas.upenn.edu/~cis565/fbo.htm#setupgl4
 //
+static bool sortOnZ(ofVec3f a,ofVec3f b){
+    return a.z>b.z;
+}
+static bool sortOnX(ofVec3f a,ofVec3f b){
+    return a.x>b.x;
+}
+static bool sortOnXYZ(ofVec3f a,ofVec3f b){
+    return a.z>b.z&&a.x>b.x&&a.y>b.y;
+}
 
 class AttrStruct{
 public:

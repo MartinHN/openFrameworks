@@ -78,7 +78,7 @@ Baton::Baton(VisuHandler * dad):VisuClass(dad){
 
 void Baton::update(VisuHandler * dad){
     attr=&dad->attr->destA;
-    ofVec2f size =    dad->sH.sizeOfScreen(screenN);
+    ofVec2f size =    dad->sH->sizeOfScreen(screenN);
     ofVec3f center = size/2;
     int width = size.x;
     int height = size.y;

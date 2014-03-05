@@ -19,8 +19,8 @@ public:
     boule2gomme(VisuHandler * v);
     ~boule2gomme(){};
     
-    ofParameter<int> rayon;
-    ofParameter<ofVec2f> center;
+    ofParameter<bool> drawZones,drawSyphon,drawPipe,drawAttr;
+
     
     void draw(int w, int h);
     void update(int w, int h);

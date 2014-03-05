@@ -11,19 +11,20 @@
 #include "BlobHandler.h"
 
 
-void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin){
+void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin,ScreenHandler * sHin){
     inw = inwin;
     inh = inhin;
     blurX=blurXin;
     blurY = blurYin;
     
+    sH = sHin;
     
 
     blobClient.setup();
-    blobClient.setApplicationName("kinectExampleDebug");
-    blobClient.setServerName("blob");
-   //     blobClient.setApplicationName("Quartz Composer");
-     //   blobClient.setServerName("N");
+    //blobClient.setApplicationName("kinectExampleDebug");
+    //blobClient.setServerName("blob");
+    blobClient.setApplicationName("Quartz Composer");
+     blobClient.setServerName("N");
 
     syphonTex.allocate(inw,inh,GL_RGB32F);
     
@@ -32,6 +33,7 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
     
 
     pix.allocate(inw,inh,3);
+
     
 }
 
@@ -39,9 +41,11 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
 void BlobHandler::update(){
     
     compBlob();
+    compCache();
     arms = compExtrems();
     centroids = compCentroid();
     boxes = compBounds();
+
     
 //    blurblob();
 
@@ -49,7 +53,8 @@ void BlobHandler::update(){
 
 void BlobHandler::registerParams(){
     settings.setName("blobsettings");
-//    MYPARAM(blobBlur, 0.f, 0.f, 10.f);
+
+    MYPARAM(isPiping,false,false,true);
     MYPARAM(vidThreshold, 70.f, 0.f, 255.f);
     MYPARAM(invertBW,true,false,true);
     MYPARAM(minSide,0.f,0.f,1.f);
@@ -60,6 +65,11 @@ void BlobHandler::registerParams(){
     MYPARAM(smooth,0.f,0.f,10.f);
     MYPARAM(polyMaxPoints, 0,0,200);
     MYPARAM(maxLengthExtrem, 15.f,0.f,100.f);
+    MYPARAM(screenN, 0, 0, 123);
+    MYPARAM(invertX,false,false,true);
+    MYPARAM(invertY,false,false,true);
+    MYPARAM(pos, ofVec3f(0.5),ofVec3f(0),ofVec4f(1.));
+    MYPARAM(scale, ofVec3f(0.5),ofVec3f(0),ofVec4f(1.));
     MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
 }
 
@@ -115,66 +125,116 @@ void BlobHandler::compBlob(){
    
     blobs = contourFinder.blobs;
     
+
+    
+    
 }
 
 
 vector<ofVec3f> BlobHandler::compCentroid(float w, float h){
     vector<ofVec3f> res;
-    ofVec3f scale(inw/w,inh/h);
+    ofVec3f scale(w*1.0/lastw,h*1.0/lasth);
     for (int i = 0 ; i< blobs.size();i++){
        
         
-        res.push_back(blobs[i].centroid/scale);
+        res.push_back(cachedP[i].getCentroid2D()/scale);
     }
     return res;
 }
 
 vector<ofRectangle> BlobHandler::compBounds(float w, float h){
     vector<ofRectangle> res;
-    ofVec3f scale(inw/w,inh/h);
+
     for (int i = 0 ; i< blobs.size();i++){
-        res.push_back(ofRectangle(blobs[i].boundingRect.x/w,blobs[i].boundingRect.y/h,blobs[i].boundingRect.height*1.0/w,blobs[i].boundingRect.width*1.0/h));
+        ofRectangle rr = cachedP[i].getBoundingBox();
+        
+        res.push_back(ofRectangle(rr.x*w/lastw,rr.y*h/lasth,rr.width*w/lastw,rr.height*h/lasth));
     }
     return res;
 }
 
-
-vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
-    vector<ofPolyline> res;
-       ofVec3f scale(inw/w,inh/h);
+void BlobHandler::compCache(){
+    cachedP.clear();
+    ofRectangle rr = sH->rectOfScreen(sH->getValidScreen(screenN));
+    rr.scaleFromCenter(lastw/(*sH->scrw), lasth/(*sH->scrh));
+    
     for (int i = 0 ; i< blobs.size();i++){
         ofPolyline pp ;
+        
         for(int j = 0 ; j < blobs[i].nPts;j++){
-            ofPoint p = blobs[i].pts[j]/scale;
-            if(invx)p.x = w-p.x;
-            if(invy)p.y = h-p.y;
-        pp.lineTo(p);
+            ofPoint p = blobs[i].pts[j]/ofVec3f(inw,inh);
+            if(invertX)p.x = 1-p.x;
+            if(invertY)p.y = 1-p.y;
+            p  =  ofVec2f(0.5) + (p-ofVec2f(0.5)) * scale.get();
+            p +=  (pos.get()-ofVec2f(0.5));
+            
+            
+            
+            p.x = ofMap(p.x, 0, 1, rr.getMinX() ,rr.getMaxX());
+            p.y =ofMap(p.y, 0, 1, rr.getMinY() ,rr.getMaxY());
+            p.z-=0.5;
+            pp.lineTo(p);
         }
+        
         if(polyMaxPoints>0){pp=pp.getResampledByCount(polyMaxPoints);}
         if(simplification>0){
             pp.simplify(simplification);
-        
+            
         }
         if(smooth>0){
             pp = pp.getSmoothed(smooth);
         }
-//        pp.setClosed(true);
-        res.push_back(pp);
+        if(pp.size()>0)
+            cachedP.push_back(pp);
     }
-    return res;
+
+    
+}
+
+vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
+
+    if(lastw ==w && lasth == h){
+        return cachedP;
+    }
+    else{
+        vector<ofPolyline> res;
+        ofVec2f ts = ofVec2f(w*1.0/lastw ,h*1.0/lasth);
+        polyCacheDirty = false;
+        for(int i = 0 ; i< cachedP.size() ; i++){
+            ofPolyline l;
+            for (int  j = 0 ; j< cachedP[i].size() ; j++){
+                ofPoint lp;
+                lp.x = !invx? cachedP[i][j].x : lastw-cachedP[i][j].x;
+                lp.y = !invy ? cachedP[i][j].y :  lasth-cachedP[i][j].y;
+                lp *= ts;
+                l.lineTo(lp);
+            }
+            res.push_back(l);
+        
+        }
+        lastw = w;
+        lasth = h;
+return res;
+    }
+    
+    
 }
 
 vector<ofPath> BlobHandler::getPaths(float w, float h,bool invx,bool invy){
     vector<ofPath> res;
-    vector<ofPolyline> p = getBlobs(w,h,invx,invy);
+    vector<ofPolyline> p;
+
+        p = getBlobs(w,h,invx,invy);
+    
     for (int i = 0 ; i< p.size();i++){
-        ofPath pp ;
+        ofPath pp;
         
         for(int j = 0 ; j < p[i].size();j++){
             pp.lineTo(p[i][j]);
         }
-
-        res.push_back(pp);
+        pp.close();
+        if(p[i].size()>0)
+            res.push_back(pp);
     }
     return res;
 }
@@ -183,16 +243,7 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     vector<ofVec3f> res;
     vector<ofPolyline> tmp ;
 
-    for (int i = 0 ; i< blobs.size();i++){
-        ofPolyline pp ;
-        for(int j = 0 ; j < blobs[i].nPts;j++){
-            pp.lineTo(blobs[i].pts[j]/ofVec2f(inw,inh));
-        }
-      pp=pp.getResampledByCount(100);
-      
-      
-        tmp.push_back(pp);
-    }
+
     
     
     float sum_angles=0;
@@ -200,11 +251,11 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     float maxangle = 110;
 
 
-    for (int i = 0 ; i< tmp.size();i++){
+    for (int i = 0 ; i< cachedP.size();i++){
         begin=0;
         end=1;
         sum_angles=0;
-        ofPolyline tmpspaced = tmp[i];//.getSmoothed(0.01);
+        ofPolyline tmpspaced = cachedP[i];//.getSmoothed(0.01);
 //        tmpspaced = tmpspaced.getResampledBySpacing(0.01);
         deque<float> tmpp;
 
@@ -238,7 +289,7 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
                 ofPoint p =tmpspaced.getPointAtIndexInterpolated(idx);
                 if(abs((p-tmpspaced.getCentroid2D()).getNormalized().dot(ofVec2f(1,0)))>cos(ofDegToRad(80))){
                 
-                res.push_back(p*ofVec2f(w,h));
+                res.push_back(p*ofVec2f(w*1.0/lastw,h*1.0/lasth));
                 }
                 
 //                    if(test == false)ofLogWarning("no extrem");

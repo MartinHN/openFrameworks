@@ -4,9 +4,9 @@
 		<saturation>1.03</saturation>
 		<contrast>1.03</contrast>
 		<brightness>1</brightness>
-		<rback>255</rback>
-		<gback>255</gback>
-		<bback>255</bback>
+		<rback>0</rback>
+		<gback>0</gback>
+		<bback>0</bback>
 		<alphablur>170</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
@@ -31,11 +31,11 @@
 		<maxSide>1</maxSide>
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
-		<simplification>0.5</simplification>
+		<simplification>0</simplification>
 		<smooth>0</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
-		<screenN>1</screenN>
+		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
 		<pos>0.494898, 0.489796, 0.5</pos>
@@ -59,7 +59,7 @@
 			<mask>0</mask>
 		</screen0>
 		<screen1>
-			<mask>1</mask>
+			<mask>0</mask>
 		</screen1>
 		<screen2>
 			<mask>0</mask>
@@ -212,7 +212,7 @@
 			<insideMode>0</insideMode>
 		</AutoTree>
 		<BallManager>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
@@ -252,7 +252,7 @@
 			<isMasking>0</isMasking>
 		</VideoPlayer>
 		<boule2gomme>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>1</screenN>
 			<recopy>1</recopy>

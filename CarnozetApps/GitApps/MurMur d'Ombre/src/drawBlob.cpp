@@ -30,8 +30,9 @@ drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
 void drawBlob::update(int w, int h){
     
     realPos = alphapos*pos+realPos*(1-alphapos);
-    paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
-    int a = 0;
+//    paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
+    lastScreenN = screenN;
+
     
 }
 
@@ -39,14 +40,17 @@ void drawBlob::draw(int w, int h){
     
 
    
-   
+
+       paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty); 
+    
     ofPushMatrix();
     
     ofTranslate(w*(realPos.x-scale->x/2.),h*(realPos.y-scale->y/2.), (realPos.z-0.5)*dad->zdepth);
     for(int i  = 0 ; i< paths.size();i++){
         ofPath pp =paths[i]; 
         pp.setFillColor(ofColor(color->x,color->y,color->z,alpha));
-        pp.draw();
+        if(pp.getOutline().size()>0 && pp.getOutline()[0].size()>0)
+            pp.draw();
     }
     
     

@@ -62,7 +62,7 @@ void VisuHandler::update(){
 //    sH->updateBlobScreens(bH->blobs);
     
     for(int i = 0;i<visuList.size();i++){
-        if(visuList[i]->isActive&&!visuList[i]->isHighFPS){
+        if((visuList[i]->isActive||visuList[i]->isPiping)&&!visuList[i]->isHighFPS){
             ofRectangle curS = sH->rectOfScreen(visuList[i]->screenN);
             visuList[i]->update(curS.width,curS.height);
         }

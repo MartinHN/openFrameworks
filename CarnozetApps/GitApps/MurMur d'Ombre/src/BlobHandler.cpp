@@ -29,6 +29,8 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
     syphonTex.allocate(inw,inh,GL_RGB32F);
     
     gs.allocate(inw, inh);
+    lastw = inw;
+    lasth = inh;
  
     
 
@@ -133,11 +135,13 @@ void BlobHandler::compBlob(){
 
 vector<ofVec3f> BlobHandler::compCentroid(float w, float h){
     vector<ofVec3f> res;
-    ofVec3f scale(w*1.0/lastw,h*1.0/lasth);
+    ofVec3f scalel(w*1.0/lastw,h*1.0/lasth);
     for (int i = 0 ; i< blobs.size();i++){
        
-        
-        res.push_back(cachedP[i].getCentroid2D()/scale);
+        ofVec2f realC = cachedP[i].getCentroid2D();
+       
+        int a = 0;
+        res.push_back(realC*scalel);
     }
     return res;
 }
@@ -156,13 +160,13 @@ vector<ofRectangle> BlobHandler::compBounds(float w, float h){
 void BlobHandler::compCache(){
     cachedP.clear();
     ofRectangle rr = sH->rectOfScreen(sH->getValidScreen(screenN));
-    rr.scaleFromCenter(lastw/(*sH->scrw), lasth/(*sH->scrh));
+    rr.scaleFromCenter(lastw*1.0/(*sH->scrw), lasth*1.0/(*sH->scrh));
     
     for (int i = 0 ; i< blobs.size();i++){
         ofPolyline pp ;
         
         for(int j = 0 ; j < blobs[i].nPts;j++){
-            ofPoint p = blobs[i].pts[j]/ofVec3f(inw,inh);
+            ofVec2f p = blobs[i].pts[j]/ofVec2f(inw,inh);
             if(invertX)p.x = 1-p.x;
             if(invertY)p.y = 1-p.y;
             p  =  ofVec2f(0.5) + (p-ofVec2f(0.5)) * scale.get();
@@ -172,7 +176,7 @@ void BlobHandler::compCache(){
             
             p.x = ofMap(p.x, 0, 1, rr.getMinX() ,rr.getMaxX());
             p.y =ofMap(p.y, 0, 1, rr.getMinY() ,rr.getMaxY());
-            p.z-=0.5;
+            
             pp.lineTo(p);
         }
         
@@ -184,28 +188,32 @@ void BlobHandler::compCache(){
         if(smooth>0){
             pp = pp.getSmoothed(smooth);
         }
-        if(pp.size()>0)
+        if(pp.size()>0){
+            pp.close();
             cachedP.push_back(pp);
+        }
+            
     }
 
     
 }
 
 vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
-
+    vector<ofPolyline> res;
     if(lastw ==w && lasth == h){
-        return cachedP;
+        res = cachedP;
     }
     else{
-        vector<ofPolyline> res;
+        
         ofVec2f ts = ofVec2f(w*1.0/lastw ,h*1.0/lasth);
         polyCacheDirty = false;
         for(int i = 0 ; i< cachedP.size() ; i++){
             ofPolyline l;
-            for (int  j = 0 ; j< cachedP[i].size() ; j++){
+            vector<ofPoint> pl = cachedP[i].getVertices();
+            for (int  j = 0 ; j< pl.size() ; j++){
                 ofPoint lp;
-                lp.x = !invx? cachedP[i][j].x : lastw-cachedP[i][j].x;
-                lp.y = !invy ? cachedP[i][j].y :  lasth-cachedP[i][j].y;
+                lp.x = !invx? pl[j].x : lastw-pl[j].x;
+                lp.y = !invy ? pl[j].y :  lasth-pl[j].y;
                 lp *= ts;
                 l.lineTo(lp);
             }
@@ -214,8 +222,9 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
         }
         lastw = w;
         lasth = h;
-return res;
+
     }
+    return res;
     
     
 }
@@ -230,6 +239,7 @@ vector<ofPath> BlobHandler::getPaths(float w, float h,bool invx,bool invy){
         ofPath pp;
         
         for(int j = 0 ; j < p[i].size();j++){
+            ofPoint tst = p[i][j];
             pp.lineTo(p[i][j]);
         }
         pp.close();
@@ -248,14 +258,14 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     
     float sum_angles=0;
     int begin=0,end=1;
-    float maxangle = 110;
+    float maxangle = 170;
 
 
-    for (int i = 0 ; i< cachedP.size();i++){
+    for (int i = 0 ; i< blobs.size();i++){
         begin=0;
         end=1;
         sum_angles=0;
-        ofPolyline tmpspaced = cachedP[i];//.getSmoothed(0.01);
+        ofPolyline tmpspaced = blobs[i].pts;//.getSmoothed(0.01);
 //        tmpspaced = tmpspaced.getResampledBySpacing(0.01);
         deque<float> tmpp;
 
@@ -289,7 +299,7 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
                 ofPoint p =tmpspaced.getPointAtIndexInterpolated(idx);
                 if(abs((p-tmpspaced.getCentroid2D()).getNormalized().dot(ofVec2f(1,0)))>cos(ofDegToRad(80))){
                 
-                res.push_back(p*ofVec2f(w*1.0/lastw,h*1.0/lasth));
+                res.push_back(p*ofVec2f(w*1.0/inw,h*1.0/inh));
                 }
                 
 //                    if(test == false)ofLogWarning("no extrem");

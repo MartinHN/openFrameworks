@@ -37,6 +37,8 @@ public:
     ofVec3f realPos;
     vector<ofPath> paths;
     
+    int lastScreenN;
+    
     
     
 };

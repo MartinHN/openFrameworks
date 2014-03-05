@@ -141,9 +141,25 @@ void AutoTree::draw(int width, int height)
     
     ofPolyline blob;
     blob.clear();
+    ofPolyline bigBlob;
+    bigBlob.clear();
     
-    if(dad->bH->getBlobs().size()>0 && insideMode)
+    if(dad->bH->getBlobs().size()>0 && insideMode){
         blob = dad->bH->getBlobs(320,240).front();
+        
+        ofPoint ratio = ofPoint(width*1.0f/320.0f, height*1.0f/240);
+        
+        for(int i=0; i<blob.size(); i++)
+        {
+            bigBlob.lineTo(blob[i]*ratio);
+            
+            
+        }
+        
+    }
+    bigBlob.close();
+    
+    
     
     //INtro
     if(initTrig )
@@ -181,7 +197,7 @@ void AutoTree::draw(int width, int height)
                 pos = pos/ofPoint(width, height);
                 pos = pos*ofPoint(320,240);
                 
-                it->update(blob, insideMode);
+                it->update(bigBlob, insideMode);
                 
                 // Branche is over
                 if(it->lifeTime < 1 && !(it->isChildCreated)  )
@@ -209,7 +225,6 @@ void AutoTree::draw(int width, int height)
                 }
                 
             }
-            
             
             
             
@@ -250,6 +265,9 @@ void AutoTree::draw(int width, int height)
     ofNoFill();
     ofSetLineWidth(4);
     ofCircle(pointToBegin->x*width, pointToBegin->y*height,30);
+        
+        ofSetColor(255, 100, 255);
+        bigBlob.draw();
     }
     
     ofPopMatrix();

@@ -165,7 +165,7 @@ void AutoTree::draw(int width, int height)
     if(initTrig )
     {
         int duree = 600; // 600
-        float finalSize = 60.0f;
+        float finalSize = 35.0f;
         introPhase++;
         
         if(introPhase< duree)
@@ -437,10 +437,19 @@ void Branche::update(ofPolyline poly, bool insideMode){
     
     int maxLife = 200;
     
-    float speed = 0.2f; //0.2f
+    float speed = 0.06f; //0.2f
     
-    if(isGrowing){
+    if(insideMode && !poly.inside(end) ){
+        isGrowing = false;
+    }
+    if(insideMode && poly.inside(end)){
+        isGrowing = true;
+    }
+    
+    if(isGrowing)
+    {
 
+        
         lifeTime -= speed;
         length += speed;
         
@@ -451,21 +460,6 @@ void Branche::update(ofPolyline poly, bool insideMode){
         
         angle +=  curve;
         
-        //bounce inside the blob
-        if(insideMode )
-        {
-            
-            if(lastTimeBouncing>0)
-                lastTimeBouncing--;
-            
-            if(poly.inside(end) && lastTimeBouncing==0)
-            {
-                angle += 3.14;
-                lastTimeBouncing = 25;
-                clockWise = !clockWise;
-            }
-            
-        }
         
         
     }

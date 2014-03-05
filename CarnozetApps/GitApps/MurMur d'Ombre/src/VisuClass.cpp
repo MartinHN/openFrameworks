@@ -12,17 +12,18 @@
 
 
 VisuClass::VisuClass(VisuHandler * vh){
-
+    
     dad=vh;
     MYPARAM(isActive,false,false,true);
+    MYPARAM(isPiping,false,false,true);
     MYPARAM(screenN,0,0,199);
     
     MYPARAM(recopy,true,false,true);
     isHighFPS = false;
     MYPARAM(isMapping,true,false,true);
     
-    MYPARAM(isPiping,false,false,true);
-     MYPARAM(isMasking,false,false,true);
+    
+    MYPARAM(isMasking,false,false,true);
     
 }
 

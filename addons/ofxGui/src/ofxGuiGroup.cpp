@@ -46,7 +46,8 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
         isDynamic = true;
         isActive = static_cast<ofParameter<bool> *>(&_parameters.get("isActive"));
     }
-
+    
+    
 	for(int i=0;i<_parameters.size();i++){
 		string type = _parameters.getType(i);
 		if(type==typeid(ofParameter<int>).name()){
@@ -74,15 +75,15 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 			ofParameter<ofShortColor> p = _parameters.getShortColor(i);
 			add(p);
 		}
-    else if(type==typeid(ofParameter<string>).name()){
-        ofParameter<string> p = _parameters.getString(i);
-        add(p);
-    }
+        else if(type==typeid(ofParameter<string>).name()){
+            ofParameter<string> p = _parameters.getString(i);
+            add(p);
+        }
         else if(type==typeid(ofParameter<ofFloatColor>).name()){
 			ofParameter<ofFloatColor> p = _parameters.getFloatColor(i);
 			add(p);
 		}else if(type==typeid(ofParameter<string>).name()){
-        		ofParameter<string> p = _parameters.getString(i);
+            ofParameter<string> p = _parameters.getString(i);
 			add(p);
 		}else if(type==typeid(ofParameterGroup).name()){
 			ofParameterGroup p = _parameters.getGroup(i);
@@ -93,10 +94,10 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 			ofLogWarning() << "ofxBaseGroup; no control for parameter of type " << type;
 		}
 	}
-
+    
 	parameters = _parameters;
 	ofRegisterMouseEvents(this,OF_EVENT_ORDER_BEFORE_APP);
-
+    
 	generateDraw();
     
 	return this;
@@ -104,16 +105,16 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 
 void ofxGuiGroup::add(ofxBaseGui * element){
 	
-
     
-    if(element->getName()!="isActive"){
+    
+    if(element->getName()!="isActive" && element->getName()!="isPiping"){
         collection.push_back( element );
-element->setPosition(b.x, b.y + b.height + spacing);
+        element->setPosition(b.x, b.y + b.height + spacing);
     }
-        
-
+    
+    
 	b.height += element->getHeight() + spacing;
-
+    
 	//if(b.width<element->getWidth()) b.width = element->getWidth();
     
 	ofUnregisterMouseEvents(element);
@@ -129,10 +130,10 @@ element->setPosition(b.x, b.y + b.height + spacing);
 			element->setPosition(b.x + b.width-element->getWidth(),element->getPosition().y);
 		}
 	}
-
+    
     
 	parameters.add(element->getParameter());
-
+    
 	generateDraw();
 }
 
@@ -218,12 +219,12 @@ bool ofxGuiGroup::mouseMoved(ofMouseEventArgs & args){
 }
 
 bool ofxGuiGroup::mousePressed(ofMouseEventArgs & args){
-
+    
 	if(setValue(args.x, args.y, true)){
 		return true;
 	}
 	if( bGuiActive ){
-
+        
 		ofMouseEventArgs a = args;
 		for(int i = 0; i < (int)collection.size(); i++){
 			if(collection[i]->mousePressed(a)) return true;
@@ -263,13 +264,13 @@ void ofxGuiGroup::generateDraw(){
 	border.setFillColor(ofColor(thisBorderColor,180));
 	border.setFilled(true);
 	border.rectangle(b.x,b.y+ spacingNextElement,b.width+1,b.height);
-
-
+    
+    
 	headerBg.clear();
 	headerBg.setFillColor(thisHeaderBackgroundColor);
 	headerBg.setFilled(true);
 	headerBg.rectangle(b.x,b.y +1 + spacingNextElement, b.width, header);
-
+    
     if(isDynamic){
         activeBox.set(b.getMaxX()-3*defaultHeight,b.y + 2,defaultHeight,defaultHeight);
     }
@@ -285,14 +286,14 @@ void ofxGuiGroup::generateDraw(){
 void ofxGuiGroup::render(){
 	border.draw();
 	headerBg.draw();
-
+    
 	ofBlendMode blendMode = ofGetStyle().blendingMode;
 	if(blendMode!=OF_BLENDMODE_ALPHA){
 		ofEnableAlphaBlending();
 	}
 	ofColor c = ofGetStyle().color;
 	ofSetColor(thisTextColor);
-
+    
 	bindFontTexture();
 	textMesh.draw();
 	unbindFontTexture();
@@ -313,7 +314,7 @@ void ofxGuiGroup::render(){
 			collection[i]->draw();
 		}
 	}
-
+    
 	ofSetColor(c);
 	if(blendMode!=OF_BLENDMODE_ALPHA){
 		ofEnableBlendMode(blendMode);
@@ -371,12 +372,12 @@ bool ofxGuiGroup::setValue(float mx, float my, bool bCheck){
 		bGuiActive = false;
 		return false;
 	}
-
-
+    
+    
 	if( bCheck ){
 		if( b.inside(mx, my) ){
 			bGuiActive = true;
-
+            
 			ofRectangle minButton(b.x+b.width-textPadding*3,b.y,textPadding*3,header);
             if(activeBox.inside(mx,my)){
                 *isActive=(!*isActive);
@@ -393,7 +394,7 @@ bool ofxGuiGroup::setValue(float mx, float my, bool bCheck){
 			}
         }
 	}
-
+    
 	return false;
 }
 
@@ -461,11 +462,11 @@ ofAbstractParameter & ofxGuiGroup::getParameter(){
 
 void ofxGuiGroup::setPosition(ofPoint p){
 	ofVec2f diff = p - b.getPosition();
-
+    
 	for(int i=0;i<(int)collection.size();i++){
 		collection[i]->setPosition(collection[i]->getPosition()+diff);
 	}
-
+    
 	b.setPosition(p);
 	generateDraw();
 }

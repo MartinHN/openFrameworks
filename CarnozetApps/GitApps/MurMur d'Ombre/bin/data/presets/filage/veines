@@ -201,7 +201,7 @@
 			<pointToBegin>0.321429, 0.341837</pointToBegin>
 			<initTrig>0</initTrig>
 			<addPoint>1</addPoint>
-			<debugMode>1</debugMode>
+			<debugMode>0</debugMode>
 			<reset>1</reset>
 			<insideMode>1</insideMode>
 		</AutoTree>
@@ -218,6 +218,8 @@
 			<emission>0</emission>
 			<mode>2</mode>
 			<lifeTime>0</lifeTime>
+			<gridForce>0</gridForce>
+			<userForce>1</userForce>
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
@@ -227,11 +229,11 @@
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
 			<drawZones>0</drawZones>
-			<invertx>1</invertx>
-			<inverty>1</inverty>
-			<pos>0.547038, 0.77103, 0.5</pos>
+			<invertx>0</invertx>
+			<inverty>0</inverty>
+			<pos>0.542061, 0.77103, 0.5</pos>
 			<alphapos>0.3</alphapos>
-			<scale>0.357392, 0.387257</scale>
+			<scale>0.397213, 0.417123</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>

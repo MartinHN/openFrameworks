@@ -27,6 +27,7 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(lifeTime,100,0,2000);
     MYPARAM(gridForce, 0.0f, 0.0f, 1.0f);
     MYPARAM(userForce, 1.0f, 0.0f, 1.0f);
+    MYPARAM(gridOpen, 0.5f, 0.0f, 1.0f);
     
     
     mode.addListener(this,&BallManager::changeMode);
@@ -253,7 +254,7 @@ void BallManager::addBall(ofPoint posin, ofPoint speedin, ofColor colin, float s
     int life = (int) lifeTime + ofRandom(100);
     
     BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
-                                     ,&gridForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
+                                     ,&gridForce,&userForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
     listOfBalls.push_back(ball);
     
     

@@ -72,6 +72,7 @@ public:
     ofParameter<int> mode;
     ofParameter<float> gridForce;
     ofParameter<float> userForce;
+    ofParameter<float> gridOpen;
     
     
     //Gravity

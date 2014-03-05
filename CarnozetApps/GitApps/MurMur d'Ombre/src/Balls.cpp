@@ -25,9 +25,9 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin ){
 }
 
 BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofColor colin, ofImage* imgin,bool* useGridin,
-                           int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,float* gridForcein,
-                           bool* insideModein , int* dieModein, int lifeTimein, ofPoint* centroidPolyin,
-                           ofVec2f* speedCentroidin, ofVec2f* gravityin){
+                           int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,ofParameter<float>* gridForcein,
+                           ofParameter<float>* userForcein, bool* insideModein , int* dieModein, int lifeTimein,
+                           ofPoint* centroidPolyin, ofVec2f* speedCentroidin, ofVec2f* gravityin){
     
     
     pos = posin;
@@ -46,6 +46,7 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofCol
     useBorder = useBorderin;
     useTor = useTorin;
     gridForce = gridForcein;
+    userForce = userForcein;
     insideMode = insideModein;
     dieMode = dieModein;
     lifeTime = lifeTimein;
@@ -135,15 +136,15 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         {
         
             
-            ofPoint centroidBlob = poly.getCentroid2D();
+        ofPoint centroidBlob = poly.getCentroid2D();
             
-            float originForce = 0.7;
+        float originForce = 0.7;
             
             
             
-        ofPoint force = ( origin - pos )* originForce;
+        ofPoint force = ( origin - pos )* (*gridForce);
             
-        force += ( centroidBlob - pos) * (*gridForce);
+        force += ( centroidBlob - pos) * (*userForce);
         
         speed = damping * ( speed + force/mass);
         }

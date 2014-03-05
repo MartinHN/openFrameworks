@@ -47,7 +47,6 @@ public:
     bool useGrid;
     int numCol;
     int numRow;
-    float gridForce;
     bool drawGrid;
     
     //Border
@@ -71,6 +70,8 @@ public:
     ofParameter<ofVec2f> noiseF;
     ofParameter<ofVec2f> emitter;
     ofParameter<int> mode;
+    ofParameter<float> gridForce;
+    ofParameter<float> userForce;
     
     
     //Gravity

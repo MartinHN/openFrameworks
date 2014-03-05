@@ -71,10 +71,10 @@
 	<Visu>
 		<background>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<type>0</type>
 			<followFam>-1</followFam>
@@ -87,10 +87,10 @@
 		</background>
 		<particles>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
 			<numParticles>99856</numParticles>
@@ -181,10 +181,10 @@
 		</particles>
 		<metaBalls>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>1</isMasking>
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
@@ -193,23 +193,24 @@
 		</metaBalls>
 		<AutoTree>
 			<isActive>1</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<pointToBegin>0.321429, 0.341837</pointToBegin>
 			<initTrig>0</initTrig>
 			<addPoint>1</addPoint>
-			<debugMode>0</debugMode>
+			<debugMode>1</debugMode>
 			<reset>1</reset>
+			<insideMode>1</insideMode>
 		</AutoTree>
 		<BallManager>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<usePointEmitter>0</usePointEmitter>
 			<noiseF>0, 0</noiseF>
@@ -220,10 +221,10 @@
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
+			<isPiping>1</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>1</isPiping>
 			<isMasking>0</isMasking>
 			<drawZones>0</drawZones>
 			<invertx>1</invertx>
@@ -236,18 +237,18 @@
 		</drawBlob>
 		<VideoPlayer>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
+			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
-			<isPiping>0</isPiping>
 			<isMasking>0</isMasking>
 			<rayon>2</rayon>
 			<center>0.5, 0.5</center>

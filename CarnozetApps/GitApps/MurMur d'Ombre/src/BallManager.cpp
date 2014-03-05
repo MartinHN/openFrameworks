@@ -25,6 +25,9 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(emission,0.0,0.0f,1.0f);
     MYPARAM(mode,0,0,10);
     MYPARAM(lifeTime,100,0,2000);
+    MYPARAM(gridForce, 0.0f, 0.0f, 1.0f);
+    MYPARAM(userForce, 1.0f, 0.0f, 1.0f);
+    
     
     mode.addListener(this,&BallManager::changeMode);
     int m = 0;

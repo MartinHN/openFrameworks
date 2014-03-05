@@ -1,0 +1,16 @@
+<group>
+	<settings>
+		<thresh_near_far>255, 80</thresh_near_far>
+		<motion_detection>0</motion_detection>
+		<Use_Kinect_front>1</Use_Kinect_front>
+		<_Use_Video>0</_Use_Video>
+		<p1>0, 0</p1>
+		<p2>640, 0</p2>
+		<p3>640, 480</p3>
+		<p4>0, 480</p4>
+		<Erode>0</Erode>
+		<Blur>0</Blur>
+		<Angle>90</Angle>
+	</settings>
+	<preset>default</preset>
+</group>

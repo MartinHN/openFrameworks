@@ -56,7 +56,7 @@ public:
     bool* useTor;
     
     //Lock grid
-    float* gridForce;
+    ofParameter<float>* gridForce;
     
     //imageg
     ofImage* imgPart;

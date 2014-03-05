@@ -42,6 +42,8 @@ void testApp::update(){
 
 }
 
+
+
 //--------------------------------------------------------------
 void testApp::draw(){
 
@@ -283,6 +285,38 @@ void testApp::mousePressed(int x, int y, int button){
         
     }
     
+
+}
+
+void testApp::loadScreens(){
+    
+    ofXml eS;
+    if(eS.load("Xml/ecrans.xml")){
+        int nS = eS.getNumChildren();
+        vector<ofVec3f> vert;
+        
+        for (int n = 0 ; n<nS;n++){
+            eS.setToChild(n);
+            
+            int nP = eS.getNumChildren();
+            eS.setToChild(0);
+            for (int i = 0 ; i<nP;i++){
+                ofVec3f curpoint(0,0);
+                curpoint.x = eS.getFloatValue("x");
+                curpoint.y = eS.getFloatValue("y");
+                curpoint.z = eS.getFloatValue("z");
+                vert.push_back(curpoint); 
+                eS.setToSibling();
+            }
+            
+       
+            listOfScreen.push_back(Screen(vert[0], vert[1],vert[2],vert[3]));
+            eS.setToParent();
+            eS.setToParent();
+            vert.clear();
+            
+        }
+    }
 
 }
 

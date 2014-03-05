@@ -95,16 +95,6 @@ public:
 
     
     int     width, height;
-    int     imgWidth, imgHeight;
-    
-    
-    
-    //Colors
-    
-//    int rback,gback,bback,alphablur;
-//    int rblob,gblob,bblob,ablob;
-
-
 
 
     bool iscam;
@@ -121,9 +111,6 @@ public:
     
     int camctl;
 
-
-    
-
     
     //BLOB
 #if  defined blobcomp || defined testvid
@@ -133,36 +120,6 @@ public:
     ofxCvGrayscaleImage 	grayDiff;
      Boolean bLearnBakground;
 #endif
-#ifdef blobosc
-    
-    
-    bool drawBlob;
-#endif
-    pingPongBuffer polyBlob;
-    int polyt,polylastt;
-    
-    
-    bool drawcam;
-
-    int threshold;
-     ofVec2f centroid;
-
-    
-    
-    //ATTRACTORS
-    bool isAtt;
-    
-    
-    
-
-    int videow;
-    int videoh;
-
-
-
-    
-
-
 
 
     
@@ -170,11 +127,7 @@ public:
     ofShader blurY;
     ofShader colorMod;
     ofShader bloom;
-    ofShader gloom;
-
-    ofPath polyline;
-
-    
+    ofShader gloom;    
 
     bool isFullScreen;
     

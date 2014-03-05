@@ -61,7 +61,7 @@ public:
 
     ofParameter<float> vidThreshold;
     ofParameterGroup settings;
-//    ofParameter<float> blobBlur;
+
     
     
     

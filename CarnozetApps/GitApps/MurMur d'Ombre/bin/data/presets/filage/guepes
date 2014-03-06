@@ -10,7 +10,7 @@
 		<alphablur>170</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
-		<isPipe>1</isPipe>
+		<isPipe>0</isPipe>
 		<pipeblur>0</pipeblur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>0</pipeMask>
@@ -24,6 +24,7 @@
 		</camera>
 	</global>
 	<blobsettings>
+		<isPiping>0</isPiping>
 		<vidThreshold>0</vidThreshold>
 		<invertBW>0</invertBW>
 		<minSide>0.135</minSide>
@@ -34,6 +35,11 @@
 		<smooth>0</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
+		<screenN>0</screenN>
+		<invertX>0</invertX>
+		<invertY>0</invertY>
+		<pos>0.5, 0.5, 0.5</pos>
+		<scale>0.5, 0.5, 0.5</scale>
 		<crop>0, 0, 0, 100</crop>
 	</blobsettings>
 	<attrCtl>
@@ -223,7 +229,7 @@
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
-			<isPiping>1</isPiping>
+			<isPiping>0</isPiping>
 			<screenN>1</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
@@ -252,8 +258,10 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
-			<rayon>2</rayon>
-			<center>0.5, 0.5</center>
+			<drawZones>0</drawZones>
+			<drawSyphon>0</drawSyphon>
+			<drawPipe>0</drawPipe>
+			<drawAttr>0</drawAttr>
 		</boule2gomme>
 	</Visu>
 </OF>

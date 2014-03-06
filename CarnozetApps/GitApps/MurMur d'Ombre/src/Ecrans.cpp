@@ -14,7 +14,7 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isB
     scrh = scrhin;
     
     vertices.setName("screen"+ofToString(number));
-    if(!isBlob){vertices.setSerializable(false);};
+    if(!isBlob){vertices.setSerializable(true);};
     for (int i = 0 ; i < vert.size();i++){
          
         vl.push_back(new ofParameter<ofVec3f>());
@@ -75,7 +75,7 @@ void Ecran::updateMatrix(ofVec3f & dummy){
 
 
 void Ecran::registerParams(){
-    MYPARAM(mask,false,false,true);
+    
     for(std::list<ofParameter<ofVec3f>*>::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         (*vv)->removeListener(this,&Ecran::updateMatrix);
     }
@@ -84,7 +84,7 @@ void Ecran::registerParams(){
     vertices.setName("vertices");
     
     for (std::list<ofParameter<ofVec3f>* >::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
-        (*vv)->setSerializable(false);
+        (*vv)->setSerializable(true);
         vertices.add(**vv);
         if(vl.size()==4)(*vv)->addListener(this,&Ecran::updateMatrix);
     }

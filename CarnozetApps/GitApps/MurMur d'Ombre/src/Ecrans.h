@@ -31,7 +31,7 @@ public:
     int * scrh;
     int number;
     ofParameterGroup settings;
-    ofParameter<bool> mask;
+    
     ofParameterGroup vertices;
     list<ofParameter<ofVec3f> *> vl;
     ofRectangle rectMax;

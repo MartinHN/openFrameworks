@@ -23,7 +23,7 @@ public:
 //    Gui(ofParameterGroup * p);
 
     void draw();
-    void load(ofParameterGroup & pg);
+    void load(ofParameterGroup & pg,ofParameterGroup & pgtmp2);
 
 
     ofxPanel glob;

@@ -11,8 +11,12 @@
 
 ScreenHandler::ScreenHandler(){
 screensParam.setName("screens");
-
+    screenPreset = 0;
+    screenPreset.setMin(0);
+    screenPreset.setMax(10);
+ screenPreset.addListener(this, &ScreenHandler::loadNewPos);
     
+    save.addListener(this, &ScreenHandler::saveP);
     
 }
 
@@ -79,14 +83,32 @@ void ScreenHandler::addScreen(vector<ofVec3f> vert){
 
 void ScreenHandler::registerParams(){
     screensParam.clear();
+    screensCtl.clear();
+    
+    
+    screenPreset.setName("screenPreset");
+    screenPreset.setSerializable(false);
+    screensCtl.add(screenPreset);
+    
+    save.setName("save");
+    save.setSerializable(false);
+    screensCtl.add(save);
+    
+    for (int i = 0 ; i < screenL.size() ; i ++ ){
+        ofParameter<bool> mask;
+        mask.setName("mask"+ofToString(i));
+        screensCtl.add(mask);
+    }
+    
+    
     for(int i = 0 ;i< screenL.size();i++){
         screenL[i]->registerParams();
-      screensParam.add(screenL[i]->settings);  
+        screensParam.add(screenL[i]->settings);  
     }
 
     
     screensParam.setName("screens");
-   
+    screensCtl.setName("screensCtl");
     
 }
 
@@ -136,36 +158,6 @@ const ofVec2f ScreenHandler::sizeOfScreen(const int which){
 
 void ScreenHandler::blurmask(){
 #ifdef LIVEBLUR
-//    glBlendEquation(GL_FUNC_ADD_EXT);
-//    
-//    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
-//    
-//
-//    ofPushView();
-//    ofPushMatrix();
-//    ofPushStyle();
-//    blur.dst->begin();
-//    blurX.begin();
-//    blurX.setUniform1f("blurAmnt",finalblur);
-//    drawMask();
-//    blur.dst->end();
-////    blur.swap();
-////    
-////    blur.dst->begin();
-////    blurY.begin();
-//////    blurY.setUniform1f("blurAmnt",finalblur);            
-////    blur.src->draw(0,0);
-////    blurY.end();        
-////    blur.dst->end();
-////    
-////    blur.swap();
-////    
-////    
-////    
-////   
-//    ofPopView();
-//    ofPopMatrix();
-//    ofPopStyle();
 #else
     //Create globalMask
     
@@ -237,7 +229,7 @@ void ScreenHandler::drawMask(){
 
     ofSetColor(0,0,244);
     for (int i = 1 ; i < screenL.size();i++){
-        if(screenL[i]->mask){
+        if(mask[i]){
         ofPath tmpP;
         vector<ofVec3f> vert = screenL[i]->getVertices();
         for(int j = 0 ; j<vert.size();j++){
@@ -261,8 +253,8 @@ void ScreenHandler::mapN2S(vector<ofPoint> & p,int s){
     }
 }
 
-void ScreenHandler::loadScreensPos(int num){
-   
+void ScreenHandler::loadScreensPos(){
+
     vector<ofVec3f> vertglob;
     vertglob.push_back(ofVec2f(0,0));
     vertglob.push_back(ofVec2f(1,0));
@@ -272,8 +264,8 @@ void ScreenHandler::loadScreensPos(int num){
     addScreen(vertglob);
     
     ofXml eS;
-    if(eS.load("Xml/ecrans"+ofToString(num)+".xml")){
-        ofLogWarning("loading : Xml/ecrans"+ofToString(num)+".xml");
+    if(eS.load("Xml/ecrans0.xml")){
+        ofLogWarning("loading : Xml/ecrans0.xml");
         int nS = eS.getNumChildren();
         vector<ofVec3f> vert;
         
@@ -308,17 +300,40 @@ void ScreenHandler::loadScreensPos(int num){
    
     blurmask();    //delete tmpPath;
     blobIdx = screenL.size();
+    for (int i = 0 ; i < screenL.size() ; i ++ ){
+        ofParameter<bool> mask;
+        mask.setName("mask"+ofToString(i));
+        screensCtl.add(mask);
+    }
     
 }
 
-//
-//void EcranHandler::saveFile(string name){
-//    ofXml xml;
-//    xml.serialize(dstPoint[0]);
-//    xml.serialize(dstPoint[1]);
-//    xml.serialize(dstPoint[2]);
-//    xml.serialize(dstPoint[3]);
-//    xml.save(name);
-//    
-//}
 
+
+
+void ScreenHandler::loadNewPos(int & num){
+
+    
+        string abspath = ofToDataPath("Xml/pecrans"+ofToString(num)+".xml");
+        ofLogWarning("loading screen from local : " + abspath);
+        ofXml xml;
+        
+        xml.load(abspath);
+        xml.deserialize(screensParam);
+    
+
+ 
+
+}
+    
+void ScreenHandler::saveP(bool & s){
+    if(s){
+        string abspath = ofToDataPath("Xml/pecrans"+ofToString(screenPreset)+".xml");
+        ofLogWarning("saving screen local : " + abspath);
+        ofXml xml;
+        
+        
+        xml.serialize(screensParam);
+        cout << xml.save(abspath) << endl;
+    }
+}

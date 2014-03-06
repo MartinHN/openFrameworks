@@ -14,7 +14,7 @@
 
 
 
-void Gui::load(ofParameterGroup & pgtmp){
+void Gui::load(ofParameterGroup & pgtmp,ofParameterGroup & pgtmp3){
 
     guiParam.push_back(new ofxPanel());
     guiParam.back()->setup(pgtmp.getGroup("global"),pgtmp.getGroup("global").getName(),(baseC)*PARAMW);
@@ -36,9 +36,16 @@ void Gui::load(ofParameterGroup & pgtmp){
     h += guiParam.back()->getHeight() + 10;
     baseC++;
     
+    guiParam.push_back(new ofxPanel());
+    guiParam.back()->setup(pgtmp.getGroup("screensCtl"),pgtmp.getGroup("screensCtl").getName(),(baseC)*PARAMW);
+    //    guiParam.back()->minimizeAll();
+    
+    h += guiParam.back()->getHeight() + 10;
+    baseC++;
+    
     guiParam.back()->setDefaultWidth(ofGetWidth()-(baseC)*PARAMW);
     guiParam.push_back(new ofxPanel());
-    guiParam.back()->setup(pgtmp.getGroup("screens"),pgtmp.getGroup("screens").getName(),(baseC)*PARAMW);
+    guiParam.back()->setup(pgtmp3,pgtmp3.getName(),(baseC)*PARAMW);
     
     guiParam.back()->minimizeAll();
     

@@ -20,12 +20,13 @@ public:
     ScreenHandler();
     ~ScreenHandler(){};
     void setup(int * w, int * h, int z);
-    void loadScreensPos(int num);
+    void loadScreensPos();
     void addScreen(vector<ofVec3f> vert);
     void registerParams();
     int getValidScreen(int which);
     void updateBlobScreens(vector<ofxCvBlob> blobs);
-    
+    void loadNewPos(int & p);
+    void saveP(bool & s);
     ofRectangle rectOfScreen(int which);
     const ofVec2f sizeOfScreen(const int which);
     void blurmask();
@@ -39,6 +40,10 @@ public:
     
     vector<Ecran *> screenL;
     ofParameterGroup screensParam;
+    ofParameterGroup screensCtl;
+    ofParameter<int> screenPreset;
+    ofParameter<bool> save;
+    vector<ofParameter<bool> > mask;
     
     int * scrw;
     int * scrh;

@@ -86,7 +86,8 @@ void testApp::setup(){
     
 #endif  
     sH.setup(&scrw,&scrh,zdepth);
-    sH.loadScreensPos(0);
+
+    sH.loadScreensPos();
 #ifndef GUIMODE
     bH.setup(inw,inh,&blurX,&blurY,&sH);
 #endif
@@ -132,6 +133,7 @@ void testApp::setup(){
     MYPARAM(pipeblur, 0.f,0.f,25.f);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
+  
     
     
     settings.add(camera2.settings);
@@ -162,7 +164,7 @@ void testApp::setup(){
     
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
-    globalParam.add(sH.screensParam);
+    globalParam.add(sH.screensCtl);
     
     globalParam.add(visuHandler.allParams);
     
@@ -180,7 +182,7 @@ void testApp::setup(){
     ofSetFrameRate(8);
     //    gui.load(visuHandler.allParams);
     //    gui.loadOne(settings);
-    gui.load(globalParam);
+    gui.load(globalParam,sH.screensParam);
     
     
 #endif

@@ -154,6 +154,8 @@ public:
     ofParameter<bool> isPipe,hidePipe,pipeMask;
     ofParameter<float> pipeblur;
     
+
+    
     int zdepth;
     int inw;
     int inh;

@@ -26,6 +26,8 @@ apps/*
 [Bb]uild/
 [Oo]bj/
 *.o
+*.wav
+*.aif
 [Dd]ebug*/
 [Rr]elease*/
 *.mode*

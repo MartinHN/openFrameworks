@@ -201,6 +201,7 @@ void testApp::setup(){
 
 
 void testApp::update(){
+    paramSync.update();
 #ifndef GUIMODE
     bH.update();
     
@@ -221,7 +222,7 @@ void testApp::update(){
         visuHandler.updateHighFPS();
     }
     
-    paramSync.update();
+    
     
     oscUpdate();
     

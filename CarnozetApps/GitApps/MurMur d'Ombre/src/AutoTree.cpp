@@ -145,16 +145,7 @@ void AutoTree::draw(int width, int height)
     bigBlob.clear();
     
     if(dad->bH->getBlobs().size()>0 && insideMode){
-        blob = dad->bH->getBlobs(320,240).front();
-        
-        ofPoint ratio = ofPoint(width*1.0f/320.0f, height*1.0f/240);
-        
-        for(int i=0; i<blob.size(); i++)
-        {
-            bigBlob.lineTo(blob[i]*ratio);
-            
-            
-        }
+        bigBlob = dad->bH->getBlobs().front();
         
     }
     bigBlob.close();

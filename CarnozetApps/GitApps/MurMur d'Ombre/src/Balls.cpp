@@ -25,7 +25,7 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin ){
 }
 
 BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofColor colin, ofImage* imgin,bool* useGridin,
-                           int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,float* gridForcein,
+                           int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,ofParameter<float>* gridForcein,
                            bool* insideModein , int* dieModein, int lifeTimein, ofPoint* centroidPolyin,
                            ofVec2f* speedCentroidin, ofVec2f* gravityin){
     

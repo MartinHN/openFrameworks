@@ -250,15 +250,14 @@ void Particles::update(int w, int h){
             int j = 0;
             vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,forces[i]->attrZone);
             if(map2blob){
-                drawBlob * vvv = (drawBlob *)dad->get("drawBlob");
-                for(int i = 0 ; i< curattr.size();i++){
-                    if(vvv->invertx)curattr[i].x = 1-curattr[i].x;
-                    if(vvv->inverty)curattr[i].y = 1-curattr[i].y;
-                    curattr[i]  =  ofVec2f(0.5) + (curattr[i]-ofVec2f(0.5)) * vvv->scale.get();
-                    curattr[i] +=  (vvv->pos.get()-ofVec2f(0.5));
-                    
-                }
-            dad->sH.mapN2S(curattr,vvv->screenN);
+//                drawBlob * vvv = (drawBlob *)dad->get("drawBlob");
+//                for(int i = 0 ; i< curattr.size();i++){
+//                    if(vvv->invertx)curattr[i].x = 1-curattr[i].x;
+//                    if(vvv->inverty)curattr[i].y = 1-curattr[i].y;
+
+//                    
+//                }
+//            dad->sH.mapN2S(curattr,vvv->screenN);
                 
                 
             }

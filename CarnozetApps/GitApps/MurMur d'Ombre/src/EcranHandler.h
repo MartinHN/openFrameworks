@@ -20,7 +20,7 @@ public:
     ScreenHandler();
     ~ScreenHandler(){};
     void setup(int * w, int * h, int z);
-    void loadScreensPos();
+    void loadScreensPos(int num);
     void addScreen(vector<ofVec3f> vert);
     void registerParams();
     int getValidScreen(int which);

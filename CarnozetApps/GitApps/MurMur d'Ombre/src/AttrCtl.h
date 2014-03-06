@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "BlobHandler.h"
 #include "ofMain.h"
 #include "Constants.h"
 

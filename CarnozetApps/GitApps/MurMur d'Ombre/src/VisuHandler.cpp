@@ -17,7 +17,8 @@ VisuHandler::VisuHandler(){
 }
 
 
-void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin, int zdepthin, int * scrwin, int * scrhin){
+void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin, int zdepthin, int * scrwin, int * scrhin,ScreenHandler * sHin){
+    
     
     allParams.clear();
     allParams.setName("Visu");
@@ -34,8 +35,7 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     //    sharedImg.push_back(ofImage("images/background.png"));
     
     
-    sH.setup(scrw,scrh,zdepth);
-    sH.loadScreensPos();
+    sH = sHin;
     
     bH = bHin;
     
@@ -59,11 +59,11 @@ VisuClass * VisuHandler::get(const string & name){
 
 void VisuHandler::update(){
     
-    sH.updateBlobScreens(bH->blobs);
+//    sH->updateBlobScreens(bH->blobs);
     
     for(int i = 0;i<visuList.size();i++){
-        if(visuList[i]->isActive&&!visuList[i]->isHighFPS){
-            ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
+        if((visuList[i]->isActive||visuList[i]->isPiping)&&!visuList[i]->isHighFPS){
+            ofRectangle curS = sH->rectOfScreen(visuList[i]->screenN);
             visuList[i]->update(curS.width,curS.height);
         }
     }
@@ -77,7 +77,7 @@ void VisuHandler::updateHighFPS(){
     
     for(int i = 0;i<visuList.size();i++){
         if(visuList[i]->isActive&&visuList[i]->isHighFPS){
-            ofRectangle curS = sH.rectOfScreen(visuList[i]->screenN);
+            ofRectangle curS = sH->rectOfScreen(visuList[i]->screenN);
             visuList[i]->update(curS.width,curS.height);
         }
     }
@@ -98,7 +98,7 @@ ofImage * VisuHandler::getSharedImg(int i){
 void VisuHandler::registerParams(){
     bH->registerParams();
     attr->registerParam();
-    
+    sH->registerParams();
     
     
     for(int i = 0 ; i< visuList.size();i++){
@@ -155,19 +155,19 @@ const void VisuHandler::draw(int mode){
         
         
         if(isOk){
-            int validScreen = sH.getValidScreen(visuList[i]->screenN);
+            int validScreen = sH->getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
                 if(mode!=2)ofEnableAlphaBlending();
                 if(visuList[i]->recopy){
                     int curn = validScreen%10;
                     do{
-                        ofRectangle curR = sH.screenL[curn]->rectMax;
-                        if (visuList[i]->isMapping)sH.screenL[curn]->screenWarp.loadMat();
+                        ofRectangle curR = sH->screenL[curn]->rectMax;
+                        if (visuList[i]->isMapping)sH->screenL[curn]->screenWarp.loadMat();
                         else ofTranslate(curR.x,curR.y);
                         
                         visuList[i]->draw(curR.width,curR.height);
                         
-                        if (visuList[i]->isMapping)sH.screenL[curn]->screenWarp.unloadMat();
+                        if (visuList[i]->isMapping)sH->screenL[curn]->screenWarp.unloadMat();
                         else ofTranslate(-curR.x,-curR.y);
                         validScreen/=10;
                         curn = validScreen%10;
@@ -176,13 +176,13 @@ const void VisuHandler::draw(int mode){
                 }
                 else{
                     
-                    ofRectangle curR = sH.rectOfScreen(validScreen);
-                    if (visuList[i]->isMapping&&validScreen<sH.screenL.size())sH.screenL[validScreen]->screenWarp.loadMat();
+                    ofRectangle curR = sH->rectOfScreen(validScreen);
+                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())sH->screenL[validScreen]->screenWarp.loadMat();
                     else ofTranslate(curR.x,curR.y);
                     
                     visuList[i]->draw(curR.width,curR.height);
                     
-                    if (visuList[i]->isMapping&&validScreen<sH.screenL.size())sH.screenL[validScreen]->screenWarp.unloadMat();
+                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())sH->screenL[validScreen]->screenWarp.unloadMat();
                     else ofTranslate(-curR.x,-curR.y);
                     
                 }
@@ -219,8 +219,8 @@ void VisuHandler::addVisu(VisuClass * v){
 void VisuHandler::updateScreenSize(){
     
     
-    for (int i = 0 ; i< sH.screenL.size();i++){
-        sH.screenL[i]->calcRectMax();
+    for (int i = 0 ; i< sH->screenL.size();i++){
+        sH->screenL[i]->calcRectMax();
     }
 }
 

@@ -30,30 +30,27 @@ drawBlob::drawBlob(VisuHandler * v):VisuClass(v){
 void drawBlob::update(int w, int h){
     
     realPos = alphapos*pos+realPos*(1-alphapos);
+//    paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
+    lastScreenN = screenN;
+
+    
 }
 
 void drawBlob::draw(int w, int h){
     
-    if(drawZones){
 
-        for(int i = 0 ; i < dad->attr->zones.size() ; i++){
-            ofNoFill();
-            ofSetColor(i==0?255:0,i==1?255:0,i==2?255:0);
-            ofRectangle rr =dad->attr->zones[i];
-            rr.x*=w;
-            rr.y*=h;
-            rr.scale(w,h);
-            ofRect(rr);
-        }
-    }
    
-    vector<ofPath> paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty);
+
+       paths = dad->bH->getPaths(w*scale->x , h*scale->y,invertx,inverty); 
+    
     ofPushMatrix();
     
     ofTranslate(w*(realPos.x-scale->x/2.),h*(realPos.y-scale->y/2.), (realPos.z-0.5)*dad->zdepth);
     for(int i  = 0 ; i< paths.size();i++){
-        paths[i].setFillColor(ofColor(color->x,color->y,color->z,alpha));
-        paths[i].draw();
+        ofPath pp =paths[i]; 
+        pp.setFillColor(ofColor(color->x,color->y,color->z,alpha));
+        if(pp.getOutline().size()>0 && pp.getOutline()[0].size()>0)
+            pp.draw();
     }
     
     

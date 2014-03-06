@@ -26,8 +26,8 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin ){
 
 BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofColor colin, ofImage* imgin,bool* useGridin,
                            int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,ofParameter<float>* gridForcein,
-                           ofParameter<float>* userForcein,ofParameter<float>* gridOpenin, bool* insideModein , int* dieModein, int lifeTimein,
-                           ofPoint* centroidPolyin, ofVec2f* speedCentroidin, ofVec2f* gravityin){
+                           bool* insideModein , int* dieModein, int lifeTimein, ofPoint* centroidPolyin,
+                           ofVec2f* speedCentroidin, ofVec2f* gravityin){
     
     
     pos = posin;
@@ -45,9 +45,7 @@ BouncingBall::BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofCol
     useGrid = useGridin;
     useBorder = useBorderin;
     useTor = useTorin;
-    gridForce = gridForcein;
-    userForce = userForcein;
-    gridOpen = gridOpenin;
+//    gridForce = gridForcein;
     insideMode = insideModein;
     dieMode = dieModein;
     lifeTime = lifeTimein;
@@ -132,22 +130,20 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         
         
         
-        //origin and grid moved from user
+        //origin
         if(*useGrid)
         {
         
             
-        ofPoint centroidBlob = poly.getCentroid2D();
+            ofPoint centroidBlob = poly.getCentroid2D();
             
-        float originForce = 0.7;
-        
-        float distFromCenter = (origin - ofVec2f(0.5,0.5)).length();
+            float originForce = 0.7;
             
-        distFromCenter = powf(distFromCenter, *gridOpen);
             
-        ofPoint force = ( origin - pos )* (*gridForce);
             
-        force += ( centroidBlob - pos) * ((*userForce)*(1/distFromCenter)) ;
+        ofPoint force = ( origin - pos )* originForce;
+            
+        force += ( centroidBlob - pos) * (*gridForce);
         
         speed = damping * ( speed + force/mass);
         }

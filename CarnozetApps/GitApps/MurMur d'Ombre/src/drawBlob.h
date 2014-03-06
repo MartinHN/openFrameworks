@@ -35,6 +35,9 @@ public:
     void update(int w, int h);
     
     ofVec3f realPos;
+    vector<ofPath> paths;
+    
+    int lastScreenN;
     
     
     

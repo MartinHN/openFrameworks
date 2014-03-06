@@ -8,7 +8,7 @@
 
 #pragma once
 
-
+#include "EcranHandler.h"
 #include "ofxOpenCv.h"
 #include "ofxSyphon.h"
 #include "Constants.h"
@@ -22,13 +22,15 @@ public:
     BlobHandler(){};
     
     
-    void setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin);
+    void setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin,ScreenHandler * sH);
+    
     
 //    void computePoly();
     void update();
 //    void blurblob();
     void compBlob();
     void registerParams();
+    void compCache();
     vector<ofVec3f> compCentroid(float w=1,float h=1);
     vector<ofRectangle> compBounds(float w=1, float h=1);
     vector<ofVec3f> compExtrems(float w=1, float h=1);
@@ -48,6 +50,7 @@ public:
     ofxSyphonClient blobClient;
     pingPongBuffer syphonTex;
 
+    ScreenHandler * sH;
     ofShader * blurX;
     ofShader * blurY;
     ofShader threshBW;
@@ -57,18 +60,25 @@ public:
     ofxCvGrayscaleImage gs;
     
     
+    vector<ofPolyline> cachedP;
+    bool polyCacheDirty;
+    int lastw,lasth;
+    
         vector<ofxCvBlob> blobs;
 
     ofParameter<float> vidThreshold;
     ofParameterGroup settings;
-//    ofParameter<float> blobBlur;
+
     
     
     
     ofParameter<float> minSide, maxSide,maxLengthExtrem;
     ofParameter<int> maxBlobs,polyMaxPoints;
-    ofParameter<bool> findHoles,invertBW;
+    ofParameter<bool> findHoles,invertBW,invertX,invertY;
     ofParameter<float> simplification,smooth;
     ofParameter<ofVec4f> crop;
+    ofParameter<int> screenN;
+    ofParameter<ofVec3f> scale,pos;
+    ofParameter<bool> isPiping;
 };
 

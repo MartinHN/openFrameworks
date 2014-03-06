@@ -160,7 +160,11 @@ vector<ofRectangle> BlobHandler::compBounds(float w, float h){
 void BlobHandler::compCache(){
     cachedP.clear();
     ofRectangle rr = sH->rectOfScreen(sH->getValidScreen(screenN));
-    rr.scaleFromCenter(lastw*1.0/(*sH->scrw), lasth*1.0/(*sH->scrh));
+    ofVec2f coef (lastw*1.0/(*sH->scrw), lasth*1.0/(*sH->scrh));
+    rr.x*=coef.x;
+    rr.y*=coef.y;
+    rr.width*=coef.x;
+    rr.height*=coef.y;
     
     for (int i = 0 ; i< blobs.size();i++){
         ofPolyline pp ;

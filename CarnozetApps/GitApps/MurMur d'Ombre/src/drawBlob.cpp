@@ -41,7 +41,7 @@ void drawBlob::draw(int w, int h){
 
    
 
-       paths = dad->bH->getPaths(scale->x , scale->y,invertx,inverty); 
+       paths = dad->bH->getPaths(scale->x*w , scale->y*h,invertx,inverty); 
     
     ofPushMatrix();
     

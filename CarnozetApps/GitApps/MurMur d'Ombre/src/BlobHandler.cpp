@@ -71,7 +71,7 @@ void BlobHandler::registerParams(){
     MYPARAM(invertX,false,false,true);
     MYPARAM(invertY,false,false,true);
     MYPARAM(pos, ofVec3f(0.5),ofVec3f(0),ofVec4f(1.));
-    MYPARAM(scale, ofVec3f(0.5),ofVec3f(0),ofVec4f(1.));
+    MYPARAM(scale, ofVec3f(1),ofVec3f(0),ofVec4f(2.));
     MYPARAM(crop, ofVec4f(0),ofVec4f(0),ofVec4f(100));
 }
 
@@ -127,7 +127,8 @@ void BlobHandler::compBlob(){
    
     blobs = contourFinder.blobs;
     
-
+    lastcw = 1;
+    lastch = 1;
     
     
 }
@@ -135,12 +136,12 @@ void BlobHandler::compBlob(){
 
 vector<ofVec3f> BlobHandler::compCentroid(float w, float h){
     vector<ofVec3f> res;
-    ofVec3f scalel(w*1.0/lastw,h*1.0/lasth);
+    ofVec3f scalel(w,h);
     for (int i = 0 ; i< blobs.size();i++){
        
         ofVec2f realC = cachedP[i].getCentroid2D();
        
-        int a = 0;
+  
         res.push_back(realC*scalel);
     }
     return res;
@@ -152,7 +153,7 @@ vector<ofRectangle> BlobHandler::compBounds(float w, float h){
     for (int i = 0 ; i< blobs.size();i++){
         ofRectangle rr = cachedP[i].getBoundingBox();
         
-        res.push_back(ofRectangle(rr.x*w/lastw,rr.y*h/lasth,rr.width*w/lastw,rr.height*h/lasth));
+        res.push_back(ofRectangle(rr.x*w,rr.y*h,rr.width*w,rr.height*h));
     }
     return res;
 }
@@ -160,11 +161,12 @@ vector<ofRectangle> BlobHandler::compBounds(float w, float h){
 void BlobHandler::compCache(){
     cachedP.clear();
     ofRectangle rr = sH->rectOfScreen(sH->getValidScreen(screenN));
-    ofVec2f coef (lastw*1.0/(*sH->scrw), lasth*1.0/(*sH->scrh));
+    ofVec2f coef (1.0/(*sH->scrw), 1.0/(*sH->scrh));
     rr.x*=coef.x;
     rr.y*=coef.y;
     rr.width*=coef.x;
     rr.height*=coef.y;
+    
     
     for (int i = 0 ; i< blobs.size();i++){
         ofPolyline pp ;
@@ -194,6 +196,7 @@ void BlobHandler::compCache(){
         }
         if(pp.size()>0){
             pp.close();
+
             cachedP.push_back(pp);
         }
             
@@ -204,29 +207,32 @@ void BlobHandler::compCache(){
 
 vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
     vector<ofPolyline> res;
-    if(lastw ==w && lasth == h){
+    if(w==1 &&  h==1){
         res = cachedP;
+    }
+    else if(w==lastcw && h == lastch){
+        res = lcacheP;
     }
     else{
         
-        ofVec2f ts = ofVec2f(w*1.0/lastw ,h*1.0/lasth);
+        ofVec2f ts = ofVec2f(w ,h);
         polyCacheDirty = false;
         for(int i = 0 ; i< cachedP.size() ; i++){
             ofPolyline l;
             vector<ofPoint> pl = cachedP[i].getVertices();
             for (int  j = 0 ; j< pl.size() ; j++){
                 ofPoint lp;
-                lp.x = !invx? pl[j].x : lastw-pl[j].x;
-                lp.y = !invy ? pl[j].y :  lasth-pl[j].y;
+                lp.x = !invx? pl[j].x : 1-pl[j].x;
+                lp.y = !invy ? pl[j].y :  1-pl[j].y;
                 lp *= ts;
                 l.lineTo(lp);
             }
             res.push_back(l);
         
         }
-        cachedP = res;
-        lastw = w;
-        lasth = h;
+        lcacheP = res;
+        lastcw = w;
+        lastch = h;
 
     }
     return res;
@@ -244,7 +250,7 @@ vector<ofPath> BlobHandler::getPaths(float w, float h,bool invx,bool invy){
         ofPath pp;
         
         for(int j = 0 ; j < p[i].size();j++){
-            ofPoint tst = p[i][j];
+//            ofPoint tst = p[i][j];
             pp.lineTo(p[i][j]);
         }
         pp.close();
@@ -263,14 +269,14 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
     
     float sum_angles=0;
     int begin=0,end=1;
-    float maxangle = 170;
+    float maxangle = 130;
 
 
-    for (int i = 0 ; i< blobs.size();i++){
+    for (int i = 0 ; i< cachedP.size();i++){
         begin=0;
         end=1;
         sum_angles=0;
-        ofPolyline tmpspaced = blobs[i].pts;//.getSmoothed(0.01);
+        ofPolyline tmpspaced = cachedP[i];//.getSmoothed(0.01);
 //        tmpspaced = tmpspaced.getResampledBySpacing(0.01);
         deque<float> tmpp;
 
@@ -304,7 +310,7 @@ vector<ofVec3f> BlobHandler::compExtrems(float w, float h){
                 ofPoint p =tmpspaced.getPointAtIndexInterpolated(idx);
                 if(abs((p-tmpspaced.getCentroid2D()).getNormalized().dot(ofVec2f(1,0)))>cos(ofDegToRad(80))){
                 
-                res.push_back(p*ofVec2f(w*1.0/inw,h*1.0/inh));
+                res.push_back(p*ofVec2f(w,h));
                 }
                 
 //                    if(test == false)ofLogWarning("no extrem");

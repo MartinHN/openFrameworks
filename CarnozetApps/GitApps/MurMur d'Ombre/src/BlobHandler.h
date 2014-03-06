@@ -60,9 +60,10 @@ public:
     ofxCvGrayscaleImage gs;
     
     
-    vector<ofPolyline> cachedP;
+    vector<ofPolyline> cachedP,lcacheP;
+
     bool polyCacheDirty;
-    int lastw,lasth;
+    int lastw,lasth,lastcw,lastch;
     
         vector<ofxCvBlob> blobs;
 

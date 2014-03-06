@@ -408,7 +408,7 @@ void testApp::draw(){
     }
     if(!oneMask){
         for(int i = 0 ; i< sH.screenL.size();i++){
-            if(sH.screenL[i]->mask){
+            if(sH.screensCtl.getBool("mask"+ofToString(i))){
                 oneMask=true;
                 break;
                 

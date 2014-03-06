@@ -229,7 +229,7 @@ void ScreenHandler::drawMask(){
 
     ofSetColor(0,0,244);
     for (int i = 1 ; i < screenL.size();i++){
-        if(mask[i]){
+        if(screensCtl.getBool("mask"+ofToString(i))){
         ofPath tmpP;
         vector<ofVec3f> vert = screenL[i]->getVertices();
         for(int j = 0 ; j<vert.size();j++){

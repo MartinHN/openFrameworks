@@ -52,8 +52,12 @@ void VideoPlayer::ppp(int & s){
 #endif
 }
 void VideoPlayer::draw(int w, int h){
-    ofSetColor(255);
-  
-    player.draw(0,0,w,h);
+    if(playPauseStop == 0){
+        ofSetColor(0);
+    }
+    else{
+    ofSetColor(color->x,color->y,color->z,alpha);
     
+    player.draw(0,0,w,h);
+    }
    }

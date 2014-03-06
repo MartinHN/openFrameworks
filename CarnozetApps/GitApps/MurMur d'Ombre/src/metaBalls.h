@@ -25,7 +25,7 @@ public:
 
     
     
-    ofParameter<float> rayon,alpha;
+    ofParameter<float> rayon,alpha,theta;
     ofParameter<int> curFamilly;
     ofParameter<ofVec4f> color;
     vector<ofVec3f>  dpoints;

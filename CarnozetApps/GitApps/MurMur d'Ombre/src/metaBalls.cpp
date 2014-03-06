@@ -26,6 +26,8 @@ void metaBalls::update(int w, int h){
     ofVec2f scale(w,h);
     ofSort(dpoints,sortOnXYZ);
     
+
+    
     for (int i = 0 ; i<dpoints.size() ; i++){
         if(i<points.size()){
             points[i]=points[i]*alpha + dpoints[i]*(1.-alpha);
@@ -39,12 +41,13 @@ void metaBalls::update(int w, int h){
         
     }
     
-    int del = dpoints.size() - points.size();
+  int del = points.size() - dpoints.size();  
     
     for (int i = 0 ;i < del ; i++){
-             points.pop_back();
-             
+        points.pop_back();
     }
+    
+
     
 }
 

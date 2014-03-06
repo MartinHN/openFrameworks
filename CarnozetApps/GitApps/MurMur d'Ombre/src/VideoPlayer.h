@@ -20,7 +20,8 @@ public:
     ~VideoPlayer(){};
     
     ofParameter<int> playPauseStop;
-
+    ofParameter<ofVec3f> color;
+    ofParameter<int> alpha;
     
     void draw(int w, int h);
     void update(int w, int h);

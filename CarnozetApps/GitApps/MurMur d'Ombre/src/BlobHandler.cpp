@@ -220,6 +220,7 @@ vector<ofPolyline> BlobHandler::getBlobs(float w, float h,bool invx,bool invy){
             res.push_back(l);
         
         }
+        cachedP = res;
         lastw = w;
         lasth = h;
 

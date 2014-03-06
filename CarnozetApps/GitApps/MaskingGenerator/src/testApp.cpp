@@ -113,8 +113,8 @@ void testApp::savePng(){
 void testApp::saveXml(){
     
     xml.clear();
-    xml.addTag("ecranList");   
-    xml.pushTag("ecranList");
+    xml.addTag("screens");   
+    xml.pushTag("screens");
     
     
     for(int i=0; i<listOfScreen.size(); i++)
@@ -122,8 +122,11 @@ void testApp::saveXml(){
         
         Screen src = listOfScreen.at(i);
         
-        xml.addTag(ofToString("ecran"));
-        xml.pushTag(ofToString("ecran"),i);
+        xml.addTag(ofToString("screen"+ofToString(i)));
+        xml.pushTag(ofToString("screen"+ofToString(i)));
+        
+        xml.addTag(ofToString("vertices"));
+        xml.pushTag(ofToString("vertices"));
        
         
         
@@ -131,12 +134,12 @@ void testApp::saveXml(){
         {
             
             
-            xml.addTag(ofToString("p"));  
-            xml.pushTag(ofToString("p"),j);
+            xml.addTag("p"+ofToString(j));  
+            xml.pushTag("p"+ofToString(j));
             
             
-            xml.setValue("x", src.listOfPoint.at(j).x/ofGetWidth());
-            xml.setValue("y", src.listOfPoint.at(j).y/ofGetHeight());
+xml.setValue("p"+ofToString(j), ofToString(src.listOfPoint.at(j).x/ofGetWidth())+", "+ofToString(src.listOfPoint.at(j).y/ofGetHeight()));
+             
             
 
             
@@ -146,7 +149,7 @@ void testApp::saveXml(){
         }
         
         xml.popTag();
-        
+        xml.popTag();        
        
         
         
@@ -155,7 +158,7 @@ void testApp::saveXml(){
     }
     
     xml.popTag();
-    xml.save("test");
+    xml.save("pecrans1.xml");
     
     
 }

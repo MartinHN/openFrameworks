@@ -145,7 +145,7 @@ void AutoTree::draw(int width, int height)
     bigBlob.clear();
     
     if(dad->bH->getBlobs().size()>0 && insideMode){
-        bigBlob = dad->bH->getBlobs().front();
+        bigBlob = dad->bH->getBlobs(width,height).front();
         
     }
     bigBlob.close();

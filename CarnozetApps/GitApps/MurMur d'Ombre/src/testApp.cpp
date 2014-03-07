@@ -50,11 +50,7 @@ void testApp::setup(){
     
     
     
-    
-    
     receiver.setup(12345);
-    
-    
     
     blurX.load("","shaders/blurX.frag");
     blurY.load("","shaders/blurY.frag");

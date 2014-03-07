@@ -24,6 +24,7 @@
 		</camera>
 	</global>
 	<blobsettings>
+		<isPiping>0</isPiping>
 		<vidThreshold>70</vidThreshold>
 		<invertBW>0</invertBW>
 		<minSide>0.05</minSide>
@@ -34,6 +35,11 @@
 		<smooth>0</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
+		<screenN>0</screenN>
+		<invertX>0</invertX>
+		<invertY>0</invertY>
+		<pos>0.540816, 0.77551, 0.5</pos>
+		<scale>0.367347, 0.428571, 0.5</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
 	<attrCtl>
@@ -206,7 +212,7 @@
 			<insideMode>0</insideMode>
 		</AutoTree>
 		<BallManager>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
@@ -252,8 +258,10 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
-			<rayon>2</rayon>
-			<center>0.5, 0.5</center>
+			<drawZones>0</drawZones>
+			<drawSyphon>0</drawSyphon>
+			<drawPipe>0</drawPipe>
+			<drawAttr>0</drawAttr>
 		</boule2gomme>
 	</Visu>
 </OF>

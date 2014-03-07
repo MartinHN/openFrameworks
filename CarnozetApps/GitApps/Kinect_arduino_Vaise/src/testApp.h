@@ -6,6 +6,7 @@
 #include "ofxXmlSettings.h"
 #include "ofxOpenCv.h"
 #include "ofxSyphon.h"
+#include "ofxOsc.h"
 
 #define USE_TWO_KINECT
 
@@ -78,6 +79,12 @@ class testApp : public ofBaseApp{
         ofxCvGrayscaleImage         grayThreshFar; // the far thresholded image
         ofxCvGrayscaleImage         grayKinect;
         ofxCvGrayscaleImage         grayKinectWarped;
+    
+        //OSC
+        ofxOscReceiver              oscReceiver;
+        
+    
+    
 
     
     

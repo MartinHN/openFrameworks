@@ -41,6 +41,12 @@ void Spring::draw(ofPoint p) {
     
     ofCircle(x, y, 20);
     
+    ofImage img;
+    
+    img.resize(int newWidth, int newHeight);
+    img.crop(int x, int y, int w, int h);
+    
+    
     
 }
 

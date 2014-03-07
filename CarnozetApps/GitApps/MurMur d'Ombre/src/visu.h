@@ -31,7 +31,6 @@ public:
 };
 
 
-
 class NoiseCircle {
 public:
     NoiseCircle();
@@ -43,10 +42,6 @@ public:
     bool caredfam[3];
     bool isNewBeat,noBeat;
     
-    
-    
-    
-
     int steps;
     float rayon;
     float currmax;

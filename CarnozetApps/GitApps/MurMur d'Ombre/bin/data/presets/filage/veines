@@ -38,7 +38,7 @@
 		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.540816, 0.77551, 0.5</pos>
+		<pos>0.515306, 0.77551, 0.5</pos>
 		<scale>0.367347, 0.428571, 0.5</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -54,26 +54,14 @@
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
-	<screens>
-		<screen0>
-			<mask>0</mask>
-		</screen0>
-		<screen1>
-			<mask>0</mask>
-		</screen1>
-		<screen2>
-			<mask>0</mask>
-		</screen2>
-		<screen3>
-			<mask>0</mask>
-		</screen3>
-		<screen4>
-			<mask>0</mask>
-		</screen4>
-		<screen5>
-			<mask>0</mask>
-		</screen5>
-	</screens>
+	<screensCtl>
+		<mask0>0</mask0>
+		<mask1>0</mask1>
+		<mask2>0</mask2>
+		<mask3>0</mask3>
+		<mask4>0</mask4>
+		<mask5>0</mask5>
+	</screensCtl>
 	<Visu>
 		<background>
 			<isActive>1</isActive>
@@ -226,6 +214,7 @@
 			<lifeTime>0</lifeTime>
 			<gridForce>0</gridForce>
 			<userForce>1</userForce>
+			<gridOpen>1</gridOpen>
 		</BallManager>
 		<drawBlob>
 			<isActive>1</isActive>

@@ -13,7 +13,9 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     settings.setName("Photo");
     
     MYPARAM(numPhoto,0,0,10);
+    numPhoto.addListener(this,&Photo::changeImage);
     MYPARAM(isResize,false,false,true);
+    isResize.addListener(this, &Photo::changeResize);
     
     ofImage img;
     img.loadImage("images/temps/1.png");
@@ -40,9 +42,11 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     img.setAnchorPercent(0.5,0.5);
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/7.png")
+    img.loadImage("images/temps/7.png");
     img.setAnchorPercent(0.5,0.5);
     listOfImage.push_back(img);
+    
+    imgToDraw = listOfImage.front();
     
     isSet = false;
     
@@ -50,16 +54,16 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
 
 }
 
-void Photo::update(w,h){
+void Photo::update(int w,int h){
     
-    if(!isSet)
+    if(!isSet )
     {
     
-        imgToDraw = listOfImage.at(numPhoto);
+        
         if(isResize)
         {
             
-            imgToDraw.resize(int newWidth, int newHeight);
+            imgToDraw.resize(w, h);
             
             
         }
@@ -75,19 +79,41 @@ void Photo::update(w,h){
                 float lengthToCrop = (finalHeight*1.0f/ratioPhoto) - w ;
                 imgToDraw.crop( lengthToCrop/2.0f, 0, w, h );
                 
-                img.crop(int x, int y, int w, int h);
-                
             }
         
         
         }
         
-        
-    
-        
+        imgToDraw.setAnchorPercent(0.5f, 0.5f);
+        isSet = true;
         
     }
     
     
+}
+
+void Photo::draw(int w, int h){
+    
+    if(isSet && numPhoto>0){
+        
+        imgToDraw.draw(w/2.0f, h/2.0f);
+    }
+    
+    
+}
+
+void Photo::changeImage(int& num){
+    
+    isSet = false;
+    if( num< listOfImage.size()-1 && num>0){
+    imgToDraw = listOfImage.at(num+1);
+    }
+
+    
+}
+
+void Photo::changeResize(bool& resize){
+    
+    isSet = false;
 }
 

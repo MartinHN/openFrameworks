@@ -37,18 +37,18 @@ void boule2gomme::draw(int w, int h){
     if(drawAttr){
         int rayon = 30;
     ofVec2f scale(w,h);
-    vector<AttrStruct> * points =  &dad->attr->staticA;
-     vector<AttrStruct> * opoints =  &dad->attr->destA;
+
     ofSetColor(255,0,0);
 //    ofRect(0,0,w,h);
-    ofFill();
-    for(int i = 0 ; i<points->size();i++)
-        ofEllipse(scale*points->at(i).p,rayon,rayon);
-    for(int i = 0 ; i<opoints->size();i++){
-        ofSetColor(opoints->at(i).type==0?255:0, opoints->at(i).type==1?255:0, opoints->at(i).type==2?255:0);
+ 
+        for (int j = 0 ; j< 3 ; j++){
+    vector <ofVec3f> opoints = dad->attr->getType(j,w,h);
+    for(int i = 0 ; i<opoints.size();i++){
+        ofSetColor(j==0?255:0, j==1?255:0, j==2?255:0);
         ofNoFill();
-        ofEllipse(scale*opoints->at(i).p,rayon,rayon);
+        ofEllipse(opoints[i],rayon,rayon);
     }
+        }
     }
     ofRect(50,50,50,50);
 

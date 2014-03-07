@@ -49,7 +49,7 @@ void background::draw(int w, int h){
     }
     ofSetColor(color.get().x,color.get().y,color.get().z,color.get().w);
 if(followFam<0) rect.setFromCenter(center.get()*ofVec2f(w,h), w*scale, h*scale*ratio);
-else{vector<ofVec3f> cur = dad->attr->getType(followFam);
+else{vector<ofVec3f> cur = dad->attr->getType(followFam,w,h);
     if(cur.size()>0){
         lastPoint = cur[0]*alpha + lastPoint*(1.0-alpha);
     }

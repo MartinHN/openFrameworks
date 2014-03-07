@@ -87,10 +87,12 @@ void ScreenHandler::registerParams(){
     
     
     screenPreset.setName("screenPreset");
+    screenPreset = 0;
     screenPreset.setSerializable(false);
     screensCtl.add(screenPreset);
     
     save.setName("save");
+    save=false;
     save.setSerializable(false);
     screensCtl.add(save);
     

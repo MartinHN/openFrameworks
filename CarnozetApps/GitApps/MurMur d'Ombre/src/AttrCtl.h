@@ -48,7 +48,7 @@ class AttrCtl{
     void clearPoints();
     void zoneChanged(ofVec4f & dumb);
     
-    vector<ofPoint> getType(int f,int zone = 0);
+    vector<ofPoint> getType(int f,float w = 1,float h = 1,int zone = 0);
     vector<ofPoint> getAll();
     
     ofParameterGroup settings;

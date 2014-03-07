@@ -92,7 +92,7 @@ vector<ofPoint> AttrCtl::getAll(){
     return res;
 }
 
-vector<ofPoint> AttrCtl::getType(int f,int z){
+vector<ofPoint> AttrCtl::getType(int f,float w, float h,int z){
     vector<ofPoint> res;
     vector<int> targetf;
     
@@ -118,6 +118,7 @@ vector<ofPoint> AttrCtl::getType(int f,int z){
             res.push_back(destA[i].p);
             if(invx)res.back().x = 1- res.back().x;
             if(invy)res.back().y = 1- res.back().y;
+                res.back()*=ofVec2f(w,h);
             }
         }
         

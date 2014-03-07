@@ -13,6 +13,20 @@
 
 
 
+class Meta : public ofVec3f{
+public:
+    Meta(ofPoint p, float r, int lifeTime):ofVec3f(p),rayon(r),lifetime(lifeTime){};
+    Meta(ofPoint p, float r, int lifeTime,ofVec3f vin):ofVec3f(p),rayon(r),lifetime(lifeTime),v(vin){};
+    float rayon;
+    int lifetime;
+    ofVec3f v;
+
+    
+    
+    
+    
+};
+
 
 class metaBalls:public VisuClass{
 public:
@@ -26,17 +40,23 @@ public:
     
     
     ofParameter<float> rayon,alpha,theta;
-    ofParameter<int> curFamilly;
+    ofParameter<int> curFamilly,mode;
     ofParameter<ofVec4f> color;
     vector<ofVec3f>  dpoints;
-    vector<ofVec3f>  points;
-    
+    vector<Meta>  points;
+    ofParameter<float> lifeTime,emitrate,noise,angle,mass;
+    ofParameter<bool> drawLines;
+    ofParameter<float> maxv;
     
     ofImage metaBall;
     
+    unsigned long lastT;
 
     
 };
+
+
+
 
 
 

@@ -152,7 +152,7 @@ void testApp::setup(){
     
     
     visuHandler.registerParams();
-    
+    sH.registerParams();
     
     
     
@@ -164,21 +164,25 @@ void testApp::setup(){
     
     globalParam.add(visuHandler.allParams);
     
+    screensParam.add(sH.screensParam);
+    screensParam.setName("screensG");
     
     
 #ifdef GUIMODE
     paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
+    sH.setupSync(VISU_OSC_IN+40,VISU_OSC_IP_OUT,VISU_OSC_OUT+40);
 #else
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
+    sH.setupSync(VISU_OSC_OUT+40,"localhost",VISU_OSC_IN+40);
 #endif
     //    string savename = "lolo";
     //    visuHandler.saveState(savename);
     
 #ifdef GUIMODE
-    ofSetFrameRate(8);
+    ofSetFrameRate(12);
     //    gui.load(visuHandler.allParams);
     //    gui.loadOne(settings);
-    gui.load(globalParam,sH.screensParam);
+    gui.load(globalParam,screensParam);
     
     
 #endif
@@ -197,7 +201,9 @@ void testApp::setup(){
 
 
 void testApp::update(){
+    sH.syncUpdate();
     paramSync.update();
+    
 #ifndef GUIMODE
     bH.update();
     

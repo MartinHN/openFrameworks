@@ -20,11 +20,10 @@ public:
     
     BouncingBall();
     BouncingBall( ofPoint pos, ofVec2f speed );
-    BouncingBall( ofPoint posin, ofVec2f speedin , float sizein, ofColor colin, ofImage* imgin,bool* useGridin,
-                 int* numColin, int* numRowin, bool* useBorderin, bool* useTorin,ofParameter<float>* gridForcein,
-                 bool* insideModein , int* dieModein, int lifeTimein, ofPoint* centroidPolyin,
-                 ofVec2f* speedCentroidin, ofVec2f* gravityin);
-
+    BouncingBall( ofPoint pos, ofVec2f speed , float size, ofColor col, ofImage* img,bool* useGridi,int* numCol,int* numRow,
+                 bool* useBorderi, bool* useTori,ofParameter<float>* gridForcei,ofParameter<float>* userForce,ofParameter<float>* gridOpen,
+                 bool* insideModei, int* dieMode, int lifeTimein, ofPoint* poly, ofVec2f* speedcentroid, ofVec2f* gravityin );
+    
     int update(ofPolyline poly, int w, int h);
     void draw(int w, int h);
     

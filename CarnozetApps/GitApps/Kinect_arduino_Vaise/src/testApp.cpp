@@ -90,6 +90,10 @@ void testApp::setup(){
     int a = 120;
     changeAngle(a);
     
+    //OSC receiver
+    oscReceiver.setup(12349);
+    
+    
     
     
 }

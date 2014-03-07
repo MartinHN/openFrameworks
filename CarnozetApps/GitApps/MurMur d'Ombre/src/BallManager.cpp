@@ -27,6 +27,7 @@ BallManager::BallManager(VisuHandler * v):VisuClass(v){
     MYPARAM(lifeTime,100,0,2000);
     MYPARAM(gridForce, 0.0f, 0.0f, 1.0f);
     MYPARAM(userForce, 1.0f, 0.0f, 1.0f);
+    MYPARAM(gridOpen, 1.0f, 0.1f, 2.0f);
     
     
     mode.addListener(this,&BallManager::changeMode);
@@ -41,51 +42,57 @@ void BallManager::update(int w,int h){
     globalWidth = w;
     globalHeight = h;
     
+    bool isblob = false;
+    bool is2blob = false;
+
+    
     sizedPolyline.clear();
     ofPolyline middlePolyline;
     ofPolyline secMiddlePolyline;
-    if(dad->bH->getBlobs().size()>0)
-        middlePolyline = dad->bH->getBlobs(320,240).front();
-    if(dad->bH->getBlobs().size()>1)
-        secMiddlePolyline = dad->bH->getBlobs(320,240).at(1);
-    
-    middlePolyline.simplify(7.0f);
-    
     ofPolyline smallPolyline;
     smallPolyline.clear();
     ofPolyline secSmallPolyline;
     secSmallPolyline.clear();
     
-    
-    for(int i=0; i<middlePolyline.size(); i++)
+    if(dad->bH->getBlobs().size()>0)
     {
+      
+        middlePolyline = dad->bH->getBlobs(w,h).front();
+        //middlePolyline.simplify(7.0f);
+        for(int i=0; i<middlePolyline.size(); i++)
+        {
+            
+            ofPoint p = middlePolyline[i]/ofPoint(w,h);
+            smallPolyline.lineTo(p);
+            
+        }
+        smallPolyline.close();
+        isblob = true;
         
-        ofPoint p = middlePolyline[i]/ofPoint(320, 240);
-        ofPoint p2 = p*ofPoint(w, h);
-        smallPolyline.lineTo(p);
-        sizedPolyline.lineTo(p2);
+        if(dad->bH->getBlobs().size()>1)
+        {
+            
+            secMiddlePolyline = dad->bH->getBlobs(w,h).at(1);
+            for(int i=0; i<secMiddlePolyline.size(); i++)
+            {
+                
+                ofPoint p = secMiddlePolyline[i]/ofPoint(w, h);
+                secSmallPolyline.lineTo(p);
+                
+            }
+            secSmallPolyline.close();
+            is2blob = true;
+            
+        }
+        
+        
         
     }
-    smallPolyline.close();
     
-    for(int i=0; i<secMiddlePolyline.size(); i++)
-    {
-        
-        ofPoint p = secMiddlePolyline[i]/ofPoint(320, 240);
-        
-        secSmallPolyline.lineTo(p);
-        
-    }
-    secSmallPolyline.close();
-    sizedPolyline.close();
+
     
     
-    bool isblob;
-    bool is2blob = false;
-    if(dad->bH->getBlobs().size()>0) isblob = dad->bH->getBlobs(w,h).front().size()> 0;
-    if(dad->bH->getBlobs().size()>1 )is2blob = true;
-    
-    if(isblob && !usePointEmitter)
+    if(isblob && !usePointEmitter &&!useGrid)
     {
         
 
@@ -103,8 +110,6 @@ void BallManager::update(int w,int h){
             
             speed = speed * 0.1;
             
-
-            
             ofPoint pos = finalEmitter + ofPoint( 0.04*ofRandomf(), 0.04*ofRandomf());
             ofColor color ;
             color.setHsb(ofRandom(255), 10, 255);
@@ -116,7 +121,7 @@ void BallManager::update(int w,int h){
          centroidPoly = newcentroid;
     }
     
-    if(ofRandomuf()<emission  && usePointEmitter)
+    if(ofRandomuf()<emission  && usePointEmitter &&!useGrid)
     {
         
         
@@ -253,7 +258,7 @@ void BallManager::addBall(ofPoint posin, ofPoint speedin, ofColor colin, float s
     int life = (int) lifeTime + ofRandom(100);
     
     BouncingBall ball = BouncingBall(posin, speedin,sizein,colin , &imgPart,&useGrid,&numCol,&numRow,&useBorder, &useTor
-                                     ,&gridForce, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
+                                     ,&gridForce,&userForce,&gridOpen, &insideMode , &dieMode, lifeTime, &centroidPoly, &centroidSpeed, &gravity);
     listOfBalls.push_back(ball);
     
     
@@ -435,6 +440,7 @@ void BallManager::changeMode(int & m){
             break;
             case 5 : {
                 // Grid
+                setNum(0);
                 setNum(25);
                 calcGrid(globalWidth, globalHeight);
                 drawPart = false;
@@ -442,7 +448,7 @@ void BallManager::changeMode(int & m){
                 useGrid = true;
                 useBorder = false;
                 useTor = false;
-                gridForce = 0.9;
+                //gridForce = 0.9;
                 insideMode = false;
                 dieMode = 0;
                 emission = 0.0;
@@ -452,14 +458,15 @@ void BallManager::changeMode(int & m){
                 break;
             case 6 : {
                 // Grid dying if it is inside
+                setNum(0);
                 setNum(25);
                 calcGrid(globalWidth, globalHeight);
                 drawPart = false;
                 drawGrid = true;
                 useGrid = true;
-                useBorder = false;
+                 useBorder = false;
                 useTor = false;
-                gridForce = 0.7;
+                //gridForce = 0.7;
                 insideMode = false;
                 dieMode = 0;
                 emission = 0.0;
@@ -469,12 +476,13 @@ void BallManager::changeMode(int & m){
                 break;
         case 7 : {
             // Grid dying if it is inside
+            setNum(0);
             setNum(40);
             calcGrid(globalWidth, globalHeight);
             drawPart = false;
             drawGrid = true;
             useGrid = true;
-            useBorder = false;
+            useBorder = true;
             useTor = false;
             gridForce = 0.4;
             insideMode = false;
@@ -486,6 +494,7 @@ void BallManager::changeMode(int & m){
             break;
         case 8 : {
             // Grid dying if it is inside
+            setNum(0);
             setNum(50);
             calcGrid(globalWidth, globalHeight);
             drawPart = false;

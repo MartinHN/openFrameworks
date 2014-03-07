@@ -12,6 +12,8 @@
 
 VideoPlayer::VideoPlayer(VisuHandler * v):VisuClass(v){
     MYPARAM(playPauseStop,0,0,3);
+    MYPARAM(color,ofVec3f(255),ofVec3f(0),ofVec3f(255));
+    MYPARAM(alpha,255,0,255);
     playPauseStop.addListener(this, &VideoPlayer::ppp);
     playPauseStop.setSerializable(false);
     settings.setName("VideoPlayer");

@@ -8,6 +8,15 @@
 
 #include "metaBalls.h"
 
+class meta{
+    
+    ofPoint pos;
+    float rayon;
+    int lifetime;
+    
+    
+};
+
 
 metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
     MYPARAM(rayon,0.f,0.f,1.f);

@@ -179,10 +179,10 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("mode",1,0,1);
     
     forces.push_back(new Force("fieldForce"));
-    forces[forces.size()-1]->addParameter("k",.030f,0.f,.5f);
-    forces[forces.size()-1]->addParameter("velouty",.030f,0.f,.5f);
-    forces[forces.size()-1]->addParameter("veloutz",.030f,0.f,.5f);
-    forces[forces.size()-1]->addParameter("veloutborder",.00f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("k",.030f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("velouty",.030f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("veloutz",.030f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("veloutborder",.00f,-.5f,.5f);
     forces[forces.size()-1]->addParameter("minv",.10f,0.f,1.f);
     forces[forces.size()-1]->addParameter("maxv",.80f,0.f,1.f);
 

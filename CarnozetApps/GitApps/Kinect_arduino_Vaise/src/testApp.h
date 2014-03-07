@@ -82,7 +82,8 @@ class testApp : public ofBaseApp{
     
         //OSC
         ofxOscReceiver              oscReceiver;
-        
+        void updateOsc();
+    
     
     
 

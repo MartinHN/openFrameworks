@@ -21,6 +21,8 @@ public:
     
     void update(int w, int h);
     void draw(int w, int h);
+    void changeImage(int &num);
+    void changeResize(bool& resize);
     
     ofParameter<int> numPhoto;
     ofParameter<bool> isResize;

@@ -94,8 +94,6 @@ void testApp::setup(){
     oscReceiver.setup(12349);
     
     
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -275,6 +273,27 @@ void testApp::changeAngleKinect(bool useFront, int value){
         kinectB.setCameraTiltAngle(value);
     }
     
+    
+}
+//-------------------------------------------------------------
+void testApp::updateOsc(){
+    
+    ofxOscMessage m;
+    
+    if(oscReceiver.getNextMessage(&m))
+    {
+     
+        if(m.getAddress()=="preset"){
+            
+            int pres = m.getArgAsFloat(0);
+            preset = pres;
+            
+        }
+        
+    }
+    
+  
+
     
 }
 

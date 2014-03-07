@@ -262,6 +262,10 @@
 		960d20b191346612d5c05a6af838c285 /* ofxTCPClient.cpp in Sources */ = {isa = PBXBuildFile; fileRef = bf88f02779dd820913acea06f63c5b7e /* ofxTCPClient.cpp */; };
 		9d44dc88ef9e7991b4a09951e2e4769f /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 832bdc407620cdba568b713d2252c43c /* tinyxmlerror.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E131CF8B18CA03B50067F453 /* Photo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E131CF8918CA03B50067F453 /* Photo.cpp */; };
+		E131CF8C18CA03B50067F453 /* Photo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E131CF8918CA03B50067F453 /* Photo.cpp */; };
+		E131CF8D18CA03B50067F453 /* Photo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E131CF8918CA03B50067F453 /* Photo.cpp */; };
+		E131CF8E18CA03B50067F453 /* Photo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E131CF8918CA03B50067F453 /* Photo.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -699,6 +703,8 @@
 		9da0cbd43da38386eb04c9ae7ce0666e /* miniflann.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = miniflann.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/miniflann.hpp; sourceTree = SOURCE_ROOT; };
 		9ff9126184dfbde8a912373ebe9d2f9d /* highgui.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = highgui.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv/highgui.h; sourceTree = SOURCE_ROOT; };
 		BBAB23BE13894E4700AA2426 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = ../../../libs/glut/lib/osx/GLUT.framework; sourceTree = "<group>"; };
+		E131CF8918CA03B50067F453 /* Photo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Photo.cpp; sourceTree = "<group>"; };
+		E131CF8A18CA03B50067F453 /* Photo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Photo.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -1775,6 +1781,8 @@
 				F242ACAF18A05DC00091E2EF /* boule2gomme.h */,
 				F2F8117818C3734600965B1B /* drawBlob.cpp */,
 				F2F8117D18C3736500965B1B /* drawBlob.h */,
+				E131CF8918CA03B50067F453 /* Photo.cpp */,
+				E131CF8A18CA03B50067F453 /* Photo.h */,
 			);
 			name = Visux;
 			sourceTree = "<group>";
@@ -2091,6 +2099,8 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "MurMur d'Ombre" */;
 			compatibilityVersion = "Xcode 2.4";
 			developmentRegion = English;
@@ -2202,6 +2212,7 @@
 				6F1EE68118A927ED00608125 /* CreEPS.cpp in Sources */,
 				6F1EE68218A927ED00608125 /* ofxXmlSettings.cpp in Sources */,
 				6F1EE68318A927ED00608125 /* tinyxml.cpp in Sources */,
+				E131CF8D18CA03B50067F453 /* Photo.cpp in Sources */,
 				6F1EE68418A927ED00608125 /* tinyxmlerror.cpp in Sources */,
 				6F1EE68518A927ED00608125 /* tinyxmlparser.cpp in Sources */,
 				6F1EE68718A927ED00608125 /* ofxPanel.cpp in Sources */,
@@ -2370,6 +2381,7 @@
 				6FC6764A18A9118F00D24E6C /* mask.frag in Sources */,
 				6FC6764B18A9118F00D24E6C /* gravity.frag in Sources */,
 				6F1EE65918A9229100608125 /* ofxGuiGroup.cpp in Sources */,
+				E131CF8C18CA03B50067F453 /* Photo.cpp in Sources */,
 				6FC6764C18A9118F00D24E6C /* netw.frag in Sources */,
 				6FC6764D18A9118F00D24E6C /* neth.frag in Sources */,
 				6F1EE66118A9229100608125 /* ofxSliderGroup.cpp in Sources */,
@@ -2474,6 +2486,7 @@
 				F2C0B53518A6A9430056A36B /* mask.frag in Sources */,
 				F2C0B54918A7B66F0056A36B /* gravity.frag in Sources */,
 				6F1EE65818A9229100608125 /* ofxGuiGroup.cpp in Sources */,
+				E131CF8B18CA03B50067F453 /* Photo.cpp in Sources */,
 				F2C0B54B18A7D4750056A36B /* netw.frag in Sources */,
 				F2FB83EE18A8D54D005E75BB /* neth.frag in Sources */,
 				6F1EE66018A9229100608125 /* ofxSliderGroup.cpp in Sources */,
@@ -2578,6 +2591,7 @@
 				F200AA7718A97C5D0004F00A /* mask.frag in Sources */,
 				F200AA7818A97C5D0004F00A /* gravity.frag in Sources */,
 				F200AA7918A97C5D0004F00A /* ofxGuiGroup.cpp in Sources */,
+				E131CF8E18CA03B50067F453 /* Photo.cpp in Sources */,
 				F200AA7A18A97C5D0004F00A /* netw.frag in Sources */,
 				F200AA7B18A97C5D0004F00A /* neth.frag in Sources */,
 				F200AA7C18A97C5D0004F00A /* ofxSliderGroup.cpp in Sources */,

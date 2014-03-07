@@ -8,9 +8,6 @@
 
 #include "BallManager.h"
 
-
-
-
 BallManager::BallManager(VisuHandler * v):VisuClass(v){
     settings.setName("BallManager");
     int num = 25;

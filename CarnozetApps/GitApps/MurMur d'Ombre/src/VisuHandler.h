@@ -26,8 +26,6 @@
 #include "Constants.h"
 #include "ofxOscParameterSync.h"
 
-
-
 #include "VisuClass.h"
 #include "Ecrans.h"
 #include "ofXml.h"

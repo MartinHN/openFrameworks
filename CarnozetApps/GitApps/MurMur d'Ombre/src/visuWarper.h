@@ -20,6 +20,7 @@
 #include "BallManager.h"
 #include "drawBlob.h"
 #include "VideoPlayer.h"
+#include "Photo.h"
 
 
 

@@ -45,7 +45,7 @@ void Gui::load(ofParameterGroup & pgtmp,ofParameterGroup & pgtmp3){
     
     guiParam.back()->setDefaultWidth(ofGetWidth()-(baseC)*PARAMW);
     guiParam.push_back(new ofxPanel());
-    guiParam.back()->setup(pgtmp3,pgtmp3.getName(),(baseC)*PARAMW);
+    guiParam.back()->setup(pgtmp3.getGroup("screens"),pgtmp3.getGroup("screens").getName(),(baseC)*PARAMW);
     
     guiParam.back()->minimizeAll();
     

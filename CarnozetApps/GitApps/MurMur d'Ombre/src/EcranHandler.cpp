@@ -15,10 +15,16 @@ screensParam.setName("screens");
     screenPreset.setMin(0);
     screenPreset.setMax(10);
  screenPreset.addListener(this, &ScreenHandler::loadNewPos);
-    
+    screenPreset.setSerializable(false);
     save.addListener(this, &ScreenHandler::saveP);
+    screenPreset.setSerializable(false);
     
 }
+
+void ScreenHandler::setupSync(int inp,string ip,int outp){
+    screenSync.setup(screensParam,inp,ip,outp);
+}
+
 
 
 void ScreenHandler::updateBlobScreens(vector<ofxCvBlob> blobs){
@@ -82,7 +88,7 @@ void ScreenHandler::addScreen(vector<ofVec3f> vert){
 }
 
 void ScreenHandler::registerParams(){
-    screensParam.clear();
+
     screensCtl.clear();
     
     
@@ -99,21 +105,27 @@ void ScreenHandler::registerParams(){
     for (int i = 0 ; i < screenL.size() ; i ++ ){
         ofParameter<bool> mask;
         mask.setName("mask"+ofToString(i));
+        mask = false;
         screensCtl.add(mask);
     }
     
     
+    
+    screensParam.clear();
+
+    screensCtl.setName("screensCtl");
+
     for(int i = 0 ;i< screenL.size();i++){
         screenL[i]->registerParams();
         screensParam.add(screenL[i]->settings);  
     }
-
+    
     
     screensParam.setName("screens");
-    screensCtl.setName("screensCtl");
-    
 }
-
+void ScreenHandler::syncUpdate(){
+    screenSync.update();
+}
 int ScreenHandler::getValidScreen(int which){
     int k = 1;
     int idx = which%10;

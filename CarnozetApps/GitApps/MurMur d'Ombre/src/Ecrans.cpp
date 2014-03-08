@@ -13,7 +13,7 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isB
     scrw = scrwin;
     scrh = scrhin;
     
-    vertices.setName("screen"+ofToString(number));
+    vertices.setName("vertices");
     if(!isBlob){vertices.setSerializable(true);};
     for (int i = 0 ; i < vert.size();i++){
          
@@ -23,8 +23,13 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isB
         vl.back()->setName("p"+ofToString(i));
         vl.back()->setMin(ofVec3f(0));
         vl.back()->setMax(ofVec3f(1));
+//        vertices.add(*vl.back());
+        
     
     }
+    
+    settings.setName("screen"+ofToString(number));
+//    settings.add(vertices);
     
     
     calcRectMax();

@@ -155,9 +155,9 @@ void BallManager::update(int w,int h){
             
             ofPoint c1 = smallPolyline.getCentroid2D();
             ofPoint c2 = secSmallPolyline.getCentroid2D();
-            ofPoint pos = it->pos;
+            ofPoint ori = it->origin;
             
-            if( c1.distance(pos) < c2.distance(pos) ){
+            if( c1.distance(ori) < c2.distance(ori) ){
                 
                 it->update(smallPolyline, w, h);
                 

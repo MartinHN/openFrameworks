@@ -11,7 +11,7 @@
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
-		<pipeblur>0.125</pipeblur>
+		<pipeblur>6.375</pipeblur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>1</pipeMask>
 		<camera>
@@ -32,13 +32,13 @@
 		<maxBlobs>2</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
-		<smooth>0</smooth>
+		<smooth>3.25</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
 		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.535714, 0.77551, 0.5</pos>
+		<pos>0.535714, 0.760204, 0.5</pos>
 		<scale>0.367347, 0.428571, 0.5</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -128,7 +128,7 @@
 				<orientation>0, 1, 0</orientation>
 			</rotation>
 			<gravity>
-				<isActive>1</isActive>
+				<isActive>0</isActive>
 				<attrFamilly>1</attrFamilly>
 				<attrZone>0</attrZone>
 				<r>0.0669487</r>
@@ -203,7 +203,7 @@
 			<pointToBegin>0.321429, 0.341837</pointToBegin>
 			<initTrig>0</initTrig>
 			<addPoint>1</addPoint>
-			<debugMode>1</debugMode>
+			<debugMode>0</debugMode>
 			<reset>1</reset>
 			<insideMode>1</insideMode>
 		</AutoTree>

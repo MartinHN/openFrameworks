@@ -29,7 +29,7 @@
 		<invertBW>0</invertBW>
 		<minSide>0.085</minSide>
 		<maxSide>1</maxSide>
-		<maxBlobs>3</maxBlobs>
+		<maxBlobs>4</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
 		<smooth>3.95</smooth>
@@ -183,7 +183,15 @@
 			<rayon>0.48</rayon>
 			<curFamilly>2</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>0</lifeTime>
 			<color>255, 255, 255, 255</color>
+			<mode>0</mode>
+			<emitrate>1</emitrate>
+			<noise>0.5</noise>
+			<angle>45</angle>
+			<mass>0.0001</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.3</maxv>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -254,5 +262,15 @@
 			<drawPipe>0</drawPipe>
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
+		<Photo>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
+		</Photo>
 	</Visu>
 </OF>

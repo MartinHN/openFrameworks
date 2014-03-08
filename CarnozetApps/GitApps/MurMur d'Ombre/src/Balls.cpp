@@ -136,7 +136,8 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
         if(*useGrid)
         {
             
-            
+            bool isBlob = poly.size()>2;
+
             ofPoint centroidBlob = poly.getCentroid2D();
             float alpha;
             float indexRow = origin.x /(1.0f) - 0.5f;
@@ -145,7 +146,11 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
             alpha = indexRow*indexRow + indexCol*indexCol;
             alpha = alpha + 0.5;
             alpha = alpha*alpha;
-            ofPoint finalPos = centroidBlob*(1 -alpha) + origin*(alpha);
+            
+            ofPoint finalPos;
+            if(isBlob)
+            finalPos= centroidBlob*(1 -alpha) + origin*(alpha);
+            else finalPos = origin;
             
             ofPoint force = ( finalPos - pos) * (*gridForce);
 

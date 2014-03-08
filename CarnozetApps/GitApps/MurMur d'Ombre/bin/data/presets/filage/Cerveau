@@ -38,7 +38,7 @@
 		<screenN>0</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.494898, 0.719388, 0.5</pos>
+		<pos>0.693878, 0.5, 0.5</pos>
 		<scale>1, 1, 0.5</scale>
 		<crop>0, 0, 0, 100</crop>
 	</blobsettings>
@@ -68,7 +68,7 @@
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
-			<isMapping>1</isMapping>
+			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
 			<type>0</type>
 			<followFam>-1</followFam>
@@ -84,7 +84,7 @@
 			<isPiping>0</isPiping>
 			<screenN>1</screenN>
 			<recopy>1</recopy>
-			<isMapping>1</isMapping>
+			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
 			<numParticles>204304</numParticles>
@@ -183,7 +183,15 @@
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>0</lifeTime>
 			<color>0, 0, 0, 0</color>
+			<mode>0</mode>
+			<emitrate>1</emitrate>
+			<noise>0.5</noise>
+			<angle>45</angle>
+			<mass>0.0001</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.3</maxv>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -218,17 +226,17 @@
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
-			<isPiping>1</isPiping>
+			<isPiping>0</isPiping>
 			<screenN>1</screenN>
 			<recopy>1</recopy>
-			<isMapping>1</isMapping>
+			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
 			<drawZones>1</drawZones>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
 			<pos>0.52551, 0.545918, 0.545918</pos>
 			<alphapos>0.3</alphapos>
-			<scale>0.765306, 0.77551</scale>
+			<scale>1.08412, 1.11399</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>
@@ -239,6 +247,8 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
+			<color>255, 255, 255</color>
+			<alpha>255</alpha>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
@@ -252,5 +262,15 @@
 			<drawPipe>0</drawPipe>
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
+		<Photo>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
+		</Photo>
 	</Visu>
 </OF>

@@ -38,7 +38,7 @@
 		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.520408, 0.663265, 0.5</pos>
+		<pos>0.403061, 0.663265, 0.5</pos>
 		<scale>0.867347, 0.683673, 1</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -50,7 +50,7 @@
 		<attrmirrorx>4</attrmirrorx>
 		<attrmirrory>0</attrmirrory>
 		<attrmirrorz>0</attrmirrorz>
-		<zonefamilly1>0, 0, 1, 0.836735</zonefamilly1>
+		<zonefamilly1>0, 0, 1, 0.857143</zonefamilly1>
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>

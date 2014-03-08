@@ -29,7 +29,7 @@
 		<invertBW>0</invertBW>
 		<minSide>0.05</minSide>
 		<maxSide>1</maxSide>
-		<maxBlobs>2</maxBlobs>
+		<maxBlobs>3</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
 		<smooth>0</smooth>
@@ -180,10 +180,10 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
-			<rayon>0.22439</rayon>
+			<rayon>0.473171</rayon>
 			<curFamilly>1</curFamilly>
 			<alpha>0.951219</alpha>
-			<lifeTime>0</lifeTime>
+			<lifeTime>5.85366</lifeTime>
 			<color>255, 255, 255, 255</color>
 			<mode>0</mode>
 			<emitrate>1</emitrate>
@@ -220,7 +220,7 @@
 			<emission>0</emission>
 			<mode>5</mode>
 			<lifeTime>1102</lifeTime>
-			<gridForce>0.936585</gridForce>
+			<gridForce>1</gridForce>
 			<userForce>0.0682927</userForce>
 			<gridOpen>1</gridOpen>
 		</BallManager>
@@ -234,9 +234,9 @@
 			<drawZones>0</drawZones>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
-			<pos>0.387755, 0.270408, 0.5</pos>
+			<pos>0.50224, 0.50224, 0.5</pos>
 			<alphapos>0.3</alphapos>
-			<scale>0.44898, 0.459184</scale>
+			<scale>1.07417, 1.07417</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>
@@ -251,7 +251,7 @@
 			<alpha>255</alpha>
 		</VideoPlayer>
 		<boule2gomme>
-			<isActive>0</isActive>
+			<isActive>1</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>

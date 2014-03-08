@@ -23,10 +23,10 @@ void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYi
     blobClient.setup();
     blobClient.setApplicationName("kinectExampleDebug");
     blobClient.setServerName("blob");
-    //blobClient.setApplicationName("Quartz Composer");
-    //blobClient.setServerName("N");
+//    blobClient.setApplicationName("Quartz Composer");
+//    blobClient.setServerName("N");
 
-    syphonTex.allocate(inw,inh,GL_RGB32F);
+    syphonTex.allocate(inw,inh,GL_RGB);
     
     gs.allocate(inw, inh);
     lastw = inw;
@@ -101,10 +101,10 @@ void BlobHandler::compBlob(){
     
     glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_DST_ALPHA);
     
-    syphonTex.dst->begin();
+    syphonTex.begin();
     ofSetColor(255);
-    blobClient.draw(-crop->x,-crop->y,inw+crop->x+crop->z,inh+crop->y+crop->w);
-    syphonTex.dst->end();
+    blobClient.draw(0,0);
+    syphonTex.end();
     
     //    syphonTex.swap();
     
@@ -114,7 +114,7 @@ void BlobHandler::compBlob(){
     
     
     
-    syphonTex.dst->readToPixels(pix);
+    syphonTex.readToPixels(pix);
     
     ofxCvColorImage colorIm;
     colorIm.allocate(inw,inh);

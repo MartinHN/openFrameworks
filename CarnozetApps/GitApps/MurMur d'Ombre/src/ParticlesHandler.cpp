@@ -248,7 +248,7 @@ void Particles::update(int w, int h){
         }
         else if(forces[i]->isActive ){
             int j = 0;
-            vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,forces[i]->attrZone);
+            vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,1,1,forces[i]->attrZone);
             if(map2blob){
 //                drawBlob * vvv = (drawBlob *)dad->get("drawBlob");
 //                for(int i = 0 ; i< curattr.size();i++){

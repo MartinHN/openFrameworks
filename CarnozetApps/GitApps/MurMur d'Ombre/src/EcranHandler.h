@@ -12,6 +12,8 @@
 #include "Constants.h"
 #include "ofMain.h"
 #include "ofxCvBlob.h"
+#include "ofxOscParameterSync.h"
+
 
 
 class ScreenHandler{
@@ -31,7 +33,8 @@ public:
     const ofVec2f sizeOfScreen(const int which);
     void blurmask();
     void drawMask();
-    
+    void setupSync(int p,string ip,int outp);
+    void syncUpdate();
     void mapN2S(vector<ofPoint> & p,int s);
     
 //    void writeFile();
@@ -53,6 +56,7 @@ public:
     
     ofImage globalMask;
     
+    ofxOscParameterSync screenSync;
     
 #ifdef LIVEBLUR
     pingPongBuffer blur;

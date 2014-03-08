@@ -166,7 +166,8 @@ public:
     AttrCtl attrctl;
     
     ofxOscParameterSync paramSync;
-
+    ofParameterGroup screensParam;
+    
     ScreenHandler sH;
     
     

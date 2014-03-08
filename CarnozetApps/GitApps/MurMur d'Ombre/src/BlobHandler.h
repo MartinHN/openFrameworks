@@ -48,7 +48,7 @@ public:
     
     
     ofxSyphonClient blobClient;
-    pingPongBuffer syphonTex;
+    ofFbo syphonTex;
 
     ScreenHandler * sH;
     ofShader * blurX;

@@ -30,7 +30,7 @@ void boule2gomme::draw(int w, int h){
     
 
     ofSetColor(255);
-    if(drawSyphon) dad->bH->syphonTex.dst->draw(0,0);
+    if(drawSyphon) dad->bH->syphonTex.draw(0,0);
     
     if(drawPipe)dad->pipePP.dst->draw(0,0);
     

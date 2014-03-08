@@ -54,26 +54,14 @@
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
-	<screens>
-		<screen0>
-			<mask>0</mask>
-		</screen0>
-		<screen1>
-			<mask>0</mask>
-		</screen1>
-		<screen2>
-			<mask>0</mask>
-		</screen2>
-		<screen3>
-			<mask>0</mask>
-		</screen3>
-		<screen4>
-			<mask>0</mask>
-		</screen4>
-		<screen5>
-			<mask>0</mask>
-		</screen5>
-	</screens>
+	<screensCtl>
+		<mask0>0</mask0>
+		<mask1>0</mask1>
+		<mask2>0</mask2>
+		<mask3>0</mask3>
+		<mask4>0</mask4>
+		<mask5>0</mask5>
+	</screensCtl>
 	<Visu>
 		<background>
 			<isActive>1</isActive>
@@ -195,7 +183,15 @@
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>0</lifeTime>
 			<color>0, 0, 0, 0</color>
+			<mode>0</mode>
+			<emitrate>1</emitrate>
+			<noise>0.5</noise>
+			<angle>45</angle>
+			<mass>0.0001</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.3</maxv>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -226,6 +222,7 @@
 			<lifeTime>0</lifeTime>
 			<gridForce>0</gridForce>
 			<userForce>1</userForce>
+			<gridOpen>1</gridOpen>
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
@@ -246,10 +243,12 @@
 		<VideoPlayer>
 			<isActive>1</isActive>
 			<isPiping>0</isPiping>
-			<screenN>4</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
+			<color>255, 255, 255</color>
+			<alpha>255</alpha>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
@@ -263,5 +262,15 @@
 			<drawPipe>0</drawPipe>
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
+		<Photo>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
+		</Photo>
 	</Visu>
 </OF>

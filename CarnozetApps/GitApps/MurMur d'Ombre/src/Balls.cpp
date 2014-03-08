@@ -138,28 +138,17 @@ int BouncingBall::update(ofPolyline poly, int w, int h){
             
             
             ofPoint centroidBlob = poly.getCentroid2D();
+            float alpha;
+            float indexRow = origin.x /(1.0f) - 0.5f;
+            float indexCol = origin.y/(1.0f) - 0.5f;
             
-            float originForce = 0.7;
+            alpha = indexRow*indexRow + indexCol*indexCol;
+            alpha = alpha + 0.5;
+            alpha = alpha*alpha;
+            ofPoint finalPos = centroidBlob*(1 -alpha) + origin*(alpha);
             
-            
-            float distFromCenter =abs( (origin - ofVec2f(0.5,0.5)).length() + 0.0001);
-            if(distFromCenter > sqrtf(2.0f)/2.0f){
-                distFromCenter = sqrtf(2.0f)/2.0f;
-            }
-            if(distFromCenter< 0){
-                distFromCenter = 0.0001;
-            }
-            
-           // distFromCenter = powf(distFromCenter, *gridOpen);
-            
-            
-            ofPoint force = ( origin - pos )* (*gridForce);
-            if(poly.size()>0){
-            float userForceValue = *userForce;
-                
-            force += ( centroidBlob - pos) * (userForceValue* 0.0000001*(sqrtf(2.0f)/2.0f - distFromCenter)) ;
-            }
-            
+            ofPoint force = ( finalPos - pos) * (*gridForce);
+
             speed = damping * ( speed + force/mass);
         }
         

@@ -275,7 +275,8 @@ void Particles::update(int w, int h){
             #endif
                             }
                     if(forces[i]->attrFamilly>=0&&curattr.size()>0&&j<curattr.size()){
-                        forces[i]->shader.setUniform3f("attr",curattr[j].x,curattr[j].y,curattr[j].z);
+                        
+                        forces[i]->shader.setUniform3f("attr",curattr[j].x,curattr[j].y,curattr[j].z+0.5);
                     }
                     forces[i]->shader.setUniform3f("screen",w,h,dad->zdepth);
                     if(origintype==1)forces[i]->shader.setUniform1i("resolution",textureRes3);

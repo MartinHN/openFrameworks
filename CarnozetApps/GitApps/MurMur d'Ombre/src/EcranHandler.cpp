@@ -12,7 +12,7 @@
 ScreenHandler::ScreenHandler(){
 screensParam.setName("screens");
     screenPreset = 0;
-    screenPreset.setMin(0);
+    screenPreset.setMin(-1);
     screenPreset.setMax(10);
  screenPreset.addListener(this, &ScreenHandler::loadNewPos);
     screenPreset.setSerializable(false);
@@ -84,7 +84,7 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
 }
 
 void ScreenHandler::addScreen(vector<ofVec3f> vert){
-    screenL.push_back(new Ecran(screenL.size(),vert,scrw,scrh,false));
+    screenL.push_back(new Ecran(screenL.size()-1,vert,scrw,scrh,false));
 }
 
 void ScreenHandler::registerParams(){

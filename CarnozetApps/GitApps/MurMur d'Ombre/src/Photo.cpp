@@ -48,7 +48,7 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     
     imgToDraw = listOfImage.front();
     
-    isSet = false;
+    isSet = true;
     
 
 
@@ -84,7 +84,7 @@ void Photo::update(int w,int h){
         
         }
         
-        imgToDraw.setAnchorPercent(0.5f, 0.5f);
+       // imgToDraw.setAnchorPercent(0.5f, 0.5f);
         isSet = true;
         
     }
@@ -96,7 +96,7 @@ void Photo::draw(int w, int h){
     
     if(isSet && numPhoto>0){
         
-        imgToDraw.draw(w/2.0f, h/2.0f);
+        imgToDraw.draw(0, 0, w, h);
     }
     
     

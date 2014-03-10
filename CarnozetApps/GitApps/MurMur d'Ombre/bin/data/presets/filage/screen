@@ -74,7 +74,7 @@
 			<followFam>-1</followFam>
 			<alpha>0.3</alpha>
 			<center>0.5, 0.5</center>
-			<color>0, 0, 0, 255</color>
+			<color>23.9895, 93.8004, 255, 255</color>
 			<scale>1</scale>
 			<ratio>1</ratio>
 			<fill>1</fill>
@@ -183,7 +183,15 @@
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>0</lifeTime>
 			<color>0, 0, 0, 0</color>
+			<mode>0</mode>
+			<emitrate>1</emitrate>
+			<noise>0.5</noise>
+			<angle>45</angle>
+			<mass>0.0001</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.3</maxv>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -255,14 +263,14 @@
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
 		<Photo>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
-			<screenN>1</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
-			<isMapping>0</isMapping>
+			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
-			<numPhoto>2</numPhoto>
-			<isResize>1</isResize>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
 		</Photo>
 	</Visu>
 </OF>

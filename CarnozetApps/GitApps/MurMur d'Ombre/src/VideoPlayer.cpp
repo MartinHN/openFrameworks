@@ -33,13 +33,18 @@ void VideoPlayer::ppp(int & s){
     switch(s){
         case 1:{
             
-            player.setPaused(!player.isPaused());
+            player.setPaused(true);
             lasts=s;
             break;
         }
         case 2:{
+            if(lasts==1){
+                player.setPaused(false);
+            }
+            else{
             player.loadMovie("Video/mains.mp4");
             player.play();
+            }
             lasts=s;
             break;
         }

@@ -9,7 +9,7 @@
 #ifndef __MursMurentDombres__Ruban__
 #define __MursMurentDombres__Ruban__
 
-#define OSCSEND
+//#define OSCSEND
 
 #include <iostream>
 #include <vector.h>
@@ -45,14 +45,14 @@ public:
 
 //-----------------------------------------------------------------------------
 
-class ruban
+class ruban 
 {
 public:
     ruban();
     ruban(ofPoint pos, float stiffness, int length );
 
     
-    int update(ofPoint control, int channel, float argument);    // return 0 if the visual object is
+    int update(ofPoint control, int channel, float argument,ofVec3f velout);    // return 0 if the visual object is
     void move();
     void draw();
     
@@ -82,7 +82,7 @@ class ColorRuban :public VisuClass{
 public:
 //    ColorRuban();
     ColorRuban(VisuHandler* v);
-    ~ColorRuban(){};
+//    ~ColorRuban(){};
 //    ColorRuban(vector<ofPoint>* attrin, vector<int>* famillyin);
 
 //Herited
@@ -94,12 +94,15 @@ public:
     int update(int channel, float argument, int w, int h);
     
     
-    vector<ofPoint>* attr;
-    vector<int>* familly;
+
     
     ruban ruban1;
     
-    bool onPause;
+    ofParameter<bool> onPause;
+    ofParameter<int> familly;
+    ofParameter<ofVec3f> color,vout;
+    ofParameter<int> alpha;
+    ofParameter<float> timestep,stiffness;
     
 #ifdef OSCSEND
     ofxOscSender musicSender;

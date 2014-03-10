@@ -81,7 +81,7 @@ ruban::ruban(ofPoint pos, float stiffness, int length ){
     
 }
 
-int ruban::update(ofPoint externControl, int channel, float argument){
+int ruban::update(ofPoint externControl, int channel, float argument,ofVec3f vout){
     
     Spring actual1, prev1, actual2, prev2;
     float sizex, sizey;
@@ -117,6 +117,12 @@ int ruban::update(ofPoint externControl, int channel, float argument){
     
     
     for(int i=0; i<nbSpring; i++){
+        
+    rub1.at(i).x+=vout.x;
+    rub1.at(i).y+=vout.y;    
+    rub2.at(i).x+=vout.x;
+    rub2.at(i).y+=vout.y;
+        
         
         actual1 = rub1.at(i);
         actual2 = rub2.at(i);
@@ -191,14 +197,16 @@ void ruban::move(){
 //    
 //}
 
-ColorRuban::ColorRuban(VisuHandler *v):VisuClass(){
-    
-//    attr = v->attr->curp;
-//    familly  = v->attr->familly;
+ColorRuban::ColorRuban(VisuHandler *v):VisuClass(v){
     
     ofPoint pos = ofPoint( 0, 0);
     ofPoint angle = ofPoint();
-    
+    MYPARAM(onPause,false,false,true);
+    MYPARAM(stiffness,0.02f,0.f,0.1f);
+    MYPARAM(timestep,0.02f,0.f,0.1f);
+    MYPARAM(color,ofVec3f(255),ofVec3f(0),ofVec3f(255));
+    MYPARAM(vout, ofVec3f(0.001),ofVec3f(0),ofVec3f(0.1));
+    MYPARAM(alpha,255,0,255);
     init(pos, angle);
     
 #ifdef OSCSEND
@@ -212,11 +220,11 @@ ColorRuban::ColorRuban(VisuHandler *v):VisuClass(){
 void ColorRuban::init(ofPoint pos, ofPoint angle){
     
     int length = (int) ofRandom(8.0f, 18.0f);
-    float stiff = ofRandom(0.06f, 0.16);
+//    float stiff = ofRandom(0.06f, 0.16);
     
-    stiff = 0.02;
+//    stiff = 0.02;
         
-    ruban1 = ruban(pos, stiff, length);
+    ruban1 = ruban(pos, stiffness, length);
     
     onPause = false;
 
@@ -239,24 +247,26 @@ int ColorRuban::update( int channel, float argument, int w , int h){
     int num=0;
     ofPoint control;
     int note=0;
+    vector<ofPoint> attr = dad->attr->getType(2,w,h);
     
     if(!onPause){
         
-        if( attr->size()>0 && ( attr->size()==familly->size()) )
+        if( attr.size()>0 )
         {
         
-            for( int i=0;i<attr->size();i++){
+            for( int i=0;i<attr.size();i++){
                 
-                if( familly->at(i) == 1) control = ofPoint(attr->at(i).x * w, attr->at(i).y * h);
+                 
+                note = ruban1.update(attr[i], channel, argument,vout);
                 
             }
                     
-            note = ruban1.update(control, channel, argument);
+            
         
         }
         else
         {
-            ruban1.update(ofPoint(0,0), channel, argument);
+            ruban1.update(ofPoint(0,0), channel, argument,vout);
         }
     }
     

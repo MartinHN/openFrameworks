@@ -74,7 +74,7 @@
 			<followFam>-1</followFam>
 			<alpha>0.3</alpha>
 			<center>0.5, 0.5</center>
-			<color>23.9895, 93.8004, 255, 255</color>
+			<color>0, 0, 0, 255</color>
 			<scale>1</scale>
 			<ratio>1</ratio>
 			<fill>1</fill>
@@ -263,7 +263,7 @@
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
 		<Photo>
-			<isActive>0</isActive>
+			<isActive>1</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
@@ -271,6 +271,21 @@
 			<isMasking>0</isMasking>
 			<numPhoto>0</numPhoto>
 			<isResize>0</isResize>
+			<isMirror>0</isMirror>
 		</Photo>
+		<ColorRuban>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<onPause>0</onPause>
+			<stiffness>0.02</stiffness>
+			<timestep>0.02</timestep>
+			<color>255, 255, 255</color>
+			<vout>0.001, 0.001, 0.001</vout>
+			<alpha>255</alpha>
+		</ColorRuban>
 	</Visu>
 </OF>

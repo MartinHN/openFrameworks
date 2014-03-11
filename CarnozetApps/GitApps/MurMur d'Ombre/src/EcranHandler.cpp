@@ -17,7 +17,6 @@ screensParam.setName("screens");
 
     screenPreset.setSerializable(false);
 
-    screenPreset.setSerializable(false);
     
 }
 
@@ -114,6 +113,12 @@ void ScreenHandler::registerParams(){
     save.setSerializable(false);
     screensCtl.add(save);
     
+    
+    invertMask.setName("invertMask");
+    invertMask=false;
+    screensCtl.add(invertMask);
+    
+    
     for (int i = 0 ; i < screenL.size() ; i ++ ){
         ofParameter<bool> mask;
         mask.setName("mask"+ofToString(i));
@@ -191,11 +196,13 @@ const ofVec2f ScreenHandler::sizeOfScreen(const int which){
 
 
 void ScreenHandler::drawMask(){
-
-    ofSetColor(0,0,244);
+    ofColor curCol;
+    if(!invertMask)    curCol.set(255);
+    else curCol.set(0);
     for (int i = 1 ; i < screenL.size();i++){
         if(screensCtl.getBool("mask"+ofToString(i))){
         ofPath tmpP;
+            tmpP.setFillColor(curCol);
         vector<ofVec3f> vert = screenL[i]->getVertices();
         for(int j = 0 ; j<vert.size();j++){
             tmpP.lineTo(vert[j]);

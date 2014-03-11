@@ -47,6 +47,7 @@ public:
     ofParameter<int> screenPreset;
     ofParameter<bool> save;
     vector<ofParameter<bool> > mask;
+    ofParameter<bool> invertMask;
     
     int * scrw;
     int * scrh;

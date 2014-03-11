@@ -27,14 +27,14 @@ metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
     MYPARAM(maxv,0.3f,0.f,0.3f);
     MYPARAM(f,1.f,0.4f,1.f);
     MYPARAM(vInit,.0f,0.00f,.05f);
-
+    settings.setName("metaBalls");
     maxsize = 400;
 
 }
 
 
 void metaBalls::setupData(){
-    settings.setName("metaBalls");
+    
     metaBall.loadImage("visu/point.png");
 }
 

@@ -150,6 +150,8 @@ void testApp::setup(){
     visuHandler.addVisu(new boule2gomme(&visuHandler));
     visuHandler.addVisu(new Photo(&visuHandler));
     visuHandler.addVisu(new ColorRuban(&visuHandler));
+    visuHandler.addVisu(new Liner(&visuHandler));
+    
     
     
     visuHandler.registerParams();

@@ -33,7 +33,7 @@ void Liner::draw(int w, int h){
     
     vector<ofPolyline> b = dad->bH->getBlobs(w,h);
     for (int i = 0 ; i < b.size(); i ++){
-        ofSetColor(color.x,color.y,color.z,alpha);
+        ofSetColor(color->x,color->y,color->z,alpha);
         ofSetLineWidth(width);
         ofPoint centr = b[i].getCentroid2D();
         ofTranslate(centr.x,0);

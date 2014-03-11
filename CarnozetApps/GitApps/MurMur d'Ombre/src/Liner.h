@@ -19,9 +19,6 @@ public:
     Liner(VisuHandler * v);
     ~Liner(){};
     
-    ofParameter<bool> drawZones,drawSyphon,drawPipe,drawAttr;
-
-    
     void draw(int w, int h);
     void update(int w, int h);
     ofParameter<float> width,alpha;

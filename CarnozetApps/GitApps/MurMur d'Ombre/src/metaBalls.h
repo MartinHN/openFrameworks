@@ -37,7 +37,7 @@ public:
     
     void draw(int w, int h);
     void update(int w, int h);
-    void setupdata();
+    void setupData();
     
     
     ofParameter<float> rayon,alpha,theta;

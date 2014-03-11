@@ -88,6 +88,7 @@ void Particles::setupData(){
     
     updateRender.load("shaders/render.vert","shaders/render.frag");
     updatePos.load("","shaders/posUpdate.frag");
+    int defaultgrad=0;
     changeGrad(defaultgrad);
 
 }
@@ -96,7 +97,7 @@ void Particles::setup(){
     settings.setName("Particles");
     
     
-    int defaultgrad=0;
+    
     
     noReset = false;
   

@@ -9,7 +9,7 @@
 
 #pragma once
 
-#define LIVEBLUR
+//#define LIVEBLUR
 
 #define VISU_OSC_IN 12344
 #define VISU_OSC_OUT 12346

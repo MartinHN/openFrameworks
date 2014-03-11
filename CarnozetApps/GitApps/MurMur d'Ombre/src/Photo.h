@@ -21,6 +21,7 @@ public:
     
     void update(int w, int h);
     void draw(int w, int h);
+    void setupData();
     void changeImage(int &num);
     void changeResize(bool& resize);
     void changeMirror(bool& ismir);

@@ -39,12 +39,14 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     bH = bHin;
     
-    pipePP.allocate(inw, inh);
+    
     
     
     
     
 }
+
+
 
 
 VisuClass * VisuHandler::get(const string & name){
@@ -120,6 +122,13 @@ const void VisuHandler::printallp(ofParameterGroup p){
             
         }
     } 
+}
+
+void VisuHandler::setupData(){
+     pipePP.allocate(inw, inh);
+    for (int i = 0 ; i< visuList.size() ; i++){
+        visuList[i]->setupData();
+    }
 }
 
 const void VisuHandler::draw(int mode){

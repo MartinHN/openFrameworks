@@ -67,6 +67,7 @@ public:
     virtual void update(int w, int h)=0;
     virtual void draw(int w, int h)=0;
     virtual void registerParam(){};
+    virtual void setupData(){};
 //    virtual void oscUpdate(ofxOscMessage &m)=0;
 
     

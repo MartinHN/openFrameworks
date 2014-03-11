@@ -14,11 +14,38 @@ screensParam.setName("screens");
     screenPreset = 0;
     screenPreset.setMin(-1);
     screenPreset.setMax(10);
- screenPreset.addListener(this, &ScreenHandler::loadNewPos);
+
     screenPreset.setSerializable(false);
-    save.addListener(this, &ScreenHandler::saveP);
+
     screenPreset.setSerializable(false);
     
+}
+
+void ScreenHandler::setupData(){
+        screenPreset.addListener(this, &ScreenHandler::loadNewPos);
+        save.addListener(this, &ScreenHandler::saveP);
+#ifdef LIVEBLUR
+    blurX.load("","shaders/blurXa.frag");
+    blurY.load("","shaders/blurYa.frag");
+    blurX.setUniform1f("blurAmnt", 10);
+    blurY.setUniform1f("blurAmnt", 10);
+    blur.allocate(*scrw,*scrh,GL_RGB32F);
+    float * pos = new float[*scrw * *scrh*3];
+    for (int x = 0; x < *scrw; x++){
+        for (int y = 0; y < *scrh; y++){
+            int i = *scrw * y + x;
+            
+            pos[i*3 + 0] = 0;
+            pos[i*3 + 1] = 0;
+            pos[i*3 + 2] = 0;
+        }
+    }
+    
+    // Load this information in to the FBO´s texture
+    blur.src->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
+    blur.dst->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
+    delete pos;
+#endif
 }
 
 
@@ -52,28 +79,7 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
     screensParam.setName("screens");
     
     
-#ifdef LIVEBLUR
-    blurX.load("","shaders/blurXa.frag");
-    blurY.load("","shaders/blurYa.frag");
-    blurX.setUniform1f("blurAmnt", 10);
-    blurY.setUniform1f("blurAmnt", 10);
-    blur.allocate(*scrw,*scrh,GL_RGB32F);
-    float * pos = new float[*scrw * *scrh*3];
-    for (int x = 0; x < *scrw; x++){
-        for (int y = 0; y < *scrh; y++){
-            int i = *scrw * y + x;
-            
-            pos[i*3 + 0] = 0;
-            pos[i*3 + 1] = 0;
-            pos[i*3 + 2] = 0;
-        }
-    }
-    
-    // Load this information in to the FBO´s texture
-    blur.src->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
-    blur.dst->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
-    delete pos;
-#endif
+
     vector<ofVec3f> vertglob;
     vertglob.push_back(ofVec2f(0,0));
     vertglob.push_back(ofVec2f(1,0));
@@ -255,71 +261,7 @@ void ScreenHandler::saveP(bool & s){
 
 
 void ScreenHandler::blurmask(){
-#ifdef LIVEBLUR
-#else
-    //Create globalMask
-    
-    ofPixels pix;
-    pix.allocate(scrw,scrh,OF_IMAGE_COLOR_ALPHA);
-    
-    ofVec2f scale(scrw,scrh);
-    
-    for(int i = 0 ; i < scrw;i++){
-        for (int j =  0; j<scrh;j++){
-            pix.setColor(i,j,ofColor(0,0,0,255)); 
-            for(int z = 1 ; z<screenL.size();z++){
-                ofPolyline tmpPath(screenL[z]->getVertices());
-                tmpPath.close();
-                if(tmpPath.inside(i,j)){
-                    pix.setColor(i,j,ofColor(0,0,0,0));
-                    //                    cout<<z<<endl;
-                    break;
-                }
-            }
-        }
-    }
-    int blurSize = 10;
-    for(int i = blurSize ; i < scrw-blurSize;i++){
-        for (int j =  0; j<scrh;j++){
-            
-            
-            float a = pix.getColor(i+blurSize*1.0,j)[3]*0.06+
-            pix.getColor(i+blurSize*0.75,j)[3]*0.09+
-            pix.getColor(i+blurSize*0.5,j)[3]*0.12 +
-            pix.getColor(i+blurSize*0.25,j)[3]*0.15 +
-            pix.getColor(i,j)[3]*0.16 +
-            pix.getColor(i-blurSize*1.0,j)[3]*0.06 +
-            pix.getColor(i-blurSize*0.75,j)[3]*0.09 +
-            pix.getColor(i-blurSize*0.5,j)[3]*0.12 +
-            pix.getColor(i-blurSize*0.25,j)[3]*0.15 ;
-            //                a*=pix.getColor(i,j)[3]*1.0;
-            ofColor color = ofColor(pix.getColor(i,j)[0],pix.getColor(i,j)[1],pix.getColor(i,j)[2], ofClamp(a,0,255));
-            pix.setColor(i,j,color);
-            //                if(color[3]>0&&color[3]<255) cout<<color[3]<<endl;
-        }
-    }
-    for(int i = blurSize ; i < scrw-blurSize;i++){
-        for (int j =  blurSize; j<scrh-blurSize;j++){
-            ofColor color = ofColor(pix.getColor(i,j)[0],pix.getColor(i,j)[1],pix.getColor(i,j)[2], (
-                                                                                                     pix.getColor(i,j+blurSize*1.0)[3]*0.06 +
-                                                                                                     pix.getColor(i,j+blurSize*0.75)[3]*0.09 +
-                                                                                                     pix.getColor(i,j+blurSize*0.5)[3]*0.12 +
-                                                                                                     pix.getColor(i,j+blurSize*0.25)[3]*0.15 +
-                                                                                                     pix.getColor(i,j)[3]*0.16 +
-                                                                                                     pix.getColor(i,j-blurSize*1.0)[3]*0.06 +
-                                                                                                     pix.getColor(i,j-blurSize*0.75)[3]*0.09 +
-                                                                                                     pix.getColor(i,j-blurSize*0.5)[3]*0.12 +
-                                                                                                     pix.getColor(i,j-blurSize*0.25)[3]*0.15 ));
-            pix.setColor(i,j,color);
-        }
-    }
-    
-    
-    globalMask.setFromPixels(pix);
-    
-    pix.clear();
-    
-#endif
+
 }
 
 

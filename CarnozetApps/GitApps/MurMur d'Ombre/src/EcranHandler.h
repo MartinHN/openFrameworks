@@ -27,6 +27,7 @@ public:
     void registerParams();
     int getValidScreen(int which);
     void updateBlobScreens(vector<ofxCvBlob> blobs);
+    void setupData();
     void loadNewPos(int & p);
     void saveP(bool & s);
     ofRectangle rectOfScreen(int which);

@@ -82,10 +82,7 @@ void testApp::setup(){
     
 #endif  
     sH.setup(&scrw,&scrh,zdepth);
-
-#ifndef GUIMODE
-    bH.setup(inw,inh,&blurX,&blurY,&sH);
-#endif
+    bH.setup(inw,inh,&sH);
     visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh,&sH);
     
 #ifndef GUIMODE 
@@ -176,8 +173,10 @@ void testApp::setup(){
     paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
 
 #else
+    visuHandler.setupData();
+    bH.setupData(&blurX,&blurY);
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
- 
+    
 #endif
     
 #ifdef GUIMODE

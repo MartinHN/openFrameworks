@@ -16,7 +16,9 @@ Force::Force(){
 }
 Force::Force(string namein,bool isAttr){
     name = namein;
+#ifndef GUIMODE
     shader.load("","shaders/"+name+".frag");
+#endif
     settings = ofParameterGroup();
     settings.setName(name);
     pl.push_back(&isActive);
@@ -76,14 +78,26 @@ Particles::Particles(VisuHandler * v):VisuClass(v){
 
 }
 
+void Particles::setupData(){
 
+    origintype.addListener(this,&Particles::changeOrigins);
+    gradNum.addListener(this,&Particles::changeGrad);
+    numParticles.addListener(this,&Particles::changeNum);
+    
+    initFbo();
+    
+    updateRender.load("shaders/render.vert","shaders/render.frag");
+    updatePos.load("","shaders/posUpdate.frag");
+    changeGrad(defaultgrad);
+
+}
 void Particles::setup(){
 
     settings.setName("Particles");
     
     
     int defaultgrad=0;
-    changeGrad(defaultgrad);
+    
     noReset = false;
   
 #ifdef PIMG
@@ -125,13 +139,10 @@ void Particles::setup(){
 
 #ifdef PMOD
     MYPARAM(origintype,1,0,2);
-#ifndef GUIMODE
-    origintype.addListener(this,&Particles::changeOrigins);
-#endif
+
 #endif
     
-    gradNum.addListener(this,&Particles::changeGrad);
-    numParticles.addListener(this,&Particles::changeNum);
+
 
     forces.push_back(new Force("netw"));
     forces[forces.size()-1]->addParameter("k",.030f,0.f,.2f);
@@ -199,11 +210,7 @@ void Particles::setup(){
 
     
     
-    
-        initFbo();
-    
-    updateRender.load("shaders/render.vert","shaders/render.frag");
-    updatePos.load("","shaders/posUpdate.frag");
+
     
 
 

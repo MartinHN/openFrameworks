@@ -80,6 +80,7 @@ public:
     void initFbo();
     void initFbo(int w, int h);
     void changeNum(int & num);
+    void setupData();
 
 #ifdef PMOD
     vector<ofPoint> readObj(string path,bool sort = false);

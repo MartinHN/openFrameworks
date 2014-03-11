@@ -11,32 +11,37 @@
 #include "BlobHandler.h"
 
 
-void BlobHandler::setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin,ScreenHandler * sHin){
+void BlobHandler::setup(int inwin, int inhin,ScreenHandler * sHin){
     inw = inwin;
     inh = inhin;
-    blurX=blurXin;
-    blurY = blurYin;
+
     
     sH = sHin;
     
 
+
+
+    
+}
+
+void BlobHandler::setupData(ofShader* blurXin,ofShader * blurYin){
+    blurX=blurXin;
+    blurY = blurYin;
     blobClient.setup();
     blobClient.setApplicationName("kinectExampleDebug");
     blobClient.setServerName("blob");
-//    blobClient.setApplicationName("Quartz Composer");
-//    blobClient.setServerName("N");
-
+    //    blobClient.setApplicationName("Quartz Composer");
+    //    blobClient.setServerName("N");
+    
     syphonTex.allocate(inw,inh,GL_RGB);
     
     gs.allocate(inw, inh);
     lastw = inw;
     lasth = inh;
- 
     
-
+    
+    
     pix.allocate(inw,inh,3);
-
-    
 }
 
 

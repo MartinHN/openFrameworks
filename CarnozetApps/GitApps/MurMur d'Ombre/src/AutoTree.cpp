@@ -17,22 +17,11 @@ AutoTree::AutoTree(VisuHandler * v):VisuClass(v){
    
     
     list.clear();
-    
-    
-    
+
     myfbo = ofFbo();
     
     count = 0;
     introPhase = 0;
-    
-    
-    imagePart.loadImage("images/part.png");
-    imagePart.setAnchorPercent(0.5, 0.5);
-
-    
-    init();
-    
-    
     
     settings.setName("AutoTree");
     
@@ -42,18 +31,26 @@ AutoTree::AutoTree(VisuHandler * v):VisuClass(v){
     MYPARAM(initTrig,false,false,true);
     //initTrig.addListener(this, &AutoTree::startStop);
     MYPARAM(addPoint,false,false,true);
-    addPoint.addListener(this, &AutoTree::addNewPoint);
+    
     MYPARAM(debugMode,false,false,true);
     MYPARAM(reset,false,false,true);
-    reset.addListener(this, &AutoTree::resetAll);
+
     MYPARAM(insideMode, false, false, true);
-    insideMode.addListener(this, &AutoTree::switchMode);
+
     
 //    
 //    MYPARAM(addTrig,false,false,true);
 //    addTrig.addListener(this,&AutoTree::reset);
 }
 
+void AutoTree::setupData(){
+        init();
+    imagePart.loadImage("images/part.png");
+    imagePart.setAnchorPercent(0.5, 0.5);
+    addPoint.addListener(this, &AutoTree::addNewPoint);
+        reset.addListener(this, &AutoTree::resetAll);
+        insideMode.addListener(this, &AutoTree::switchMode);
+}
 
 
 void AutoTree::init(){

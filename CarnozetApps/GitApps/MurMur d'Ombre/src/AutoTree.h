@@ -57,6 +57,7 @@ public:
     
     void update(int w, int h);
     void draw(int w, int h);
+    void setupData();
     
     void createBranche(ofPoint p, float a, int l,int tot,  bool isEnd);
     void resetAll( bool &isReset);

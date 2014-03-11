@@ -13,12 +13,24 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     settings.setName("Photo");
     
     MYPARAM(numPhoto,0,0,11);
-    numPhoto.addListener(this,&Photo::changeImage);
+    
     MYPARAM(isResize,false,false,true);
-    isResize.addListener(this, &Photo::changeResize);
+    
     MYPARAM(isMirror, false, false, true);
-    isMirror.addListener(this, &Photo::changeMirror);
+    
     MYPARAM(color, ofVec3f(255, 255,255), ofVec3f(0,0,0), ofVec3f(255,255,255));
+    
+
+    
+    isSet = false;
+    
+
+
+}
+void Photo::setupData(){
+    numPhoto.addListener(this,&Photo::changeImage);
+    isResize.addListener(this, &Photo::changeResize);
+    isMirror.addListener(this, &Photo::changeMirror);
     
     ofImage img;
     img.loadImage("images/temps/1.jpg");
@@ -55,11 +67,6 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     listOfImage.push_back(img);
     
     imgToDraw = listOfImage.front();
-    
-    isSet = false;
-    
-
-
 }
 
 void Photo::update(int w,int h){

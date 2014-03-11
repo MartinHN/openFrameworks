@@ -22,7 +22,7 @@ public:
     BlobHandler(){};
     
     
-    void setup(int inwin, int inhin,ofShader* blurXin,ofShader * blurYin,ScreenHandler * sH);
+    void setup(int inwin, int inhin,ScreenHandler * sH);
     
     
 //    void computePoly();
@@ -31,6 +31,7 @@ public:
     void compBlob();
     void registerParams();
     void compCache();
+    void setupData(ofShader* blurXin,ofShader * blurYin);
     vector<ofVec3f> compCentroid(float w=1,float h=1);
     vector<ofRectangle> compBounds(float w=1, float h=1);
     vector<ofVec3f> compExtrems(float w=1, float h=1);

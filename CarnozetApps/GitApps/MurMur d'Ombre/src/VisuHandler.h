@@ -47,6 +47,7 @@ public:
     void update();
     void updateHighFPS();
     const void draw(int mode);
+    void setupData();
     void registerParams();
     void saveState(string & s);
     void loadState(string & s);

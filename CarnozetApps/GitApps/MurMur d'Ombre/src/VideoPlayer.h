@@ -25,6 +25,7 @@ public:
     
     void draw(int w, int h);
     void update(int w, int h);
+    void setupData();
     void ppp(int & s);
     int lasts;
     ofVideoPlayer player;

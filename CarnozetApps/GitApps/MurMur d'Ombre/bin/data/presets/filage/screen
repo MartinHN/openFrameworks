@@ -4,14 +4,15 @@
 		<saturation>1</saturation>
 		<contrast>1</contrast>
 		<brightness>1</brightness>
-		<rback>255</rback>
-		<gback>255</gback>
-		<bback>255</bback>
+		<rback>0</rback>
+		<gback>0</gback>
+		<bback>0</bback>
 		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
 		<isPipe>0</isPipe>
 		<pipeblur>0</pipeblur>
+		<pipeAlphablur>255</pipeAlphablur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>0</pipeMask>
 		<camera>
@@ -60,7 +61,6 @@
 		<mask2>0</mask2>
 		<mask3>0</mask3>
 		<mask4>0</mask4>
-		<mask5>0</mask5>
 	</screensCtl>
 	<Visu>
 		<background>
@@ -116,6 +116,7 @@
 				<k>0.1</k>
 				<z>0.01</z>
 				<freeze>0</freeze>
+				<freezemin>0</freezemin>
 				<damp>0.9</damp>
 			</origin>
 			<rotation>
@@ -164,6 +165,8 @@
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
+				<fin>1</fin>
+				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
 				<isActive>0</isActive>
@@ -188,10 +191,12 @@
 			<mode>0</mode>
 			<emitrate>1</emitrate>
 			<noise>0.5</noise>
+			<noiseR>0.472441</noiseR>
 			<angle>45</angle>
 			<mass>0.0001</mass>
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -265,13 +270,14 @@
 		<Photo>
 			<isActive>1</isActive>
 			<isPiping>0</isPiping>
-			<screenN>0</screenN>
+			<screenN>2</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
-			<numPhoto>0</numPhoto>
-			<isResize>0</isResize>
-			<isMirror>0</isMirror>
+			<numPhoto>4</numPhoto>
+			<isResize>1</isResize>
+			<isMirror>1</isMirror>
+			<color>255, 255, 255</color>
 		</Photo>
 		<ColorRuban>
 			<isActive>0</isActive>
@@ -287,5 +293,19 @@
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
 		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>123</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<width>0.390244</width>
+			<steps>24</steps>
+			<drawCentr>1</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>23.6341</alpha>
+		</Liner>
 	</Visu>
 </OF>

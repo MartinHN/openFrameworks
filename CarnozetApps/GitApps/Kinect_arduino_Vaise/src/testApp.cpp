@@ -1,6 +1,6 @@
 #include "testApp.h"
 //--------------------------------------------------------------
-//                  VAISE - KINECT - ARDUINO - GUI - PAS GITER
+//                  VAISE - KINECT - ARDUINO - GUI -
 //--------------------------------------------------------------
 void testApp::setup(){
     
@@ -23,7 +23,6 @@ void testApp::setup(){
     changeAngleKinect(true, angleF);
     
 
-    
     grayKinect.allocate(kinectF.width, kinectF.height);
     grayKinectWarped.allocate(globalWidth, globalHeight);
     grayThresImg.allocate(globalWidth, globalHeight);

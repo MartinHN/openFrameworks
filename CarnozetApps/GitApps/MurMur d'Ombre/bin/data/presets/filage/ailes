@@ -12,12 +12,13 @@
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
 		<pipeblur>0</pipeblur>
+		<pipeAlphablur>85</pipeAlphablur>
 		<hidePipe>1</hidePipe>
 		<pipeMask>0</pipeMask>
 		<camera>
 			<alpha>1</alpha>
 			<distance>1</distance>
-			<ypr>0, 0, 0</ypr>
+			<ypr>0, -0.759422, 0</ypr>
 			<lookAt>0.5, 0.5, 0.5</lookAt>
 			<lookypr>0, 0, 0</lookypr>
 			<isLooking>0</isLooking>
@@ -38,7 +39,7 @@
 		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.403061, 0.663265, 0.5</pos>
+		<pos>0.452464, 0.663265, 0.5</pos>
 		<scale>0.867347, 0.683673, 1</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -50,7 +51,7 @@
 		<attrmirrorx>4</attrmirrorx>
 		<attrmirrory>0</attrmirrory>
 		<attrmirrorz>0</attrmirrorz>
-		<zonefamilly1>0, 0, 1, 0.857143</zonefamilly1>
+		<zonefamilly1>0, 0, 1, 0.865605</zonefamilly1>
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
@@ -60,7 +61,6 @@
 		<mask2>0</mask2>
 		<mask3>0</mask3>
 		<mask4>0</mask4>
-		<mask5>0</mask5>
 	</screensCtl>
 	<Visu>
 		<background>
@@ -86,10 +86,10 @@
 			<recopy>1</recopy>
 			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
-			<timeStep>1</timeStep>
-			<numParticles>43681</numParticles>
-			<particleSize>3.07317</particleSize>
-			<alphaparticle>1.30732</alphaparticle>
+			<timeStep>0.472441</timeStep>
+			<numParticles>90601</numParticles>
+			<particleSize>3.54331</particleSize>
+			<alphaparticle>0.661417</alphaparticle>
 			<partcolor>0, 0, 255</partcolor>
 			<gradtype>0</gradtype>
 			<gradNum>0</gradNum>
@@ -99,24 +99,25 @@
 			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
-				<k>0.00816326</k>
+				<k>0</k>
 				<l0>1.02041</l0>
 				<z>0.469388</z>
 				<size>2</size>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
-				<k>0.0122449</k>
+				<k>0.0304676</k>
 				<l0>1.02041</l0>
 				<z>0.520408</z>
-				<size>2</size>
+				<size>4</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
-				<k>0.100672</k>
-				<z>0.261075</z>
+				<k>0.0380845</k>
+				<z>0.0219347</z>
 				<freeze>0.318168</freeze>
-				<damp>1</damp>
+				<freezemin>0</freezemin>
+				<damp>0.963844</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
@@ -132,7 +133,7 @@
 				<attrFamilly>1</attrFamilly>
 				<attrZone>1</attrZone>
 				<r>0.101792</r>
-				<mass>0.00454082</mass>
+				<mass>0.00149767</mass>
 				<rin>0.0470383</rin>
 				<massin>0</massin>
 				<damp>0.960179</damp>
@@ -164,13 +165,15 @@
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
+				<fin>1</fin>
+				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
 				<isActive>1</isActive>
-				<f>0.992185</f>
-				<fmin>1</fmin>
-				<vmax>0.118965</vmax>
-				<vmin>0</vmin>
+				<f>0.99</f>
+				<fmin>1.04409</fmin>
+				<vmax>1</vmax>
+				<vmin>0.397397</vmin>
 			</globalForce>
 		</particles>
 		<metaBalls>
@@ -188,10 +191,12 @@
 			<mode>0</mode>
 			<emitrate>1</emitrate>
 			<noise>0.5</noise>
+			<noiseR>0.472441</noiseR>
 			<angle>45</angle>
 			<mass>0.0001</mass>
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -271,6 +276,36 @@
 			<isMasking>0</isMasking>
 			<numPhoto>0</numPhoto>
 			<isResize>0</isResize>
+			<isMirror>0</isMirror>
+			<color>255, 255, 255</color>
 		</Photo>
+		<ColorRuban>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<onPause>0</onPause>
+			<stiffness>0.02</stiffness>
+			<timestep>0.02</timestep>
+			<color>255, 255, 255</color>
+			<vout>0.001, 0.001, 0.001</vout>
+			<alpha>255</alpha>
+		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>0</isMapping>
+			<isMasking>0</isMasking>
+			<width>1.70732</width>
+			<steps>32</steps>
+			<drawCentr>0</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>131.854</alpha>
+		</Liner>
 	</Visu>
 </OF>

@@ -12,6 +12,7 @@
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
 		<pipeblur>0</pipeblur>
+		<pipeAlphablur>255</pipeAlphablur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>0</pipeMask>
 		<camera>
@@ -54,26 +55,13 @@
 		<zonefamilly2>0, 0, 1, 1</zonefamilly2>
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
-	<screens>
-		<screen0>
-			<mask>0</mask>
-		</screen0>
-		<screen1>
-			<mask>0</mask>
-		</screen1>
-		<screen2>
-			<mask>0</mask>
-		</screen2>
-		<screen3>
-			<mask>0</mask>
-		</screen3>
-		<screen4>
-			<mask>0</mask>
-		</screen4>
-		<screen5>
-			<mask>0</mask>
-		</screen5>
-	</screens>
+	<screensCtl>
+		<mask0>0</mask0>
+		<mask1>0</mask1>
+		<mask2>0</mask2>
+		<mask3>0</mask3>
+		<mask4>0</mask4>
+	</screensCtl>
 	<Visu>
 		<background>
 			<isActive>1</isActive>
@@ -128,6 +116,7 @@
 				<k>0.1</k>
 				<z>0.01</z>
 				<freeze>0</freeze>
+				<freezemin>0</freezemin>
 				<damp>0.9</damp>
 			</origin>
 			<rotation>
@@ -176,6 +165,8 @@
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
+				<fin>1</fin>
+				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
 				<isActive>0</isActive>
@@ -195,7 +186,17 @@
 			<rayon>0</rayon>
 			<curFamilly>0</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>226.772</lifeTime>
 			<color>0, 0, 0, 0</color>
+			<mode>0</mode>
+			<emitrate>6.02362</emitrate>
+			<noise>0</noise>
+			<noiseR>0.472441</noiseR>
+			<angle>43.5827</angle>
+			<mass>0.409449</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.211417</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -226,6 +227,7 @@
 			<lifeTime>250</lifeTime>
 			<gridForce>0.1</gridForce>
 			<userForce>1</userForce>
+			<gridOpen>1</gridOpen>
 		</BallManager>
 		<drawBlob>
 			<isActive>0</isActive>
@@ -250,6 +252,8 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
+			<color>255, 255, 255</color>
+			<alpha>255</alpha>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
@@ -263,5 +267,45 @@
 			<drawPipe>0</drawPipe>
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
+		<Photo>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
+			<isMirror>0</isMirror>
+			<color>255, 255, 255</color>
+		</Photo>
+		<ColorRuban>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<onPause>0</onPause>
+			<stiffness>0.02</stiffness>
+			<timestep>0.02</timestep>
+			<color>255, 255, 255</color>
+			<vout>0.001, 0.001, 0.001</vout>
+			<alpha>255</alpha>
+		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>123</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<width>0.390244</width>
+			<steps>24</steps>
+			<drawCentr>1</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>23.6341</alpha>
+		</Liner>
 	</Visu>
 </OF>

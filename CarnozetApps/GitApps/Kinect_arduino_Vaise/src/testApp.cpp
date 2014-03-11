@@ -92,7 +92,7 @@ void testApp::setup(){
     
     //Serial
     int baud  = 9600;
-//    serial.setup(0, baud); //open the first device
+    serial.setup(0, baud); //open the first device
     
     //Arduino
     int a = 120;
@@ -121,7 +121,6 @@ void testApp::update(){
 #else
     actualKinect = &kinectF;
 #endif
-    
     
     if(!useTestVid){
     if(useVideo){

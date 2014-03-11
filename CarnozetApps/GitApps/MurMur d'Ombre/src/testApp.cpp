@@ -87,9 +87,7 @@ void testApp::setup(){
     
 #ifndef GUIMODE 
     
-#ifndef LIVEBLUR
-    foreground.push_back(sH.globalMask);
-#endif
+
     
 #ifdef blobosc
     drawBlob = false;

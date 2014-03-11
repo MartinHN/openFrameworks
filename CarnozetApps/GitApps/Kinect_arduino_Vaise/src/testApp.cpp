@@ -1,20 +1,19 @@
 #include "testApp.h"
 //--------------------------------------------------------------
-//                  VAISE - KINECT - ARDUINO - GUI
+//                  VAISE - KINECT - ARDUINO - GUI - PAS GITER
 //--------------------------------------------------------------
 void testApp::setup(){
-
+    
     ofSetLogLevel(OF_LOG_VERBOSE);
     ofSetFrameRate(28);
     
     globalWidth = 320;
     globalHeight = 240;
     
-    angleB = -22;
     angleF = 21;
 	
 	// enable depth->video image calibration
-	kinectF.setRegistration(true);
+	kinectF.setRegistration(false);
     
 	kinectF.init();
 	//globalinit(true); // shows infrared instead of RGB video image
@@ -22,15 +21,9 @@ void testApp::setup(){
 	
 	kinectF.open();
     changeAngleKinect(true, angleF);
-
-#ifdef USE_TWO_KINECT
-    kinectB.setRegistration(true);
-    kinectB.init(false, false);
-    kinectB.open();
-    changeAngleKinect(false, angleB);
     
-#endif
-        
+
+    
     grayKinect.allocate(kinectF.width, kinectF.height);
     grayKinectWarped.allocate(globalWidth, globalHeight);
     grayThresImg.allocate(globalWidth, globalHeight);
@@ -53,6 +46,8 @@ void testApp::setup(){
     save.addListener(this, &testApp::savePreset);
     load.addListener(this, &testApp::loadPreset);
     angle.set("Angle", 90, 4, 180);
+    angleTilt.set("AngleTilt", -22, -50, 50);
+    angleTilt.addListener(this, &testApp::changeAngleTilt);
     p1.set("p1", ofVec2f(0.0, 0), ofVec2f(0.0), ofVec2f(globalWidth, globalHeight));
     p2.set("p2", ofVec2f(globalWidth, 0), ofVec2f(0.0), ofVec2f(globalWidth, globalHeight));
     p3.set("p3", ofVec2f(globalWidth, globalHeight), ofVec2f(0.0), ofVec2f(globalWidth, globalHeight));
@@ -71,6 +66,7 @@ void testApp::setup(){
     parameters.add(erode);
     parameters.add(blur);
     parameters.add(angle);
+    parameters.add(angleTilt);
     
     gui.setup(); // most of the time you don't need a name
     
@@ -79,6 +75,15 @@ void testApp::setup(){
     gui.add(preset.setup("preset", 0, 0, 15));
     gui.add(save.setup("Save"));
     gui.add(load.setup("Open"));
+    
+#ifdef USE_TWO_KINECT
+    kinectB.setRegistration(true);
+    kinectB.init();
+    kinectB.open();
+    int tilt = angleTilt;
+    changeAngleTilt(tilt);
+    
+#endif
     
     // Syphon Server
     ofSetWindowTitle("kinect");
@@ -94,7 +99,7 @@ void testApp::setup(){
     changeAngle(a);
     
     //OSC receiver
-    oscReceiver.setup(12349);
+    oscReceiver.setup(12333);
     
     
 
@@ -106,7 +111,7 @@ void testApp::setup(){
 
 //--------------------------------------------------------------
 void testApp::update(){
-
+    
     
     bool isNewFrame;
     ofxKinect* actualKinect;
@@ -116,7 +121,7 @@ void testApp::update(){
 #else
     actualKinect = &kinectF;
 #endif
-
+    
     
     if(!useTestVid){
     if(useVideo){
@@ -143,10 +148,10 @@ void testApp::update(){
             
             grayKinect.setFromPixels(actualKinect->getDepthPixels(), actualKinect->width, actualKinect->height);
             grayKinect.resize(globalWidth, globalHeight);
-
+            
             //Trapeze correction
             grayKinectWarped = grayKinect;
-
+            
             grayKinectWarped.warpPerspective(ofPoint(p1->x, p1->y),ofPoint(p2->x, p2->y),ofPoint(p3->x, p3->y),ofPoint(p4->x, p4->y));
             grayThresImg = grayKinectWarped;
             
@@ -172,7 +177,7 @@ void testApp::update(){
                 grayThreshFar.threshold(treshFar);
             }
             cvAnd(grayThreshNear.getCvImage(), grayThreshFar.getCvImage(), grayThresImg.getCvImage(), NULL);
-
+            
             
         }
         else{
@@ -211,12 +216,14 @@ void testApp::update(){
         
     }
     
+    updateOsc();
+    
     
 }
 
 //--------------------------------------------------------------
 void testApp::draw(){
-
+    
     gui.draw();
     
     ofTranslate(240, 20);
@@ -238,7 +245,7 @@ void testApp::draw(){
     ofCircle(p2->x, p2->y, 10);
     ofCircle(p3->x, p3->y, 10);
     ofCircle(p4->x, p4->y, 10);
-
+    
     ofTranslate(0, 260);
     ofSetColor(255);
     grayThresImg.draw(0, 0);
@@ -250,10 +257,10 @@ void testApp::draw(){
 void testApp::changeAngle(int  & i){
     
     if( i>4 && i< 180){
-    
-    unsigned char a = static_cast<char>(i);
-    
-    serial.writeByte(a);
+        
+        unsigned char a = static_cast<char>(i);
+        
+        serial.writeByte(a);
         
     }
     
@@ -266,7 +273,12 @@ void testApp::savePreset(){
     string str = ofToString(numPreset);
     //str += ".xml";
     
+    if(ofGetKeyPressed('s')){
     gui.saveToFile(str);
+        
+    }
+    
+    
     
 }
 
@@ -287,12 +299,24 @@ void testApp::changeAngleKinect(bool useFront, int value){
     
     
     if(useFront){
-	kinectF.setCameraTiltAngle(value);
+        kinectF.setCameraTiltAngle(value);
         
     }
     else{
         kinectB.setCameraTiltAngle(value);
     }
+    
+    
+}
+
+//-------------------------------------------------------------
+void testApp::changeAngleTilt(int &value){
+    
+    if(value>30) value = 30;
+    if(value< -30) value = -30;
+    
+    kinectB.setCameraTiltAngle(value);
+
     
     
 }
@@ -303,40 +327,41 @@ void testApp::updateOsc(){
     
     if(oscReceiver.getNextMessage(&m))
     {
-     
+        
         if(m.getAddress()=="preset"){
             
             int pres = m.getArgAsFloat(0);
             preset = pres;
+            loadPreset();
             
         }
         
     }
     
-  
-
+    
+    
     
 }
 
 //--------------------------------------------------------------
 void testApp::keyPressed(int key){
-
     
     
-//    
-//    switch (key) {
-//        case OF_KEY_UP:
-//            angleB++;
-//            changeAngleKinect(false, angleB);
-//            break;
-//        case OF_KEY_DOWN:
-//            angleB--;
-//            changeAngleKinect(false, angleB);
-//            break;
-//            
-//        default:
-//            break;
-//    }
+    
+    //
+    //    switch (key) {
+    //        case OF_KEY_UP:
+    //            angleB++;
+    //            changeAngleKinect(false, angleB);
+    //            break;
+    //        case OF_KEY_DOWN:
+    //            angleB--;
+    //            changeAngleKinect(false, angleB);
+    //            break;
+    //
+    //        default:
+    //            break;
+    //    }
     
     
 }
@@ -355,40 +380,40 @@ void testApp::loadVid(bool & b){
 
 //--------------------------------------------------------------
 void testApp::keyReleased(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::mouseDragged(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::mousePressed(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::mouseReleased(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
 void testApp::dragEvent(ofDragInfo dragInfo){ 
-
+    
 }

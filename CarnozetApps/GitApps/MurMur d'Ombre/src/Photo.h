@@ -23,9 +23,12 @@ public:
     void draw(int w, int h);
     void changeImage(int &num);
     void changeResize(bool& resize);
+    void changeMirror(bool& ismir);
     
     ofParameter<int> numPhoto;
     ofParameter<bool> isResize;
+    ofParameter<bool> isMirror;
+    ofParameter<ofVec3f> color;
     
     vector<ofImage> listOfImage;
     

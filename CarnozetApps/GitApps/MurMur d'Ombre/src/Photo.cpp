@@ -12,43 +12,51 @@ Photo::Photo(VisuHandler * v):VisuClass(v){
     
     settings.setName("Photo");
     
-    MYPARAM(numPhoto,0,0,10);
+    MYPARAM(numPhoto,0,0,11);
     numPhoto.addListener(this,&Photo::changeImage);
     MYPARAM(isResize,false,false,true);
     isResize.addListener(this, &Photo::changeResize);
+    MYPARAM(isMirror, false, false, true);
+    isMirror.addListener(this, &Photo::changeMirror);
+    MYPARAM(color, ofVec3f(255, 255,255), ofVec3f(0,0,0), ofVec3f(255,255,255));
     
     ofImage img;
-    img.loadImage("images/temps/1.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/1.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/2.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/2.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/3.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/3.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/4.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/4.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/5.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/5.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/6.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/6.jpg");
     listOfImage.push_back(img);
     
-    img.loadImage("images/temps/7.png");
-    img.setAnchorPercent(0.5,0.5);
+    img.loadImage("images/temps/7.jpg");
+    listOfImage.push_back(img);
+    
+    img.loadImage("images/temps/8.jpg");
+    listOfImage.push_back(img);
+    
+    img.loadImage("images/temps/9.jpg");
+    listOfImage.push_back(img);
+    
+    img.loadImage("images/temps/10.jpg");
+    listOfImage.push_back(img);
+    
+    img.loadImage("images/temps/11.jpg");
     listOfImage.push_back(img);
     
     imgToDraw = listOfImage.front();
     
-    isSet = true;
+    isSet = false;
     
 
 
@@ -84,6 +92,9 @@ void Photo::update(int w,int h){
         
         }
         
+        if(isMirror){
+            imgToDraw.mirror(false, true);
+        }
        // imgToDraw.setAnchorPercent(0.5f, 0.5f);
         isSet = true;
         
@@ -96,6 +107,7 @@ void Photo::draw(int w, int h){
     
     if(isSet && numPhoto>0){
         
+        ofSetColor(color->x, color->y, color->z);
         imgToDraw.draw(0, 0, w, h);
     }
     
@@ -115,5 +127,16 @@ void Photo::changeImage(int& num){
 void Photo::changeResize(bool& resize){
     
     isSet = false;
+    int num = numPhoto;
+    changeImage(num);
+}
+
+void Photo::changeMirror(bool &ismir){
+    
+    int num = numPhoto;
+    changeImage(num);
+    
+    isSet = false;
+    
 }
 

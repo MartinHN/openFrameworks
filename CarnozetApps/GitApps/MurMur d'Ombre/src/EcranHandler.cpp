@@ -197,7 +197,12 @@ const ofVec2f ScreenHandler::sizeOfScreen(const int which){
 
 void ScreenHandler::drawMask(){
     ofColor curCol;
-    if(!invertMask)    curCol.set(255);
+    ofSetColor(0);
+    ofRect(0,0,*scrw,screenL[0]->rectMax.y);
+    ofRect(0,0,screenL[0]->rectMax.y,*scrh);
+    ofRect(screenL[0]->rectMax.getMaxX(),0,*scrw-screenL[0]->rectMax.getMaxX(),*scrh);
+    ofRect(0,screenL[0]->rectMax.getMaxY(),*scrw,*scrh-screenL[0]->rectMax.getMaxY());
+    if(!invertMask)curCol.set(255);
     else curCol.set(0);
     for (int i = 1 ; i < screenL.size();i++){
         if(screensCtl.getBool("mask"+ofToString(i))){

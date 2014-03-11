@@ -435,7 +435,7 @@ void testApp::draw(){
     
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA);
     if(oneMask){
-        ofEnableAlphaBlending();
+  
         if(!sH.invertMask)ofSetColor(0);
         else ofSetColor(255);
         ofRect(0, 0, scrw, scrh);

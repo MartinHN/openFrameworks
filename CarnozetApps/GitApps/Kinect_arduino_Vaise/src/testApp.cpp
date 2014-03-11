@@ -87,7 +87,6 @@ void testApp::setup(){
     
     // Syphon Server
     ofSetWindowTitle("kinect");
-    syphonServerVid.setName("video");
     syphonServerBlob.setName("blob");
     
     //Serial

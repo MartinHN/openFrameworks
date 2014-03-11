@@ -205,7 +205,7 @@ ColorRuban::ColorRuban(VisuHandler *v):VisuClass(v){
     MYPARAM(stiffness,0.02f,0.f,0.1f);
     MYPARAM(timestep,0.02f,0.f,0.1f);
     MYPARAM(color,ofVec3f(255),ofVec3f(0),ofVec3f(255));
-    MYPARAM(vout, ofVec3f(0.001),ofVec3f(0),ofVec3f(0.1));
+    MYPARAM(vout, ofVec3f(0),ofVec3f(-50),ofVec3f(50));
     MYPARAM(alpha,255,0,255);
     init(pos, angle);
     

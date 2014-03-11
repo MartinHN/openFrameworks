@@ -64,6 +64,20 @@ void boule2gomme::draw(int w, int h){
             rr.scale(w,h);
             ofRect(rr);
         }
-    }   
+    } 
+    
+    vector<ofPolyline> b = dad->bH->getBlobs(w,h);
+    for (int i = 0 ; i < b.size(); i ++){
+        ofSetColor(255,255,255,100);
+        ofSetLineWidth(2);
+        ofPoint centr = b[i].getCentroid2D();
+        ofTranslate(centr.x,0);
+        for (int j = 0 ; j < b[i].size() ; j++){
+            
+            ofRotateY(3*360/b[i].size());
+            ofLine(b[i][j]-ofVec2f(centr.x,0),b[i][(j+50)%(b[i].size())]-ofVec2f(centr.x,0));
+            ofLine(b[i][j]-ofVec2f(centr.x,0),ofVec3f(0,centr.y));
+        }
+    }
 
 }

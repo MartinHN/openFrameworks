@@ -122,8 +122,8 @@ void testApp::saveXml(){
         
         Screen src = listOfScreen.at(i);
         
-        xml.addTag(ofToString("screen"+ofToString(i)));
-        xml.pushTag(ofToString("screen"+ofToString(i)));
+        xml.addTag(ofToString("screen"+ofToString(i+1)));
+        xml.pushTag(ofToString("screen"+ofToString(i+1)));
         
         xml.addTag(ofToString("vertices"));
         xml.pushTag(ofToString("vertices"));
@@ -158,7 +158,10 @@ xml.setValue("p"+ofToString(j), ofToString(src.listOfPoint.at(j).x/ofGetWidth())
     }
     
     xml.popTag();
-    xml.save("pecrans1.xml");
+    
+    ofFileDialogResult filep = ofSystemSaveDialog("pecrans1.xml","save screen map preset file");
+    string saveName = filep.getPath();
+    xml.save(saveName);
     
     
 }

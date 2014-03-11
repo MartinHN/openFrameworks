@@ -1,6 +1,6 @@
 <OF>
 	<global>
-		<finalblur>0</finalblur>
+		<finalblur>10</finalblur>
 		<saturation>1</saturation>
 		<contrast>1</contrast>
 		<brightness>1</brightness>
@@ -183,19 +183,20 @@
 			<recopy>1</recopy>
 			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
-			<rayon>0.409449</rayon>
+			<rayon>0.15748</rayon>
 			<curFamilly>1</curFamilly>
 			<alpha>0.668293</alpha>
-			<lifeTime>327.559</lifeTime>
+			<lifeTime>119.685</lifeTime>
 			<color>255, 255, 255, 255</color>
 			<mode>1</mode>
-			<emitrate>3.07087</emitrate>
-			<noise>0.5</noise>
-			<angle>34.6829</angle>
-			<mass>1.02439</mass>
+			<emitrate>0.669291</emitrate>
+			<noise>0</noise>
+			<noiseR>5</noiseR>
+			<angle>43.5827</angle>
+			<mass>0.409449</mass>
 			<drawLines>0</drawLines>
-			<maxv>0.12874</maxv>
-			<f>0.86063</f>
+			<maxv>0.0153543</maxv>
+			<f>0.962205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>

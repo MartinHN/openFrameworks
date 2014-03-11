@@ -44,13 +44,14 @@ public:
     ofParameter<ofVec4f> color;
     vector<ofVec3f>  dpoints;
     vector<Meta>  points;
-    ofParameter<float> lifeTime,emitrate,noise,angle,mass;
+    ofParameter<float> lifeTime,emitrate,noise,noiseR,angle,mass,f;
     ofParameter<bool> drawLines;
     ofParameter<float> maxv;
     
     ofImage metaBall;
     
     unsigned long lastT;
+    int maxsize;
 
     
 };

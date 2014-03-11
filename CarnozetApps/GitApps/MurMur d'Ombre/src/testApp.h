@@ -149,7 +149,7 @@ public:
     ofParameter<string> loadName;
 
     ofParameter<bool> isGloom;
-    ofParameter<int> bloomsize;
+    ofParameter<int> bloomsize,pipeAlphablur;
     
     ofParameter<bool> isPipe,hidePipe,pipeMask;
     ofParameter<float> pipeblur;
@@ -166,7 +166,11 @@ public:
     AttrCtl attrctl;
     
     ofxOscParameterSync paramSync;
+    
+    
+    ofxOscParameterSync screenSync;
     ofParameterGroup screensParam;
+    
     
     ScreenHandler sH;
     

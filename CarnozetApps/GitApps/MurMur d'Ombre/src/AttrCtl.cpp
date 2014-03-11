@@ -65,7 +65,7 @@ void AttrCtl::addPoints(vector<ofPoint> curcentroids,int type){
 
 
     for(int i = 0 ; i< curcentroids.size() ; i++){
-        AttrStruct p = AttrStruct(ofPoint(curcentroids[i].x,curcentroids[i].y,curcentroids[i].z+zoffset),type,0);
+        AttrStruct p = AttrStruct(ofPoint(curcentroids[i].x,curcentroids[i].y,curcentroids[i].z+zoffset-0.5),type,0);
         for(int k = 0 ; k< zones.size();k++){
             if(zones[k].inside(p.p)){
                 p.zone=k+1;
@@ -118,7 +118,8 @@ vector<ofPoint> AttrCtl::getType(int f,float w, float h,int z){
             res.push_back(destA[i].p);
             if(invx)res.back().x = 1- res.back().x;
             if(invy)res.back().y = 1- res.back().y;
-                res.back()*=ofVec2f(w,h);
+                
+                res.back()*=ofVec3f(w,h,1);
             }
         }
         

@@ -41,6 +41,8 @@ void testApp::setup(){
 	grayThreshFar.allocate(globalWidth, globalHeight);
     
     //ofParameters
+    useTestVid.set("use Test Video",false);
+    useTestVid.addListener(this,&testApp::loadVid);
     threshold.set("thresh near far", ofVec2f(255, 80),ofVec2f(0, 0),ofVec2f(255, 255));
     useMotionDetection.set("motion detection", false);
     useKinectFront.set("Use Kinect front", true);
@@ -61,6 +63,7 @@ void testApp::setup(){
     parameters.add(useMotionDetection);
     parameters.add(useKinectFront);
     parameters.add(useVideo);
+    parameters.add(useTestVid);
     parameters.add(p1);
     parameters.add(p2);
     parameters.add(p3);
@@ -84,7 +87,7 @@ void testApp::setup(){
     
     //Serial
     int baud  = 9600;
-    serial.setup(0, baud); //open the first device
+//    serial.setup(0, baud); //open the first device
     
     //Arduino
     int a = 120;
@@ -92,6 +95,11 @@ void testApp::setup(){
     
     //OSC receiver
     oscReceiver.setup(12349);
+    
+    
+
+    
+
     
     
 }
@@ -110,7 +118,7 @@ void testApp::update(){
 #endif
 
     
-    
+    if(!useTestVid){
     if(useVideo){
         actualKinect->update();
         isNewFrame = actualKinect->isFrameNewVideo();
@@ -121,9 +129,15 @@ void testApp::update(){
         actualKinect->update();
         isNewFrame = actualKinect->isFrameNewDepth();
     }
+    }
+    else{
+        player.update();
+        isNewFrame = player.isFrameNew();
+        
+    }
     
     if(isNewFrame){
-        
+        if(!useTestVid){
       
         if(!useVideo){
             
@@ -171,12 +185,19 @@ void testApp::update(){
             grayThresImg.threshold(threshold->y);
             
         }
+        }
+        else{
+            colorImg.setFromPixels(player.getPixels(),player.width,player.height);
+            grayThresImg = colorImg;
+            grayThresImg.threshold(threshold->y,true);
+        }
         
         float er = erode;
-        float blu = blur;
+        float blu = int(blur / 2) * 2 +1;
         cvErode(grayThresImg.getCvImage(), grayThresImg.getCvImage(), NULL, er);
         cvDilate(grayThresImg.getCvImage(), grayThresImg.getCvImage(), NULL, er);
-        grayThresImg.blur(blu);
+        
+        if(blu>0)grayThresImg.blur(blu);
         
         
         //Syphon
@@ -318,6 +339,18 @@ void testApp::keyPressed(int key){
 //    }
     
     
+}
+
+
+
+void testApp::loadVid(bool & b){
+    if(b){
+        player.loadMovie("bien.mov");
+        player.play();
+    }
+    else{
+        player.close();
+    }
 }
 
 //--------------------------------------------------------------

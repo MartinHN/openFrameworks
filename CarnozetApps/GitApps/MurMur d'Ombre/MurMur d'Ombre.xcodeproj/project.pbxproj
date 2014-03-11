@@ -122,10 +122,8 @@
 		6F1EE6E918A9292500608125 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1EE6E218A9292500608125 /* QTKit.framework */; };
 		6F1EE6EA18A9292500608125 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1EE6E218A9292500608125 /* QTKit.framework */; };
 		6F1EE6EB18A9292500608125 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1EE6E218A9292500608125 /* QTKit.framework */; };
-		6F1EEA6A18A94F3300608125 /* globalForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6918A94F3300608125 /* globalForce.frag */; };
 		6F1EEA6B18A94F3300608125 /* globalForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6918A94F3300608125 /* globalForce.frag */; };
 		6F1EEA6C18A94F3300608125 /* globalForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6918A94F3300608125 /* globalForce.frag */; };
-		6F1EEA6E18A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		6F1EEA6F18A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		6F1EEA7018A95D6C00608125 /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		6F2DD5EE18B2252700AA09D2 /* BlobHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F2DD5EC18B2252700AA09D2 /* BlobHandler.cpp */; };
@@ -141,30 +139,21 @@
 		6F2DD5FC18B22E0600AA09D2 /* SyphonNameboundClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F20915F6188EC6C100AC8620 /* SyphonNameboundClient.m */; };
 		6F2DD5FD18B22E2700AA09D2 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F20915F3188EC6C100AC8620 /* Syphon.framework */; };
 		6F2DD5FE18B22E6700AA09D2 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F20915F3188EC6C100AC8620 /* Syphon.framework */; };
-		6F2EDF9D18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
 		6F2EDF9E18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
 		6F2EDF9F18B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
-		6F2EDFA018B3613400D28964 /* rotation.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2EDF9C18B3613400D28964 /* rotation.frag */; };
-		6F2F476318AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
 		6F2F476418AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
 		6F2F476518AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
-		6F2F476618AE71F10050EA33 /* thresholdBW.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F2F476218AE71F10050EA33 /* thresholdBW.frag */; };
 		6F4915F318AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
 		6F4915F418AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
 		6F4915F518AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
 		6F4915F618AE2C7E001079F3 /* metaBalls.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F118AE2C7E001079F3 /* metaBalls.cpp */; };
-		6F4915F818AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
 		6F4915F918AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
 		6F4915FA18AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
-		6F4915FB18AE3171001079F3 /* smoothyGrav.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F4915F718AE3171001079F3 /* smoothyGrav.frag */; };
 		6F9E617A18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
 		6F9E617B18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
 		6F9E617C18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
-		6F9E617D18AD417100D93498 /* bloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617918AD417100D93498 /* bloom.frag */; };
-		6F9E617F18AD48EB00D93498 /* gloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617E18AD48EB00D93498 /* gloom.frag */; };
 		6F9E618018AD48EB00D93498 /* gloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617E18AD48EB00D93498 /* gloom.frag */; };
 		6F9E618118AD48EB00D93498 /* gloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617E18AD48EB00D93498 /* gloom.frag */; };
-		6F9E618218AD48EB00D93498 /* gloom.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F9E617E18AD48EB00D93498 /* gloom.frag */; };
 		6FB148C618AA5CF800C6B63F /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FB148C418AA5CF800C6B63F /* background.cpp */; };
 		6FB148C718AA5CF800C6B63F /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FB148C418AA5CF800C6B63F /* background.cpp */; };
 		6FB148C818AA5CF800C6B63F /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FB148C418AA5CF800C6B63F /* background.cpp */; };
@@ -307,20 +296,12 @@
 		F200AA4018A97C5D0004F00A /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ede55d82bd962dac0e94b708addc77b6 /* ofxAssimpModelLoader.cpp */; };
 		F200AA4118A97C5D0004F00A /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64C18A9229100608125 /* ofxPanel.cpp */; };
 		F200AA4218A97C5D0004F00A /* ofxThreadedImageLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45b576a8b106cbe71564781c3ac63c76 /* ofxThreadedImageLoader.cpp */; };
-		F200AA4318A97C5D0004F00A /* posUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774571653B46B00E0CB96 /* posUpdate.frag */; };
-		F200AA4418A97C5D0004F00A /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774581653B46B00E0CB96 /* render.frag */; };
-		F200AA4518A97C5D0004F00A /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745A1653B46B00E0CB96 /* render.vert */; };
-		F200AA4618A97C5D0004F00A /* velUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745B1653B46B00E0CB96 /* velUpdate.frag */; };
-		F200AA4718A97C5D0004F00A /* blur.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C26C7F16C155DA00E80EC5 /* blur.frag */; };
 		F200AA4818A97C5D0004F00A /* Easer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F260A73B16C4EE440041ACEA /* Easer.cpp */; };
 		F200AA4918A97C5D0004F00A /* visu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D666FA16F8D94F00B5FD58 /* visu.cpp */; };
 		F200AA4A18A97C5D0004F00A /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64518A9229100608125 /* ofxButton.cpp */; };
 		F200AA4B18A97C5D0004F00A /* AttrCtl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F296B6DF16FDB93F0068A6BD /* AttrCtl.cpp */; };
 		F200AA4C18A97C5D0004F00A /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		F200AA4D18A97C5D0004F00A /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
-		F200AA4E18A97C5D0004F00A /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
-		F200AA5118A97C5D0004F00A /* globalForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6918A94F3300608125 /* globalForce.frag */; };
-		F200AA5218A97C5D0004F00A /* fieldForce.frag in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EEA6D18A95D6C00608125 /* fieldForce.frag */; };
 		F200AA5318A97C5D0004F00A /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
 		F200AA5518A97C5D0004F00A /* Ecrans.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC44E1885C66F00FDBDC2 /* Ecrans.cpp */; };
 		F200AA5618A97C5D0004F00A /* VisuClass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F20CC45B1885D73E00FDBDC2 /* VisuClass.cpp */; };
@@ -346,23 +327,12 @@
 		F200AA6A18A97C5D0004F00A /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64E18A9229100608125 /* ofxSlider.cpp */; };
 		F200AA6B18A97C5D0004F00A /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE65218A9229100608125 /* ofxToggle.cpp */; };
 		F200AA6C18A97C5D0004F00A /* Warp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D60518A0E43C005EA5A4 /* Warp.cpp */; };
-		F200AA6D18A97C5D0004F00A /* blurX.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61218A111D2005EA5A4 /* blurX.frag */; };
-		F200AA6E18A97C5D0004F00A /* blurY.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61318A111D2005EA5A4 /* blurY.frag */; };
-		F200AA6F18A97C5D0004F00A /* colorMod.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61618A11EEC005EA5A4 /* colorMod.frag */; };
-		F200AA7018A97C5D0004F00A /* origin.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61818A12425005EA5A4 /* origin.frag */; };
 		F200AA7118A97C5D0004F00A /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64A18A9229100608125 /* ofxLabel.cpp */; };
 		F200AA7218A97C5D0004F00A /* EcranHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FA5DF218A3944F00513406 /* EcranHandler.cpp */; };
-		F200AA7318A97C5D0004F00A /* blurXa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98018A52F2100450D5F /* blurXa.frag */; };
 		F200AA7418A97C5D0004F00A /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64318A9229100608125 /* ofxBaseGui.cpp */; };
-		F200AA7518A97C5D0004F00A /* blurYa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98118A52F2200450D5F /* blurYa.frag */; };
 		F200AA7618A97C5D0004F00A /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F220C7B218A65D1900B8EA9F /* Gui.cpp */; };
-		F200AA7718A97C5D0004F00A /* mask.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B53418A6A9430056A36B /* mask.frag */; };
-		F200AA7818A97C5D0004F00A /* gravity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B54818A7B66F0056A36B /* gravity.frag */; };
 		F200AA7918A97C5D0004F00A /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE64818A9229100608125 /* ofxGuiGroup.cpp */; };
-		F200AA7A18A97C5D0004F00A /* netw.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B54A18A7D4750056A36B /* netw.frag */; };
-		F200AA7B18A97C5D0004F00A /* neth.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83ED18A8D54D005E75BB /* neth.frag */; };
 		F200AA7C18A97C5D0004F00A /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F1EE65018A9229100608125 /* ofxSliderGroup.cpp */; };
-		F200AA7D18A97C5D0004F00A /* spring.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83EF18A8EF2B005E75BB /* spring.frag */; };
 		F200AA7F18A97C5D0004F00A /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F1EE6E118A9292500608125 /* Accelerate.framework */; };
 		F200AA8018A97C5D0004F00A /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		F200AA8118A97C5D0004F00A /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
@@ -396,8 +366,6 @@
 		F213706918C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
 		F213706A18C5490E00F2195A /* VideoPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F213706518C5490E00F2195A /* VideoPlayer.cpp */; };
 		F220C7B418A65D1900B8EA9F /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F220C7B218A65D1900B8EA9F /* Gui.cpp */; };
-		F222D98218A52F2300450D5F /* blurXa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98018A52F2100450D5F /* blurXa.frag */; };
-		F222D98318A52F2300450D5F /* blurYa.frag in Sources */ = {isa = PBXBuildFile; fileRef = F222D98118A52F2200450D5F /* blurYa.frag */; };
 		F22359F517C15D2800895AA8 /* Ruban.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F22359F317C15D2800895AA8 /* Ruban.cpp */; };
 		F242ACAE18A05DAD0091E2EF /* boule2gomme.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F242ACAD18A05DAC0091E2EF /* boule2gomme.cpp */; };
 		F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */; };
@@ -405,7 +373,6 @@
 		F25C29E718ABF6E200A3AFE2 /* CamHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */; };
 		F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */; };
 		F260A73D16C4EE440041ACEA /* Easer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F260A73B16C4EE440041ACEA /* Easer.cpp */; };
-		F26A260C17BEB77B0053DD48 /* Shadow.frag in Sources */ = {isa = PBXBuildFile; fileRef = F26A260B17BEB77B0053DD48 /* Shadow.frag */; };
 		F2901AE718C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
 		F2901AE818C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
 		F2901AE918C22C8700B2D50E /* AutoTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AE518C22C8700B2D50E /* AutoTree.cpp */; };
@@ -424,14 +391,6 @@
 		F2901AFC18C22C9600B2D50E /* CircleLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2901AEF18C22C9600B2D50E /* CircleLine.cpp */; };
 		F296B6E116FDB93F0068A6BD /* AttrCtl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F296B6DF16FDB93F0068A6BD /* AttrCtl.cpp */; };
 		F2B9D60718A0E43C005EA5A4 /* Warp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D60518A0E43C005EA5A4 /* Warp.cpp */; };
-		F2B9D61418A111D2005EA5A4 /* blurX.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61218A111D2005EA5A4 /* blurX.frag */; };
-		F2B9D61518A111D2005EA5A4 /* blurY.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61318A111D2005EA5A4 /* blurY.frag */; };
-		F2B9D61718A11EEC005EA5A4 /* colorMod.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61618A11EEC005EA5A4 /* colorMod.frag */; };
-		F2B9D61918A12426005EA5A4 /* origin.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2B9D61818A12425005EA5A4 /* origin.frag */; };
-		F2C0B53518A6A9430056A36B /* mask.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B53418A6A9430056A36B /* mask.frag */; };
-		F2C0B54918A7B66F0056A36B /* gravity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B54818A7B66F0056A36B /* gravity.frag */; };
-		F2C0B54B18A7D4750056A36B /* netw.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C0B54A18A7D4750056A36B /* netw.frag */; };
-		F2C26C8016C155DA00E80EC5 /* blur.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2C26C7F16C155DA00E80EC5 /* blur.frag */; };
 		F2CCD63E1891927900C0F2B2 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2CCD6181891927900C0F2B2 /* IpEndpointName.cpp */; };
 		F2CCD63F1891927900C0F2B2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2CCD61D1891927900C0F2B2 /* NetworkingUtils.cpp */; };
 		F2CCD6401891927A00C0F2B2 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2CCD61E1891927900C0F2B2 /* UdpSocket.cpp */; };
@@ -449,21 +408,13 @@
 		F2D52E1217BB856300E384AB /* VisuHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1017BB856300E384AB /* VisuHandler.cpp */; };
 		F2D52E1617BBA3E800E384AB /* ParticlesHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D52E1417BBA3E800E384AB /* ParticlesHandler.cpp */; };
 		F2D666FC16F8D94F00B5FD58 /* visu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2D666FA16F8D94F00B5FD58 /* visu.cpp */; };
-		F2E27B0F18AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
 		F2E27B1018AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
 		F2E27B1118AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
-		F2E27B1218AD60D000DE2130 /* thresholdIntensity.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2E27B0E18AD60D000DE2130 /* thresholdIntensity.frag */; };
-		F2F7745C1653B46B00E0CB96 /* posUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774571653B46B00E0CB96 /* posUpdate.frag */; };
-		F2F7745D1653B46B00E0CB96 /* render.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F774581653B46B00E0CB96 /* render.frag */; };
-		F2F7745E1653B46B00E0CB96 /* render.vert in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745A1653B46B00E0CB96 /* render.vert */; };
-		F2F7745F1653B46B00E0CB96 /* velUpdate.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2F7745B1653B46B00E0CB96 /* velUpdate.frag */; };
 		F2F8117918C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
 		F2F8117A18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
 		F2F8117B18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
 		F2F8117C18C3734700965B1B /* drawBlob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2F8117818C3734600965B1B /* drawBlob.cpp */; };
 		F2FA5DF318A3944F00513406 /* EcranHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2FA5DF218A3944F00513406 /* EcranHandler.cpp */; };
-		F2FB83EE18A8D54D005E75BB /* neth.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83ED18A8D54D005E75BB /* neth.frag */; };
-		F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */ = {isa = PBXBuildFile; fileRef = F2FB83EF18A8EF2B005E75BB /* spring.frag */; };
 		c2b7714e50909a7bcae5a51c9821f98a /* texture3DS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = bb605e48a7d7e1902d8c19c57275f40f /* texture3DS.cpp */; };
 		d3301f6a0b43bb293ed97c1d5d26c840 /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8a4dd23693dfab8ec05faa5d62c49d8c /* ofxCvShortImage.cpp */; };
 		e212c821d1064b92dd953a42edc08aa7 /* ofxCvHaarFinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9a16cbf2e8cfe43af54fe6f55efbf8a4 /* ofxCvHaarFinder.cpp */; };
@@ -2429,20 +2380,12 @@
 				8ded5056525646fa71980866dad7cfd5 /* ofxAssimpModelLoader.cpp in Sources */,
 				6F1EE65C18A9229100608125 /* ofxPanel.cpp in Sources */,
 				ec26f225d807f4f0694059240bc36eb7 /* ofxThreadedImageLoader.cpp in Sources */,
-				F2F7745C1653B46B00E0CB96 /* posUpdate.frag in Sources */,
-				F2F7745D1653B46B00E0CB96 /* render.frag in Sources */,
-				F2F7745E1653B46B00E0CB96 /* render.vert in Sources */,
-				F2F7745F1653B46B00E0CB96 /* velUpdate.frag in Sources */,
-				F2C26C8016C155DA00E80EC5 /* blur.frag in Sources */,
 				F260A73D16C4EE440041ACEA /* Easer.cpp in Sources */,
 				F2D666FC16F8D94F00B5FD58 /* visu.cpp in Sources */,
 				6F1EE65618A9229100608125 /* ofxButton.cpp in Sources */,
 				F296B6E116FDB93F0068A6BD /* AttrCtl.cpp in Sources */,
 				F2D52E1217BB856300E384AB /* VisuHandler.cpp in Sources */,
 				F2D52E1617BBA3E800E384AB /* ParticlesHandler.cpp in Sources */,
-				F26A260C17BEB77B0053DD48 /* Shadow.frag in Sources */,
-				6F1EEA6A18A94F3300608125 /* globalForce.frag in Sources */,
-				6F1EEA6E18A95D6C00608125 /* fieldForce.frag in Sources */,
 				F22359F517C15D2800895AA8 /* Ruban.cpp in Sources */,
 				F20CC4501885C66F00FDBDC2 /* Ecrans.cpp in Sources */,
 				F20CC45D1885D73E00FDBDC2 /* VisuClass.cpp in Sources */,
@@ -2460,10 +2403,8 @@
 				F2CCD6441891927A00C0F2B2 /* OscPrintReceivedElements.cpp in Sources */,
 				F2CCD6451891927A00C0F2B2 /* OscReceivedElements.cpp in Sources */,
 				F2CCD6461891927A00C0F2B2 /* OscTypes.cpp in Sources */,
-				6F4915F818AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F2CCD6471891927A00C0F2B2 /* ofxOscBundle.cpp in Sources */,
 				6F2DD5EE18B2252700AA09D2 /* BlobHandler.cpp in Sources */,
-				6F2EDF9D18B3613400D28964 /* rotation.frag in Sources */,
 				F2CCD6481891927A00C0F2B2 /* ofxOscMessage.cpp in Sources */,
 				F2CCD6491891927A00C0F2B2 /* ofxOscParameterSync.cpp in Sources */,
 				F2CCD64A1891927A00C0F2B2 /* ofxOscReceiver.cpp in Sources */,
@@ -2472,29 +2413,15 @@
 				6F1EE65E18A9229100608125 /* ofxSlider.cpp in Sources */,
 				6F1EE66218A9229100608125 /* ofxToggle.cpp in Sources */,
 				F2B9D60718A0E43C005EA5A4 /* Warp.cpp in Sources */,
-				F2B9D61418A111D2005EA5A4 /* blurX.frag in Sources */,
-				F2B9D61518A111D2005EA5A4 /* blurY.frag in Sources */,
 				6F4915F318AE2C7E001079F3 /* metaBalls.cpp in Sources */,
-				F2B9D61718A11EEC005EA5A4 /* colorMod.frag in Sources */,
-				F2B9D61918A12426005EA5A4 /* origin.frag in Sources */,
 				6F1EE65A18A9229100608125 /* ofxLabel.cpp in Sources */,
 				F2FA5DF318A3944F00513406 /* EcranHandler.cpp in Sources */,
-				F222D98218A52F2300450D5F /* blurXa.frag in Sources */,
 				6F1EE65418A9229100608125 /* ofxBaseGui.cpp in Sources */,
-				6F2F476318AE71F10050EA33 /* thresholdBW.frag in Sources */,
-				F222D98318A52F2300450D5F /* blurYa.frag in Sources */,
 				F220C7B418A65D1900B8EA9F /* Gui.cpp in Sources */,
-				F2C0B53518A6A9430056A36B /* mask.frag in Sources */,
-				F2C0B54918A7B66F0056A36B /* gravity.frag in Sources */,
 				6F1EE65818A9229100608125 /* ofxGuiGroup.cpp in Sources */,
 				E131CF8B18CA03B50067F453 /* Photo.cpp in Sources */,
-				F2C0B54B18A7D4750056A36B /* netw.frag in Sources */,
-				F2FB83EE18A8D54D005E75BB /* neth.frag in Sources */,
 				6F1EE66018A9229100608125 /* ofxSliderGroup.cpp in Sources */,
-				6F9E617F18AD48EB00D93498 /* gloom.frag in Sources */,
-				F2FB83F018A8EF2B005E75BB /* spring.frag in Sources */,
 				F25C29E518ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B0F18AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 				F2901AE718C22C8700B2D50E /* AutoTree.cpp in Sources */,
 				F2901AF118C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF518C22C9600B2D50E /* Balls.cpp in Sources */,
@@ -2523,7 +2450,6 @@
 				F200AA3618A97C5D0004F00A /* ofxCvGrayscaleImage.cpp in Sources */,
 				F200AA3718A97C5D0004F00A /* ofxCvHaarFinder.cpp in Sources */,
 				F200AA3818A97C5D0004F00A /* ofxCvImage.cpp in Sources */,
-				6F9E617D18AD417100D93498 /* bloom.frag in Sources */,
 				F200AA3918A97C5D0004F00A /* ofxCvShortImage.cpp in Sources */,
 				F200AA3A18A97C5D0004F00A /* ofxVectorGraphics.cpp in Sources */,
 				F200AA3B18A97C5D0004F00A /* CreEPS.cpp in Sources */,
@@ -2534,20 +2460,12 @@
 				F200AA4018A97C5D0004F00A /* ofxAssimpModelLoader.cpp in Sources */,
 				F200AA4118A97C5D0004F00A /* ofxPanel.cpp in Sources */,
 				F200AA4218A97C5D0004F00A /* ofxThreadedImageLoader.cpp in Sources */,
-				F200AA4318A97C5D0004F00A /* posUpdate.frag in Sources */,
-				F200AA4418A97C5D0004F00A /* render.frag in Sources */,
-				F200AA4518A97C5D0004F00A /* render.vert in Sources */,
-				F200AA4618A97C5D0004F00A /* velUpdate.frag in Sources */,
-				F200AA4718A97C5D0004F00A /* blur.frag in Sources */,
 				F200AA4818A97C5D0004F00A /* Easer.cpp in Sources */,
 				F200AA4918A97C5D0004F00A /* visu.cpp in Sources */,
 				F200AA4A18A97C5D0004F00A /* ofxButton.cpp in Sources */,
 				F200AA4B18A97C5D0004F00A /* AttrCtl.cpp in Sources */,
 				F200AA4C18A97C5D0004F00A /* VisuHandler.cpp in Sources */,
 				F200AA4D18A97C5D0004F00A /* ParticlesHandler.cpp in Sources */,
-				F200AA4E18A97C5D0004F00A /* Shadow.frag in Sources */,
-				F200AA5118A97C5D0004F00A /* globalForce.frag in Sources */,
-				F200AA5218A97C5D0004F00A /* fieldForce.frag in Sources */,
 				F200AA5318A97C5D0004F00A /* Ruban.cpp in Sources */,
 				F200AA5518A97C5D0004F00A /* Ecrans.cpp in Sources */,
 				F200AA5618A97C5D0004F00A /* VisuClass.cpp in Sources */,
@@ -2565,10 +2483,8 @@
 				F200AA6118A97C5D0004F00A /* OscPrintReceivedElements.cpp in Sources */,
 				F200AA6218A97C5D0004F00A /* OscReceivedElements.cpp in Sources */,
 				F200AA6318A97C5D0004F00A /* OscTypes.cpp in Sources */,
-				6F4915FB18AE3171001079F3 /* smoothyGrav.frag in Sources */,
 				F200AA6418A97C5D0004F00A /* ofxOscBundle.cpp in Sources */,
 				6F2DD5F118B2252700AA09D2 /* BlobHandler.cpp in Sources */,
-				6F2EDFA018B3613400D28964 /* rotation.frag in Sources */,
 				F200AA6518A97C5D0004F00A /* ofxOscMessage.cpp in Sources */,
 				F200AA6618A97C5D0004F00A /* ofxOscParameterSync.cpp in Sources */,
 				F200AA6718A97C5D0004F00A /* ofxOscReceiver.cpp in Sources */,
@@ -2577,29 +2493,15 @@
 				F200AA6A18A97C5D0004F00A /* ofxSlider.cpp in Sources */,
 				F200AA6B18A97C5D0004F00A /* ofxToggle.cpp in Sources */,
 				F200AA6C18A97C5D0004F00A /* Warp.cpp in Sources */,
-				F200AA6D18A97C5D0004F00A /* blurX.frag in Sources */,
-				F200AA6E18A97C5D0004F00A /* blurY.frag in Sources */,
 				6F4915F618AE2C7E001079F3 /* metaBalls.cpp in Sources */,
-				F200AA6F18A97C5D0004F00A /* colorMod.frag in Sources */,
-				F200AA7018A97C5D0004F00A /* origin.frag in Sources */,
 				F200AA7118A97C5D0004F00A /* ofxLabel.cpp in Sources */,
 				F200AA7218A97C5D0004F00A /* EcranHandler.cpp in Sources */,
-				F200AA7318A97C5D0004F00A /* blurXa.frag in Sources */,
 				F200AA7418A97C5D0004F00A /* ofxBaseGui.cpp in Sources */,
-				6F2F476618AE71F10050EA33 /* thresholdBW.frag in Sources */,
-				F200AA7518A97C5D0004F00A /* blurYa.frag in Sources */,
 				F200AA7618A97C5D0004F00A /* Gui.cpp in Sources */,
-				F200AA7718A97C5D0004F00A /* mask.frag in Sources */,
-				F200AA7818A97C5D0004F00A /* gravity.frag in Sources */,
 				F200AA7918A97C5D0004F00A /* ofxGuiGroup.cpp in Sources */,
 				E131CF8E18CA03B50067F453 /* Photo.cpp in Sources */,
-				F200AA7A18A97C5D0004F00A /* netw.frag in Sources */,
-				F200AA7B18A97C5D0004F00A /* neth.frag in Sources */,
 				F200AA7C18A97C5D0004F00A /* ofxSliderGroup.cpp in Sources */,
-				6F9E618218AD48EB00D93498 /* gloom.frag in Sources */,
-				F200AA7D18A97C5D0004F00A /* spring.frag in Sources */,
 				F25C29E818ABF6E200A3AFE2 /* CamHandler.cpp in Sources */,
-				F2E27B1218AD60D000DE2130 /* thresholdIntensity.frag in Sources */,
 				F2901AEA18C22C8700B2D50E /* AutoTree.cpp in Sources */,
 				F2901AF418C22C9600B2D50E /* BallManager.cpp in Sources */,
 				F2901AF818C22C9600B2D50E /* Balls.cpp in Sources */,

@@ -1,12 +1,4 @@
 <screens>
-	<screen0>
-		<vertices>
-			<p0>0, 0, 0</p0>
-			<p1>1, 0, 0</p1>
-			<p2>1, 1, 0</p2>
-			<p3>0, 1, 0</p3>
-		</vertices>
-	</screen0>
 	<screen1>
 		<vertices>
 			<p0>0, 0.508333, 0</p0>

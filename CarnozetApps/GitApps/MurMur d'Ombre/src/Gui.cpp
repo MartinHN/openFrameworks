@@ -14,9 +14,10 @@
 
 
 
-void Gui::load(ofParameterGroup & pgtmp,ofParameterGroup & pgtmp3){
+void Gui::load(ofParameterGroup & pgtmp){
 
     guiParam.push_back(new ofxPanel());
+    guiParam.back()->setDefaultWidth(.98*PARAMW);
     guiParam.back()->setup(pgtmp.getGroup("global"),pgtmp.getGroup("global").getName(),(baseC)*PARAMW);
     
     baseC++;
@@ -43,11 +44,13 @@ void Gui::load(ofParameterGroup & pgtmp,ofParameterGroup & pgtmp3){
     h += guiParam.back()->getHeight() + 10;
     baseC++;
     
-    guiParam.back()->setDefaultWidth(ofGetWidth()-(baseC)*PARAMW);
-    guiParam.push_back(new ofxPanel());
-    guiParam.back()->setup(pgtmp3.getGroup("screens"),pgtmp3.getGroup("screens").getName(),(baseC)*PARAMW);
     
-    guiParam.back()->minimizeAll();
+    guiScreen.push_back(new ofxPanel());
+    guiScreen.back()->setDefaultWidth(ofGetWidth()-30);
+    guiScreen.back()->setup(pgtmp.getGroup("screens"),pgtmp.getGroup("screens").getName());
+    
+    guiScreen.back()->minimizeAll();
+    
     
     guiParam.back()->setDefaultWidth(.98*PARAMW);
     
@@ -74,14 +77,20 @@ void Gui::load(ofParameterGroup & pgtmp,ofParameterGroup & pgtmp3){
 
 void Gui::draw(){
     
-    if(!visuSettings){
+    if(visuSettings==0){
     for(std::list<ofxPanel*>::iterator ggg = guiParam.begin() ; ggg!=guiParam.end();++ggg){
     (*ggg)->draw();
     }
     }
-    else{
+    else if(visuSettings == 1){
         for(std::list<ofxPanel*>::iterator ggg = guiVisu.begin() ; ggg!=guiVisu.end();++ggg){
             (*ggg)->draw();
         }
+    }
+    else if(visuSettings == 2){
+        for(std::list<ofxPanel*>::iterator ggg = guiScreen.begin() ; ggg!=guiScreen.end();++ggg){
+            (*ggg)->draw();
+        }
+
     }
 }

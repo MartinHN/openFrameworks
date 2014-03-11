@@ -21,53 +21,12 @@ uniform vec2  screen;
 uniform float k;
 uniform float z;
 uniform float freeze;
+uniform float freezemin;
 uniform float damp;
 
 
     
 void main(void){
-//    float mult=screen.x;
-//    float screenratio=screen.y/screen.x;
-//    vec2 st = gl_TexCoord[0].xy;    // gets the position of the pixel that it´s dealing with...
-//    
-//    
-// 
-//    vec3 pos = texture2DRect( posData, st).xyz;
-//    
-//   
-//    
-//    pos.y*=screenratio;
-//    pos*=mult;
-//    // ... for gettinh the position data 
-//    vec3 vel = texture2DRect( tex0, st ).xyz;
-//    vel.y*=screenratio;
-//    vel*=mult;
-//    
-//    //origin pos
-//    vec3 ori =  texture2DRect( originData, st).xyz;
-//    ori.y*=screenratio;
-//    ori*=mult;
-//    
-//    //distance
-//    ori-=pos;  
-//    
-//    
-//    vec3 prevvel = vel;
-//    vec3 velbuf;
-//
-////    if(freeze>0&&length(ori)<freeze){
-////                vel*=0.5;
-////
-////        }
-//    
-//    velbuf = ori*k;
-//    vel+=velbuf-normalize(velbuf)*dot(prevvel,normalize(velbuf))*z;
-//  
-
-//    
-//    
-//    //vel+=ori*origin.y*(1+origin.z)-origin.z*prevvel;        
-//    
 
     vec3 vel = texture2DRect(tex0, gl_TexCoord[0].xy).xyz;
     
@@ -79,7 +38,7 @@ void main(void){
     
     vel+=velbuf-normalize(velbuf)*dot(vel,normalize(velbuf))*z;
     
-    if(freeze>0&&length(ori-pos)<freeze){
+    if(freeze>0&&length(ori-pos)<freeze &&length(ori-pos)>freezemin ){
         vel*=damp;
     }
 //     vel.x+= 0.1;

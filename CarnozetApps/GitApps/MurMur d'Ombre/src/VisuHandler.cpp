@@ -133,7 +133,8 @@ const void VisuHandler::draw(int mode){
         ofPushView();
         ofPushStyle();
         
-        if(mode!=2)ofTranslate(0,0,zdepth/2);
+        if(mode==0)ofTranslate(0,0,zdepth/2);
+        
         bool isOk = false;
         
         if(!visuList[i]->isMasking){
@@ -158,16 +159,32 @@ const void VisuHandler::draw(int mode){
             int validScreen = sH->getValidScreen(visuList[i]->screenN);
             if(validScreen>=0){
                 if(mode!=2)ofEnableAlphaBlending();
+                if(mode == 1)ofDisableAlphaBlending();
                 if(visuList[i]->recopy){
                     int curn = validScreen%10;
                     do{
-                        ofRectangle curR = sH->screenL[curn]->rectMax;
-                        if (visuList[i]->isMapping)sH->screenL[curn]->screenWarp.loadMat();
-                        else ofTranslate(curR.x,curR.y);
+                        ofRectangle curR;                      
+                        
+                            if(mode == 1){
+                                curR=sH->screenL[curn]->miniRectMax;  
+                                 if (visuList[i]->isMapping) sH->screenL[curn]->miniScreenWarp.loadMat();
+                            }
+                            else{
+                                curR = sH->screenL[curn]->rectMax;
+                            if (visuList[i]->isMapping) sH->screenL[curn]->screenWarp.loadMat();   
+                            }
+                        if(!visuList[i]->isMapping) ofTranslate(curR.x,curR.y);
                         
                         visuList[i]->draw(curR.width,curR.height);
                         
-                        if (visuList[i]->isMapping)sH->screenL[curn]->screenWarp.unloadMat();
+                        if (visuList[i]->isMapping){
+                            if (mode == 1){
+                             sH->screenL[curn]->miniScreenWarp.unloadMat();      
+                            }
+                            else{
+                               sH->screenL[curn]->screenWarp.unloadMat();  
+                            }
+                        }
                         else ofTranslate(-curR.x,-curR.y);
                         validScreen/=10;
                         curn = validScreen%10;
@@ -177,12 +194,18 @@ const void VisuHandler::draw(int mode){
                 else{
                     
                     ofRectangle curR = sH->rectOfScreen(validScreen);
-                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())sH->screenL[validScreen]->screenWarp.loadMat();
+                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())
+                        {if(mode == 1){sH->screenL[validScreen]->screenWarp.loadMat();}
+                    else{sH->screenL[validScreen]->miniScreenWarp.loadMat();}
+                    }
                     else ofTranslate(curR.x,curR.y);
                     
                     visuList[i]->draw(curR.width,curR.height);
                     
-                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())sH->screenL[validScreen]->screenWarp.unloadMat();
+                    if (visuList[i]->isMapping&&validScreen<sH->screenL.size())
+                        {if(mode == 1){sH->screenL[validScreen]->screenWarp.unloadMat();}
+                    else{sH->screenL[validScreen]->miniScreenWarp.unloadMat();}
+                    }
                     else ofTranslate(-curR.x,-curR.y);
                     
                 }

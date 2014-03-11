@@ -24,6 +24,8 @@ uniform float velouty;
 uniform float veloutborder;
 uniform float minv;
 uniform float maxv;
+uniform float fout;
+uniform float fin;
 
 
 
@@ -40,12 +42,16 @@ void main(void){
 
     
     
-    if (field>maxv&&velouty*veloutz>0){
+    if (field>maxv){
         vel+=vec3(0,velouty,veloutz);
+        vel*=vec3(fin,fin,fin);
         
     }
     else if(field>minv){
         vel+= vec3 (k*(field-texture2DRect( fieldData , pos+vec2(1,0)).x) , k*(field-texture2DRect( fieldData , pos+vec2(0,1)).x) , veloutborder);
+    }
+    else{
+        vel*=vec3(fout,fout,fout);   
     }
 
     

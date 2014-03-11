@@ -33,10 +33,9 @@ public:
     const ofVec2f sizeOfScreen(const int which);
     void blurmask();
     void drawMask();
-    void setupSync(int p,string ip,int outp);
-    void syncUpdate();
     void mapN2S(vector<ofPoint> & p,int s);
-    
+    void mapN2S(ofPoint & p,int s);
+  
 //    void writeFile();
     
     Boolean isEditingScreens;
@@ -56,7 +55,7 @@ public:
     
     ofImage globalMask;
     
-    ofxOscParameterSync screenSync;
+
     
 #ifdef LIVEBLUR
     pingPongBuffer blur;

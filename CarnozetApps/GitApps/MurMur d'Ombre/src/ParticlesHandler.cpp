@@ -84,7 +84,7 @@ void Particles::setup(){
     
     int defaultgrad=0;
     changeGrad(defaultgrad);
-    
+    noReset = false;
   
 #ifdef PIMG
     int partRes = 10 ;
@@ -149,6 +149,7 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
     forces[forces.size()-1]->addParameter("z",.01f,0.f,.5f);
     forces[forces.size()-1]->addParameter("freeze",0.f,0.f,.80f);
+    forces[forces.size()-1]->addParameter("freezemin",0.f,0.f,.30f);
     forces[forces.size()-1]->addParameter("damp",0.9f,0.5f,1.0f);
     
     forces.push_back(new Force("rotation",true));
@@ -179,15 +180,18 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("mode",1,0,1);
     
     forces.push_back(new Force("fieldForce"));
-    forces[forces.size()-1]->addParameter("k",.030f,-.5f,.5f);
-    forces[forces.size()-1]->addParameter("velouty",.030f,-.5f,.5f);
-    forces[forces.size()-1]->addParameter("veloutz",.030f,-.5f,.5f);
-    forces[forces.size()-1]->addParameter("veloutborder",.00f,-.5f,.5f);
+    forces[forces.size()-1]->addParameter("k",.030f,-.3f,.3f);
+    forces[forces.size()-1]->addParameter("velouty",.030f,-.1f,.1f);
+    forces[forces.size()-1]->addParameter("veloutz",.030f,-.1f,.1f);
+    forces[forces.size()-1]->addParameter("veloutborder",.00f,-.1f,.1f);
     forces[forces.size()-1]->addParameter("minv",.10f,0.f,1.f);
     forces[forces.size()-1]->addParameter("maxv",.80f,0.f,1.f);
-
+    forces[forces.size()-1]->addParameter("fin",1.f,0.5f,1.3f);
+    forces[forces.size()-1]->addParameter("fout",1.f,0.5f,1.3f);
+    
+    
     forces.push_back(new Force("globalForce"));
-    forces[forces.size()-1]->addParameter("f",1.f,0.99f,1.001f);
+    forces[forces.size()-1]->addParameter("f",1.f,0.8f,1.f);
     forces[forces.size()-1]->addParameter("fmin",1.f,0.f,1.3f);
     forces[forces.size()-1]->addParameter("vmax",1.0f,0.f,1.f);
     forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
@@ -379,6 +383,8 @@ void Particles::draw(int w, int h){
 void Particles::initFbo(){
     initFbo(*dad->scrw,*dad->scrh);
 }
+
+
 void Particles::initFbo(int w,int h){
     
     // Seting the textures where the information ( position and velocity ) will be
@@ -390,6 +396,16 @@ void Particles::initFbo(int w,int h){
     
     textureRes = (int)sqrt((float)numParticles);
     numParticles = textureRes* textureRes;
+    
+    // Load this information in to the FBO´s texture
+if(!noReset){
+        posPingPong.allocate(textureRes, textureRes,GL_RGB32F);
+
+    
+    // Load this information in to the FBO´s texture
+    velPingPong.allocate(textureRes, textureRes,GL_RGB32F);
+    origins.allocate(textureRes, textureRes,GL_RGB32F);
+    
     
     // 1. Making arrays of float pixels with position information
     float * pos = new float[numParticles*3];
@@ -403,12 +419,11 @@ void Particles::initFbo(int w,int h){
         }
     }
     
-    // Load this information in to the FBO´s texture
-    posPingPong.allocate(textureRes, textureRes,GL_RGB32F);
+
     posPingPong.src->getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     posPingPong.dst->getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
        
-    origins.allocate(textureRes, textureRes,GL_RGB32F);
+    
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     
     delete [] pos;    // Delete the array
@@ -424,14 +439,22 @@ void Particles::initFbo(int w,int h){
         vel[i*3 + 1] = 0.0;
         vel[i*3 + 2] = 0.0;//i*1.0/numParticles ;
     }
-    // Load this information in to the FBO´s texture
-    velPingPong.allocate(textureRes, textureRes,GL_RGB32F);
+
     velPingPong.src->getTextureReference().loadData(vel, textureRes, textureRes, GL_RGB);
     velPingPong.dst->getTextureReference().loadData(vel, textureRes, textureRes, GL_RGB);
     delete [] vel; // Delete the array
     
 
-    
+    }
+    else{
+        
+            posPingPong.src->allocate(textureRes, textureRes,GL_RGB32F);
+            posPingPong.src->begin();
+            posPingPong.dst->draw(0,0);
+            posPingPong.src->end();
+            posPingPong.dst->allocate(textureRes,textureRes,GL_RGB32F);
+       
+    }
     
 }
 
@@ -473,7 +496,7 @@ void Particles::changeOrigins(int &type){
     float * pos ;
     bool hasChanged = true;
     
-    
+    noReset = true;
     
     switch (type) {
         case 0:
@@ -492,11 +515,13 @@ void Particles::changeOrigins(int &type){
         case 1:
         {
             int zsplit = 2;
-            textureRes3 = (int)pow(numParticles,1.0/3);
-            numParticles= textureRes3*textureRes3*textureRes3;
-            textureRes = sqrt((float)numParticles);
+            
+            textureRes3 =  (int)pow(numParticles,1.0/3)-1;
+            int curnumpart= textureRes3*textureRes3*textureRes3;
+            textureRes = sqrt((float)curnumpart);
+
             int count=0;
-            pos = new float[numParticles*3];
+            pos = new float[curnumpart*3];
             for (int z = 0; z < textureRes3; z++){
                 
             for (int x = 0; x < textureRes3; x++){
@@ -512,34 +537,47 @@ void Particles::changeOrigins(int &type){
                     }
                 }
             }
-            
+            numParticles = curnumpart;
 //            ofSort(pos,sortOnXYZ);
             break;}
 #ifdef PMOD
         case 2:
         {
-            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
-            numParticles = vert.size();
-            textureRes = sqrt((float)numParticles);
-            numParticles = textureRes*textureRes;
+            
             pos = new float[numParticles*3];
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
-                    int i =  x + textureRes * y;
-                    
-                    if(i<vert.size()){
-                    pos[i*3 + 0] = vert[i].x;
-                    pos[i*3 + 1] = vert[i].y;
-                    pos[i*3 + 2] = vert[i].z +1;
-                    }
-                    else {
-                        pos[i*3 + 0] = 0;
-                        pos[i*3 + 1] = 0;
-                        pos[i*3 + 2] = 0;
-                    }
+                    int i = textureRes * y + x;
+                    ofPoint p(x*1.0/textureRes,y*1.0/(textureRes),0.5);
+                    dad->sH->mapN2S(p,1);
+                    pos[i*3 + 0] = p.x;
+                    pos[i*3 + 1] = p.y;
+                    pos[i*3 + 2] = 0.5;
                 }
             }
             break;
+//            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
+//            numParticles = vert.size();
+//            textureRes = sqrt((float)numParticles);
+//            numParticles = textureRes*textureRes;
+//            pos = new float[numParticles*3];
+//            for (int x = 0; x < textureRes; x++){
+//                for (int y = 0; y < textureRes; y++){
+//                    int i =  x + textureRes * y;
+//                    
+//                    if(i<vert.size()){
+//                    pos[i*3 + 0] = vert[i].x;
+//                    pos[i*3 + 1] = vert[i].y;
+//                    pos[i*3 + 2] = vert[i].z +1;
+//                    }
+//                    else {
+//                        pos[i*3 + 0] = 0;
+//                        pos[i*3 + 1] = 0;
+//                        pos[i*3 + 2] = 0;
+//                    }
+//                }
+//            }
+//            break;
         }
     
 #endif
@@ -552,7 +590,7 @@ void Particles::changeOrigins(int &type){
      origins.allocate(textureRes, textureRes,GL_RGB32F);
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     }
- 
+    noReset = false;
     delete [] pos;
 }
 

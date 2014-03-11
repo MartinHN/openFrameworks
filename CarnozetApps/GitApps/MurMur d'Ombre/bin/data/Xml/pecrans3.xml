@@ -1,5 +1,5 @@
 <screens>
-    <screen0>
+    <screen1>
         <vertices>
             <p0>
                 <p0>0, 0.494792</p0>
@@ -14,8 +14,8 @@
                 <p3>0.009375, 0.998958</p3>
             </p3>
         </vertices>
-    </screen0>
-    <screen1>
+    </screen1>
+    <screen2>
         <vertices>
             <p0>
                 <p0>0.76875, 0.451042</p0>
@@ -30,5 +30,5 @@
                 <p3>0.755469, 0.890625</p3>
             </p3>
         </vertices>
-    </screen1>
+    </screen2>
 </screens>

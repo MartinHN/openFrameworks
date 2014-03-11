@@ -115,6 +115,7 @@ public:
     int textureRes3;
     
     ofImage gradient;
+    bool noReset;
     
 
     

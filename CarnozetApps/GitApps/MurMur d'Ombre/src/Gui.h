@@ -11,27 +11,27 @@
 #include "ofxGui.h"
 #include "ofMain.h"
 #include "Constants.h"
-#define PARAMW 210
+#define PARAMW 260
 
 
 class Gui{
     
     
 public:
-    Gui():bHide(true),baseC(0){};
+    Gui():baseC(0){};
     ~Gui(){};
 //    Gui(ofParameterGroup * p);
 
     void draw();
-    void load(ofParameterGroup & pg,ofParameterGroup & pgtmp2);
+    void load(ofParameterGroup & pg);
 
 
     ofxPanel glob;
     ofParameterGroup globP;
-    list<ofxPanel *> guiParam,guiVisu;
-    bool bHide;
+    list<ofxPanel *> guiParam,guiVisu,guiScreen;
+
      int baseC ;
-    bool visuSettings;
+    int visuSettings;
     
     
 };

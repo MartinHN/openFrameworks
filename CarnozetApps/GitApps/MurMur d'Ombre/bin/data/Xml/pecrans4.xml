@@ -1,5 +1,5 @@
 <screens>
-    <screen0>
+    <screen1>
         <vertices>
             <p0>
                 <p0>0, 0.494792</p0>
@@ -14,8 +14,8 @@
                 <p3>0.009375, 0.998958</p3>
             </p3>
         </vertices>
-    </screen0>
-    <screen1>
+    </screen1>
+    <screen2>
         <vertices>
             <p0>
                 <p0>0.296094, 0.479167</p0>
@@ -30,8 +30,8 @@
                 <p3>0.302344, 0.933333</p3>
             </p3>
         </vertices>
-    </screen1>
-    <screen2>
+    </screen2>
+    <screen3>
         <vertices>
             <p0>
                 <p0>0.496094, 0.419792</p0>
@@ -46,8 +46,8 @@
                 <p3>0.492969, 0.835417</p3>
             </p3>
         </vertices>
-    </screen2>
-    <screen3>
+    </screen3>
+    <screen4>
         <vertices>
             <p0>
                 <p0>0.660937, 0.422917</p0>
@@ -62,5 +62,5 @@
                 <p3>0.645312, 0.832292</p3>
             </p3>
         </vertices>
-    </screen3>
+    </screen4>
 </screens>

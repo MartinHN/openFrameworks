@@ -34,11 +34,13 @@ public:
     
     ofParameterGroup vertices;
     list<ofParameter<ofVec3f> *> vl;
-    ofRectangle rectMax;
+    ofRectangle rectMax,miniRectMax;
+    ofVec2f miniScale;
     
 //    ofImage mask;
 #ifdef HOMOGRAPHY
     Warp screenWarp;
+    Warp miniScreenWarp;
 #endif
     
 };

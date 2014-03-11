@@ -28,6 +28,7 @@ class testApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
         void loadPreset();
         void savePreset();
+    void loadVid(bool & b);
     
         int globalWidth;
         int globalHeight;
@@ -51,6 +52,7 @@ class testApp : public ofBaseApp{
     
         ofParameter<bool> useKinectFront;
         ofParameter<bool> useVideo;
+        ofParameter<bool> useTestVid;
         ofParameter<bool> useMotionDetection;
         ofParameter<ofVec2f> threshold;
         ofParameter<int> erode;
@@ -85,7 +87,7 @@ class testApp : public ofBaseApp{
         void updateOsc();
     
     
-    
+    ofVideoPlayer player;
 
     
     

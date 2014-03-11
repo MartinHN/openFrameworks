@@ -21,9 +21,6 @@ screensParam.setName("screens");
     
 }
 
-void ScreenHandler::setupSync(int inp,string ip,int outp){
-    screenSync.setup(screensParam,inp,ip,outp);
-}
 
 
 
@@ -77,14 +74,23 @@ void ScreenHandler::setup(int * win, int * hin, int zin){
     blur.dst->getTextureReference().loadData(pos, *scrw,*scrh, GL_RGB);
     delete pos;
 #endif
+    vector<ofVec3f> vertglob;
+    vertglob.push_back(ofVec2f(0,0));
+    vertglob.push_back(ofVec2f(1,0));
+    vertglob.push_back(ofVec2f(1,1));
+    vertglob.push_back(ofVec2f(0,1));
     
+    for (int i = 0 ; i< 5 ; i++){
+    addScreen(vertglob);
+    }
+
     
     
 
 }
 
 void ScreenHandler::addScreen(vector<ofVec3f> vert){
-    screenL.push_back(new Ecran(screenL.size()-1,vert,scrw,scrh,false));
+    screenL.push_back(new Ecran(screenL.size(),vert,scrw,scrh,false));
 }
 
 void ScreenHandler::registerParams(){
@@ -111,10 +117,12 @@ void ScreenHandler::registerParams(){
     
     
     
-    screensParam.clear();
+
 
     screensCtl.setName("screensCtl");
 
+    
+screensParam.clear();
     for(int i = 0 ;i< screenL.size();i++){
         screenL[i]->registerParams();
         screensParam.add(screenL[i]->settings);  
@@ -122,10 +130,14 @@ void ScreenHandler::registerParams(){
     
     
     screensParam.setName("screens");
+    
+    
+    
+    
+    int a = 0;
+    loadNewPos(a);
 }
-void ScreenHandler::syncUpdate(){
-    screenSync.update();
-}
+
 int ScreenHandler::getValidScreen(int which){
     int k = 1;
     int idx = which%10;
@@ -168,6 +180,78 @@ const ofVec2f ScreenHandler::sizeOfScreen(const int which){
     ofRectangle tmp = rectOfScreen(which);
     return ofVec2f(tmp.width,tmp.height);
 }
+
+
+
+
+void ScreenHandler::drawMask(){
+
+    ofSetColor(0,0,244);
+    for (int i = 1 ; i < screenL.size();i++){
+        if(screensCtl.getBool("mask"+ofToString(i))){
+        ofPath tmpP;
+        vector<ofVec3f> vert = screenL[i]->getVertices();
+        for(int j = 0 ; j<vert.size();j++){
+            tmpP.lineTo(vert[j]);
+        }
+        if(vert.size()>100)tmpP.simplify();
+        tmpP.close();
+        tmpP.draw();
+    }
+    }
+    
+}
+
+
+void ScreenHandler::mapN2S(vector<ofPoint> & p,int s){
+    ofRectangle rr = rectOfScreen(getValidScreen(s));
+    for(int i = 0 ; i < p.size();i++){
+        
+        p[i].x = ofMap(p[i].x,0,1,rr.getMinX()*1.0/(*scrw),rr.getMaxX()*1.0/(*scrw));
+        p[i].y = ofMap(p[i].y,0,1,rr.getMinY()*1.0/(*scrh),rr.getMaxY()*1.0/(*scrh));
+    }
+}
+void ScreenHandler::mapN2S(ofPoint & p,int s){
+    ofRectangle rr = rectOfScreen(getValidScreen(s));
+
+        
+        p.x = ofMap(p.x,0,1,rr.getMinX()*1.0/(*scrw),rr.getMaxX()*1.0/(*scrw));
+        p.y = ofMap(p.y,0,1,rr.getMinY()*1.0/(*scrh),rr.getMaxY()*1.0/(*scrh));
+    
+}
+
+
+
+void ScreenHandler::loadNewPos(int & num){
+
+    
+        string abspath = ofToDataPath("Xml/pecrans"+ofToString(num)+".xml");
+        ofLogWarning("loading screen from local : " + abspath);
+        ofXml xml;
+        
+        xml.load(abspath);
+        xml.deserialize(screensParam);
+    
+
+ 
+
+}
+    
+void ScreenHandler::saveP(bool & s){
+    if(s){
+        
+        ofFileDialogResult filep = ofSystemSaveDialog("pecrans0.xml","save screen preset");
+        
+        string abspath =filep.getPath();// ofToDataPath("Xml/pecrans"+ofToString(screenPreset)+".xml");
+        ofLogWarning("saving screen local : " + abspath);
+        ofXml xml;
+        
+        
+        xml.serialize(screensParam);
+        cout << xml.save(abspath) << endl;
+    }
+}
+
 
 
 void ScreenHandler::blurmask(){
@@ -234,52 +318,18 @@ void ScreenHandler::blurmask(){
     globalMask.setFromPixels(pix);
     
     pix.clear();
-
+    
 #endif
 }
 
 
-void ScreenHandler::drawMask(){
-
-    ofSetColor(0,0,244);
-    for (int i = 1 ; i < screenL.size();i++){
-        if(screensCtl.getBool("mask"+ofToString(i))){
-        ofPath tmpP;
-        vector<ofVec3f> vert = screenL[i]->getVertices();
-        for(int j = 0 ; j<vert.size();j++){
-            tmpP.lineTo(vert[j]);
-        }
-        if(vert.size()>100)tmpP.simplify();
-        tmpP.close();
-        tmpP.draw();
-    }
-    }
-    
-}
-
-
-void ScreenHandler::mapN2S(vector<ofPoint> & p,int s){
-    ofRectangle rr = rectOfScreen(getValidScreen(s));
-    for(int i = 0 ; i < p.size();i++){
-        
-        p[i].x = ofMap(p[i].x,0,1,rr.getMinX()*1.0/(*scrw),rr.getMaxX()*1.0/(*scrw));
-        p[i].y = ofMap(p[i].y,0,1,rr.getMinY()*1.0/(*scrh),rr.getMaxY()*1.0/(*scrh));
-    }
-}
-
 void ScreenHandler::loadScreensPos(){
-
-    vector<ofVec3f> vertglob;
-    vertglob.push_back(ofVec2f(0,0));
-    vertglob.push_back(ofVec2f(1,0));
-    vertglob.push_back(ofVec2f(1,1));
-    vertglob.push_back(ofVec2f(0,1));
     
-    addScreen(vertglob);
+    
     
     ofXml eS;
-    if(eS.load("Xml/ecrans0.xml")){
-        ofLogWarning("loading : Xml/ecrans0.xml");
+    if(eS.load("Xml/pecrans0.xml")){
+        ofLogWarning("loading : Xml/pecrans0.xml");
         int nS = eS.getNumChildren();
         vector<ofVec3f> vert;
         
@@ -311,43 +361,14 @@ void ScreenHandler::loadScreensPos(){
     }
     
     
-   
-    blurmask();    //delete tmpPath;
-    blobIdx = screenL.size();
-    for (int i = 0 ; i < screenL.size() ; i ++ ){
-        ofParameter<bool> mask;
-        mask.setName("mask"+ofToString(i));
-        screensCtl.add(mask);
-    }
+    
+    //    blurmask();    //delete tmpPath;
+    //    blobIdx = screenL.size();
+    //    for (int i = 0 ; i < screenL.size() ; i ++ ){
+    //        ofParameter<bool> mask;
+    //        mask.setName("mask"+ofToString(i));
+    //        screensCtl.add(mask);
+    //    }
     
 }
 
-
-
-
-void ScreenHandler::loadNewPos(int & num){
-
-    
-        string abspath = ofToDataPath("Xml/pecrans"+ofToString(num)+".xml");
-        ofLogWarning("loading screen from local : " + abspath);
-        ofXml xml;
-        
-        xml.load(abspath);
-        xml.deserialize(screensParam);
-    
-
- 
-
-}
-    
-void ScreenHandler::saveP(bool & s){
-    if(s){
-        string abspath = ofToDataPath("Xml/pecrans"+ofToString(screenPreset)+".xml");
-        ofLogWarning("saving screen local : " + abspath);
-        ofXml xml;
-        
-        
-        xml.serialize(screensParam);
-        cout << xml.save(abspath) << endl;
-    }
-}

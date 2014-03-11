@@ -83,7 +83,6 @@ void testApp::setup(){
 #endif  
     sH.setup(&scrw,&scrh,zdepth);
 
-    sH.loadScreensPos();
 #ifndef GUIMODE
     bH.setup(inw,inh,&blurX,&blurY,&sH);
 #endif
@@ -127,6 +126,7 @@ void testApp::setup(){
     MYPARAM(isGloom,false,false,true);
     MYPARAM(isPipe,false,false,true);
     MYPARAM(pipeblur, 0.f,0.f,25.f);
+    MYPARAM(pipeAlphablur, 255,0,255);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
   
@@ -162,28 +162,26 @@ void testApp::setup(){
     globalParam.add(bH.settings);
     globalParam.add(attrctl.settings);
     globalParam.add(sH.screensCtl);
-    
+    globalParam.add(sH.screensParam);
     globalParam.add(visuHandler.allParams);
-    
-    screensParam.add(sH.screensParam);
-    screensParam.setName("screensG");
+//    ofParameterGroup pg;
+//    screensParam.add(sH.screensParam);
+//    screensParam.setName("screensG");
+//    ofParameterGroup pg = screensParam.getGroup("screens");
     
     
 #ifdef GUIMODE
     paramSync.setup(globalParam,VISU_OSC_IN,VISU_OSC_IP_OUT,VISU_OSC_OUT);
-    sH.setupSync(VISU_OSC_IN+40,VISU_OSC_IP_OUT,VISU_OSC_OUT+40);
+
 #else
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
-    sH.setupSync(VISU_OSC_OUT+40,"localhost",VISU_OSC_IN+40);
+ 
 #endif
-    //    string savename = "lolo";
-    //    visuHandler.saveState(savename);
     
 #ifdef GUIMODE
     ofSetFrameRate(12);
-    //    gui.load(visuHandler.allParams);
-    //    gui.loadOne(settings);
-    gui.load(globalParam,screensParam);
+
+    gui.load(globalParam);
     
     
 #endif
@@ -202,7 +200,7 @@ void testApp::setup(){
 
 
 void testApp::update(){
-    sH.syncUpdate();
+    
     paramSync.update();
     
 #ifndef GUIMODE
@@ -256,54 +254,52 @@ void testApp::draw(){
 #else
     
     
+    if(isPipe){
     glBlendEquation(GL_FUNC_ADD);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    
-    finalRender.dst->begin();
-    
-    ofSetColor(rback,gback,bback,alphablur);
-    ofRect(0,0,scrw,scrh);
-    
+        ofPushMatrix();
+        ofPushView();
+        
+        
+        visuHandler.pipePP.src->begin();
 
-    
-    
-    ofPushMatrix();
-    ofPushView();
-    ofEnableAlphaBlending();
-    camera2.begin();
-    ofSetColor(255,255,255,255);  
-    
-    glBlendEquation(GL_FUNC_ADD);            
-    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
-    
-    
-    //Draw only for pipe
-    int modeVisu = isPipe?1:0;
-    visuHandler.draw(modeVisu);
+                ofSetColor(0,0,0,pipeAlphablur);
+                ofRect(0,0,inw,inh);
 
-    
-    camera2.end();
-    ofPopMatrix();
-    ofPopView();
-    
-    finalRender.dst->end();
-    
-    finalRender.swap();
-    
-    
-    //PIPE
-    if(isPipe){
+
+                ofEnableAlphaBlending();
+                ofSetColor(255,255,255,255);  
+            
+        //    glBlendEquation(GL_FUNC_ADD);            
+        //    glBlendFunc(GL_SRC_COLOR, GL_ONE_MINUS_SRC_ALPHA);
+            
+            
+                //Draw only for pipe
+                
+                visuHandler.draw(1);
+
+            
+
+        
+        visuHandler.pipePP.src->end();
+
+        ofPopMatrix();
+        ofPopView();
+        
+        //PIPE Blur
         glBlendEquation(GL_FUNC_ADD_EXT);
         glBlendFunc(GL_ONE,GL_ZERO);
         ofSetColor(255);
         
-        visuHandler.pipePP.src->begin();
+        visuHandler.pipePP.dst->begin();
         blurX.begin();
-        blurX.setUniform1f("blurAmnt", pipeblur*2.);
-        finalRender.src->draw(0,0,inw,inh);
+        blurX.setUniform1f("blurAmnt", pipeblur);
+        visuHandler.pipePP.src->draw(0,0);
         blurX.end();        
-        visuHandler.pipePP.src->end();
-        ofSetColor(255);      
+        visuHandler.pipePP.dst->end();
+        ofSetColor(255);  
+        visuHandler.pipePP.swap();
+        
         visuHandler.pipePP.dst->begin();
         blurY.begin();
         blurY.setUniform1f("blurAmnt", pipeblur);
@@ -315,15 +311,28 @@ void testApp::draw(){
         visuHandler.pipePP.swap();
         
         
-        glBlendEquation(GL_FUNC_ADD);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        
+//        glBlendEquation(GL_FUNC_ADD);
+//        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    }
+    
+    
+    
+    
+    //Direct Render
+    
+//glBlendEquation(GL_FUNC_ADD);            
+   glBlendFunc(GL_DST_ALPHA, GL_DST_ALPHA);
+    ofEnableAlphaBlending();
         finalRender.src->begin();
-        if(hidePipe) {
-            ofSetColor(0,0,0,255);
+//        if(hidePipe) {
+            ofSetColor(rback,gback,bback,alphablur);
+//            if(!isPipe)ofRect(0,0,scrw,scrh);
+//            ofSetColor(0,0,0,255);
             ofRect(0,0,scrw,scrh);
             ofSetColor(255);
-        }
+//        }
+        
+        
         
         ofPushMatrix();
         ofPushView();
@@ -339,13 +348,13 @@ void testApp::draw(){
         finalRender.src->end();
         
         
-    }
+    
     
     
     //FinalTOUCH
-    glBlendEquation(GL_FUNC_ADD_EXT);
-    glBlendFunc(GL_ONE,GL_ZERO);
-    
+//    glBlendEquation(GL_FUNC_ADD_EXT);
+//    glBlendFunc(GL_ONE,GL_ZERO);
+//    
     
     finalRender.dst->begin();
     blurX.begin();
@@ -479,7 +488,8 @@ void testApp::keyPressed(int key){
             break;
             
         case'v':
-            gui.visuSettings = !gui.visuSettings;
+            gui.visuSettings++;
+            gui.visuSettings %=3 ;
             break;
             
     }
@@ -627,7 +637,9 @@ void testApp::saveState(string & s){
         else{ofLogWarning("saving to local : " + abspath);}
         cout<<"saving to " + abspath<<endl;
         ofXml xml;
+        sH.screensParam.setSerializable(false);
         xml.serialize(globalParam);
+        sH.screensParam.setSerializable(true);
         cout<<xml.save(abspath)<<endl;
     }
     else{
@@ -650,7 +662,10 @@ void testApp::loadState(string & s){
         ofXml xml;
         
         xml.load(abspath);
+        
+        sH.screensParam.setSerializable(false);
         xml.deserialize(globalParam);
+        sH.screensParam.setSerializable(true);
     }
     else{
         ofLogWarning("no argument for load state");

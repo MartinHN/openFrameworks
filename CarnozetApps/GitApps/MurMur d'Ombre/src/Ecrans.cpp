@@ -12,7 +12,6 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isB
 
     scrw = scrwin;
     scrh = scrhin;
-    
     vertices.setName("vertices");
     if(!isBlob){vertices.setSerializable(true);};
     for (int i = 0 ; i < vert.size();i++){
@@ -40,6 +39,8 @@ Ecran::Ecran(int number,vector<ofVec3f> vert,int * scrwin, int * scrhin,bool isB
     ofVec2f scale(*scrw,*scrh);
     if(vert.size()!=4);//ofLogWarning("more/less than 4 vertices for screen : "+ofToString(number));
     else screenWarp.setDst(vert[0]*scale,vert[1]*scale,vert[2]*scale, vert[3]*scale);
+    
+    screenWarp.updateMatrix();
 #endif
 
 //    createMask();
@@ -73,8 +74,15 @@ vector<ofVec3f> Ecran::getVertices(){
 
 void Ecran::updateMatrix(ofVec3f & dummy){
     vector<ofVec3f> vert = getVertices();
-    screenWarp.setDst(vert[0],vert[1],vert[2], vert[3]);
     calcRectMax();
+    screenWarp.setSrc(ofPoint(0,0), ofPoint(rectMax.width,0), ofPoint(rectMax.width,rectMax.height), ofPoint(0,rectMax.height));
+    screenWarp.setDst(vert[0],vert[1],vert[2], vert[3]);
+    screenWarp.updateMatrix();
+    
+    miniScreenWarp.setSrc(ofPoint(0,0), ofPoint(miniRectMax.width,0), ofPoint(miniRectMax.width,miniRectMax.height), ofPoint(0,miniRectMax.height));
+    miniScreenWarp.setDst(miniScale *vert[0],miniScale*vert[1],miniScale*vert[2], miniScale*vert[3]);
+    miniScreenWarp.updateMatrix();
+//    calcRectMax();
     
 }
 
@@ -91,7 +99,9 @@ void Ecran::registerParams(){
     for (std::list<ofParameter<ofVec3f>* >::iterator vv(vl.begin()); vv !=  vl.end(); ++vv){
         (*vv)->setSerializable(true);
         vertices.add(**vv);
-        if(vl.size()==4)(*vv)->addListener(this,&Ecran::updateMatrix);
+        if(vl.size()==4){
+            (*vv)->addListener(this,&Ecran::updateMatrix);
+        }
     }
     settings.setName("screen"+ofToString(number));
     settings.add(vertices);
@@ -103,6 +113,8 @@ void Ecran::calcRectMax(){
     
     int maxX = -99999;
     int maxY = -99999;
+    
+    miniScale = ofVec2f(320.0/(*scrw),240.0/(*scrh));
     vector<ofVec3f> vert = getVertices();
     for( int i = 0 ; i<  vert.size() ; i++ ){
         ofVec3f tmp = vert[i];
@@ -112,6 +124,8 @@ void Ecran::calcRectMax(){
         if(tmp.y<minY){minY = tmp.y;}
         else if(tmp.y>maxY){maxY = tmp.y;}
     }
+    miniRectMax = ofRectangle(minX*miniScale.x, minY*miniScale.y, (maxX-minX)*miniScale.x, (maxY-minY)*miniScale.y);
+
     rectMax = ofRectangle(minX, minY, maxX-minX, maxY-minY);
-}
+    }
 

@@ -47,7 +47,7 @@ void Warp::setSrc(ofPoint p0,ofPoint p1,ofPoint p2,ofPoint p3){
     srcPoint[2] = p2;
     srcPoint[3] = p3;
     
-    updateMatrix();
+//    updateMatrix();
 }
 
 void Warp::setDst(ofPoint p0,ofPoint p1,ofPoint p2,ofPoint p3){
@@ -57,7 +57,7 @@ void Warp::setDst(ofPoint p0,ofPoint p1,ofPoint p2,ofPoint p3){
     dstPoint[3] = p3;
     
     
-    updateMatrix();
+//    updateMatrix();
 }
 
 int Warp::isOverCtl(ofPoint p){

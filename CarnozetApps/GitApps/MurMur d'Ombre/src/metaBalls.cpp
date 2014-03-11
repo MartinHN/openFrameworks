@@ -26,6 +26,7 @@ metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
     MYPARAM(drawLines,false,false,true);
     MYPARAM(maxv,0.3f,0.f,0.3f);
     MYPARAM(f,1.f,0.4f,1.f);
+    MYPARAM(vInit,.0f,0.00f,.05f);
     settings.setName("metaBalls");
     metaBall.loadImage("visu/point.png");
     maxsize = 400;
@@ -37,7 +38,7 @@ void metaBalls::update(int w, int h){
 
     dpoints =  dad->attr->getType(curFamilly);
     ofVec2f scale(w,h);
-    ofSort(dpoints,sortOnXYZ);
+    ofSort(dpoints,sortOnX);
     
 
     switch(mode){
@@ -79,24 +80,16 @@ void metaBalls::update(int w, int h){
     }
         case 1:{
            //Emit
-            if(ofGetElapsedTimeMillis()-lastT> 1000./emitrate){
-                ofVec3f v(0.01,0);
+            if(ofGetElapsedTimeMillis()-lastT> 1000./emitrate && dpoints.size()>0){
+                ofVec3f v(vInit,0);
                 
                 ofVec3f tmpv = v;
-                tmpv.rotate(ofRandom(noise)*90+angle,ofVec3f(0,0,1));
-                points.push_back(Meta(ofVec3f(0,0),(ofRandom(noiseR)+1)*rayon,lifeTime,tmpv));
-
-                tmpv=v;
-                tmpv.rotate(ofRandom(noise)*90+90+angle,ofVec3f(0,0,1));
-                points.push_back(Meta(ofVec3f(1,0),(ofRandom(noiseR)+1)*rayon,lifeTime,tmpv));
-                
-                tmpv=v;
-                tmpv.rotate(ofRandom(noise)*90-angle,ofVec3f(0,0,1));
-                points.push_back(Meta(ofVec3f(0,1),(ofRandom(noiseR)+1)*rayon,lifeTime,tmpv));
-                
-                tmpv=v;
-                tmpv.rotate(ofRandom(noise)*90-90-angle,ofVec3f(0,0,1));
-                points.push_back(Meta(ofVec3f(1,1),(ofRandom(noiseR)+1)*rayon,lifeTime,tmpv));
+                float curangle  = angle;
+                for (int i = 0 ; i< dpoints.size() ; i++){
+                    if(dpoints.size()>1){curangle = tmpv.angle(dpoints[(i+1)%dpoints.size()]-dpoints[i]);}
+                    tmpv.rotate(ofRandom(noise)*360+curangle,ofVec3f(0,0,1));
+                    points.push_back(Meta(dpoints[i],(ofRandom(noiseR)+1)*rayon,lifeTime,tmpv,i));
+                }
                 
                 lastT = ofGetElapsedTimeMillis();
             }
@@ -104,20 +97,25 @@ void metaBalls::update(int w, int h){
             //Gravit
                                  
          for(int j = 0 ; j<points.size(); j++){
-             points[j].v *= f;
+             
              for (int i = 0 ; i< dpoints.size() ; i ++){
+                 if(points[j].mode==i){
                  float d = dpoints[i].distance(points[j]);
-                 float v =std::min(1.f,mass*0.001f/abs(d)); 
+                 float v =std::min(1.f,mass*0.01f/abs(d));
+                     if(points[j].v.length()<maxv){
                  ofVec3f l = (dpoints[i]-points[j])/d * v;
                  points[j].v+=l;
                  
-                 if(points[j].v.length()>maxv){
-                     points[j].v = points[j].v.getNormalized()*maxv;
-                     
+//                 if(points[j].v.length()>maxv){
+//                     points[j].v = points[j].v.getNormalized()*maxv;
+//                     
                  }
+                }
+                     
              }
+                  points[j].v *= f;
          }
-             
+            
              
              for(int i = 0 ; i < points.size() ; i++){
                  points[i]+=points[i].v;
@@ -152,11 +150,15 @@ void metaBalls::draw(int w, int h){
     ofVec2f scale(w,h);
 
 //        ofClear(0);
+        ofEnableAlphaBlending();
+        
         ofColor c(color.get().x, color.get().y, color.get().z);
     for(int i = 0 ; i< points.size();i++){
-        
-        c.setBrightness(std::min(255.0,512.0*points[i].lifetime/lifeTime));
-        ofSetColor(c);
+        float al;
+//        if(points[i].lifetime>4*lifeTime/5){al = (255.0*(lifeTime-points[i].lifetime)/(4*lifeTime/5));}
+//        else
+            al=(std::min(255.0,512.0*points[i].lifetime/(lifeTime)));
+        ofSetColor(c.r,c.g,c.b,al);
         ofRectangle rect;
         rect.setFromCenter(points[i].x*w, points[i].y*h, points[i].rayon*w, points[i].rayon*h);
         metaBall.draw(rect);

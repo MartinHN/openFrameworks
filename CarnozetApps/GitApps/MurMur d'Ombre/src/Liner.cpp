@@ -32,11 +32,13 @@ void Liner::draw(int w, int h){
     
     
     vector<ofPolyline> b = dad->bH->getBlobs(w,h);
+    ofSetColor(color->x,color->y,color->z,alpha);
+    ofSetLineWidth(width);
     for (int i = 0 ; i < b.size(); i ++){
-        ofSetColor(color->x,color->y,color->z,alpha);
-        ofSetLineWidth(width);
+        ofPushMatrix();
         ofPoint centr = b[i].getCentroid2D();
         ofTranslate(centr.x,0);
+        
         for (int j = 0 ; j < b[i].size() ; j++){
             
             ofRotateY(3*360*rotAngle/b[i].size());
@@ -45,6 +47,7 @@ void Liner::draw(int w, int h){
             
             if(drawCentr)ofLine(b[i][j]-ofVec2f(centr.x,0),ofVec3f(0,centr.y));
         }
+        ofPopMatrix();
     }
 
 }

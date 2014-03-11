@@ -16,10 +16,11 @@
 class Meta : public ofVec3f{
 public:
     Meta(ofPoint p, float r, int lifeTime):ofVec3f(p),rayon(r),lifetime(lifeTime){};
-    Meta(ofPoint p, float r, int lifeTime,ofVec3f vin):ofVec3f(p),rayon(r),lifetime(lifeTime),v(vin){};
+    Meta(ofPoint p, float r, int lifeTime,ofVec3f vin,int modin):ofVec3f(p),rayon(r),lifetime(lifeTime),v(vin),mode(modin){};
     float rayon;
     int lifetime;
     ofVec3f v;
+    int mode;
 
     
     
@@ -47,7 +48,7 @@ public:
     ofParameter<float> lifeTime,emitrate,noise,noiseR,angle,mass,f;
     ofParameter<bool> drawLines;
     ofParameter<float> maxv;
-    
+    ofParameter<float> vInit;
     ofImage metaBall;
     
     unsigned long lastT;

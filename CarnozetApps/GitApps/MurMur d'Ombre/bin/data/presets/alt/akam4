@@ -33,13 +33,13 @@
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
-		<smooth>0</smooth>
+		<smooth>4</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
-		<screenN>0</screenN>
+		<screenN>4</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.469388, 0.556122, 0.5</pos>
+		<pos>0.487307, 0.342957, 0.5</pos>
 		<scale>1, 1, 0.5</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -191,10 +191,12 @@
 			<mode>0</mode>
 			<emitrate>1</emitrate>
 			<noise>0.5</noise>
+			<noiseR>0.472441</noiseR>
 			<angle>45</angle>
 			<mass>0.0001</mass>
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -230,7 +232,7 @@
 		<drawBlob>
 			<isActive>0</isActive>
 			<isPiping>1</isPiping>
-			<screenN>1</screenN>
+			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
@@ -274,6 +276,8 @@
 			<isMasking>0</isMasking>
 			<numPhoto>0</numPhoto>
 			<isResize>0</isResize>
+			<isMirror>0</isMirror>
+			<color>255, 255, 255</color>
 		</Photo>
 		<ColorRuban>
 			<isActive>0</isActive>
@@ -289,5 +293,19 @@
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
 		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>0</isMapping>
+			<isMasking>0</isMasking>
+			<width>2.53659</width>
+			<steps>1</steps>
+			<drawCentr>1</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>165.439</alpha>
+		</Liner>
 	</Visu>
 </OF>

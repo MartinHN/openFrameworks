@@ -1,17 +1,17 @@
 <OF>
 	<global>
 		<finalblur>0</finalblur>
-		<saturation>0.96063</saturation>
-		<contrast>1.04724</contrast>
-		<brightness>1.17073</brightness>
+		<saturation>1</saturation>
+		<contrast>1.2</contrast>
+		<brightness>0.897561</brightness>
 		<rback>0</rback>
-		<gback>0</gback>
-		<bback>0</bback>
-		<alphablur>130</alphablur>
+		<gback>42</gback>
+		<bback>32</bback>
+		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
-		<isGloom>0</isGloom>
+		<isGloom>1</isGloom>
 		<isPipe>1</isPipe>
-		<pipeblur>2.95276</pipeblur>
+		<pipeblur>2.85433</pipeblur>
 		<pipeAlphablur>255</pipeAlphablur>
 		<hidePipe>1</hidePipe>
 		<pipeMask>0</pipeMask>
@@ -33,13 +33,13 @@
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
 		<simplification>0</simplification>
-		<smooth>4.04878</smooth>
+		<smooth>4.29134</smooth>
 		<polyMaxPoints>0</polyMaxPoints>
 		<maxLengthExtrem>15</maxLengthExtrem>
 		<screenN>4</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.469388, 0.417621, 0.5</pos>
+		<pos>0.362867, 0.442509, 0.5</pos>
 		<scale>1, 1, 0.5</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -88,12 +88,12 @@
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
 			<numParticles>209764</numParticles>
-			<particleSize>4.96063</particleSize>
-			<alphaparticle>0.393701</alphaparticle>
+			<particleSize>10.1575</particleSize>
+			<alphaparticle>0.507317</alphaparticle>
 			<partcolor>0, 0, 1</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>6</gradNum>
-			<mingrad>-0.0551181</mingrad>
+			<mingrad>0.204724</mingrad>
 			<maxgrad>1.20472</maxgrad>
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>
@@ -101,23 +101,23 @@
 				<isActive>1</isActive>
 				<k>0</k>
 				<l0>1</l0>
-				<z>0.0556001</z>
+				<z>0.142857</z>
 				<size>4</size>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
 				<k>0</k>
 				<l0>1</l0>
-				<z>0.0475653</z>
+				<z>0.142857</z>
 				<size>5</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
 				<k>0.0548469</k>
 				<z>0.117347</z>
-				<freeze>0.0929455</freeze>
+				<freeze>0.314703</freeze>
 				<freezemin>0.0698055</freezemin>
-				<damp>0.84734</damp>
+				<damp>0.771011</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
@@ -159,13 +159,13 @@
 			</spring>
 			<fieldForce>
 				<isActive>1</isActive>
-				<k>-0.0278162</k>
+				<k>0.0203921</k>
 				<velouty>0.000369586</velouty>
 				<veloutz>-0.000433877</veloutz>
-				<veloutborder>-0.00204082</veloutborder>
+				<veloutborder>0</veloutborder>
 				<minv>0.0679736</minv>
 				<maxv>0.959826</maxv>
-				<fin>1</fin>
+				<fin>0.731142</fin>
 				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
@@ -243,7 +243,7 @@
 			<alphapos>0.3</alphapos>
 			<scale>1.12394, 1.11399</scale>
 			<color>255, 255, 255</color>
-			<alpha>255</alpha>
+			<alpha>119.468</alpha>
 		</drawBlob>
 		<VideoPlayer>
 			<isActive>0</isActive>

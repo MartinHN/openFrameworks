@@ -4,6 +4,7 @@
 		<motion_detection>0</motion_detection>
 		<Use_Kinect_front>0</Use_Kinect_front>
 		<_Use_Video>1</_Use_Video>
+		<use_Test_Video>0</use_Test_Video>
 		<p1>0, 0</p1>
 		<p2>320, 0</p2>
 		<p3>320, 240</p3>
@@ -11,9 +12,7 @@
 		<Erode>0</Erode>
 		<Blur>0</Blur>
 		<Angle>90</Angle>
-	<use_Test_Video>0</use_Test_Video>
 		<AngleTilt>-8</AngleTilt>
 	</settings>
-	<preset>2</preset>
-<group/>
+	<preset>15</preset>
 </group>

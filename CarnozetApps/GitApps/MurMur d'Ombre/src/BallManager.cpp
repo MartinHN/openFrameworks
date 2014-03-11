@@ -142,7 +142,7 @@ void BallManager::update(int w,int h){
     for( vector<BouncingBall>::iterator it = listOfBalls.begin(); it < listOfBalls.end() ; )
     {
         
-        int res;
+        int res = 1;
         
         // ONE BLOB
         if(!is2blob){
@@ -159,12 +159,12 @@ void BallManager::update(int w,int h){
             
             if( c1.distance(ori) < c2.distance(ori) ){
                 
-                it->update(smallPolyline, w, h);
+                res =it->update(smallPolyline, w, h);
                 
             }
             else{
                 
-                it->update(secSmallPolyline, w, h);
+               res = it->update(secSmallPolyline, w, h);
             }
             
             

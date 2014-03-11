@@ -1,16 +1,18 @@
 <group>
 	<settings>
-		<thresh_near_far>255, 46.5712</thresh_near_far>
+		<thresh_near_far>255, 159.415</thresh_near_far>
 		<motion_detection>0</motion_detection>
-		<Use_Kinect_front>1</Use_Kinect_front>
+		<Use_Kinect_front>0</Use_Kinect_front>
 		<_Use_Video>0</_Use_Video>
-		<p1>0, 0</p1>
-		<p2>320, 0</p2>
+		<p1>0, 53.8276</p1>
+		<p2>320, 55.0771</p2>
 		<p3>320, 240</p3>
 		<p4>0, 240</p4>
 		<Erode>0</Erode>
 		<Blur>0</Blur>
-		<Angle>57</Angle>
+		<Angle>63</Angle>
+	<use_Test_Video>0</use_Test_Video>
+		<AngleTilt>-22</AngleTilt>
 	</settings>
 	<preset>5</preset>
 <group/>

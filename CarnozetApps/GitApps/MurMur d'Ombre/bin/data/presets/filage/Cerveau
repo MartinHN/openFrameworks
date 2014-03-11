@@ -12,6 +12,7 @@
 		<isGloom>1</isGloom>
 		<isPipe>1</isPipe>
 		<pipeblur>0</pipeblur>
+		<pipeAlphablur>85</pipeAlphablur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>0</pipeMask>
 		<camera>
@@ -38,7 +39,7 @@
 		<screenN>0</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.693878, 0.5, 0.5</pos>
+		<pos>0.566949, 0.5, 0.5</pos>
 		<scale>1, 1, 0.5</scale>
 		<crop>0, 0, 0, 100</crop>
 	</blobsettings>
@@ -60,7 +61,6 @@
 		<mask2>0</mask2>
 		<mask3>0</mask3>
 		<mask4>0</mask4>
-		<mask5>0</mask5>
 	</screensCtl>
 	<Visu>
 		<background>
@@ -116,6 +116,7 @@
 				<k>0.0222748</k>
 				<z>0.0395719</z>
 				<freeze>0</freeze>
+				<freezemin>0</freezemin>
 				<damp>0.970134</damp>
 			</origin>
 			<rotation>
@@ -164,10 +165,12 @@
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
+				<fin>1</fin>
+				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
 				<isActive>1</isActive>
-				<f>1.00084</f>
+				<f>0.973121</f>
 				<fmin>1</fmin>
 				<vmax>1</vmax>
 				<vmin>0</vmin>
@@ -188,10 +191,12 @@
 			<mode>0</mode>
 			<emitrate>1</emitrate>
 			<noise>0.5</noise>
+			<noiseR>0.472441</noiseR>
 			<angle>45</angle>
 			<mass>0.0001</mass>
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -271,6 +276,36 @@
 			<isMasking>0</isMasking>
 			<numPhoto>0</numPhoto>
 			<isResize>0</isResize>
+			<isMirror>0</isMirror>
+			<color>255, 255, 255</color>
 		</Photo>
+		<ColorRuban>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<onPause>0</onPause>
+			<stiffness>0.02</stiffness>
+			<timestep>0.02</timestep>
+			<color>255, 255, 255</color>
+			<vout>0.001, 0.001, 0.001</vout>
+			<alpha>255</alpha>
+		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>0</isMapping>
+			<isMasking>0</isMasking>
+			<width>1.70732</width>
+			<steps>32</steps>
+			<drawCentr>0</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>131.854</alpha>
+		</Liner>
 	</Visu>
 </OF>

@@ -12,6 +12,7 @@
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
 		<pipeblur>2.625</pipeblur>
+		<pipeAlphablur>255</pipeAlphablur>
 		<hidePipe>0</hidePipe>
 		<pipeMask>1</pipeMask>
 		<camera>
@@ -60,7 +61,6 @@
 		<mask2>0</mask2>
 		<mask3>0</mask3>
 		<mask4>0</mask4>
-		<mask5>0</mask5>
 	</screensCtl>
 	<Visu>
 		<background>
@@ -102,20 +102,21 @@
 				<k>0</k>
 				<l0>1</l0>
 				<z>0.218019</z>
-				<size>6</size>
+				<size>3</size>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
 				<k>0</k>
 				<l0>1</l0>
 				<z>0.227974</z>
-				<size>6</size>
+				<size>3</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
 				<k>0.0372076</k>
 				<z>0.181434</z>
 				<freeze>0.473469</freeze>
+				<freezemin>0</freezemin>
 				<damp>0.972623</damp>
 			</origin>
 			<rotation>
@@ -164,6 +165,8 @@
 				<veloutborder>0</veloutborder>
 				<minv>0.1</minv>
 				<maxv>0.8</maxv>
+				<fin>1</fin>
+				<fout>1</fout>
 			</fieldForce>
 			<globalForce>
 				<isActive>0</isActive>
@@ -183,7 +186,17 @@
 			<rayon>0.48</rayon>
 			<curFamilly>2</curFamilly>
 			<alpha>0</alpha>
+			<lifeTime>226.772</lifeTime>
 			<color>255, 255, 255, 255</color>
+			<mode>1</mode>
+			<emitrate>6.02362</emitrate>
+			<noise>0</noise>
+			<noiseR>0.472441</noiseR>
+			<angle>43.5827</angle>
+			<mass>0.409449</mass>
+			<drawLines>0</drawLines>
+			<maxv>0.211417</maxv>
+			<f>0.662205</f>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -239,6 +252,8 @@
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
+			<color>255, 255, 255</color>
+			<alpha>255</alpha>
 		</VideoPlayer>
 		<boule2gomme>
 			<isActive>0</isActive>
@@ -252,5 +267,45 @@
 			<drawPipe>0</drawPipe>
 			<drawAttr>0</drawAttr>
 		</boule2gomme>
+		<Photo>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>1</isMapping>
+			<isMasking>0</isMasking>
+			<numPhoto>0</numPhoto>
+			<isResize>0</isResize>
+			<isMirror>0</isMirror>
+			<color>255, 255, 255</color>
+		</Photo>
+		<ColorRuban>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>0</isMapping>
+			<isMasking>0</isMasking>
+			<onPause>0</onPause>
+			<stiffness>0.075122</stiffness>
+			<timestep>0.0946341</timestep>
+			<color>155.996, 255, 255</color>
+			<vout>0.001, 0.001, 0</vout>
+			<alpha>255</alpha>
+		</ColorRuban>
+		<Liner>
+			<isActive>0</isActive>
+			<isPiping>0</isPiping>
+			<screenN>0</screenN>
+			<recopy>1</recopy>
+			<isMapping>0</isMapping>
+			<isMasking>0</isMasking>
+			<width>2.53659</width>
+			<steps>1</steps>
+			<drawCentr>1</drawCentr>
+			<rotAngle>0</rotAngle>
+			<color>255, 255, 255</color>
+			<alpha>165.439</alpha>
+		</Liner>
 	</Visu>
 </OF>

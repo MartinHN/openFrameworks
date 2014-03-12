@@ -29,6 +29,7 @@ public:
     void ppp(int & s);
     int lasts;
     ofVideoPlayer player;
+    unsigned int framenum;
     
 };
 

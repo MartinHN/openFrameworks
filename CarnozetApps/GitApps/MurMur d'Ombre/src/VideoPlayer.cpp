@@ -18,6 +18,7 @@ VideoPlayer::VideoPlayer(VisuHandler * v):VisuClass(v){
     playPauseStop.setSerializable(false);
     settings.setName("VideoPlayer");
     lasts=playPauseStop;
+    framenum = 0;
 }
 
 void VideoPlayer::setupData(){
@@ -41,7 +42,8 @@ void VideoPlayer::ppp(int & s){
             break;
         }
         case 2:{
-            if(lasts==1){
+            if(lasts==1&&player.isLoaded()){
+                
                 player.setPaused(false);
             }
             else{
@@ -55,6 +57,7 @@ void VideoPlayer::ppp(int & s){
             player.stop();
             player.close();
             lasts=s;
+            framenum =0;
             break;
         }
     }
@@ -62,15 +65,14 @@ void VideoPlayer::ppp(int & s){
 #endif
 }
 void VideoPlayer::draw(int w, int h){
-    if(playPauseStop == 0){
-        ofSetColor(0);
-    }
-    else{
+    if(playPauseStop == 2 && player.isLoaded() && player.isPlaying()){
     
-        if(player.isLoaded())
-        {
+
+            if(framenum>3){
             ofSetColor(color->x,color->y,color->z,alpha);
             player.draw(0,0,w,h);
-        }
+            }
+            framenum++;
+        
     }
    }

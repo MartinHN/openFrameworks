@@ -7,7 +7,7 @@
 		<rback>0</rback>
 		<gback>0</gback>
 		<bback>0</bback>
-		<alphablur>49</alphablur>
+		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
 		<isPipe>1</isPipe>
@@ -28,7 +28,7 @@
 		<isPiping>0</isPiping>
 		<vidThreshold>70</vidThreshold>
 		<invertBW>0</invertBW>
-		<minSide>0</minSide>
+		<minSide>0.0829268</minSide>
 		<maxSide>1</maxSide>
 		<maxBlobs>1</maxBlobs>
 		<findHoles>0</findHoles>
@@ -39,8 +39,8 @@
 		<screenN>0</screenN>
 		<invertX>0</invertX>
 		<invertY>0</invertY>
-		<pos>0.402688, 0.805874, 0.5</pos>
-		<scale>0.855152, 1.05426, 1.0443</scale>
+		<pos>0.512195, 0.512195, 0.5</pos>
+		<scale>1.00448, 1.05426, 1.0443</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
 	<attrCtl>
@@ -56,6 +56,7 @@
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screensCtl>
+		<invertMask>0</invertMask>
 		<mask0>0</mask0>
 		<mask1>0</mask1>
 		<mask2>0</mask2>
@@ -93,8 +94,8 @@
 			<partcolor>0, 0, 1</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>6</gradNum>
-			<mingrad>0.204724</mingrad>
-			<maxgrad>1.20472</maxgrad>
+			<mingrad>0.0731708</mingrad>
+			<maxgrad>0.385366</maxgrad>
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>
@@ -197,6 +198,8 @@
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
 			<f>0.662205</f>
+			<vInit>0</vInit>
+			<rIn>0</rIn>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -232,16 +235,16 @@
 		<drawBlob>
 			<isActive>0</isActive>
 			<isPiping>1</isPiping>
-			<screenN>0</screenN>
+			<screenN>4</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
 			<drawZones>0</drawZones>
 			<invertx>0</invertx>
 			<inverty>0</inverty>
-			<pos>0.52551, 0.545918, 0.545918</pos>
+			<pos>0.50224, 0.50224, 0.50224</pos>
 			<alphapos>0.3</alphapos>
-			<scale>1.09408, 1.09408</scale>
+			<scale>1.01444, 1.00448</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>
@@ -292,6 +295,8 @@
 			<color>255, 255, 255</color>
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
+			<length>3</length>
+			<curFamilly>1</curFamilly>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

@@ -352,9 +352,9 @@ void testApp::draw(){
     
     
     //FinalTOUCH
-//    glBlendEquation(GL_FUNC_ADD_EXT);
-//    glBlendFunc(GL_ONE,GL_ZERO);
-//    
+    glBlendEquation(GL_FUNC_ADD_EXT);
+    glBlendFunc(GL_ONE,GL_ZERO);
+//
     
     finalRender.dst->begin();
     blurX.begin();

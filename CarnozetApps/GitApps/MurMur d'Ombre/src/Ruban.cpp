@@ -242,6 +242,7 @@ ColorRuban::ColorRuban(VisuHandler *v):VisuClass(v){
     MYPARAM(vout, ofVec3f(0),ofVec3f(-50),ofVec3f(50));
     MYPARAM(alpha,255,0,255);
     MYPARAM(length, 3.0, 0.1f, 10.0f);
+    MYPARAM(curFamilly, 1, 0, 2);
     stiffness.addListener(this, &ColorRuban::changeStiffness);
     length.addListener(this, &ColorRuban::changeLength);
     init(pos, angle);
@@ -284,7 +285,7 @@ int ColorRuban::update( int channel, float argument, int w , int h){
     int num=0;
     ofPoint control;
     int note=0;
-    vector<ofPoint> attr = dad->attr->getType(0,w,h);
+    vector<ofPoint> attr = dad->attr->getType(curFamilly,w,h);
     
     if(!onPause){
         

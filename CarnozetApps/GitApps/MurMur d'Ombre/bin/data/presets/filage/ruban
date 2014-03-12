@@ -39,7 +39,7 @@
 		<screenN>1</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.5, 0.5, 0.5</pos>
+		<pos>0.39771, 0.566949, 0.5</pos>
 		<scale>1.0102, 1.0102, 0.994525</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
@@ -56,6 +56,7 @@
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screensCtl>
+		<invertMask>0</invertMask>
 		<mask0>0</mask0>
 		<mask1>0</mask1>
 		<mask2>0</mask2>
@@ -176,7 +177,7 @@
 				<vmin>0</vmin>
 			</globalForce>
 		</particles>
-		<group>
+		<metaBalls>
 			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
@@ -198,7 +199,8 @@
 			<maxv>0.3</maxv>
 			<f>1</f>
 			<vInit>0</vInit>
-		</group>
+			<rIn>0</rIn>
+		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
 			<isPiping>0</isPiping>
@@ -288,12 +290,13 @@
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
 			<onPause>0</onPause>
-			<stiffness>0.556098</stiffness>
-			<timestep>0.02</timestep>
+			<stiffness>0.585366</stiffness>
+			<timestep>0.0931707</timestep>
 			<color>255, 255, 255</color>
 			<vout>0.001, 0.001, 0</vout>
 			<alpha>255</alpha>
-			<length>6.90927</length>
+			<length>0.1</length>
+			<curFamilly>1</curFamilly>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

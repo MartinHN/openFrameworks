@@ -104,6 +104,7 @@ public:
     ofParameter<ofVec3f> color,vout;
     ofParameter<int> alpha;
     ofParameter<float> timestep,stiffness, length;
+    ofParameter<int> curFamilly;
     
     void changeStiffness(float &f);
     void changeLength(float &f);

@@ -56,6 +56,7 @@
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screensCtl>
+		<invertMask>0</invertMask>
 		<mask0>0</mask0>
 		<mask1>0</mask1>
 		<mask2>0</mask2>
@@ -88,8 +89,8 @@
 			<isMasking>0</isMasking>
 			<timeStep>1.02439</timeStep>
 			<numParticles>379456</numParticles>
-			<particleSize>1.7561</particleSize>
-			<alphaparticle>1.95122</alphaparticle>
+			<particleSize>2.78049</particleSize>
+			<alphaparticle>0.468293</alphaparticle>
 			<partcolor>255, 255, 255</partcolor>
 			<gradtype>0</gradtype>
 			<gradNum>0</gradNum>
@@ -197,6 +198,8 @@
 			<drawLines>0</drawLines>
 			<maxv>0.3</maxv>
 			<f>0.662205</f>
+			<vInit>0.0185366</vInit>
+			<rIn>0.178537</rIn>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -292,6 +295,7 @@
 			<color>255, 255, 255</color>
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
+			<length>3</length>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

@@ -27,6 +27,7 @@ metaBalls::metaBalls(VisuHandler * v):VisuClass(v){
     MYPARAM(maxv,0.3f,0.f,0.3f);
     MYPARAM(f,1.f,0.4f,1.f);
     MYPARAM(vInit,.0f,0.00f,.05f);
+    MYPARAM(rIn,.0f,0.00f,.3f);
     settings.setName("metaBalls");
     maxsize = 400;
 
@@ -106,7 +107,7 @@ void metaBalls::update(int w, int h){
                  if(points[j].mode==i){
                  float d = dpoints[i].distance(points[j]);
                  float v =std::min(1.f,mass*0.01f/abs(d));
-                     if(points[j].v.length()<maxv){
+            if(points[j].distance(dpoints[i])>rIn && points[j].v.length()<maxv){
                  ofVec3f l = (dpoints[i]-points[j])/d * v;
                  points[j].v+=l;
                  

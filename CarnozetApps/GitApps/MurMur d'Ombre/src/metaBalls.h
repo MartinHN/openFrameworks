@@ -40,7 +40,7 @@ public:
     void setupData();
     
     
-    ofParameter<float> rayon,alpha,theta;
+    ofParameter<float> rayon,alpha,theta,rIn;
     ofParameter<int> curFamilly,mode;
     ofParameter<ofVec4f> color;
     vector<ofVec3f>  dpoints;

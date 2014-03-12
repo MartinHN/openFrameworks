@@ -53,8 +53,7 @@ public:
 
     
     int update(ofPoint control, int channel, float argument,ofVec3f velout);    // return 0 if the visual object is
-    void move();
-    void draw();
+    void draw(ofColor color);
     
     int chelou;
     
@@ -73,6 +72,11 @@ public:
     vector<Spring> rub1;
     vector<Spring> rub2;
     ofPath mypath;
+    
+    //change Parameter
+    void changeStiffness( float stif);
+    void changeLength(float length);
+
         
 };
 
@@ -93,16 +97,16 @@ public:
     void init(ofPoint pos, ofPoint angle);
     int update(int channel, float argument, int w, int h);
     
-    
-
-    
     ruban ruban1;
     
     ofParameter<bool> onPause;
     ofParameter<int> familly;
     ofParameter<ofVec3f> color,vout;
     ofParameter<int> alpha;
-    ofParameter<float> timestep,stiffness;
+    ofParameter<float> timestep,stiffness, length;
+    
+    void changeStiffness(float &f);
+    void changeLength(float &f);
     
 #ifdef OSCSEND
     ofxOscSender musicSender;

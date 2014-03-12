@@ -66,8 +66,11 @@ void VideoPlayer::draw(int w, int h){
         ofSetColor(0);
     }
     else{
-    ofSetColor(color->x,color->y,color->z,alpha);
     
-    player.draw(0,0,w,h);
+        if(player.isLoaded())
+        {
+            ofSetColor(color->x,color->y,color->z,alpha);
+            player.draw(0,0,w,h);
+        }
     }
    }

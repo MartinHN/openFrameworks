@@ -25,14 +25,22 @@ Spring::Spring(float xpos, float ypos, float m, float g, float i, float s) {
 }
 
 void Spring::update(ofPoint target) {
+    
+    ofPoint sp = ofPoint(x,y);
+    
+    if((target-sp).length()> initialSize){
+    
     float forceX = (target.x - x) * stiffness;
     float ax = forceX / mass;
     vx = damping * (vx + ax);
-    x += vx;
+    
     float forceY = (target.y - y) * stiffness;
     forceY += gravity;
     float ay = forceY / mass;
     vy = damping * (vy + ay);
+    }
+    
+    x += vx;
     y += vy;
 }
 
@@ -40,10 +48,6 @@ void Spring::update(ofPoint target) {
 void Spring::draw(ofPoint p) {
     
     ofCircle(x, y, 20);
-    
-
-    
-    
     
 }
 
@@ -62,11 +66,11 @@ ruban::ruban(ofPoint pos, float stiffness, int length ){
     float gravity = 0.3;
     float mass = 2.2;
     float spSize = 3.0;
-    stiffness = 0.55;
+    //stiffness = 0.55;
     
     for( int i=0;i<nbSpring; i++){
         
-        Spring sp1 = Spring(ofGetWidth()/2.0, ofGetHeight()/2.0, (mass + i*0.02), gravity, spSize, (stiffness - i*0.001));
+        Spring sp1 = Spring(0, 0, (mass + i*0.02), gravity, spSize, (stiffness - i*0.001));
         
         rub1.push_back(sp1);
         rub2.push_back(sp1);
@@ -74,7 +78,7 @@ ruban::ruban(ofPoint pos, float stiffness, int length ){
     }
     mypath.clear();
     mypath.setFilled(TRUE);
-    mypath.setFillColor(ofColor(0));
+    mypath.setFillColor(ofColor(0,0,255));
     
     pointCol = ofColor(0,120,210);
     stillMoving = false;
@@ -161,13 +165,15 @@ int ruban::update(ofPoint externControl, int channel, float argument,ofVec3f vou
     
 }
 
-void ruban::draw()
+void ruban::draw(ofColor color)
 {
     ofPushMatrix();
     
     ofFill();
     ofSetColor(255);
-    
+    if(mypath.getFillColor() != color){
+        mypath.setFillColor(color);
+    }
     mypath.draw();
     
     
@@ -185,28 +191,59 @@ void ruban::draw()
     ofPopMatrix();
 }
 
-void ruban::move(){
+void ruban::changeStiffness(float stif){
+    
+    if(rub1.size()==rub2.size())
+    {
+        
+        for(int i=0; i<rub1.size(); i++)
+        {
+            float finalStiff = (stif - i*0.001);
+            rub1.at(i).stiffness = finalStiff;
+            rub2.at(i).stiffness = finalStiff;
+        }
+            
+    }
+    
+}
+
+void ruban::changeLength(float length){
+    
+    if(rub1.size()==rub2.size())
+    {
+        
+        for(int i=0; i<rub1.size(); i++)
+        {
+            rub1.at(i).initialSize = length;
+            rub2.at(i).initialSize = length;
+        }
+        
+    }
     
 }
 
 
+
+
+
+
 //------------------------------------------------------------------------------
 
-//ColorRuban::ColorRuban(){
-//    
-//    
-//}
+
 
 ColorRuban::ColorRuban(VisuHandler *v):VisuClass(v){
     
     ofPoint pos = ofPoint( 0, 0);
     ofPoint angle = ofPoint();
     MYPARAM(onPause,false,false,true);
-    MYPARAM(stiffness,0.02f,0.f,0.1f);
+    MYPARAM(stiffness,0.55f,0.f,2.0f);
     MYPARAM(timestep,0.02f,0.f,0.1f);
     MYPARAM(color,ofVec3f(255),ofVec3f(0),ofVec3f(255));
     MYPARAM(vout, ofVec3f(0.001),ofVec3f(0),ofVec3f(0.1));
     MYPARAM(alpha,255,0,255);
+    MYPARAM(length, 3.0, 0.1f, 10.0f);
+    stiffness.addListener(this, &ColorRuban::changeStiffness);
+    length.addListener(this, &ColorRuban::changeLength);
     init(pos, angle);
     
 #ifdef OSCSEND
@@ -247,7 +284,7 @@ int ColorRuban::update( int channel, float argument, int w , int h){
     int num=0;
     ofPoint control;
     int note=0;
-    vector<ofPoint> attr = dad->attr->getType(2,w,h);
+    vector<ofPoint> attr = dad->attr->getType(0,w,h);
     
     if(!onPause){
         
@@ -295,7 +332,16 @@ int ColorRuban::update( int channel, float argument, int w , int h){
 void ColorRuban::draw(int w, int h){
     
     update(0, 0, w, h);
-    ruban1.draw();
+    ofColor col = ofColor(color->x, color->y, color->z);
+    ruban1.draw(col);
+}
+
+void ColorRuban::changeStiffness(float &f){
+    ruban1.changeStiffness(f);
+}
+
+void ColorRuban::changeLength(float &f){
+    ruban1.changeLength(f);
 }
 
 

@@ -173,6 +173,7 @@ void testApp::setup(){
 #else
     visuHandler.setupData();
     bH.setupData(&blurX,&blurY);
+    sH.setupData();
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
     
 #endif
@@ -432,11 +433,15 @@ void testApp::draw(){
     }
     glBlendEquation(GL_FUNC_ADD);
     
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_DST_ALPHA);
     if(oneMask){
-        ofSetColor(0);
+  
+        if(!sH.invertMask)ofSetColor(0);
+        else ofSetColor(255);
         ofRect(0, 0, scrw, scrh);
-        ofSetColor(255);
+        if(!sH.invertMask)ofSetColor(255);
+        else ofSetColor(0);
+
         if(pipeMask)visuHandler.pipePP.src->draw(0,0,scrw,scrh);
         visuHandler.draw(2);  
         

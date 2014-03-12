@@ -28,6 +28,7 @@ apps/*
 *.o
 *.wav
 *.aif
+Iconr
 [Dd]ebug*/
 [Rr]elease*/
 *.mode*

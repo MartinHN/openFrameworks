@@ -134,7 +134,7 @@ void Photo::draw(int w, int h){
 void Photo::changeImage(int& num){
     
     isSet = false;
-    if( num< listOfImage.size()-1 && num>0){
+    if( num< listOfImage.size() && num>0){
     imgToDraw = listOfImage.at(num);
     }
 

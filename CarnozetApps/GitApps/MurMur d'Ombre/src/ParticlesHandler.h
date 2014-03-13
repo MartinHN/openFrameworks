@@ -11,7 +11,7 @@
 #include "VisuHandler.h"
 #include "drawBlob.h"
 #define PVISU
-//#define PIMG
+#define PIMG
 //#define PFBO
 
 

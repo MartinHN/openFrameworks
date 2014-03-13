@@ -102,17 +102,19 @@ void Particles::setup(){
     noReset = false;
   
 #ifdef PIMG
-    int partRes = 10 ;
-    partImg.allocate(partRes,partRes,OF_IMAGE_COLOR_ALPHA);
+    int partRes = 100 ;
+//    partImg.allocate(partRes,partRes,OF_IMAGE_COLOR_ALPHA);
     ofVec2f center(partRes/2);
-    for(int i = 0 ; i<partRes;i++){
-        for(int j = 0 ; j<partRes;j++){
-            ofVec2f curp(i,j);
-            ofColor cc(0,0,0,max(0.,1-curp.distance(center)*1.0/partRes));
-            partImg.setColor(i,j,cc);
-        }
-    }
-    
+//    for(int i = 0 ; i<partRes;i++){
+//        for(int j = 0 ; j<partRes;j++){
+//            ofVec2f curp(i,j);
+//            ofColor cc(0,0,255*max(0.,1-curp.distance(center)*1.0/partRes),255);
+//            partImg.setColor(i,j,cc);
+//        }
+//    }
+
+    partImg.loadImage("images/noms.png");
+
 #endif
 
 
@@ -132,7 +134,7 @@ void Particles::setup(){
     MYPARAM(particleSize, 3.0f,0.f,30.f);
     MYPARAM(alphaparticle,1.f,0.f,4.f);
     MYPARAM(partcolor, ofVec3f(0,0,1.),ofVec3f(0.),ofVec3f(255.));
-    MYPARAM(gradtype , 2,0,2);
+    MYPARAM(gradtype , 2,0,3);
     MYPARAM(gradNum,0,0,20);
     MYPARAM(mingrad,0.f,-1.f,1.f);
     MYPARAM(maxgrad,1,-1.f,3.f);
@@ -346,6 +348,7 @@ void Particles::draw(int w, int h){
     if(gradtype>0) updateRender.setUniformTexture("gradient",gradient.getTextureReference(),2);
 #ifdef PIMG
     updateRender.setUniformTexture("img",partImg.getTextureReference(),3);
+    updateRender.setUniform2f("imgRes",partImg.width,partImg.height);
 
 #endif
 #ifdef CAMCOLO

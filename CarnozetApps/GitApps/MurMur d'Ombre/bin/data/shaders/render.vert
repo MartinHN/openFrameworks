@@ -6,7 +6,7 @@ uniform sampler2DRect posTex;
 uniform sampler2DRect velTex;
 uniform sampler2DRect gradient;
 
-uniform sampler2DRect camin;
+uniform sampler2DRect img;
 
 
 
@@ -21,7 +21,7 @@ uniform vec2 gradbounds;
 uniform vec2 gradbounds2;
 uniform vec3 mouse;
 uniform vec2 insize;
-
+uniform vec2 imgRes;
 
 
 
@@ -29,10 +29,10 @@ void main() {
     // Takes the position of a vertex that was send on porpuse to the same  
     // position on the texture were it´s the information stored on the Red Green channels
     //
-    vec4 verPos = gl_Vertex;
+    vec2 verPos = gl_Vertex.xy;
    
     
-    vec4 pixPos = texture2DRect( posTex, verPos.xy );
+    vec4 pixPos = texture2DRect( posTex, verPos );
     
     // Maps the position from the texture (from 0.0 to 1.0) to
     // the screen position (0 - screenWidth/screenHeight)
@@ -53,9 +53,13 @@ void main() {
     else if(colorpart.x==2){
         
         
-        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(100.0*length(texture2DRect( velTex, verPos.xy ).xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));
+        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(10.0*length(texture2DRect(velTex, verPos ).xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));
         
         
+    }
+    
+    else if(colorpart.x == 3){
+         gl_FrontColor = texture2DRect(img,verPos*imgRes/vec2(resolution,resolution));
     }
     
 

@@ -14,7 +14,7 @@
 		<pipeblur>6.375</pipeblur>
 		<pipeAlphablur>255</pipeAlphablur>
 		<hidePipe>0</hidePipe>
-		<pipeMask>1</pipeMask>
+		<pipeMask>0</pipeMask>
 		<camera>
 			<alpha>1</alpha>
 			<distance>1</distance>

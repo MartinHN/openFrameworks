@@ -5,7 +5,7 @@
 void testApp::setup(){
     
     ofSetLogLevel(OF_LOG_VERBOSE);
-    ofSetFrameRate(28);
+    ofSetFrameRate(15);
     
     globalWidth = 320;
     globalHeight = 240;
@@ -195,19 +195,21 @@ void testApp::update(){
         }
         
         float er = erode;
-        float blu = int(blur / 2) * 2 +1;
+        
+        if(er>0){
         cvErode(grayThresImg.getCvImage(), grayThresImg.getCvImage(), NULL, er);
         cvDilate(grayThresImg.getCvImage(), grayThresImg.getCvImage(), NULL, er);
-        
+        }
+        float blu = int(blur / 2) * 2 +1;
         if(blu>0)grayThresImg.blur(blu);
         
         
         //Syphon
         
-        ofTexture tex = ofTexture(colorImg.getTextureReference());
-        ofTexture tex2 = ofTexture(grayThresImg.getTextureReference());
+//        ofTexture tex = ofTexture(colorImg.getTextureReference());
+//        ofTexture tex2 = ofTexture();
         //syphonServerVid.publishTexture(&tex);
-        syphonServerBlob.publishTexture(&tex2);
+        syphonServerBlob.publishTexture(&grayThresImg.getTextureReference());
         
         
         

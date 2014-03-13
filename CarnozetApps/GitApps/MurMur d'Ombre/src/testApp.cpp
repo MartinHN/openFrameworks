@@ -657,12 +657,17 @@ void testApp::saveState(string & s){
 
 
 void testApp::loadState(string & s){
-#if defined GUIMODE || defined STANDALONEMODE
+//#if defined GUIMODE || defined STANDALONEMODE
+    string abspath = "";
+#ifdef GUIMODE  
+    if(s.find("/")!=string::npos){abspath = s;}
+#else
+    if(s.find("/")==string::npos){ abspath = ofToDataPath("presets/filage/"+ofToString(s));}
+     else ofLogWarning("wrong preset name");
+#endif
     
-    if(s!=""){
-        string abspath = ofToDataPath("presets/filage/"+ofToString(loadName));
-        if(s.find("/")!=string::npos) {abspath = s;}
-        else{ofLogWarning("loading from local : " + abspath);}
+    if(abspath!=""){
+ 
         ofXml xml;
         
         xml.load(abspath);
@@ -674,6 +679,6 @@ void testApp::loadState(string & s){
     else{
         ofLogWarning("no argument for load state");
     }
-#endif  
+//#endif  
 }
 

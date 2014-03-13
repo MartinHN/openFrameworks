@@ -6,7 +6,7 @@
 		<brightness>1</brightness>
 		<rback>0</rback>
 		<gback>0</gback>
-		<bback>0</bback>
+		<bback>21</bback>
 		<alphablur>175</alphablur>
 		<bloomsize>4</bloomsize>
 		<isGloom>1</isGloom>
@@ -56,6 +56,7 @@
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screensCtl>
+		<invertMask>0</invertMask>
 		<mask0>0</mask0>
 		<mask1>1</mask1>
 		<mask2>1</mask2>
@@ -197,6 +198,8 @@
 			<drawLines>0</drawLines>
 			<maxv>0.211417</maxv>
 			<f>0.662205</f>
+			<vInit>0.0185366</vInit>
+			<rIn>0.178537</rIn>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -292,6 +295,8 @@
 			<color>255, 255, 255</color>
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
+			<length>3</length>
+			<curFamilly>1</curFamilly>
 		</ColorRuban>
 		<Liner>
 			<isActive>1</isActive>

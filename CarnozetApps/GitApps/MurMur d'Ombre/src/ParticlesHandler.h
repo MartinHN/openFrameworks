@@ -110,6 +110,8 @@ public:
     ofParameter<bool> map2blob;
     
     
+    int lastnumParticles;
+    
     
     int textureRes;
     ofVec2f  textureRes2;

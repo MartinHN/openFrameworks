@@ -561,9 +561,9 @@ void Particles::changeOrigins(int &type){
                     int i = textureRes * y + x;
                     ofPoint p(x*1.0/textureRes,y*1.0/(textureRes),0.5);
                     dad->sH->mapN2S(p,1);
-                    pos[i*3 + 0] = p.x;
-                    pos[i*3 + 1] = p.y;
-                    pos[i*3 + 2] = 0.5;
+                    pos[i*3 + 0] = 0;//p.x;
+                    pos[i*3 + 1] = 0;//p.y;
+                    pos[i*3 + 2] = 0;//0.5;
                 }
             }
             break;

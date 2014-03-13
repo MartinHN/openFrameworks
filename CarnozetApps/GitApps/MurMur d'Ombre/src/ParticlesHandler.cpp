@@ -128,7 +128,7 @@ void Particles::setup(){
 
     
     MYPARAM(numParticles , 100000,100,1000000);
-    
+    lastnumParticles = numParticles;
     
     //Appearence
     MYPARAM(particleSize, 3.0f,0.f,30.f);
@@ -488,7 +488,10 @@ void Particles::registerParam(){
 }
 
 void Particles::changeNum(int & num){
-    initFbo();
+    if(num!=lastnumParticles){
+        initFbo();
+        lastnumParticles = num;
+    }
 }
 
 

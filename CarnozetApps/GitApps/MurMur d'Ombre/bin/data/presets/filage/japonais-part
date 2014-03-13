@@ -56,6 +56,7 @@
 		<zonefamilly3>0, 0, 1, 1</zonefamilly3>
 	</attrCtl>
 	<screensCtl>
+		<invertMask>0</invertMask>
 		<mask0>0</mask0>
 		<mask1>0</mask1>
 		<mask2>0</mask2>
@@ -87,7 +88,7 @@
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
-			<numParticles>82944</numParticles>
+			<numParticles>131794</numParticles>
 			<particleSize>7.46341</particleSize>
 			<alphaparticle>0.604878</alphaparticle>
 			<partcolor>255, 255, 255</partcolor>
@@ -95,21 +96,21 @@
 			<gradNum>2</gradNum>
 			<mingrad>-0.560976</mingrad>
 			<maxgrad>3</maxgrad>
-			<map2blob>1</map2blob>
+			<map2blob>0</map2blob>
 			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
-				<k>0</k>
-				<l0>1</l0>
-				<z>0.218019</z>
-				<size>3</size>
+				<k>0.0456944</k>
+				<l0>2.5784</l0>
+				<z>0.0587356</z>
+				<size>2</size>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
-				<k>0</k>
-				<l0>1</l0>
-				<z>0.227974</z>
-				<size>3</size>
+				<k>0.0337481</k>
+				<l0>2.18019</l0>
+				<z>0.0487804</z>
+				<size>2</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
@@ -197,6 +198,8 @@
 			<drawLines>0</drawLines>
 			<maxv>0.211417</maxv>
 			<f>0.662205</f>
+			<vInit>0</vInit>
+			<rIn>0</rIn>
 		</metaBalls>
 		<AutoTree>
 			<isActive>0</isActive>
@@ -292,6 +295,8 @@
 			<color>155.996, 255, 255</color>
 			<vout>0.001, 0.001, 0</vout>
 			<alpha>255</alpha>
+			<length>3</length>
+			<curFamilly>1</curFamilly>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

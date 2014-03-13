@@ -39,8 +39,8 @@
 		<screenN>1</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.39771, 0.566949, 0.5</pos>
-		<scale>1.0102, 1.0102, 0.994525</scale>
+		<pos>0.39771, 0.427576, 0.5</pos>
+		<scale>0.944749, 0.715779, 0.994525</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
 	<attrCtl>
@@ -244,7 +244,7 @@
 			<inverty>0</inverty>
 			<pos>0.497262, 0.50224, 0.5</pos>
 			<alphapos>0.3</alphapos>
-			<scale>0.974614, 0.974614</scale>
+			<scale>1.01444, 1.00448</scale>
 			<color>255, 255, 255</color>
 			<alpha>255</alpha>
 		</drawBlob>

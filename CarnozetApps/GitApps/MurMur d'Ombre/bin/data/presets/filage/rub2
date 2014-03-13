@@ -39,8 +39,8 @@
 		<screenN>1</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.39771, 0.566949, 0.5</pos>
-		<scale>1.0102, 1.0102, 0.994525</scale>
+		<pos>0.39771, 0.427576, 0.5</pos>
+		<scale>1.0102, 0.715779, 0.994525</scale>
 		<crop>0, 0, 0, 0</crop>
 	</blobsettings>
 	<attrCtl>

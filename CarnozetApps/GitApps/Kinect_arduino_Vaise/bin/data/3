@@ -11,6 +11,8 @@
 		<Erode>0</Erode>
 		<Blur>0</Blur>
 		<Angle>63</Angle>
+	<use_Test_Video>0</use_Test_Video>
+		<AngleTilt>-22</AngleTilt>
 	</settings>
 	<preset>3</preset>
 <group/>

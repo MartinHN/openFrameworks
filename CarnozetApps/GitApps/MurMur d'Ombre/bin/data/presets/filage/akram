@@ -94,8 +94,8 @@
 			<partcolor>0, 0, 1</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>6</gradNum>
-			<mingrad>0.0731708</mingrad>
-			<maxgrad>0.385366</maxgrad>
+			<mingrad>0.00487804</mingrad>
+			<maxgrad>0.0146341</maxgrad>
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>

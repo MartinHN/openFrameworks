@@ -16,7 +16,7 @@ VisuClass::VisuClass(VisuHandler * vh){
     dad=vh;
     MYPARAM(isActive,false,false,true);
     MYPARAM(isPiping,false,false,true);
-    MYPARAM(screenN,0,0,199);
+    MYPARAM(screenN,0,0,234);
     
     MYPARAM(recopy,true,false,true);
     isHighFPS = false;

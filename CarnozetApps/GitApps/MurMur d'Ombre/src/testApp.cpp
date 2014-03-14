@@ -124,7 +124,8 @@ void testApp::setup(){
     MYPARAM(pipeAlphablur, 255,0,255);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
-  
+    MYPARAM(cropScreen,ofVec4f(0,0.07,0,0),ofVec4f(0),ofVec4f(0.3))
+    cropScreen.setSerializable(false);
     
     
     settings.add(camera2.settings);
@@ -456,8 +457,12 @@ void testApp::draw(){
     
     
     ofSetColor(255);
-    finalRender.src->draw(0,0,ofGetWidth(),ofGetHeight());
-    
+    finalRender.src->draw(0,0,scrw,scrh);
+    ofSetColor(0);
+    ofRect(0,0,cropScreen->x*scrw,scrh);
+    ofRect(0,0,scrw,cropScreen->y*scrh);
+    ofRect(scrw*(1-cropScreen->z),0,scrw*cropScreen->z,scrh);
+    ofRect(0,scrh*(1-cropScreen->w),scrw,scrh*cropScreen->w);
     
     
     if(isFPS){

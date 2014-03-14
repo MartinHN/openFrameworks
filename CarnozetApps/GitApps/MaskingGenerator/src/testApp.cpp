@@ -5,21 +5,21 @@ void testApp::setup(){
 
     
     Screen src;
+
     
-    src = Screen(ofPoint(100,200), ofPoint(200,600),ofPoint(200, 700), ofPoint(100,700));
+    
+    src = Screen(ofPoint(0, 0.494792), ofPoint(0.289844, 0.458333),ofPoint(0.3, 0.936458), ofPoint(0.009375, 0.998958));
     listOfScreen.push_back(src);
     
-    src = Screen(ofPoint(100,100), ofPoint(200,100),ofPoint(200, 200), ofPoint(100,200));
+    src = Screen(ofPoint(0.295362, 0.463659), ofPoint(0.465359, 0.425409),ofPoint(0.459409, 0.856352), ofPoint(0.301312, 0.915001));
     listOfScreen.push_back(src);
     
-    src = Screen(ofPoint(900,100), ofPoint(950,100),ofPoint(950, 500), ofPoint(900,500));
+    src = Screen(ofPoint(0.467909, 0.428809), ofPoint(0.590625, 0.41861),ofPoint(0.583507, 0.830853), ofPoint(0.473859, 0.831703));
     listOfScreen.push_back(src);
     
-    src = Screen(ofPoint(900,600), ofPoint(950,800),ofPoint(950, 800), ofPoint(900,800));
+    src = Screen(ofPoint(0.597957, 0.41946), ofPoint(0.797703, 0.438159),ofPoint(0.787503, 0.876752), ofPoint(0.600507, 0.832553));
     listOfScreen.push_back(src);
     
-    src = Screen(ofPoint(500,100), ofPoint(550,100),ofPoint(550, 300), ofPoint(500,300));
-    listOfScreen.push_back(src);
     
     activeScreen = -1;
     

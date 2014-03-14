@@ -124,7 +124,7 @@ void testApp::setup(){
     MYPARAM(pipeAlphablur, 255,0,255);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
-    MYPARAM(cropScreen,ofVec4f(0,0.07,0,0),ofVec4f(0),ofVec4f(0.3))
+    MYPARAM(cropScreen,ofVec4f(0,0.0984,0,0),ofVec4f(0),ofVec4f(0.3))
     cropScreen.setSerializable(false);
     
     

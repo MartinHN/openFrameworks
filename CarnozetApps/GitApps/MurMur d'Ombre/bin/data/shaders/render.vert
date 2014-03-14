@@ -53,7 +53,7 @@ void main() {
     else if(colorpart.x==2){
         
         
-        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(10.0*length(texture2DRect(velTex, verPos ).xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));
+        gl_FrontColor = texture2DRect(gradient,vec2(100.0*(100.0*length(texture2DRect(velTex, verPos ).xyz)-gradbounds.x)/(gradbounds.y-gradbounds.x),0));
         
         
     }

@@ -58,10 +58,10 @@
 	<screensCtl>
 		<invertMask>0</invertMask>
 		<mask0>0</mask0>
-		<mask1>0</mask1>
+		<mask1>1</mask1>
 		<mask2>1</mask2>
-		<mask3>0</mask3>
-		<mask4>0</mask4>
+		<mask3>1</mask3>
+		<mask4>1</mask4>
 	</screensCtl>
 	<Visu>
 		<background>
@@ -94,31 +94,31 @@
 			<partcolor>0, 0, 1</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>6</gradNum>
-			<mingrad>-0.0146341</mingrad>
-			<maxgrad>0.0146341</maxgrad>
+			<mingrad>0.00487804</mingrad>
+			<maxgrad>0.112195</maxgrad>
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>
 				<isActive>1</isActive>
 				<k>0</k>
 				<l0>1</l0>
-				<z>0.142857</z>
-				<size>4</size>
+				<z>0.466899</z>
+				<size>2</size>
 			</netw>
 			<neth>
 				<isActive>1</isActive>
 				<k>0</k>
 				<l0>1</l0>
-				<z>0.142857</z>
+				<z>0.417123</z>
 				<size>5</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
-				<k>0.0222748</k>
+				<k>0.0608512</k>
 				<z>0.33325</z>
 				<freeze>0.182777</freeze>
 				<freezemin>0.0698055</freezemin>
-				<damp>0.611747</damp>
+				<damp>0.738676</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
@@ -160,13 +160,13 @@
 			</spring>
 			<fieldForce>
 				<isActive>1</isActive>
-				<k>0.0203921</k>
+				<k>0.0879542</k>
 				<velouty>0.000369586</velouty>
-				<veloutz>-0.000433877</veloutz>
+				<veloutz>-0.00154306</veloutz>
 				<veloutborder>0</veloutborder>
 				<minv>0.372822</minv>
 				<maxv>0.701344</maxv>
-				<fin>0.731142</fin>
+				<fin>1.00931</fin>
 				<fout>1</fout>
 			</fieldForce>
 			<globalForce>

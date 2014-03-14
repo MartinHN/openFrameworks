@@ -61,7 +61,7 @@
 		<mask1>1</mask1>
 		<mask2>1</mask2>
 		<mask3>1</mask3>
-		<mask4>0</mask4>
+		<mask4>1</mask4>
 	</screensCtl>
 	<Visu>
 		<background>

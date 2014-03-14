@@ -153,7 +153,7 @@ public:
     
     ofParameter<bool> isPipe,hidePipe,pipeMask;
     ofParameter<float> pipeblur;
-    
+    ofParameter<ofVec4f> cropScreen;
 
     
     int zdepth;

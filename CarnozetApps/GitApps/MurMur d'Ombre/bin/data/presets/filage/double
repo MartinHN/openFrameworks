@@ -3,7 +3,7 @@
 		<finalblur>0</finalblur>
 		<saturation>1</saturation>
 		<contrast>1</contrast>
-		<brightness>1.32683</brightness>
+		<brightness>1.24878</brightness>
 		<rback>0</rback>
 		<gback>0</gback>
 		<bback>0</bback>
@@ -91,8 +91,8 @@
 			<numParticles>87896</numParticles>
 			<particleSize>6.43902</particleSize>
 			<alphaparticle>0.44878</alphaparticle>
-			<partcolor>255, 255, 255</partcolor>
-			<gradtype>2</gradtype>
+			<partcolor>169.958, 129.34, 119.186</partcolor>
+			<gradtype>0</gradtype>
 			<gradNum>2</gradNum>
 			<mingrad>-0.629268</mingrad>
 			<maxgrad>2.3561</maxgrad>

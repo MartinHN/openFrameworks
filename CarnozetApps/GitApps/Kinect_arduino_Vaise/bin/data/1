@@ -1,13 +1,13 @@
 <group>
 	<settings>
-		<thresh_near_far>255, 62.5021</thresh_near_far>
+		<thresh_near_far>255, 54.5367</thresh_near_far>
 		<motion_detection>0</motion_detection>
 		<Use_Kinect_front>1</Use_Kinect_front>
 		<_Use_Video>0</_Use_Video>
 		<p1>140.075, 0</p1>
-		<p2>288.347, 0</p2>
-		<p3>291.678, 240</p3>
-		<p4>148.405, 240</p4>
+		<p2>256.693, 0</p2>
+		<p3>250.029, 240</p3>
+		<p4>136.743, 240</p4>
 		<Erode>0</Erode>
 		<Blur>0</Blur>
 		<Angle>58</Angle>

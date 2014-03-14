@@ -9,7 +9,7 @@ void testApp::setup(){
 #ifndef GUIMODE
     
     
-    isFPS = true;
+    isFPS = false;
     
     
     ofSetLogLevel(OF_LOG_VERBOSE);

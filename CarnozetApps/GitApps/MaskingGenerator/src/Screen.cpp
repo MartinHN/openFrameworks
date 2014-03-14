@@ -15,11 +15,13 @@ Screen::Screen(){}
 Screen::Screen(ofPoint p1, ofPoint p2, ofPoint p3, ofPoint p4){
     
     isActive = false;
+    int h = 900;
+    int w = 800;
     
-    origin.push_back(p1);
-    origin.push_back(p2);
-    origin.push_back(p3);
-    origin.push_back(p4);
+    origin.push_back(p1*ofPoint(w,h));
+    origin.push_back(p2*ofPoint(w,h));
+    origin.push_back(p3*ofPoint(w,h));
+    origin.push_back(p4*ofPoint(w,h));
     
     listOfPoint = origin;
     

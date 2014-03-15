@@ -30,33 +30,39 @@ void main(void){
     vec3 pos = texture2DRect( posData, st).xyz;
     
         for(int i = 1 ; i<=size;i++){
-    vec3 poso = texture2DRect( posData , st+vec2(i,0)).xyz;
-    vec3 opos = texture2DRect( posData , st+vec2(-i,0)).xyz;
+    
+    
     
     
     
     vec3 distbuf;
-    float l0norm = (l0*i)/resolution;
+    float l0norm = l0/resolution;
 
     float netmax = 100*l0norm;
+            
     float normbuf;
     vec3 linbuf;
     linbuf.x=netmax+1;
         
-    if(st.x<resolution-i){
-            distbuf=pos-poso;
+    if(st.x<resolution-i-1){
+            distbuf=pos- texture2DRect( posData , st+vec2(i,0)).xyz;
             linbuf=distbuf;
             normbuf = length(distbuf);
             if(normbuf<netmax){
-            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
+            vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
             }
         }
-    if(st.x>i){
-        distbuf=pos-opos;
+    if(st.x>i+1){
+        distbuf=pos-texture2DRect( posData , st+vec2(-i,0)).xyz;
         normbuf = length(distbuf);
         
         if(normbuf<netmax){
-            vel-=normalize(distbuf)*(normbuf-l0norm)*k;
+            vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
+//            if(st.y<resolution-i){
+//               if(length(distbuf)<netmax){
+//                vel-=z*(distbuf+linbuf);
+//            }
+//            }
         }
         
         if(length(linbuf)<netmax){

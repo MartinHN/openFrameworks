@@ -5,7 +5,7 @@
 void testApp::setup(){
     
     ofSetLogLevel(OF_LOG_VERBOSE);
-    ofSetFrameRate(15);
+    ofSetFrameRate(25);
     
     globalWidth = 320;
     globalHeight = 240;

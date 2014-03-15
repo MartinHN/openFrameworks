@@ -4,9 +4,9 @@
 		<saturation>1</saturation>
 		<contrast>1</contrast>
 		<brightness>1</brightness>
-		<rback>0</rback>
-		<gback>0</gback>
-		<bback>0</bback>
+		<rback>170</rback>
+		<gback>90</gback>
+		<bback>65</bback>
 		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
 		<isGloom>0</isGloom>
@@ -65,8 +65,8 @@
 	</screensCtl>
 	<Visu>
 		<background>
-			<isActive>1</isActive>
-			<isPiping>0</isPiping>
+			<isActive>0</isActive>
+			<isPiping>1</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
 			<isMapping>1</isMapping>
@@ -75,7 +75,7 @@
 			<followFam>-1</followFam>
 			<alpha>0.3</alpha>
 			<center>0.5, 0.5</center>
-			<color>169.958, 89.9925, 66.352, 255</color>
+			<color>255, 255, 255, 0</color>
 			<scale>1</scale>
 			<ratio>1</ratio>
 			<fill>1</fill>
@@ -297,6 +297,7 @@
 			<alpha>255</alpha>
 			<length>3</length>
 			<curFamilly>1</curFamilly>
+			<isHidden>1</isHidden>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

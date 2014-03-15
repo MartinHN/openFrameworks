@@ -5,10 +5,10 @@
 		<Use_Kinect_front>1</Use_Kinect_front>
 		<_Use_Video>0</_Use_Video>
 		<use_Test_Video>0</use_Test_Video>
-		<p1>0, 0</p1>
+		<p1>23.4569, 0</p1>
 		<p2>320, 0</p2>
 		<p3>320, 240</p3>
-		<p4>0, 240</p4>
+		<p4>25.1229, 240</p4>
 		<Erode>0</Erode>
 		<Blur>0</Blur>
 		<Angle>57</Angle>

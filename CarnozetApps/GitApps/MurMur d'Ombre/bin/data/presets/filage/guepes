@@ -39,7 +39,7 @@
 		<screenN>1</screenN>
 		<invertX>1</invertX>
 		<invertY>0</invertY>
-		<pos>0.507218, 0.666501, 0.5</pos>
+		<pos>0.422598, 0.601792, 0.5</pos>
 		<scale>0.846939, 0.867347, 0.5</scale>
 		<crop>0, 0, 0, 100</crop>
 	</blobsettings>
@@ -296,6 +296,8 @@
 			<vout>0.001, 0.001, 0.001</vout>
 			<alpha>255</alpha>
 			<length>3</length>
+			<curFamilly>1</curFamilly>
+			<isHidden>0</isHidden>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

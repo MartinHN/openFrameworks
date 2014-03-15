@@ -1,6 +1,6 @@
 <group>
 	<settings>
-		<thresh_near_far>255, 164.725</thresh_near_far>
+		<thresh_near_far>255, 162.07</thresh_near_far>
 		<motion_detection>0</motion_detection>
 		<Use_Kinect_front>0</Use_Kinect_front>
 		<_Use_Video>0</_Use_Video>

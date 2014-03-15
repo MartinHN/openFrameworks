@@ -3,13 +3,13 @@
 		<finalblur>0</finalblur>
 		<saturation>1.03</saturation>
 		<contrast>1</contrast>
-		<brightness>1.41463</brightness>
+		<brightness>1.67805</brightness>
 		<rback>0</rback>
 		<gback>0</gback>
 		<bback>0</bback>
 		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
-		<isGloom>1</isGloom>
+		<isGloom>0</isGloom>
 		<isPipe>0</isPipe>
 		<pipeblur>0</pipeblur>
 		<pipeAlphablur>135</pipeAlphablur>
@@ -94,7 +94,7 @@
 			<partcolor>255, 0, 0</partcolor>
 			<gradtype>2</gradtype>
 			<gradNum>0</gradNum>
-			<mingrad>0.443902</mingrad>
+			<mingrad>-1</mingrad>
 			<maxgrad>3</maxgrad>
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>

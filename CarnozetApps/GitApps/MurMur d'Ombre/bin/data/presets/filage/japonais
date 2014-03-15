@@ -88,7 +88,7 @@
 			<isMapping>1</isMapping>
 			<isMasking>0</isMasking>
 			<timeStep>1</timeStep>
-			<numParticles>204304</numParticles>
+			<numParticles>90601</numParticles>
 			<particleSize>4.09756</particleSize>
 			<alphaparticle>0.487805</alphaparticle>
 			<partcolor>87.4539, 87.4539, 251.192</partcolor>

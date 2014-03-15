@@ -243,6 +243,7 @@ ColorRuban::ColorRuban(VisuHandler *v):VisuClass(v){
     MYPARAM(alpha,255,0,255);
     MYPARAM(length, 3.0, 0.1f, 10.0f);
     MYPARAM(curFamilly, 1, 0, 2);
+    MYPARAM(isHidden, true, false, true);
     stiffness.addListener(this, &ColorRuban::changeStiffness);
     length.addListener(this, &ColorRuban::changeLength);
     init(pos, angle);
@@ -332,9 +333,12 @@ int ColorRuban::update( int channel, float argument, int w , int h){
 
 void ColorRuban::draw(int w, int h){
     
-    update(0, 0, w, h);
+    //update(0, 0, w, h);
+    
+    if(!isHidden){
     ofColor col = ofColor(color->x, color->y, color->z);
     ruban1.draw(col);
+    }
 }
 
 void ColorRuban::changeStiffness(float &f){

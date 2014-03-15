@@ -9,7 +9,7 @@
 		<bback>0</bback>
 		<alphablur>255</alphablur>
 		<bloomsize>0</bloomsize>
-		<isGloom>0</isGloom>
+		<isGloom>1</isGloom>
 		<isPipe>0</isPipe>
 		<pipeblur>0</pipeblur>
 		<pipeAlphablur>135</pipeAlphablur>
@@ -297,6 +297,7 @@
 			<alpha>255</alpha>
 			<length>3</length>
 			<curFamilly>1</curFamilly>
+			<isHidden>0</isHidden>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

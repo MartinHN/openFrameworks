@@ -100,6 +100,7 @@ public:
     ruban ruban1;
     
     ofParameter<bool> onPause;
+    ofParameter<bool> isHidden;
     ofParameter<int> familly;
     ofParameter<ofVec3f> color,vout;
     ofParameter<int> alpha;

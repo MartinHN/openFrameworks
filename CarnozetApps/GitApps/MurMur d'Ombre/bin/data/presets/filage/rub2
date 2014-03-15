@@ -297,6 +297,7 @@
 			<alpha>255</alpha>
 			<length>0.1</length>
 			<curFamilly>1</curFamilly>
+			<isHidden>0</isHidden>
 		</ColorRuban>
 		<Liner>
 			<isActive>0</isActive>

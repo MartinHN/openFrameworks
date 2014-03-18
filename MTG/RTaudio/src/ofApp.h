@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "ofxJSONElement.h"
 #include "Timed.h"
+#include "ofxEssentia.h"
 
 
 
@@ -48,5 +49,7 @@ class ofApp : public ofBaseApp{
     ofxJSONElement json;
     int classesN;
     float zoomfactor;
+    
+    ofxEssentia ess;
 		
 };

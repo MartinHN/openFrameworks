@@ -1,5 +1,6 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     zoomfactor = 4.;
@@ -9,8 +10,8 @@ void ofApp::setup(){
     player.load(json["filepath"][0].asString());
     ofSetFrameRate(20);
     zoomfactor = ofGetWidth()/(0.9*slices.back().start);
-
     
+    ess.initalgo("audio.mp3","bout");
 }
 
 //--------------------------------------------------------------

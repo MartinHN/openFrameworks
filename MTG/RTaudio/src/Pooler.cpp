@@ -44,17 +44,13 @@ bool LocalPool::exists(string name){
 }
 
 
-
-
-
-
 void Pooler::load(string s){
     ofxJSONElement json;
     json.open(s);
 
 
     vector<string>  names = json["corpus"].getMemberNames();
-
+    int nn = 0;
     for (vector<string>::iterator n = names.begin() ; n!=names.end() ; ++n){
         LocalPool p;
         Json::Value * curfile  =&json["corpus"][n->c_str()];
@@ -70,6 +66,7 @@ void Pooler::load(string s){
             string name = features[j];
             for (int k = 0 ; k<(*curf)["data"].size(); k++){
                 frame d;
+                d.localid = nn;
                 Json::Value * curdata = &(*curf)["data"][k];
                 if(isTimestamped) {
                     
@@ -96,20 +93,18 @@ void Pooler::load(string s){
                 }
 
                 
-                
+                data.push_back(d);
             }
             
             p.create(features[j],data);
             
         }
         globalPool.push_back(p);
+        nn++;
 
     }
 }
 
-void Pooler::Slice(){
-    
-}
 
 map<string,int> Pooler::getAxes(){
     map<string,int> res;

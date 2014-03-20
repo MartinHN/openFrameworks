@@ -7,14 +7,27 @@ void ofApp::setup(){
     h=40;
     
     slicers.push_back(new ThresholdSlicer());
+    analyzers.push_back(new DirectAnalyzer());
     
     
+    
+    for (int k = 0 ; k < slicers.size() ; k++){
+        slicers[k]->registerParams();
+    }
+    for (int k = 0 ; k < analyzers.size() ; k++){
+        analyzers[k]->registerParams();
+    }
 
     ofSetFrameRate(20);
 
 
     pool.load("tst");
-    view.link2pool(&pool);
+    slicers[0]->SliceIt(pool["envelope"]);
+    analyzers[0]->Analyze(slicers[0]->slices);
+    
+    
+    
+    view.link2model(&slicers[0]->slices,&slicers,&analyzers);
 //    player.load(json["filepath"][0].asString());
 }
 

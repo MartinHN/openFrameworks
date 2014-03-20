@@ -36,9 +36,9 @@
 		6F3FF1FC18BCBDE700E53C95 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FF1F318BCBDE700E53C95 /* json_value.cpp */; };
 		6F3FF1FD18BCBDE700E53C95 /* json_writer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FF1F518BCBDE700E53C95 /* json_writer.cpp */; };
 		6F3FF1FE18BCBDE700E53C95 /* ofxJSONElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FF1F918BCBDE700E53C95 /* ofxJSONElement.cpp */; };
+		6FA5AE3B18DB5FD800CD9275 /* Gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FA5AE3918DB5FD800CD9275 /* Gui.cpp */; };
 		6FAE60DA18BFA52D0099B3E0 /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FAE60D818BFA52D0099B3E0 /* Player.cpp */; };
 		6FAE60DD18BFB0430099B3E0 /* Timed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FAE60DB18BFB0430099B3E0 /* Timed.cpp */; };
-		6FF96BF218D9D62300BCC134 /* Reducer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF96BF018D9D62300BCC134 /* Reducer.cpp */; };
 		6FF96BF518D9D66200BCC134 /* Pooler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF96BF318D9D66200BCC134 /* Pooler.cpp */; };
 		6FF96BF818D9E02C00BCC134 /* Viewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF96BF618D9E02C00BCC134 /* Viewer.cpp */; };
 		6FF9707518DA128C00BCC134 /* ofxUI2DGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6FF96FE518DA128B00BCC134 /* ofxUI2DGraph.cpp */; };
@@ -287,12 +287,12 @@
 		6F3FF1F718BCBDE700E53C95 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6F3FF1F918BCBDE700E53C95 /* ofxJSONElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxJSONElement.cpp; sourceTree = "<group>"; };
 		6F3FF1FA18BCBDE700E53C95 /* ofxJSONElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxJSONElement.h; sourceTree = "<group>"; };
+		6FA5AE3918DB5FD800CD9275 /* Gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Gui.cpp; sourceTree = "<group>"; };
+		6FA5AE3A18DB5FD800CD9275 /* Gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Gui.h; sourceTree = "<group>"; };
 		6FAE60D818BFA52D0099B3E0 /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
 		6FAE60D918BFA52D0099B3E0 /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
 		6FAE60DB18BFB0430099B3E0 /* Timed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timed.cpp; sourceTree = "<group>"; };
 		6FAE60DC18BFB0430099B3E0 /* Timed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timed.h; sourceTree = "<group>"; };
-		6FF96BF018D9D62300BCC134 /* Reducer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Reducer.cpp; sourceTree = "<group>"; };
-		6FF96BF118D9D62300BCC134 /* Reducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reducer.h; sourceTree = "<group>"; };
 		6FF96BF318D9D66200BCC134 /* Pooler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Pooler.cpp; sourceTree = "<group>"; };
 		6FF96BF418D9D66200BCC134 /* Pooler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pooler.h; sourceTree = "<group>"; };
 		6FF96BF618D9E02C00BCC134 /* Viewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Viewer.cpp; sourceTree = "<group>"; };
@@ -920,6 +920,35 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		6FA5AE3618DB4BCB00CD9275 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				6FAE60D918BFA52D0099B3E0 /* Player.h */,
+				6FAE60D818BFA52D0099B3E0 /* Player.cpp */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		6FA5AE3718DB4BE200CD9275 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
+				6FAE60DB18BFB0430099B3E0 /* Timed.cpp */,
+				6FAE60DC18BFB0430099B3E0 /* Timed.h */,
+				6F24EED718DB16C200360850 /* Misc.h */,
+			);
+			name = Misc;
+			sourceTree = "<group>";
+		};
+		6FA5AE3818DB5FCA00CD9275 /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				6FA5AE3918DB5FD800CD9275 /* Gui.cpp */,
+				6FA5AE3A18DB5FD800CD9275 /* Gui.h */,
+			);
+			name = Gui;
+			sourceTree = "<group>";
+		};
 		6FF96E2118DA128900BCC134 /* ofxUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -1349,24 +1378,19 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				6FAE60D918BFA52D0099B3E0 /* Player.h */,
-				6FAE60D818BFA52D0099B3E0 /* Player.cpp */,
-				6FAE60DB18BFB0430099B3E0 /* Timed.cpp */,
-				6FAE60DC18BFB0430099B3E0 /* Timed.h */,
-				6FF96BF018D9D62300BCC134 /* Reducer.cpp */,
-				6FF96BF118D9D62300BCC134 /* Reducer.h */,
 				6FF96BF318D9D66200BCC134 /* Pooler.cpp */,
 				6FF96BF418D9D66200BCC134 /* Pooler.h */,
 				6FF96BF618D9E02C00BCC134 /* Viewer.cpp */,
 				6FF96BF718D9E02C00BCC134 /* Viewer.h */,
 				6F24EED218DAF43600360850 /* Slicer.cpp */,
 				6F24EED318DAF43600360850 /* Slicer.h */,
-				6F24EED718DB16C200360850 /* Misc.h */,
 				6F24EED818DB2EB200360850 /* Analyser.cpp */,
 				6F24EED918DB2EB200360850 /* Analyser.h */,
+				6FA5AE3818DB5FCA00CD9275 /* Gui */,
+				6FA5AE3718DB4BE200CD9275 /* Misc */,
+				6FA5AE3618DB4BCB00CD9275 /* Player */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1513,6 +1537,7 @@
 				3A47706C1DF9A0D4045568C0 /* ofxGuiGroup.cpp in Sources */,
 				B38AE0704C26620B0B1F72E4 /* ofxLabel.cpp in Sources */,
 				0E459598E225E56585AC1CD9 /* ofxPanel.cpp in Sources */,
+				6FA5AE3B18DB5FD800CD9275 /* Gui.cpp in Sources */,
 				9F74DFA8C0F57500C92936C8 /* ofxSlider.cpp in Sources */,
 				6FF9708A18DA128C00BCC134 /* ofxUIMovingGraph.cpp in Sources */,
 				A3C6983F8768ECD6DBA89E0F /* ofxSliderGroup.cpp in Sources */,
@@ -1584,7 +1609,6 @@
 				6FF9709C18DA128C00BCC134 /* ofxUIToggleMatrix.cpp in Sources */,
 				235FAC5F19A22B69DA5C68A8 /* maxiAtoms.cpp in Sources */,
 				6FF9707A18DA128C00BCC134 /* ofxUICanvas.cpp in Sources */,
-				6FF96BF218D9D62300BCC134 /* Reducer.cpp in Sources */,
 				6FF9707D18DA128C00BCC134 /* ofxUIDropDownList.cpp in Sources */,
 				6F3FF1FB18BCBDE700E53C95 /* json_reader.cpp in Sources */,
 				6FAE60DA18BFA52D0099B3E0 /* Player.cpp in Sources */,

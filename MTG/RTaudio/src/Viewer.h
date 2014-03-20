@@ -10,10 +10,11 @@
 #define __RTaudio__Viewer__
 
 #include <iostream>
-#include "Slicer.h"
+
 #include "ofxUI.h"
 #include "ofxGui.h"
-
+#include "Analyser.h"
+#include "Slicer.h"
 
 class Viewer{
 public:
@@ -24,7 +25,14 @@ public:
     void updateView();
     void updateCache();
     void draw();
-    void link2pool(Pooler * pin){p =pin;};
+    void link2model(vector<Slice> *slicesin,vector<Slicer *> *slicersin,vector<Analyzer * > *analin){
+        slices =slicesin;
+        slicers = slicersin;
+        analyzers = analin;
+        
+    };
+    void setCurrentSlicer(int i);
+    
     void guiEvent(ofxUIEventArgs &e);
     void setupGui();
     
@@ -35,15 +43,21 @@ public:
     ofxUIDropDownList *dl;
     ofxUISuperCanvas *gui;
     
-    Slicer * slicer;
+    vector<Slicer *> *slicers;
+    vector<Analyzer *> *analyzers;
+    
+    
+    vector<Slice>  *slices;
     
     bool isViewDirty,isCacheDirty,isGuiDirty;
-    ofVbo vbo;
+    vector<ofVec3f> cache;
     
     ofParameter<bool> drawSlice;
     ofParameterGroup settings;
     
     ofxPanel * guip;
+    
+    vector<ofColor> colors;
     
     vector<string> axesx,axesy,axesz;
     

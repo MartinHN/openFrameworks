@@ -7,7 +7,7 @@
 #include "Viewer.h"
 #include "Pooler.h"
 #include "Slicer.h"
-
+#include "Analyser.h"
 
 
 
@@ -35,7 +35,8 @@ class ofApp : public ofBaseApp{
     vector<Slice> slices;
     
     vector<Slicer * > slicers;
-    
+
+    vector<Analyzer*> analyzers;
     
     int h;
     
@@ -49,5 +50,6 @@ class ofApp : public ofBaseApp{
     
     Pooler pool;
     Viewer view;
+
 		
 };

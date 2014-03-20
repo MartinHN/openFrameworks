@@ -18,6 +18,14 @@ Viewer::Viewer(){
 
     setupGui();
     
+    colors.push_back(ofColor::cadetBlue);
+    colors.push_back(ofColor::red);
+    colors.push_back(ofColor::rosyBrown);
+    colors.push_back(ofColor::tomato);
+    colors.push_back(ofColor::yellow);
+    colors.push_back(ofColor::yellowGreen);
+    colors.push_back(ofColor::chartreuse);
+    colors.push_back(ofColor::darkCyan);
     
     
     
@@ -33,12 +41,13 @@ void Viewer::setupGui(){
     
     guip = new ofxPanel(settings);
     gui = new ofxUISuperCanvas("Axes",ofGetWidth()/2,0,300,200);
-    if(p->getAxes().size()>0){
-        
-        gui->addDropDownList("Axesx", p->getAxesNames());
-        gui->addDropDownList("Axesy", p->getAxesNames());
-        gui->addDropDownList("Axesz", p->getAxesNames());
-    }
+//    
+//    if(analyzers->getAxes().size()>0){
+//        
+//        gui->addDropDownList("Axesx", p->getAxesNames());
+//        gui->addDropDownList("Axesy", p->getAxesNames());
+//        gui->addDropDownList("Axesz", p->getAxesNames());
+//    }
 }
 
 void Viewer::registerParams(){
@@ -51,17 +60,17 @@ void Viewer::registerParams(){
 
 
 void Viewer::updateGui(){
-    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->clearToggles();
-    axesx = p->getAxesNames();
-    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->addToggles(axesx);
-    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->clearToggles();
-    axesy = p->getAxesNames();
-    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->addToggles(axesy);
-    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->clearToggles();
-    axesz = p->getAxesNames();
-    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->addToggles(axesz);
-    
-    
+//    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->clearToggles();
+//    axesx = p->getAxesNames();
+//    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->addToggles(axesx);
+//    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->clearToggles();
+//    axesy = p->getAxesNames();
+//    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->addToggles(axesy);
+//    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->clearToggles();
+//    axesz = p->getAxesNames();
+//    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->addToggles(axesz);
+//    
+//    
 
 
 }
@@ -97,8 +106,11 @@ void Viewer::updateView(){
 }
 
 void Viewer::updateCache(){
-        
-        
+    
+  
+    for (int i = 0 ; i < slices->size() ; i++){
+  
+    }
 }
 
 void Viewer::update(){
@@ -125,9 +137,14 @@ void Viewer::draw(){
     
     cam.begin();
     
-    ofSetColor(255,0,0);
-
-    ofDrawBox(30);
+   for (int i = 0 ; i < slices->size() ; i++){
+       ofPushMatrix();
+       ofSetColor(colors[slices->at(i).localid%colors.size()]);
+       ofTranslate( slices->at(i).curpos);
+       ofRect(0,0,10,10);
+       ofPopMatrix();
+   }
+    
     
     
     

@@ -12,17 +12,32 @@
 #include <iostream>
 #include "ofMain.h"
 #include "Misc.h"
-
+#include "Pooler.h"
 class Analyzer{
     
 public:
+//    Analyzer(Pooler * poolin):pool(poolin){};
+    
+    int nd;
+    
+    virtual void Analyze(vector<Slice> & v){};
+    virtual void registerParams(){};
+    
+    ofParameterGroup settings;
+    Pooler * pool;
     
     
-    int dimension;
+};
+
+class DirectAnalyzer : public Analyzer{
+public:
     
-    virtual void Analyze(vector<slice> v){};
-    
-    
+//    DirectAnalyzer(Pooler * p):Analyzer(p){};
+    void Analyze(vector<Slice> & v);
+    void registerParams();
+    ofParameter<int> x;
+    ofParameter<int> y;
+    ofParameter<int> z;
     
 };
 

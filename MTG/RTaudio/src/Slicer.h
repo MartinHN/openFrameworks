@@ -14,7 +14,6 @@
 #include <iostream>
 #include "ofMain.h"
 
-#include "Pooler.h"
 #include "Misc.h"
 
 
@@ -24,7 +23,7 @@ class Slicer{
     
 public:
     
-    virtual void SliceIt(vector<frame> d){};
+    virtual void SliceIt(vector<frame> &d){};
     virtual void registerParams(){};
     virtual map<string,int> outputs(){};
     
@@ -41,7 +40,7 @@ class ThresholdSlicer : public Slicer{
 public:
 
 
-    void SliceIt(vector<frame> d);
+    void SliceIt(vector<frame> &d);
     void registerParams();
     map<string, int> outputs();
     

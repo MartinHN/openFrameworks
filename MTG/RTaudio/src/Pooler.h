@@ -12,15 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 #include "ofxJSONElement.h"
-
-
-typedef struct{
-
-    float ts;
-    vector<float> data;
-    
-    
-}frame;
+#include "Misc.h"
 
 
 
@@ -33,6 +25,7 @@ public:
     vector<string> getNames(int dim);
     map<string,int> getNdNames();
     bool exists(string name);
+    const vector<frame> operator [] (string s){return poolnd[s];};
     
     string filepath;
     std::map<string , vector< frame > > poolnd;
@@ -51,6 +44,14 @@ public:
     void getAll(){};
     map<string,int> getAxes();
     vector<string> getAxesNames();
+    vector<frame> operator [] (string s){vector<frame> res;
+        for(vector<LocalPool>::iterator it  = globalPool.begin();it!=globalPool.end();++it){
+            vector<frame> tmp  = (*it)[s];
+            res.reserve(res.size()+tmp.size());
+            res.insert(res.end(),tmp.begin(),tmp.end());
+        }
+        return res;
+    };
     
     
     vector<LocalPool> globalPool;

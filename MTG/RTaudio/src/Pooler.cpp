@@ -8,31 +8,40 @@
 
 #include "Pooler.h"
 
-void LocalPool::create(string s,vector<ofVec2f> inv){
-    pool1d[s] = inv;
+void LocalPool::create(string s,vector <frame>  inv){
+    poolnd[s] = inv;
+    features[s] = 1;
     
 }
 
-vector<string> LocalPool::get1dNames(){
+vector<string> LocalPool::getNames(int dim){
     vector<string> res;
-    for (map<string,vector<ofVec2f> >::iterator p = pool1d.begin() ; p!=pool1d.end() ; ++p){
+    for (map<string,int >::iterator p = features.begin() ; p!=features.end() ; ++p){
+        if(dim == p->second){
         if(std::find(res.begin(),res.end(),p->first)!=res.end()) res.push_back(p->first);
+            else ofLogWarning("recopy of nd features");
+        }
     }
     return res;
 }
 
-
-bool LocalPool::exists(string name){
-    return pool1d.find(name)!=pool1d.end();
+map<string,int> LocalPool::getNdNames(){
+    map<string,int> res;
+    for (map<string,int >::iterator p = features.begin() ; p!=features.end() ; ++p){
+        if(p->second>3){
+            if(res.find(p->first)!=res.end()) res[p->first] = p->second;
+            else ofLogWarning("recopy of nd features");
+        }
+    }
+    return res;
+    
 }
 
 
 
-
-
-
-
-
+bool LocalPool::exists(string name){
+    return features.find(name)!=features.end();
+}
 
 
 
@@ -55,14 +64,38 @@ void Pooler::load(string s){
         int numFeatures = features.size();
         for (int j = 0; j <numFeatures ; j++){
             Json::Value * curf  = &(*curfile)["features"][features[j]];
-            vector<ofVec2f> data;
+            vector<frame> data;
             float fs = (*curf)["fs"].asFloat();
             bool isTimestamped = fs==0;
+            string name = features[j];
             for (int k = 0 ; k<(*curf)["data"].size(); k++){
-                ofVec2f d;
-                if(isTimestamped)d.set((*curf)["data"][0].asFloat(),(*curf)["data"][1].asFloat());
-                else d.set(k*fs,(*curf)["data"][0].asFloat());
-                data.push_back(d);
+                frame d;
+                Json::Value * curdata = &(*curf)["data"][k];
+                if(isTimestamped) {
+                    
+                    d.ts = (*curdata)[0][0].asFloat();
+                    curdata = &(*curdata)[1];
+                }
+                else {
+                 d.ts=k*fs;
+                    
+                }
+                int ds =curdata->size();
+                
+                
+                if (ds ==0){
+                    d.data.push_back((*curdata).asFloat());
+                    
+                }
+                else{
+                for( int ll = 0 ; ll< ds ; ll++ ){
+                    
+                    d.data.push_back((*curdata)[ll].asFloat());
+                    
+                }
+                }
+
+                
                 
             }
             
@@ -72,18 +105,34 @@ void Pooler::load(string s){
         globalPool.push_back(p);
 
     }
+}
+
+void Pooler::Slice(){
     
 }
 
-vector<string> Pooler::getAxes(){
-    vector<string> res;
+map<string,int> Pooler::getAxes(){
+    map<string,int> res;
     for(vector<LocalPool>::iterator lp = globalPool.begin() ; lp!= globalPool.end() ; ++lp){
-        for (map<string,vector<ofVec2f> >::iterator p = lp->pool1d.begin() ; p!=lp->pool1d.end() ; ++p){
-            if(std::find(res.begin(),res.end(),p->first)==res.end()) res.push_back(p->first);
+        for (map<string,int >::iterator p = lp->features.begin() ; p!=lp->features.end() ; ++p){
+            if(res.find(p->first)==res.end()) res[p->first] = p->second;
+            
         }
-        
-        
     }
     
     return res;
 }
+
+vector<string> Pooler::getAxesNames(){
+    vector<string> res;
+    map<string, int> tmp = getAxes();
+    for (map<string,int >::iterator p = tmp.begin() ; p!=tmp.end() ; ++p){
+        res.push_back(p->first);
+        
+    }
+
+    
+    return res;
+}
+
+

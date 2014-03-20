@@ -29,6 +29,8 @@
 		5F685BDA45699A139CE3C766 /* maximilian.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0318E64C675EC9A638A78D2B /* maximilian.cpp */; };
 		63512F2008E135A7A3860582 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D1484D2806E7E5ACEEE55436 /* ofxCvImage.cpp */; };
 		6C503756DAFDCF2FEEE0EAA0 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8A844876A71DBD7546201CC6 /* ofxOscMessage.cpp */; };
+		6F24EED418DAF43600360850 /* Slicer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F24EED218DAF43600360850 /* Slicer.cpp */; };
+		6F24EEDA18DB2EB200360850 /* Analyser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F24EED818DB2EB200360850 /* Analyser.cpp */; };
 		6F2D739BB67B61B0D43AB5BD /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B34D2935437BD95ED6DA2A59 /* ofxOscReceiver.cpp */; };
 		6F3FF1FB18BCBDE700E53C95 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FF1F118BCBDE700E53C95 /* json_reader.cpp */; };
 		6F3FF1FC18BCBDE700E53C95 /* json_value.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3FF1F318BCBDE700E53C95 /* json_value.cpp */; };
@@ -259,6 +261,11 @@
 		6ADD271F71E5CF8161B45109 /* logger.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = logger.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/logger.h; sourceTree = SOURCE_ROOT; };
 		6EE05DD94DAD5D94142391A8 /* IpEndpointName.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = IpEndpointName.cpp; path = ../../addons/ofxOsc/libs/oscpack/src/ip/IpEndpointName.cpp; sourceTree = SOURCE_ROOT; };
 		6EE47C352EE8D03D943B4D04 /* maxiMFCC.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = maxiMFCC.h; path = ../../addons/ofxMaxim/libs/maxiMFCC.h; sourceTree = SOURCE_ROOT; };
+		6F24EED218DAF43600360850 /* Slicer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Slicer.cpp; sourceTree = "<group>"; };
+		6F24EED318DAF43600360850 /* Slicer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Slicer.h; sourceTree = "<group>"; };
+		6F24EED718DB16C200360850 /* Misc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Misc.h; sourceTree = "<group>"; };
+		6F24EED818DB2EB200360850 /* Analyser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Analyser.cpp; sourceTree = "<group>"; };
+		6F24EED918DB2EB200360850 /* Analyser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Analyser.h; sourceTree = "<group>"; };
 		6F3FF1E018BCBDE700E53C95 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6F3FF1E518BCBDE700E53C95 /* autolink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = autolink.h; sourceTree = "<group>"; };
 		6F3FF1E618BCBDE700E53C95 /* config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
@@ -1355,6 +1362,11 @@
 				6FF96BF418D9D66200BCC134 /* Pooler.h */,
 				6FF96BF618D9E02C00BCC134 /* Viewer.cpp */,
 				6FF96BF718D9E02C00BCC134 /* Viewer.h */,
+				6F24EED218DAF43600360850 /* Slicer.cpp */,
+				6F24EED318DAF43600360850 /* Slicer.h */,
+				6F24EED718DB16C200360850 /* Misc.h */,
+				6F24EED818DB2EB200360850 /* Analyser.cpp */,
+				6F24EED918DB2EB200360850 /* Analyser.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1552,6 +1564,7 @@
 				6FF9708518DA128C00BCC134 /* ofxUIImageToggle.cpp in Sources */,
 				9753D2F373BDF97B89D59B33 /* OscPrintReceivedElements.cpp in Sources */,
 				6FF9707918DA128C00BCC134 /* ofxUIButton.cpp in Sources */,
+				6F24EED418DAF43600360850 /* Slicer.cpp in Sources */,
 				6F3FF1FC18BCBDE700E53C95 /* json_value.cpp in Sources */,
 				6F3FF1FD18BCBDE700E53C95 /* json_writer.cpp in Sources */,
 				6FF9707F18DA128C00BCC134 /* ofxUIFPS.cpp in Sources */,
@@ -1563,6 +1576,7 @@
 				28DC652211D4AF8CC023D568 /* tinyxml.cpp in Sources */,
 				6FF9707C18DA128C00BCC134 /* ofxUIDragableLabelButton.cpp in Sources */,
 				F877D69532909AE487E0EF22 /* tinyxmlerror.cpp in Sources */,
+				6F24EEDA18DB2EB200360850 /* Analyser.cpp in Sources */,
 				32E2318B89B6217AE6052155 /* tinyxmlparser.cpp in Sources */,
 				C95B869521C83E3B478F83FA /* btAlignedAllocator.cpp in Sources */,
 				6FF9708118DA128C00BCC134 /* ofxUIImage.cpp in Sources */,

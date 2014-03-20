@@ -14,21 +14,30 @@
 #include "ofxJSONElement.h"
 
 
+typedef struct{
+
+    float ts;
+    vector<float> data;
+    
+    
+}frame;
+
 
 
 class LocalPool{
 public:
 
-    void create(string name,vector<ofVec2f> inv);
+    void create(string name,vector<frame>   inv);
     void add(string name,vector<ofVec2f> inv);
     void del(string s);
-    vector<string> get1dNames();
+    vector<string> getNames(int dim);
+    map<string,int> getNdNames();
     bool exists(string name);
     
     string filepath;
-    std::map<string , vector<ofVec2f> > pool1d;
-    std::map<string , vector<ofVec2f> > pool2d;
-    std::map<string , vector< vector<float> > > poolnd;
+    std::map<string , vector< frame > > poolnd;
+    
+    std::map<string, int> features;
     
 };
 
@@ -37,9 +46,11 @@ public:
     
     
     void load(string fn);
+    void Slice();
     
     void getAll(){};
-    vector<string> getAxes();
+    map<string,int> getAxes();
+    vector<string> getAxesNames();
     
     
     vector<LocalPool> globalPool;

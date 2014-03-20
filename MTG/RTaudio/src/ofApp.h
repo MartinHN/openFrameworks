@@ -6,17 +6,10 @@
 #include "Timed.h"
 #include "Viewer.h"
 #include "Pooler.h"
+#include "Slicer.h"
 
 
 
-
-class Slice{
-public:
-    Slice(float a, float b, int t):start(a),length(b),type(t){};
-    float start;
-    float length;
-    int type;
-};
 
 class ofApp : public ofBaseApp{
 
@@ -40,6 +33,10 @@ class ofApp : public ofBaseApp{
     void drawFromSlice();
     
     vector<Slice> slices;
+    
+    vector<Slicer * > slicers;
+    
+    
     int h;
     
     

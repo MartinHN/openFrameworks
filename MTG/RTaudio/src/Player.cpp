@@ -42,8 +42,11 @@ void Player::gotMessage(ofMessage & msg){
 
 
 void Player::load(string f){
+    if(f!=""){
     for(vector<ofSoundPlayer>::iterator player = playerl.begin() ; player!=playerl.end() ; ++player){
        player->loadSound(f);
+    
+        }
     }
     
 }

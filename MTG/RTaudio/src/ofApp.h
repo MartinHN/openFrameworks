@@ -4,7 +4,9 @@
 #include "Player.h"
 #include "ofxJSONElement.h"
 #include "Timed.h"
-#include "ofxEssentia.h"
+#include "Viewer.h"
+#include "Pooler.h"
+
 
 
 
@@ -33,9 +35,7 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 
-    
-    
-    void loadSlices(string filename);
+
     
     void drawFromSlice();
     
@@ -50,6 +50,7 @@ class ofApp : public ofBaseApp{
     int classesN;
     float zoomfactor;
     
-    ofxEssentia ess;
+    Pooler pool;
+    Viewer view;
 		
 };

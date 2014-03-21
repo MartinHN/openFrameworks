@@ -15,7 +15,7 @@ void ofApp::setup(){
     sH.setup(&pool);
     aH.setup(&sH);
     pool.load("tst");
-    view.link2model(&aH);
+    view.setup(&aH);
     sH.sliceIt("threshold", "envelope");
     aH.analyzeIt("Direct", "threshold");
     
@@ -25,6 +25,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     view.update();
+    
 }
 
 //--------------------------------------------------------------
@@ -80,7 +81,13 @@ void ofApp::mousePressed(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    if(view.hoverIdx>-1){
+        
+        Slice s =aH.curslice->at(view.hoverIdx);
+        player.load(s.filepath);
+        string msg = "play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
+        ofSendMessage(msg);
+    }
 }
 
 //--------------------------------------------------------------

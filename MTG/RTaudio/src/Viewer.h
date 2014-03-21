@@ -18,20 +18,21 @@
 
 class Viewer{
 public:
-    Viewer();
+    Viewer(){};
+    void setup(AnalyzerH * a);
     
     void update();
-    void updateGui();
+    void updateAnalyzerGui();
+    void updateSlicerGui();
     void updateView();
     void updateCache();
     void draw();
-    void link2model(AnalyzerH * a){
-        aH = a;
-        
-    };
+
     void autoScale(bool & b);
     void setCurrentSlicer(int i);
     void resetView(bool & b);
+    
+    void updateHoverSlice();
     
     void guiEvent(ofxUIEventArgs &e);
     void setupGui();
@@ -41,7 +42,7 @@ public:
     ofEasyCam cam;
     
     ofxUIDropDownList *dl;
-    ofxUISuperCanvas *gui;
+    ofxUISuperCanvas *guiconf;
     
     AnalyzerH * aH;
     
@@ -52,9 +53,12 @@ public:
     ofParameter<ofVec3f> scale,center;
     ofParameterGroup settings;
     
-    ofxPanel * guip;
+    ofxPanel * guicam,* guia,*guis;
+    
+
     
     vector<ofColor> colors;
+    int hoverIdx;
     
     vector<string> axesx,axesy,axesz;
     float viewR;

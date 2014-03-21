@@ -57,6 +57,7 @@ public:
     void setup(Pooler * p);
     void registerParams();
     Slicer * get(string s);
+    vector<string> getSlicerNames();
     void sliceIt(string slicer,string novelty);
     Pooler * pool;
     vector<Slicer * > slicers;

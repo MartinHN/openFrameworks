@@ -59,7 +59,7 @@ void Player::play(float t,float til){
             printf("play at %f\n",t);
             playerl[i].play();
             playerl[i].setPositionMS(1000.0*t);
-            TimeLine.addDel(til*1000.0, "stop4 "+ofToString(i));
+            TimeLine.addDel(til*100000.0, "stop4 "+ofToString(i));
             break;
         }}
     

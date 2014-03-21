@@ -29,8 +29,6 @@ typedef struct{
     float tb;
     float te;
     
-    string familly;
-    
     vector<frame> * origin;
     int originIdx;
     int endIdx;

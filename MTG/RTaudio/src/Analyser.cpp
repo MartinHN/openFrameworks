@@ -12,17 +12,20 @@
 
 
 void DirectAnalyzer::analyze(vector<Slice> &v){
-    ofVec2f bx(999999,-999999),by(999999,-999999),bz(999999,-999999);
+
+    int dim = v[0].origin->at(0).data.size();
     for(vector<Slice>::iterator vi = v.begin() ; vi != v.end() ; ++vi){
         vi->curpos.set(0);
         
         for(int i = vi->originIdx;i<vi->endIdx ; i++ ){
             vi->curpos.x +=  vi->origin->at(i).data[x];
-            vi->curpos.y +=  vi->origin->at(i).data[y];
-            vi->curpos.z +=  vi->origin->at(i).data[z];
+            vi->curpos.y += dim>1?vi->origin->at(i).data[y] : 0;
+            vi->curpos.z +=  dim>2 ? vi->origin->at(i).data[z]:0;
             
         }
     }
+    
+    
     
 }
 
@@ -68,9 +71,22 @@ void AnalyzerH::analyzeIt(string aname,string sname){
         ofLogWarning("analyserH : slicer not found : "+sname);
     }
     else{
+        if(s->slices.size()>0){
     a->analyze(s->slices);
-    
     curslice = &s->slices;
+        }
+        else ofLogWarning("analyzerH : analyzing empty slices");
     }
+    
+}
+
+
+vector<string> AnalyzerH::getAnalyzerNames(){
+    vector<string> res;
+    for (int k = 0 ; k < analyzers.size() ; k++){
+        res.push_back(analyzers[k]->settings.getName());
+    }
+    return res;
+
     
 }

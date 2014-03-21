@@ -53,6 +53,7 @@ public:
     void registerParams();
     Analyzer * get(string n);
     SlicerH * sH;
+    vector<string> getAnalyzerNames();
     
     vector<Analyzer*> analyzers;
     

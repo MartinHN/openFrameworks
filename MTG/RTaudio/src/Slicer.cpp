@@ -15,7 +15,13 @@ void SlicerH::setup(Pooler * p){
     
     registerParams();
 }
-
+vector<string> SlicerH::getSlicerNames(){
+    vector<string> res;
+    for (int k = 0 ; k < slicers.size() ; k++){
+        res.push_back(slicers[k]->settings.getName());
+    }
+    return res;
+}
 void SlicerH::registerParams(){
     for (int k = 0 ; k < slicers.size() ; k++){
         slicers[k]->registerParams();
@@ -69,8 +75,6 @@ void ThresholdSlicer::SliceIt(vector<frame> &d){
     Slice tmps;
     tmps.tb = 0;
     tmps.te = 0;
-    tmps.filepath = "null";
-    tmps.familly = "threshold";
     tmps.origin = &d;
     tmps.localid = d[0].localid;
     tmps.tb = 0;

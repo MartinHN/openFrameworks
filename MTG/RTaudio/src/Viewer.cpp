@@ -10,8 +10,8 @@
 #include "Misc.h"
 
 
-Viewer::Viewer(){
-    
+void Viewer::setup(AnalyzerH * a){
+    aH = a;
     cam.enableMouseInput();
     isCacheDirty = isGuiDirty =isViewDirty = true;
 
@@ -44,18 +44,30 @@ void Viewer::setupGui(){
     
     registerParams();
     
+    int ch = 0;
+    int pad=10;
+    guiconf = new ofxUISuperCanvas("Config",0,0,200,100);
+    ch+=guiconf->getRect()->height+pad;
+    guicam = new ofxPanel(settings);
+    guicam->setPosition(ofPoint(0,ch));
+    ch+= guicam->getHeight()+pad;
+    guia = new ofxPanel(aH->analyzers[0]->settings);
+    guia->setPosition(ofPoint(0,ch));
+    ch += guia->getHeight() + pad;
+    guis = new ofxPanel(aH->sH->slicers[0]->settings);
+    guis->setPosition(ofPoint(0,ch));
+    
+
     
     
-    guip = new ofxPanel(settings);
-    gui = new ofxUISuperCanvas("Axes",ofGetWidth()/2,0,300,200);
-    
-//    
-//    if(analyzers->getAxes().size()>0){
-//        
-//        gui->addDropDownList("Axesx", p->getAxesNames());
-//        gui->addDropDownList("Axesy", p->getAxesNames());
-//        gui->addDropDownList("Axesz", p->getAxesNames());
-//    }
+    if(aH->getAnalyzerNames().size()>0){
+        guiconf->addDropDownList("AnalyzerNames", aH->getAnalyzerNames());
+    }
+    if(aH->sH->getSlicerNames().size()>0){
+        guiconf->addDropDownList("SlicerNames",aH->sH->getSlicerNames());
+    }
+   	ofAddListener(guiconf->newGUIEvent,this,&Viewer::guiEvent);
+
 }
 
 void Viewer::registerParams(){
@@ -87,34 +99,46 @@ void Viewer::resetView(bool & b){
 }
 
 
-void Viewer::updateGui(){
-//    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->clearToggles();
-//    axesx = p->getAxesNames();
-//    ((ofxUIDropDownList*)gui->getWidget("Axesx"))->addToggles(axesx);
-//    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->clearToggles();
-//    axesy = p->getAxesNames();
-//    ((ofxUIDropDownList*)gui->getWidget("Axesy"))->addToggles(axesy);
-//    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->clearToggles();
-//    axesz = p->getAxesNames();
-//    ((ofxUIDropDownList*)gui->getWidget("Axesz"))->addToggles(axesz);
-//    
-//    
+void Viewer::updateAnalyzerGui(){
 
+    vector<string> curselected = ((ofxUIDropDownList *)guiconf->getWidget("AnalyzerNames"))->getSelectedNames();
+    if(curselected.size()>0){
+        ofPoint pos = guia->getPosition();
+        delete guia;
+        guia = new ofxPanel(aH->get(curselected[0])->settings);
+        guia->setPosition(pos);
+    }
+    else{
+        ofLogWarning("no analyzer Selected");
+    }
 
 }
+
+void Viewer::updateSlicerGui(){
+    
+    vector<string> curselected = ((ofxUIDropDownList *)guiconf->getWidget("SlicerNames"))->getSelectedNames();
+    if(curselected.size()>0){
+        ofPoint pos = guis->getPosition();
+        delete guis;
+        guis = new ofxPanel(aH->sH->get(curselected[0])->settings);
+        guis->setPosition(pos);
+    }
+    else{
+        ofLogWarning("no slicer Selected");
+    }
+    
+}
+
 
 void Viewer::guiEvent(ofxUIEventArgs &e){
     string name = e.getName();
 	int kind = e.getKind();
 	cout << "got event from: " << name << endl;
-    if(name == "Axesx"){
-        
+    if(name == "AnalyzerNames"){
+        updateAnalyzerGui();
     }
-    else if(name == "Axesy"){
-        
-    }
-    else if(name == "Axesz"){
-        
+    else if(name == "SlicerNames"){
+        updateSlicerGui();
     }
     
 
@@ -151,28 +175,30 @@ void Viewer::autoScale(bool & b){
         for (int i = 0 ; i < aH->curslice->size() ; i++){
             
             min.x = std::min(aH->curslice->at(i).curpos.x,min.x);
-            min.y = std::min(aH->curslice->at(i).curpos.x,min.y);
-            min.z = std::min(aH->curslice->at(i).curpos.x,min.z);
+            min.y = std::min(aH->curslice->at(i).curpos.y,min.y);
+            min.z = std::min(aH->curslice->at(i).curpos.z,min.z);
             
             max.x = std::max(aH->curslice->at(i).curpos.x,max.x);
-            max.y = std::max(aH->curslice->at(i).curpos.x,max.y);
-            max.z = std::max(aH->curslice->at(i).curpos.x,max.z);
+            max.y = std::max(aH->curslice->at(i).curpos.y,max.y);
+            max.z = std::max(aH->curslice->at(i).curpos.z,max.z);
 
         }
+
         scale = 1./(max-min);
-        
+        ofVec3f cpy = scale;
+        if(max.x ==min.x){cpy.x=1;}
+        if(max.y ==min.y){cpy.y=1;}
+        if(max.z ==min.z){cpy.z=1;}
+        scale=cpy;
     }
-        center = ofVec3f(0);
+        center = -scale.get()*(min+max)/2;
         b = false;
     }
     
 }
 void Viewer::update(){
 
-    if(isGuiDirty){
-        updateGui();
-        isGuiDirty = false;
-    }
+
     if(isViewDirty){
         updateView();
         isViewDirty = false;
@@ -181,13 +207,40 @@ void Viewer::update(){
         updateCache();
         isCacheDirty = false;
     }
+    updateHoverSlice();
+
 
 }
 
-void Viewer::draw(){
+void Viewer::updateHoverSlice(){
+    ofVec2f mouse(ofGetMouseX(),ofGetMouseY());
+    float nearestDistance = 999999;
+    hoverIdx=-1;
+    for (int i = 0 ; i < aH->curslice->size() ; i++){
+        //TODO:Cache it
+        ofVec3f pp( (center.get() + aH->curslice->at(i).curpos* scale )*viewR );
+        ofVec2f cur = cam.worldToScreen(pp);
+        float distance = cur.distance(mouse);
+		if(distance<20 && distance < nearestDistance) {
+			nearestDistance = distance;
+			hoverIdx = i;
+		}
+	}
     
-    gui->draw();
-    guip->draw();
+}
+
+void Viewer::draw(){
+    ofPushMatrix();
+    guiconf->draw();
+    
+//    ofTranslate(60,0);
+    guis->draw();
+    guia->draw();
+    
+    
+    guicam->draw();
+    
+    ofPopMatrix();
     ofNoFill();
 
 
@@ -207,18 +260,23 @@ void Viewer::draw(){
         ofFill();
         for (int i = 0 ; i < aH->curslice->size() ; i++){
        ofPushMatrix();
-       ofSetColor(colors[aH->curslice->at(i).localid%colors.size()],150);
+            ofColor curcolor = colors[aH->curslice->at(i).localid%colors.size()];
+       ofSetColor(curcolor,150);
        ofVec3f pp( (center.get() + aH->curslice->at(i).curpos* scale )*viewR );
        
        ofFill();
-       if(pp.length()>viewR/2){
+            float cscale = 1;
+            float curl = pp.length();
+       if(curl>viewR/2){
+           cscale = viewR/(curl);
            pp.limit(viewR/2);
 //           pp.z = 0;
            ofNoFill();
-           cout<<"out"<<endl;
+
        }
        ofTranslate(pp);
-       ofRect(0,0,10,10);
+            ofSetRectMode(OF_RECTMODE_CENTER);
+       ofRect(0,0,10*cscale,10*cscale);
        ofPopMatrix();
    }
 }

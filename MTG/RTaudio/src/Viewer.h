@@ -29,7 +29,9 @@ public:
         aH = a;
         
     };
+    void autoScale(bool & b);
     void setCurrentSlicer(int i);
+    void resetView(bool & b);
     
     void guiEvent(ofxUIEventArgs &e);
     void setupGui();
@@ -46,7 +48,8 @@ public:
     bool isViewDirty,isCacheDirty,isGuiDirty;
     vector<ofVec3f> cache;
     
-    ofParameter<bool> drawSlice;
+    ofParameter<bool> drawSlice,autoZoom,resetCam;
+    ofParameter<ofVec3f> scale,center;
     ofParameterGroup settings;
     
     ofxPanel * guip;
@@ -54,6 +57,7 @@ public:
     vector<ofColor> colors;
     
     vector<string> axesx,axesy,axesz;
+    float viewR;
     
     
 };

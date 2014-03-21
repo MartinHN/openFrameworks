@@ -6,28 +6,19 @@ void ofApp::setup(){
     zoomfactor = 4.;
     h=40;
     
-    slicers.push_back(new ThresholdSlicer());
-    analyzers.push_back(new DirectAnalyzer());
     
-    
-    
-    for (int k = 0 ; k < slicers.size() ; k++){
-        slicers[k]->registerParams();
-    }
-    for (int k = 0 ; k < analyzers.size() ; k++){
-        analyzers[k]->registerParams();
-    }
+
+
+
 
     ofSetFrameRate(20);
-
-
+    sH.setup(&pool);
+    aH.setup(&sH);
     pool.load("tst");
-    slicers[0]->SliceIt(pool["envelope"]);
-    analyzers[0]->Analyze(slicers[0]->slices);
+    view.link2model(&aH);
+    sH.sliceIt("threshold", "envelope");
+    aH.analyzeIt("Direct", "threshold");
     
-    
-    
-    view.link2model(&slicers[0]->slices,&slicers,&analyzers);
 //    player.load(json["filepath"][0].asString());
 }
 

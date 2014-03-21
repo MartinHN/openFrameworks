@@ -41,6 +41,7 @@ void Viewer::setupGui(){
     
     guip = new ofxPanel(settings);
     gui = new ofxUISuperCanvas("Axes",ofGetWidth()/2,0,300,200);
+    
 //    
 //    if(analyzers->getAxes().size()>0){
 //        
@@ -52,7 +53,7 @@ void Viewer::setupGui(){
 
 void Viewer::registerParams(){
     MYPARAM(drawSlice,true,false,true);
-    
+    MYPARAM(AutoZoom,true,false,true);
     
     
     
@@ -96,7 +97,6 @@ void Viewer::guiEvent(ofxUIEventArgs &e){
 void Viewer::updateView(){
     if(drawSlice){
         
-        
     }
     else{
         
@@ -107,10 +107,10 @@ void Viewer::updateView(){
 
 void Viewer::updateCache(){
     
-  
-    for (int i = 0 ; i < slices->size() ; i++){
-  
-    }
+//  
+//    for (int i = 0 ; i < slices->size() ; i++){
+//  
+//    }
 }
 
 void Viewer::update(){
@@ -136,15 +136,15 @@ void Viewer::draw(){
     guip->draw();
     
     cam.begin();
-    
-   for (int i = 0 ; i < slices->size() ; i++){
+    if(aH->curslice!=NULL){
+   for (int i = 0 ; i < aH->curslice->size() ; i++){
        ofPushMatrix();
-       ofSetColor(colors[slices->at(i).localid%colors.size()]);
-       ofTranslate( slices->at(i).curpos);
+       ofSetColor(colors[aH->curslice->at(i).localid%colors.size()]);
+       ofTranslate( aH->curslice->at(i).curpos);
        ofRect(0,0,10,10);
        ofPopMatrix();
    }
-    
+    }
     
     
     

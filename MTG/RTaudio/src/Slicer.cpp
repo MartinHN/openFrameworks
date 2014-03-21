@@ -9,15 +9,68 @@
 #include "Slicer.h"
 
 
+void SlicerH::setup(Pooler * p){
+    slicers.push_back(new ThresholdSlicer());
+    pool = p;
+    
+    registerParams();
+}
+
+void SlicerH::registerParams(){
+    for (int k = 0 ; k < slicers.size() ; k++){
+        slicers[k]->registerParams();
+    }
+}
+
+void SlicerH::sliceIt(string slicer,string novelty){
+
+    Slicer * s = get(slicer);
+    if(s==NULL){ofLogWarning("SlicerH : Slicer not found :" + slicer);}
+    
+    else{
+            
+        s->clear();
+    
+    
+            for (int i = 0 ; i< pool->globalPool.size() ; i++){
+                s->SliceIt(pool->globalPool[i].poolnd[novelty]);
+            }
+
+        
+    
+    }
+
+}
+
+
+Slicer * SlicerH::get(string n){
+    for (int k = 0 ; k < slicers.size() ; k++){
+        if( n==slicers[k]->settings.getName()) return slicers[k];
+    }
+    return NULL;
+}
+
+void Slicer::clear(){
+   
+    slices.clear();
+}
+
+
+
+
+
+
+
+
 
 void ThresholdSlicer::SliceIt(vector<frame> &d){
-    slices.clear();
+    
     bool isSlice = false;
     Slice tmps;
     tmps.tb = 0;
     tmps.te = 0;
     tmps.filepath = "null";
-    tmps.familly = "thresholded";
+    tmps.familly = "threshold";
     tmps.origin = &d;
     tmps.localid = d[0].localid;
     tmps.tb = 0;
@@ -33,7 +86,7 @@ void ThresholdSlicer::SliceIt(vector<frame> &d){
         if(isSlice ){
             if(mean<threshold){
                 tmps.te = p->ts;
-                tmps.originIdx = curidx;
+                tmps.endIdx = curidx;
                 slices.push_back(tmps);
             isSlice = false;
                              }
@@ -41,7 +94,7 @@ void ThresholdSlicer::SliceIt(vector<frame> &d){
         else{
             if(mean>threshold){
                 tmps.tb = p->ts;
-                tmps.endIdx = curidx;
+                tmps.originIdx = curidx;
                 isSlice = true;
             }
         }
@@ -59,4 +112,5 @@ map<string, int> ThresholdSlicer::outputs(){
 
 void ThresholdSlicer::registerParams(){
     MYPARAM(threshold,0.01,0,100);
+    settings.setName("threshold");
 }

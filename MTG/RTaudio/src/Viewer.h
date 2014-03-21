@@ -25,10 +25,8 @@ public:
     void updateView();
     void updateCache();
     void draw();
-    void link2model(vector<Slice> *slicesin,vector<Slicer *> *slicersin,vector<Analyzer * > *analin){
-        slices =slicesin;
-        slicers = slicersin;
-        analyzers = analin;
+    void link2model(AnalyzerH * a){
+        aH = a;
         
     };
     void setCurrentSlicer(int i);
@@ -43,11 +41,7 @@ public:
     ofxUIDropDownList *dl;
     ofxUISuperCanvas *gui;
     
-    vector<Slicer *> *slicers;
-    vector<Analyzer *> *analyzers;
-    
-    
-    vector<Slice>  *slices;
+    AnalyzerH * aH;
     
     bool isViewDirty,isCacheDirty,isGuiDirty;
     vector<ofVec3f> cache;

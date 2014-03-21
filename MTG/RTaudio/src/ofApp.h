@@ -34,7 +34,8 @@ class ofApp : public ofBaseApp{
     
     vector<Slice> slices;
     
-    vector<Slicer * > slicers;
+    SlicerH sH;
+    AnalyzerH aH;
 
     vector<Analyzer*> analyzers;
     

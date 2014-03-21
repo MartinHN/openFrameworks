@@ -12,7 +12,8 @@
 #include <iostream>
 #include "ofMain.h"
 #include "Misc.h"
-#include "Pooler.h"
+#include "Slicer.h"
+
 class Analyzer{
     
 public:
@@ -20,7 +21,7 @@ public:
     
     int nd;
     
-    virtual void Analyze(vector<Slice> & v){};
+    virtual void analyze(vector<Slice> & v){};
     virtual void registerParams(){};
     
     ofParameterGroup settings;
@@ -33,12 +34,29 @@ class DirectAnalyzer : public Analyzer{
 public:
     
 //    DirectAnalyzer(Pooler * p):Analyzer(p){};
-    void Analyze(vector<Slice> & v);
+    void analyze(vector<Slice> & v);
     void registerParams();
     ofParameter<int> x;
     ofParameter<int> y;
     ofParameter<int> z;
     
+};
+
+
+
+
+class AnalyzerH{
+public:
+    
+    void setup(SlicerH * sH);
+    void analyzeIt(string aname,string sname);
+    void registerParams();
+    Analyzer * get(string n);
+    SlicerH * sH;
+    
+    vector<Analyzer*> analyzers;
+    
+    vector<Slice> * curslice;
 };
 
 

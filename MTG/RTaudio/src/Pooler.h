@@ -25,7 +25,7 @@ public:
     vector<string> getNames(int dim);
     map<string,int> getNdNames();
     bool exists(string name);
-    const vector<frame> operator [] (string s){return poolnd[s];};
+    vector<frame> operator [] (string s){return poolnd[s];};
     
     string filepath;
     std::map<string , vector< frame > > poolnd;
@@ -52,6 +52,7 @@ public:
         }
         return res;
     };
+    LocalPool operator [] (int i){return globalPool[i];};
     
     
     vector<LocalPool> globalPool;

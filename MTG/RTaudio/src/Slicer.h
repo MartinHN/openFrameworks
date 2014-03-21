@@ -15,6 +15,7 @@
 #include "ofMain.h"
 
 #include "Misc.h"
+#include "Pooler.h"
 
 
 
@@ -26,6 +27,7 @@ public:
     virtual void SliceIt(vector<frame> &d){};
     virtual void registerParams(){};
     virtual map<string,int> outputs(){};
+    void clear();
     
     
     vector<Slice> slices;
@@ -47,6 +49,17 @@ public:
     ofParameter<float> threshold;
     
     
+    
+};
+
+class SlicerH{
+public:
+    void setup(Pooler * p);
+    void registerParams();
+    Slicer * get(string s);
+    void sliceIt(string slicer,string novelty);
+    Pooler * pool;
+    vector<Slicer * > slicers;
     
 };
 //class NoveltySlicer: public Slicer{

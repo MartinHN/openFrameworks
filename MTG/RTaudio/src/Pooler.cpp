@@ -130,4 +130,16 @@ vector<string> Pooler::getAxesNames(){
     return res;
 }
 
+vector<string> Pooler::getFilePaths(){
+    vector<string> res;
+    
+    for (vector<LocalPool >::iterator p = globalPool.begin() ; p!=globalPool.end() ; ++p){
+        res.push_back(p->filepath);
+        
+    }
+    
+    
+    return res;
+}
+
 

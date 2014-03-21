@@ -44,6 +44,7 @@ public:
     void getAll(){};
     map<string,int> getAxes();
     vector<string> getAxesNames();
+    vector<string> getFilePaths();
     vector<frame> operator [] (string s){vector<frame> res;
         for(vector<LocalPool>::iterator it  = globalPool.begin();it!=globalPool.end();++it){
             vector<frame> tmp  = (*it)[s];

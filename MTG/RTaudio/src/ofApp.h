@@ -42,7 +42,7 @@ class ofApp : public ofBaseApp{
     int h;
     
     
-    Player player;
+    vector<Player> player;
     int lastplayed;
 
     ofxJSONElement json;

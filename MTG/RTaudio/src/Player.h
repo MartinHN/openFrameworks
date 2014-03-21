@@ -17,13 +17,20 @@ class Player{
 public:
     
     Player();
+    ~Player();
+    
     void play(float t,float til);
     void setup(){};
     void gotMessage(ofMessage & msg);
     void play(float t);
     void load(string f);
+    int pid;
+ 
     
     vector<ofSoundPlayer> playerl;
+    
+private:
+    static int number;
 };
 
 

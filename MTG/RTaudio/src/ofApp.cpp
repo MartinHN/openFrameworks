@@ -18,6 +18,11 @@ void ofApp::setup(){
     view.setup(&aH);
     sH.sliceIt("threshold", "envelope");
     aH.analyzeIt("Direct", "threshold");
+    vector<string> files = pool.getFilePaths();
+    for (vector<string>::iterator it = files.begin();it!= files.end() ; ++it){
+        player.push_back(Player());
+        player.back().load(*it);
+    }
     
 //    player.load(json["filepath"][0].asString());
 }
@@ -84,8 +89,8 @@ void ofApp::mouseReleased(int x, int y, int button){
     if(view.hoverIdx>-1){
         
         Slice s =aH.curslice->at(view.hoverIdx);
-        player.load(s.filepath);
-        string msg = "play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
+
+        string msg = "p "+ofToString(s.localid)+" play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
         ofSendMessage(msg);
     }
 }

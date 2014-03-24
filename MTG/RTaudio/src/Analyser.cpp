@@ -24,9 +24,9 @@ void DirectAnalyzer::analyze(vector<Slice> * v,Pooler * p){
         
         for(int i = vi->originIdx;i<vi->endIdx ; i++ ){
             
-            vi->curpos.x +=  p->at(id)->poolnd[ftn[feature1]][0].data[i];
-            vi->curpos.y +=  p->at(id)->poolnd[ftn[feature2]][0].data[i];
-            vi->curpos.z +=  p->at(id)->poolnd[ftn[feature3]][0].data[i];
+            vi->curpos.x +=  p->at(id)->poolnd[ftn[feature1]][0].data[i]/1000.;
+            vi->curpos.y +=  p->at(id)->poolnd[ftn[feature2]][0].data[i]/1000.;
+            vi->curpos.z +=  p->at(id)->poolnd[ftn[feature3]][0].data[i]/1000.;
 
             
         }

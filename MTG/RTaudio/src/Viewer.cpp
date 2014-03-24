@@ -31,6 +31,12 @@ void Viewer::setup(AnalyzerH * a){
     viewR = ofGetHeight();
 
 //	void setAspectRatio(float aspectRatio);
+    cam.orbit(0, 0, viewR*2);
+    
+    
+    
+    cam.setFov(10);//2*ofRadToDeg(atan(ofGetWidth()*2.0/(viewR))));//50
+
     
     resetCam = true;
 
@@ -100,12 +106,8 @@ void Viewer::setViewMouse(bool & b){
 
 void Viewer::resetView(bool & b){
     if(b){
-    cam.orbit(0, 0, viewR);
-//        cam.enableOrtho();
-
-//    cam.setDistance(viewBox.z);
-        cam.setFov(10);//2*ofRadToDeg(atan(ofGetWidth()*2.0/(viewR))));//50
-//    cam.setAspectRatio(viewBox.x*1.0/(viewBox.y));
+        cam.reset();
+    
         b= false;}
     
     
@@ -187,11 +189,10 @@ void Viewer::updateCache(){
 
 void Viewer::autoScale(bool & b){
     if(b){
-    ofVec3f min(9999,99999,99999);
+    ofVec3f min(999999,999999,999999);
     ofVec3f max = -min;
 
-    if(aH->curSlice
-       !=NULL){
+    if(aH->curSlice!=NULL){
         
         for (int i = 0 ; i < aH->curSlice->size() ; i++){
             
@@ -212,7 +213,7 @@ void Viewer::autoScale(bool & b){
         if(max.z ==min.z){cpy.z=1;}
         scale=cpy;
     }
-        center = -scale.get()*(min+max)/2;
+        center = scale.get()*(min+max)/2;
         b = false;
     }
     
@@ -238,7 +239,7 @@ void Viewer::updateHoverSlice(){
     hoverIdx=-1;
     for (int i = 0 ; i < aH->curSlice->size() ; i++){
         //TODO:Cache it
-        ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
+        ofVec3f pp( (-center.get() + aH->curSlice->at(i).curpos* scale )*viewR/2 );
         ofVec2f cur = cam.worldToScreen(pp);
         float distance = cur.distance(mouse);
 		if(distance<20 && distance < nearestDistance) {
@@ -292,7 +293,7 @@ void Viewer::draw(){
        ofPushMatrix();
             ofColor curcolor = colors[aH->curSlice->at(i).localid%colors.size()];
        ofSetColor(curcolor,150);
-       ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
+       ofVec3f pp( (-center.get() + aH->curSlice->at(i).curpos* scale )*viewR/2 );
        
        ofFill();
             float cscale = 1;

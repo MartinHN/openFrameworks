@@ -3,7 +3,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    zoomfactor = 4.;
+//    zoomfactor = 4.;
     h=40;
     
     
@@ -113,7 +113,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-zoomfactor = ofGetWidth()/(0.9*slices.back().te);
+//zoomfactor = ofGetWidth()/(0.9*slices.back().te);
 }
 
 //--------------------------------------------------------------

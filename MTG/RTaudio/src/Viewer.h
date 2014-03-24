@@ -29,8 +29,9 @@ public:
     void draw();
 
     void autoScale(bool & b);
-    void setCurrentSlicer(int i);
+
     void resetView(bool & b);
+    void setViewMouse(bool & b);
     
     void updateHoverSlice();
     
@@ -49,14 +50,14 @@ public:
     bool isViewDirty,isCacheDirty,isGuiDirty;
     vector<ofVec3f> cache;
     
-    ofParameter<bool> drawSlice,autoZoom,resetCam;
+    ofParameter<bool> drawSlice,autoZoom,resetCam,viewMouse;
     ofParameter<ofVec3f> scale,center;
     ofParameterGroup settings;
     
     ofxPanel * guicam,* guia,*guis;
     
 
-    
+    bool displayFeatures;
     vector<ofColor> colors;
     int hoverIdx;
     

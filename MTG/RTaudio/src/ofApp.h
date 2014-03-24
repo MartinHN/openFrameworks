@@ -27,7 +27,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
+    void compute();
 
     
     void drawFromSlice();
@@ -42,7 +42,7 @@ class ofApp : public ofBaseApp{
     int h;
     
     
-    vector<Player> player;
+    vector<Player *> player;
     int lastplayed;
 
     ofxJSONElement json;

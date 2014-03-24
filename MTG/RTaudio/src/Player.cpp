@@ -7,20 +7,18 @@
 //
 
 #include "Player.h"
-int Player::number = 0;
 
-Player::Player(){
+
+Player::Player(int id,string f){
     for (int i = 0 ; i< 4 ; i++){
-    playerl.push_back(ofSoundPlayer());
+    playerl.push_back(new ofSoundPlayer());
     }
     ofAddListener(ofEvents().messageEvent,this,&Player::gotMessage);
-    pid = number;
-    number++;
+    pid =id;
+    load(f);
 }
 
-Player::~Player(){
-    number--;
-}
+
 
 
 void Player::gotMessage(ofMessage & msg){
@@ -38,11 +36,11 @@ void Player::gotMessage(ofMessage & msg){
         //    }
         
         else if(inst[2]=="stop4"){
-            playerl[ofToInt(inst[3])].stop();
+            playerl[ofToInt(inst[3])]->stop();
         }
         
         else if(inst[2] == "play4"){
-            play( ofToFloat(inst[3]),ofToFloat(inst[2]));
+            play( ofToFloat(inst[3]),ofToFloat(inst[4]));
         }
         
 
@@ -59,8 +57,8 @@ void Player::gotMessage(ofMessage & msg){
 
 void Player::load(string f){
     if(f!=""){
-    for(vector<ofSoundPlayer>::iterator player = playerl.begin() ; player!=playerl.end() ; ++player){
-       player->loadSound(f);
+    for(vector<ofSoundPlayer*>::iterator player = playerl.begin() ; player!=playerl.end() ; ++player){
+       (*player)->loadSound(f);
     
         }
     }
@@ -72,12 +70,12 @@ void Player::load(string f){
 void Player::play(float t,float til){
     
     for (int i = 0 ; i < playerl.size() ; i++){
-        if (!playerl[i].getIsPlaying()){
+        if (!playerl[i]->getIsPlaying()){
     
             printf("play at %f\n",t);
-            playerl[i].play();
-            playerl[i].setPositionMS(1000.0*t);
-            TimeLine.addDel(til*100000.0, "p "+ofToString(pid)+" stop4 "+ofToString(i));
+            playerl[i]->play();
+            playerl[i]->setPositionMS(1000.0*t);
+            TimeLine.addDel(til*1000.0, "p "+ofToString(pid)+" stop4 "+ofToString(i));
             break;
         }}
     

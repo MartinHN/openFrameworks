@@ -21,11 +21,17 @@ public:
     
     int nd;
     
-    virtual void analyze(vector<Slice> & v){};
-    virtual void registerParams(){};
+    virtual void analyze(vector<Slice> * v,Pooler * p){};
+    virtual void registerParams(){
+        MYPARAM(feature1,0,0,10);
+        MYPARAM(feature2,1,0,10);
+        MYPARAM(feature3,2,0,10);
+        
+    };
     
     ofParameterGroup settings;
-    Pooler * pool;
+    ofParameter<int> feature1,feature2,feature3;
+
     
     
 };
@@ -34,7 +40,7 @@ class DirectAnalyzer : public Analyzer{
 public:
     
 //    DirectAnalyzer(Pooler * p):Analyzer(p){};
-    void analyze(vector<Slice> & v);
+    void analyze(vector<Slice> * v,Pooler *p);
     void registerParams();
     ofParameter<int> x;
     ofParameter<int> y;
@@ -49,7 +55,7 @@ class AnalyzerH{
 public:
     
     void setup(SlicerH * sH);
-    void analyzeIt(string aname,string sname);
+    void analyzeIt();
     void registerParams();
     Analyzer * get(string n);
     SlicerH * sH;
@@ -57,7 +63,10 @@ public:
     
     vector<Analyzer*> analyzers;
     
-    vector<Slice> * curslice;
+    
+    Analyzer * curAnalyzer;
+    
+    vector<Slice> * curSlice;
 };
 
 

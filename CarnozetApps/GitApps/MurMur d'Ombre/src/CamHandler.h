@@ -38,10 +38,11 @@ public:
     
     ofParameter<float> distance;
     ofParameter<ofVec3f> lookAt;
-    ofParameter<ofVec3f> ypr;
+    ofParameter<ofVec3f> ypr,orientation;
     ofParameter<ofVec3f> lookypr;
     ofParameter<bool> isLooking;
-    ofVec3f curypr;
+    
+    ofVec3f curypr,curOrientation;
     ofVec3f curlookypr;
     
     ofParameter<float> alpha;

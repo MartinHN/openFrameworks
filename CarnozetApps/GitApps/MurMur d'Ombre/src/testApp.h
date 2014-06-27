@@ -13,7 +13,7 @@
 
 //#define blobcomp
 
-//#define syphonout
+#define syphonout
 
 //#define isVisu
 
@@ -86,6 +86,9 @@ public:
 #ifdef syphon  
     ofxSyphonClient blobClient;
 #endif
+#ifdef syphonout
+    ofxSyphonServer syphonOut;
+#endif
     pingPongBuffer finalRender;
 
 #if defined testvid || localcamera
@@ -147,6 +150,7 @@ public:
     ofParameter<float> brightness2,saturation2,contrast2;
     ofParameter<string> saveName;
     ofParameter<string> loadName;
+
 
     ofParameter<bool> isGloom;
     ofParameter<int> bloomsize,pipeAlphablur;

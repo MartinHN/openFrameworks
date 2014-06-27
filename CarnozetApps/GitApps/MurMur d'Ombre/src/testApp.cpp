@@ -4,7 +4,7 @@
 
 //--------------------------------------------------------------
 void testApp::setup(){
-    //    ofSetDataPathRoot("../Resources/data/");
+        ofSetDataPathRoot("../Resources/data/");
     
 #ifndef GUIMODE
     
@@ -124,7 +124,8 @@ void testApp::setup(){
     MYPARAM(pipeAlphablur, 255,0,255);
     MYPARAM(hidePipe,false,false,true);
     MYPARAM(pipeMask,false,false,true);
-    MYPARAM(cropScreen,ofVec4f(0,0.0984,0,0),ofVec4f(0),ofVec4f(0.3))
+    MYPARAM(cropScreen,ofVec4f(0,0,0,0),ofVec4f(0),ofVec4f(0.3))
+
     cropScreen.setSerializable(false);
     
     
@@ -176,7 +177,9 @@ void testApp::setup(){
     bH.setupData(&blurX,&blurY);
     sH.setupData();
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
-    
+#ifdef syphonout
+    syphonOut.setName("Murmur");
+#endif
 #endif
     
 #ifdef GUIMODE
@@ -186,6 +189,8 @@ void testApp::setup(){
     
     
 #endif
+    
+
     
 }
 
@@ -408,7 +413,7 @@ void testApp::draw(){
         
     }
     
-    
+
     
     ofSetColor(255);
     
@@ -479,7 +484,9 @@ void testApp::draw(){
         //        ofDrawBitmapString(" www.facebook.com/AssoUnDesSens",500,40);
     }
     //    cout << ofGetFrameNum()<< endl;
-    
+#ifdef syphonout
+    syphonOut.publishScreen();
+#endif
 #endif
     
     

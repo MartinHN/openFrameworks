@@ -703,6 +703,7 @@
 		F222D98118A52F2200450D5F /* blurYa.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = blurYa.frag; sourceTree = "<group>"; };
 		F22359F317C15D2800895AA8 /* Ruban.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Ruban.cpp; sourceTree = "<group>"; };
 		F22359F417C15D2800895AA8 /* Ruban.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Ruban.h; sourceTree = "<group>"; };
+		F22C31E2195DCD4000482429 /* border.frag */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = border.frag; sourceTree = "<group>"; };
 		F242ACAD18A05DAC0091E2EF /* boule2gomme.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = boule2gomme.cpp; sourceTree = "<group>"; };
 		F242ACAF18A05DC00091E2EF /* boule2gomme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = boule2gomme.h; sourceTree = "<group>"; };
 		F25C29E318ABF6E200A3AFE2 /* CamHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CamHandler.cpp; sourceTree = "<group>"; };
@@ -1586,6 +1587,7 @@
 		F2C0B54C18A7DB430056A36B /* Forces */ = {
 			isa = PBXGroup;
 			children = (
+				F22C31E2195DCD4000482429 /* border.frag */,
 				6F1EEA6D18A95D6C00608125 /* fieldForce.frag */,
 				6F4915F718AE3171001079F3 /* smoothyGrav.frag */,
 				6F1EEA6918A94F3300608125 /* globalForce.frag */,

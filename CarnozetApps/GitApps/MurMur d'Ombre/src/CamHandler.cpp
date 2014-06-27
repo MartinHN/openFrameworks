@@ -29,12 +29,14 @@ void CamHandler::setup(int * scrwin,int * scrhin,int* zdepthin){
     MYPARAM(alpha,1.f,0.f,1.f);
     MYPARAM(distance,1.f,0.f,2.f);
     MYPARAM(ypr,ofVec3f(0),ofVec3f(0,-90,0),ofVec3f(180,90,360));
+    MYPARAM(orientation,ofVec3f(0),ofVec3f(0,-90,0),ofVec3f(180,90,360));
     MYPARAM(lookAt,ofVec3f(0.5,0.5,0.5),ofVec3f(0),ofVec3f(1));
     MYPARAM(lookypr,ofVec3f(0),ofVec3f(0,-90,0),ofVec3f(180,90,360));
     MYPARAM(isLooking,false,false,true);
 
     curdist = distance;
     curypr = ypr;
+    curOrientation = orientation;
 }
 
 void CamHandler::updateScreenSize(int w, int h){
@@ -46,7 +48,7 @@ void CamHandler::updateScreenSize(int w, int h){
 void CamHandler::begin(){
     curdist = distance*1.0*alpha+curdist*(1.0-alpha);
     curypr = ypr.get() * alpha+ curypr*(1-alpha);
-    
+    curOrientation = orientation.get() * alpha+ curOrientation*(1-alpha);
 
     if(isLooking){
             camera.orbit(0,0, (*zdepth/2.0),ofVec3f(*scrw,*scrh,*zdepth)/2);
@@ -71,6 +73,10 @@ void CamHandler::begin(){
     else{
             camera.orbit(curypr.x,curypr.y,curdist * (*zdepth/2.0),ofVec3f(*scrw,*scrh,*zdepth)/2);
          camera.rotate(curypr.z,camera.getLookAtDir());
+        
+        camera.rotate(curOrientation.x, ofVec3f(1,0,0));
+        camera.rotate(curOrientation.y, ofVec3f(0,1,0));
+        camera.rotate(curOrientation.z, ofVec3f(0,0,1));
     }
     
    

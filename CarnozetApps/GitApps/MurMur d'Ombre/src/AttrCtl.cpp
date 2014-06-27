@@ -20,6 +20,13 @@ AttrCtl::AttrCtl(){
 }
 
 void AttrCtl::update(){
+
+        vector <ofPoint> extAttr;
+    
+        extAttr.push_back(extAttractor);
+    
+        addPoints(extAttr,extAttractorFamilly);
+
     smooth();
     staticpoints();
     timedPoints();
@@ -38,6 +45,9 @@ void AttrCtl::registerParam(){
     MYPARAM(zonefamilly1,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
     MYPARAM(zonefamilly2,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
     MYPARAM(zonefamilly3,ofVec4f(0,0,1,1),ofVec4f(0),ofVec4f(1));
+    MYPARAM(extAttractor,ofVec3f(0),ofVec3f(0,0,-0.5),ofVec3f(1,1,0.5));
+    MYPARAM(extAttractorFamilly,-1,-1,3);
+    
 }
 
 
@@ -77,7 +87,10 @@ void AttrCtl::addPoints(vector<ofPoint> curcentroids,int type){
                 
     }
 
-
+    if(type<0){
+        destA.clear();
+        lastA.clear();
+    }
     
 }
 

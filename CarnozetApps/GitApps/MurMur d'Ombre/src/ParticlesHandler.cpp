@@ -212,6 +212,9 @@ void Particles::setup(){
 
 
     
+
+    
+    
     
 
     
@@ -415,7 +418,7 @@ if(!noReset){
     
     // Load this information in to the FBO´s texture
     velPingPong.allocate(textureRes, textureRes,GL_RGB32F);
-    origins.allocate(textureRes, textureRes,GL_RGB32F);
+    origins.allocate(textureRes, textureRes,GL_RGB);
     
     
     // 1. Making arrays of float pixels with position information
@@ -536,11 +539,11 @@ void Particles::changeOrigins(int &type){
 
             int count=0;
             pos = new float[curnumpart*3];
-            for (int z = 0; z < textureRes3; z++){
-                
+            
+                for (int z = 0; z < textureRes3; z++){
             for (int x = 0; x < textureRes3; x++){
                 for (int y = 0; y < textureRes3; y++){
-                    
+                   
                     
                     int i = textureRes3 * textureRes3* z + textureRes3 * y + x;
                     
@@ -558,40 +561,40 @@ void Particles::changeOrigins(int &type){
         case 2:
         {
             
-            pos = new float[numParticles*3];
-            for (int x = 0; x < textureRes; x++){
-                for (int y = 0; y < textureRes; y++){
-                    int i = textureRes * y + x;
-                    ofPoint p(x*1.0/textureRes,y*1.0/(textureRes),0.5);
-                    dad->sH->mapN2S(p,1);
-                    pos[i*3 + 0] = 0;//p.x;
-                    pos[i*3 + 1] = 0;//p.y;
-                    pos[i*3 + 2] = 0;//0.5;
-                }
-            }
-            break;
-//            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
-//            numParticles = vert.size();
-//            textureRes = sqrt((float)numParticles);
-//            numParticles = textureRes*textureRes;
 //            pos = new float[numParticles*3];
 //            for (int x = 0; x < textureRes; x++){
 //                for (int y = 0; y < textureRes; y++){
-//                    int i =  x + textureRes * y;
-//                    
-//                    if(i<vert.size()){
-//                    pos[i*3 + 0] = vert[i].x;
-//                    pos[i*3 + 1] = vert[i].y;
-//                    pos[i*3 + 2] = vert[i].z +1;
-//                    }
-//                    else {
-//                        pos[i*3 + 0] = 0;
-//                        pos[i*3 + 1] = 0;
-//                        pos[i*3 + 2] = 0;
-//                    }
+//                    int i = textureRes * y + x;
+//                    ofPoint p(x*1.0/textureRes,y*1.0/(textureRes),0.5);
+//                    dad->sH->mapN2S(p,1);
+//                    pos[i*3 + 0] = 0;//p.x;
+//                    pos[i*3 + 1] = 0;//p.y;
+//                    pos[i*3 + 2] = 0;//0.5;
 //                }
 //            }
 //            break;
+            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
+            numParticles = vert.size();
+            textureRes = sqrt((float)numParticles);
+            numParticles = textureRes*textureRes;
+            pos = new float[numParticles*3];
+            for (int x = 0; x < textureRes; x++){
+                for (int y = 0; y < textureRes; y++){
+                    int i =  x + textureRes * y;
+                    
+                    if(i<vert.size()){
+                    pos[i*3 + 0] = vert[i].x;
+                    pos[i*3 + 1] = vert[i].y;
+                    pos[i*3 + 2] = vert[i].z +1;
+                    }
+                    else {
+                        pos[i*3 + 0] = 0;
+                        pos[i*3 + 1] = 0;
+                        pos[i*3 + 2] = 0;
+                    }
+                }
+            }
+            break;
         }
     
 #endif

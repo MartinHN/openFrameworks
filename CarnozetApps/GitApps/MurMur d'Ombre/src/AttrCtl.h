@@ -56,10 +56,12 @@ class AttrCtl{
     ofParameter<ofVec4f> zonefamilly3;
     ofParameter<ofVec4f> zonefamilly1;
     ofParameter<ofVec4f> zonefamilly2;
-     vector<ofRectangle> zones;
+    vector<ofRectangle> zones;
     ofParameter<int> attrmirrorx;
     ofParameter<int> attrmirrory;
     ofParameter<int> attrmirrorz;
     ofParameter<bool> isAttr,invx,invy;
+    ofParameter<ofVec3f> extAttractor;
+    ofParameter<int> extAttractorFamilly;
 
 };

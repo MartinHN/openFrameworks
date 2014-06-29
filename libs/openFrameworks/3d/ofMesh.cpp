@@ -1531,8 +1531,8 @@ ofMesh ofMesh::plane(float width, float height, int columns, int rows, ofPrimiti
             texcoord.x = ((float)ix/((float)columns-1.f));
             texcoord.y = ((float)iy/((float)rows-1.f));
             
-            vert.x = texcoord.x * width - halfW;
-            vert.y = texcoord.y * height - halfH;
+            vert.x = texcoord.x * width;// - halfW;
+            vert.y = texcoord.y * height;// - halfH;
             
             mesh.addVertex(vert);
             mesh.addTexCoord(texcoord);

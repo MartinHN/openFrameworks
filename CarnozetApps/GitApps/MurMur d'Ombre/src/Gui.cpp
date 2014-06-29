@@ -28,10 +28,10 @@ void Gui::load(ofParameterGroup & pgtmp){
     guiParam.back()->setup(pgtmp.getGroup("attrCtl"),pgtmp.getGroup("attrCtl").getName(),(baseC)*PARAMW);
 //    guiParam.back()->minimizeAll();
     
-    h += guiParam.back()->getHeight() + 10;
-    baseC++;
-    guiParam.push_back(new ofxPanel());
-    guiParam.back()->setup(pgtmp.getGroup("blobsettings"),pgtmp.getGroup("blobsettings").getName(),(baseC)*PARAMW);
+//    h += guiParam.back()->getHeight() + 10;
+//    baseC++;
+//    guiParam.push_back(new ofxPanel());
+//    guiParam.back()->setup(pgtmp.getGroup("blobsettings"),pgtmp.getGroup("blobsettings").getName(),(baseC)*PARAMW);
 //    guiParam.back()->minimizeAll();
     
     h += guiParam.back()->getHeight() + 10;

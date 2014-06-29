@@ -47,7 +47,7 @@ void main(void){
             distbuf=pos-poso;
             linbuf=distbuf;
             normbuf = length(distbuf);
-            if(normbuf<netmax){
+            if(normbuf>0 && normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
             }
         }
@@ -55,7 +55,7 @@ void main(void){
         distbuf=pos-opos;
         normbuf = length(distbuf);
         
-        if(normbuf<netmax){
+        if(normbuf>0 && normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
 //            if(st.y<resolution-1&&length(distbuf)<netmax){
 //                vel-=z*(distbuf+linbuf);

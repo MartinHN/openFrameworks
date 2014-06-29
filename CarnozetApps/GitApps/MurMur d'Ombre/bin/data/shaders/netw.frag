@@ -48,7 +48,7 @@ void main(void){
             distbuf=pos- texture2DRect( posData , st+vec2(i,0)).xyz;
             linbuf=distbuf;
             normbuf = length(distbuf);
-            if(normbuf<netmax ){
+            if(normbuf>0 &&normbuf<netmax ){
             vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
             }
         }
@@ -56,7 +56,7 @@ void main(void){
         distbuf=pos-texture2DRect( posData , st+vec2(-i,0)).xyz;
         normbuf = length(distbuf);
         
-        if(normbuf<netmax){
+        if(normbuf>0 && normbuf<netmax){
             vel-=normalize(distbuf)*(normbuf-i*l0norm)*k;
 //            if(st.y<resolution-i){
 //               if(length(distbuf)<netmax){

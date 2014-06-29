@@ -83,8 +83,8 @@ void Particles::setupData(){
     origintype.addListener(this,&Particles::changeOrigins);
     gradNum.addListener(this,&Particles::changeGrad);
     numParticles.addListener(this,&Particles::changeNum);
-    
-    initFbo();
+    numParticles=100000;
+//    initFbo();
     
     updateRender.load("shaders/render.vert","shaders/render.frag");
     updatePos.load("","shaders/posUpdate.frag");
@@ -128,6 +128,7 @@ void Particles::setup(){
 
     
     MYPARAM(numParticles , 100000,100,1000000);
+    MYPARAM(noReset,false,false,true);
     lastnumParticles = numParticles;
     
     //Appearence
@@ -138,10 +139,11 @@ void Particles::setup(){
     MYPARAM(gradNum,0,0,20);
     MYPARAM(mingrad,0.f,-1.f,1.f);
     MYPARAM(maxgrad,1,-1.f,3.f);
-    MYPARAM(map2blob,true,false,true);
-
+    MYPARAM(renderType,0,0,2);
+    
 #ifdef PMOD
     MYPARAM(origintype,1,0,2);
+    
 
 #endif
     
@@ -219,8 +221,7 @@ void Particles::setup(){
     
     
 
-    
-    
+    vbo.setMode(OF_PRIMITIVE_POINTS);
     
 
     
@@ -272,7 +273,7 @@ void Particles::update(int w, int h){
         else if(forces[i]->isActive ){
             int j = 0;
             vector<ofPoint> curattr = dad->attr->getType(forces[i]->attrFamilly,1,1,forces[i]->attrZone);
-            if(map2blob){
+//            if(map2blob){
 //                drawBlob * vvv = (drawBlob *)dad->get("drawBlob");
 //                for(int i = 0 ; i< curattr.size();i++){
 //                    if(vvv->invertx)curattr[i].x = 1-curattr[i].x;
@@ -283,7 +284,7 @@ void Particles::update(int w, int h){
 //            dad->sH.mapN2S(curattr,vvv->screenN);
                 
                 
-            }
+//            }
             if((forces[i]->attrFamilly>-2?curattr.size()>0:1)){
                 do{
                     velPingPong.dst->begin();
@@ -379,16 +380,17 @@ void Particles::draw(int w, int h){
    
     
     glPointSize(particleSize);
-    glBegin( GL_POINTS ); 
-    for(int x = 0; x < textureRes; x++){
-        for(int y = 0; y < textureRes; y++){
-            
-            glVertex3d(x,y,0);
-            
-        }
-    }
-    
-    glEnd();
+
+    vbo.draw((ofPolyRenderMode)renderType.get());
+//    glBegin( GL_POINTS );
+//    for(int x = 0; x < textureRes; x++){
+//        for(int y = 0; y < textureRes; y++){
+//            
+//            glVertex3d(x,y,0);
+//            
+//        }
+//    }
+//    glEnd();
 
     
     
@@ -406,27 +408,28 @@ void Particles::initFbo(){
 
 
 void Particles::initFbo(int w,int h){
+
+
+
     
     // Seting the textures where the information ( position and velocity ) will be
 //    textureResx*textureResy = numParticles;
 //    textureResx/textureResy = scrw/scrh;
  
-    textureRes2.x = (int)sqrt((float)numParticles* w/ h);
-    textureRes2.y = (int)numParticles/textureRes2.x;
-    
-    textureRes = (int)sqrt((float)numParticles);
-    numParticles = textureRes* textureRes;
-    
-    // Load this information in to the FBO´s texture
-if(!noReset){
-        posPingPong.allocate(textureRes, textureRes,GL_RGB32F);
 
     
+
+    
+    
+if(!noReset){
     // Load this information in to the FBO´s texture
-    velPingPong.allocate(textureRes, textureRes,GL_RGB32F);
-    origins.allocate(textureRes, textureRes,GL_RGB);
+    
+    posPingPong.allocate(textureRes, textureRes,GL_RGB32F_ARB);
     
     
+    // Load this information in to the FBO´s texture
+    velPingPong.allocate(textureRes, textureRes,GL_RGB32F_ARB);
+    // origins.allocate(textureRes, textureRes,GL_RGBA);
     // 1. Making arrays of float pixels with position information
     float * pos = new float[numParticles*3];
     for (int x = 0; x < textureRes; x++){
@@ -444,7 +447,8 @@ if(!noReset){
     posPingPong.dst->getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
        
     
-    origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
+    //origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGBA);
+    
     
     delete [] pos;    // Delete the array
     
@@ -464,17 +468,37 @@ if(!noReset){
     velPingPong.dst->getTextureReference().loadData(vel, textureRes, textureRes, GL_RGB);
     delete [] vel; // Delete the array
     
+    
+    
+    vbo = vbo.plane(textureRes,textureRes,textureRes,textureRes);
+
+    int oritmptyp = origintype.get();
+        changeOrigins(oritmptyp);
+
 
     }
     else{
+//        ofDisableAlphaBlending();
+//            posPingPong.src->allocate(textureRes, textureRes,GL_RGB32F_ARB);
+//            posPingPong.src->begin();
+//            ofRect(0,0,textureRes,textureRes);
+//            posPingPong.dst->draw(0,0);
+//            posPingPong.src->end();
+//            posPingPong.dst->allocate(textureRes,textureRes,GL_RGB32F_ARB);
+
+//            velPingPong.src->allocate(textureRes, textureRes,GL_RGB);
+//            velPingPong.src->begin();
+//            velPingPong.dst->draw(0,0);
+//            velPingPong.src->end();
+//            velPingPong.dst->allocate(textureRes,textureRes,GL_RGB);
+
         
-            posPingPong.src->allocate(textureRes, textureRes,GL_RGB32F);
-            posPingPong.src->begin();
-            posPingPong.dst->draw(0,0);
-            posPingPong.src->end();
-            posPingPong.dst->allocate(textureRes,textureRes,GL_RGB32F);
-       
+//        ofEnableAlphaBlending();
     }
+    
+
+
+
     
 }
 
@@ -497,10 +521,10 @@ void Particles::registerParam(){
 }
 
 void Particles::changeNum(int & num){
-    if(num!=lastnumParticles){
-        initFbo();
-        lastnumParticles = num;
-    }
+   
+    textureRes = (int)sqrt((float)num);
+    numParticles = textureRes* textureRes;
+    initFbo();
 }
 
 
@@ -544,7 +568,7 @@ void Particles::changeOrigins(int &type){
             textureRes = sqrt((float)curnumpart);
 
             int count=0;
-            pos = new float[curnumpart*3];
+            pos = new float[numParticles*3];
             
                 for (int z = 0; z < textureRes3; z++){
             for (int x = 0; x < textureRes3; x++){
@@ -610,11 +634,14 @@ void Particles::changeOrigins(int &type){
             break;
     }
     if(hasChanged){
-     origins.allocate(textureRes, textureRes,GL_RGB32F);
+    origins.allocate(textureRes, textureRes,GL_RGB32F_ARB);
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
+    initFbo();
     }
+    
     noReset = false;
     delete [] pos;
+    
 }
 
 

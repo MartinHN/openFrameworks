@@ -15,6 +15,9 @@
 
 #define syphonout
 
+#ifndef GUIMODE
+//#define syphon
+#endif
 //#define isVisu
 
 
@@ -133,8 +136,7 @@ public:
     ofShader gloom;    
 
     bool isFullScreen;
-    
- 
+     
 #endif
 
     

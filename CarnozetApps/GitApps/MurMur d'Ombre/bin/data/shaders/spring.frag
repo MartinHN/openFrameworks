@@ -38,12 +38,13 @@ void main(void){
     float normbuf = length(distbuf);
     
     //    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);
+    if(normbuf>0){
     if(mode==0 || normbuf<l0){
         vec3 zspring = distnormed * dot(vel,distnormed);
         vel+=distnormed*(normbuf-l0)*k - zspring*z - (vel-zspring)*z2;
 
     }
-
+    }
     
     
 

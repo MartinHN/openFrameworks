@@ -164,7 +164,9 @@ bool ofxSlider<Type>::setValue(float mx, float my, bool bCheck){
 			bGuiActive = false;
 		}
 	}
-	if( bGuiActive ){
+	if( bGuiActive ){//&& value != ofMap(mx, b.x, b.x + b.width, value.getMin(), value.getMax(), true) ){
+        
+        
 		value = ofMap(mx, b.x, b.x + b.width, value.getMin(), value.getMax(), true);
 		return true;
 	}

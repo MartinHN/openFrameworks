@@ -8,15 +8,9 @@
 #pragma once
 //#ifndef VISU_HANDLER
 //#define VISU_HANDLER
-#ifndef GUIMODE
-#define syphon
-#endif
 
 
-#ifdef  syphon
-//#include "ofxSyphon.h"
-//#include "ofxOpenCv.h"
-#endif
+
 #include "ofMain.h"
 
 

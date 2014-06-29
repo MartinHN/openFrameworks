@@ -77,12 +77,13 @@ void testApp::setup(){
     
     
     
-    attrctl = AttrCtl();  
+    attrctl = AttrCtl();
 
-    
 #endif  
     sH.setup(&scrw,&scrh,zdepth);
+#ifdef syphon
     bH.setup(inw,inh,&sH);
+#endif
     visuHandler.setup(&attrctl,&bH,inw,inh,zdepth,&scrw,&scrh,&sH);
     
 #ifndef GUIMODE 
@@ -138,14 +139,14 @@ void testApp::setup(){
     
     visuHandler.addVisu(new Particles(&visuHandler));
     visuHandler.addVisu(new metaBalls(&visuHandler));
-    visuHandler.addVisu(new AutoTree(&visuHandler));
+    //visuHandler.addVisu(new AutoTree(&visuHandler));
     
-    visuHandler.addVisu(new BallManager(&visuHandler));
+    //visuHandler.addVisu(new BallManager(&visuHandler));
     visuHandler.addVisu(new drawBlob(&visuHandler));
     
     visuHandler.addVisu(new VideoPlayer(&visuHandler));
     visuHandler.addVisu(new boule2gomme(&visuHandler));
-    visuHandler.addVisu(new Photo(&visuHandler));
+    //visuHandler.addVisu(new Photo(&visuHandler));
     visuHandler.addVisu(new ColorRuban(&visuHandler));
     visuHandler.addVisu(new Liner(&visuHandler));
     
@@ -157,8 +158,9 @@ void testApp::setup(){
     
     
     globalParam.add(settings);
-    
+#ifdef syphon
     globalParam.add(bH.settings);
+#endif
     globalParam.add(attrctl.settings);
     globalParam.add(sH.screensCtl);
     globalParam.add(sH.screensParam);
@@ -174,7 +176,9 @@ void testApp::setup(){
 
 #else
     visuHandler.setupData();
+#ifdef syphon
     bH.setupData(&blurX,&blurY);
+#endif
     sH.setupData();
     paramSync.setup(globalParam,VISU_OSC_OUT,"localhost",VISU_OSC_IN);
 #ifdef syphonout
@@ -183,7 +187,7 @@ void testApp::setup(){
 #endif
     
 #ifdef GUIMODE
-    ofSetFrameRate(12);
+    ofSetFrameRate(20);
 
     gui.load(globalParam);
     
@@ -210,13 +214,12 @@ void testApp::update(){
     paramSync.update();
     
 #ifndef GUIMODE
+#ifdef syphon
     bH.update();
-    
-    
-    //    attrctl.clearPoints();
-    
     attrctl.addPoints(bH.centroids, 1);
     attrctl.addPoints(bH.arms, 2);
+#endif    
+    
     
     attrctl.update();
     
@@ -564,7 +567,9 @@ void testApp::keyPressed(int key){
         case 'x':
             if( visuHandler.get("particles")){
                 Particles * ptmp =(Particles *)visuHandler.get("particles") ;
+                ptmp->noReset=false;
                 ptmp->initFbo();
+                ptmp->noReset=true;
             };
             
         default :

@@ -66,6 +66,7 @@ public:
     
     void registerParam();
     void changeGrad(int & i);
+    ofVboMesh	vbo;
 
 #ifdef PFBO
     ofFbo finaldraw;
@@ -107,7 +108,7 @@ public:
     ofParameter<float>      mingrad;
     ofParameter<float>      maxgrad;
     ofParameter<int>        gradNum;
-    ofParameter<bool> map2blob;
+    ofParameter<int>        renderType;
     
     
     int lastnumParticles;
@@ -118,7 +119,7 @@ public:
     int textureRes3;
     
     ofImage gradient;
-    bool noReset;
+    ofParameter<bool> noReset;
     
 
     

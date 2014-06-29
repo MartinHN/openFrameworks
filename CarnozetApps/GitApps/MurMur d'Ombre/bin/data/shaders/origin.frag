@@ -36,12 +36,14 @@ void main(void){
     
     
     vec3 velbuf = (ori-pos)*k;
+    if(length(velbuf)>0){
     vec3 zd = normalize(velbuf)*dot(vel,normalize(velbuf));
     vel+=velbuf-zd*z-(vel-zd)*z2;
-    
+    }
     if(freeze>0&&length(ori-pos)<freeze &&length(ori-pos)>freezemin ){
         vel*=damp;
     }
+    
 //     vel.x+= 0.1;
 //    if(vel.x>1.0){
 //     vel.x=0;   

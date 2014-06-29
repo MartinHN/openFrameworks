@@ -25,7 +25,7 @@ void AttrCtl::update(){
     
         extAttr.push_back(extAttractor);
     
-        addPoints(extAttr,extAttractorFamilly);
+        if(extAttractor.get().x>0)addPoints(extAttr,extAttractorFamilly);
 
     smooth();
     staticpoints();

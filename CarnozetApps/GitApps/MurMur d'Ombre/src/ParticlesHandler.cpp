@@ -162,6 +162,7 @@ void Particles::setup(){
     forces.push_back(new Force("origin"));
     forces[forces.size()-1]->addParameter("k",.10f,0.f,.25f);
     forces[forces.size()-1]->addParameter("z",.01f,0.f,.5f);
+    forces[forces.size()-1]->addParameter("z2",.01f,0.f,.5f);
     forces[forces.size()-1]->addParameter("freeze",0.f,0.f,.80f);
     forces[forces.size()-1]->addParameter("freezemin",0.f,0.f,.30f);
     forces[forces.size()-1]->addParameter("damp",0.9f,0.5f,1.0f);
@@ -191,6 +192,7 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("k",.030f,-.2f,1.f);
     forces[forces.size()-1]->addParameter("l0",.010f,0.f,.1f);
     forces[forces.size()-1]->addParameter("z",.0f,-.5f,.5f);    
+    forces[forces.size()-1]->addParameter("z2",.0f,-.5f,.5f);
     forces[forces.size()-1]->addParameter("mode",1,0,1);
     
     forces.push_back(new Force("fieldForce"));
@@ -203,6 +205,10 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("fin",1.f,0.5f,1.3f);
     forces[forces.size()-1]->addParameter("fout",1.f,0.5f,1.3f);
     
+    forces.push_back(new Force("border"));
+    forces[forces.size()-1]->addParameter("r",ofVec3f(0),ofVec3f(0),ofVec3f(0.5));
+    forces[forces.size()-1]->addParameter("damp",1.f,0.5f,1.2f);
+    forces[forces.size()-1]->addParameter("vmin",ofVec3f(0),ofVec3f(0),ofVec3f(0.5));    
     
     forces.push_back(new Force("globalForce"));
     forces[forces.size()-1]->addParameter("f",1.f,0.8f,1.f);
@@ -210,7 +216,7 @@ void Particles::setup(){
     forces[forces.size()-1]->addParameter("vmax",1.0f,0.f,1.f);
     forces[forces.size()-1]->addParameter("vmin",.0f,0.f,1.f);
 
-
+    
     
 
     

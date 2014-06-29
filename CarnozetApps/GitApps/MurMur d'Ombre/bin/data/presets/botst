@@ -46,7 +46,7 @@
 	</blobsettings>
 	<attrCtl>
 		<isAttr>1</isAttr>
-		<zoffset>0.390244</zoffset>
+		<zoffset>0.512195</zoffset>
 		<invx>0</invx>
 		<invy>0</invy>
 		<attrmirrorx>4</attrmirrorx>
@@ -68,7 +68,7 @@
 	</screensCtl>
 	<Visu>
 		<background>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
@@ -90,10 +90,10 @@
 			<recopy>1</recopy>
 			<isMapping>0</isMapping>
 			<isMasking>0</isMasking>
-			<timeStep>1.17073</timeStep>
-			<numParticles>175692</numParticles>
-			<particleSize>4.82927</particleSize>
-			<alphaparticle>0.253659</alphaparticle>
+			<timeStep>23.8537</timeStep>
+			<numParticles>448835</numParticles>
+			<particleSize>5.70732</particleSize>
+			<alphaparticle>0.195122</alphaparticle>
 			<partcolor>0, 0, 0</partcolor>
 			<gradtype>0</gradtype>
 			<gradNum>0</gradNum>
@@ -102,27 +102,26 @@
 			<map2blob>1</map2blob>
 			<origintype>0</origintype>
 			<netw>
-				<isActive>0</isActive>
-				<k>0.0198108</k>
-				<l0>1.28422</l0>
-				<z>1.03061</z>
-				<size>4</size>
+				<isActive>1</isActive>
+				<k>0.0148332</k>
+				<l0>3.07616</l0>
+				<z>0.0487804</z>
+				<size>6</size>
 			</netw>
 			<neth>
 				<isActive>0</isActive>
-				<k>0</k>
-				<l0>0.388252</l0>
-				<z>0.02887</z>
-				<size>6</size>
+				<k>0.0198108</k>
+				<l0>0.487804</l0>
+				<z>0.989796</z>
+				<size>4</size>
 			</neth>
 			<origin>
 				<isActive>1</isActive>
-				<k>0.0148084</k>
-				<z>0</z>
-				<z2>0.01</z2>
-				<freeze>0</freeze>
-				<freezemin>0</freezemin>
-				<damp>0.756098</damp>
+				<k>0.00111995</k>
+				<z>0.101792</z>
+				<freeze>0.525236</freeze>
+				<freezemin>0.0327028</freezemin>
+				<damp>0.997511</damp>
 			</origin>
 			<rotation>
 				<isActive>0</isActive>
@@ -158,10 +157,9 @@
 				<attrFamilly>0</attrFamilly>
 				<attrZone>0</attrZone>
 				<k>0.0323544</k>
-				<l0>0.00940766</l0>
-				<z>0</z>
-				<z2>0.380538</z2>
-				<mode>0</mode>
+				<l0>0.0776008</l0>
+				<z>0.280986</z>
+				<mode>1</mode>
 			</spring>
 			<fieldForce>
 				<isActive>0</isActive>
@@ -174,17 +172,11 @@
 				<fin>1</fin>
 				<fout>1</fout>
 			</fieldForce>
-			<border>
-				<isActive>1</isActive>
-				<r>0.139378, 0.263818, 0.395877</r>
-				<damp>1.10244</damp>
-				<vmin>0.0301754, 0.0276358, 0</vmin>
-			</border>
 			<globalForce>
-				<isActive>0</isActive>
-				<f>0.999795</f>
+				<isActive>1</isActive>
+				<f>0.996018</f>
 				<fmin>1</fmin>
-				<vmax>0.168741</vmax>
+				<vmax>1</vmax>
 				<vmin>0</vmin>
 			</globalForce>
 		</particles>
@@ -227,7 +219,7 @@
 			<insideMode>0</insideMode>
 		</AutoTree>
 		<BallManager>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>
@@ -311,7 +303,7 @@
 			<isHidden>1</isHidden>
 		</ColorRuban>
 		<Liner>
-			<isActive>1</isActive>
+			<isActive>0</isActive>
 			<isPiping>0</isPiping>
 			<screenN>0</screenN>
 			<recopy>1</recopy>

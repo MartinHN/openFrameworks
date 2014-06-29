@@ -20,6 +20,7 @@ uniform vec3 attr;
 uniform float k;
 uniform float l0;
 uniform float z;
+uniform float z2;
 uniform int mode;
 
 
@@ -37,13 +38,12 @@ void main(void){
     float normbuf = length(distbuf);
     
     //    float normxy = sqrt(distbuf.x*distbuf.x+distbuf.y*distbuf.y);
-    if(mode==0){
-        vel+=distnormed*((normbuf-l0)*k - dot(vel,distnormed)*z);
+    if(mode==0 || normbuf<l0){
+        vec3 zspring = distnormed * dot(vel,distnormed);
+        vel+=distnormed*(normbuf-l0)*k - zspring*z - (vel-zspring)*z2;
 
     }
-    else if (normbuf<l0){
-     vel+=distnormed*((normbuf-l0)*k - dot(vel,distnormed)*z);
-    }
+
     
     
 

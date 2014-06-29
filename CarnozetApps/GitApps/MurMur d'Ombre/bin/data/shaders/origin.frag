@@ -20,6 +20,7 @@ uniform vec2  screen;
 
 uniform float k;
 uniform float z;
+uniform float z2;
 uniform float freeze;
 uniform float freezemin;
 uniform float damp;
@@ -35,8 +36,8 @@ void main(void){
     
     
     vec3 velbuf = (ori-pos)*k;
-    
-    vel+=velbuf-normalize(velbuf)*dot(vel,normalize(velbuf))*z;
+    vec3 zd = normalize(velbuf)*dot(vel,normalize(velbuf));
+    vel+=velbuf-zd*z-(vel-zd)*z2;
     
     if(freeze>0&&length(ori-pos)<freeze &&length(ori-pos)>freezemin ){
         vel*=damp;

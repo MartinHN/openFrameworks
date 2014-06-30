@@ -390,7 +390,7 @@ void Particles::initFbo(int w,int h){
     posPingPong.src->getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     posPingPong.dst->getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
        
-    origins.allocate(textureRes, textureRes,GL_RGB32F);
+    origins.algit pulllocate(textureRes, textureRes,GL_RGB32F);
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     
     delete [] pos;    // Delete the array

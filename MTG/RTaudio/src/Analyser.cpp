@@ -11,16 +11,23 @@
 
 
 
-void DirectAnalyzer::analyze(vector<Slice> &v){
+void DirectAnalyzer::analyze(vector<Slice> * v,Pooler * p){
 
-    int dim = v[0].origin->at(0).data.size();
-    for(vector<Slice>::iterator vi = v.begin() ; vi != v.end() ; ++vi){
+    
+    vector<string> ftn;
+    
+    for(vector<Slice>::iterator vi = v->begin() ; vi != v->end() ; ++vi){
         vi->curpos.set(0);
+        int id = vi->localid;
+        ftn = p->getAxesNames();
+        
         
         for(int i = vi->originIdx;i<vi->endIdx ; i++ ){
-            vi->curpos.x +=  vi->origin->at(i).data[x];
-            vi->curpos.y += dim>1?vi->origin->at(i).data[y] : 0;
-            vi->curpos.z +=  dim>2 ? vi->origin->at(i).data[z]:0;
+            
+            vi->curpos.x +=  p->at(id)->poolnd[ftn[feature1]][0].data[i];
+            vi->curpos.y +=  p->at(id)->poolnd[ftn[feature2]][0].data[i];
+            vi->curpos.z +=  p->at(id)->poolnd[ftn[feature3]][0].data[i];
+
             
         }
     }
@@ -31,9 +38,8 @@ void DirectAnalyzer::analyze(vector<Slice> &v){
 
 
 void DirectAnalyzer::registerParams(){
-    MYPARAM(x, 0, 0, 10);
-    MYPARAM(y, 1, 0, 10);
-    MYPARAM(z, 2, 0, 10);
+    Analyzer::registerParams();
+
     
     settings.setName("Direct");
     
@@ -61,21 +67,20 @@ Analyzer * AnalyzerH::get(string n){
 }
 
 
-void AnalyzerH::analyzeIt(string aname,string sname){
-    Analyzer * a = get(aname);
-    Slicer * s = sH->get(sname);
-    if(a==NULL){
-        ofLogWarning("analyserH : analyzer not found : "+aname);
+void AnalyzerH::analyzeIt(){
+
+    if(curAnalyzer==NULL){
+        ofLogWarning("analyserH : curanalyzer not found");
     }
-    else if(s==NULL){
-        ofLogWarning("analyserH : slicer not found : "+sname);
+    else if(curSlice==NULL){
+        ofLogWarning("analyserH : curslicer not found");
     }
     else{
-        if(s->slices.size()>0){
-    a->analyze(s->slices);
-    curslice = &s->slices;
+        if(curSlice->size()>0){
+    curAnalyzer->analyze(curSlice,sH->pool);
+    
         }
-        else ofLogWarning("analyzerH : analyzing empty slices");
+        else ofLogWarning("analyzerH : not analyzing (empty slices)");
     }
     
 }

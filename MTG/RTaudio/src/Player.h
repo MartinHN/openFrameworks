@@ -16,8 +16,7 @@
 class Player{
 public:
     
-    Player();
-    ~Player();
+    Player(int pid,string f);
     
     void play(float t,float til);
     void setup(){};
@@ -27,10 +26,8 @@ public:
     int pid;
  
     
-    vector<ofSoundPlayer> playerl;
-    
-private:
-    static int number;
+    vector<ofSoundPlayer *> playerl;
+
 };
 
 

@@ -24,9 +24,9 @@ class Slicer{
     
 public:
     
-    virtual void SliceIt(vector<frame> &d){};
+    virtual void SliceIt(vector<frame> *d){};
     virtual void registerParams(){};
-    virtual map<string,int> outputs(){};
+
     void clear();
     
     
@@ -42,7 +42,7 @@ class ThresholdSlicer : public Slicer{
 public:
 
 
-    void SliceIt(vector<frame> &d);
+    void SliceIt(vector<frame> * d);
     void registerParams();
     map<string, int> outputs();
     
@@ -58,9 +58,13 @@ public:
     void registerParams();
     Slicer * get(string s);
     vector<string> getSlicerNames();
-    void sliceIt(string slicer,string novelty);
+    void sliceIt();
     Pooler * pool;
     vector<Slicer * > slicers;
+    
+    Slicer * curSlicer;
+    vector<frame> * curNovelty;
+    
     
 };
 //class NoveltySlicer: public Slicer{

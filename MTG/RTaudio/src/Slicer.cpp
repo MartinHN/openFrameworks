@@ -28,23 +28,16 @@ void SlicerH::registerParams(){
     }
 }
 
-void SlicerH::sliceIt(string slicer,string novelty){
+void SlicerH::sliceIt(){
 
-    Slicer * s = get(slicer);
-    if(s==NULL){ofLogWarning("SlicerH : Slicer not found :" + slicer);}
-    
-    else{
             
-        s->clear();
+        curSlicer->clear();
     
     
             for (int i = 0 ; i< pool->globalPool.size() ; i++){
-                s->SliceIt(pool->globalPool[i].poolnd[novelty]);
+                curSlicer->SliceIt(curNovelty);
             }
 
-        
-    
-    }
 
 }
 
@@ -69,13 +62,13 @@ void Slicer::clear(){
 
 
 
-void ThresholdSlicer::SliceIt(vector<frame> &d){
-    
+void ThresholdSlicer::SliceIt(vector<frame> * din){
+    vector<frame> d = *din;
     bool isSlice = false;
     Slice tmps;
     tmps.tb = 0;
     tmps.te = 0;
-    tmps.origin = &d;
+    tmps.origin = din;
     tmps.localid = d[0].localid;
     tmps.tb = 0;
     int dimension = d[0].data.size();
@@ -105,16 +98,8 @@ void ThresholdSlicer::SliceIt(vector<frame> &d){
         curidx++;}
 }
 
-map<string, int> ThresholdSlicer::outputs(){
-
-    map<string, int> res;
-    
-    res["mean"] =1;
-    
-    return res;
-}
 
 void ThresholdSlicer::registerParams(){
-    MYPARAM(threshold,0.01,0,100);
+    MYPARAM(threshold,0.01,0,1);
     settings.setName("threshold");
 }

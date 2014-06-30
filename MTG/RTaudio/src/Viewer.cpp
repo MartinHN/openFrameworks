@@ -66,6 +66,8 @@ void Viewer::setupGui(){
     if(aH->sH->getSlicerNames().size()>0){
         guiconf->addDropDownList("SlicerNames",aH->sH->getSlicerNames());
     }
+    guiconf->addToggle("Recomp", false);
+    
    	ofAddListener(guiconf->newGUIEvent,this,&Viewer::guiEvent);
 
 }
@@ -73,16 +75,27 @@ void Viewer::setupGui(){
 void Viewer::registerParams(){
     MYPARAM(drawSlice,true,false,true);
     MYPARAM(autoZoom,false,false,true);
+    MYPARAM(viewMouse,true,false,true);
+    viewMouse.addListener(this,&Viewer::setViewMouse);
     MYPARAM(resetCam,true,false,true);
     autoZoom.addListener(this, &Viewer::autoScale);
     resetCam.addListener(this, &Viewer::resetView);
     MYPARAM(scale,ofVec3f(1),ofVec3f(0),ofVec3f(2));
     MYPARAM(center,ofVec3f(0),ofVec3f(-1),ofVec3f(1));
-    
+
     
     settings.setName("Viewer");
     
     
+}
+
+void Viewer::setViewMouse(bool & b){
+    if(b){
+        cam.enableMouseInput();
+    }
+    else{
+        cam.disableMouseInput();
+    }
 }
 
 void Viewer::resetView(bool & b){
@@ -103,9 +116,10 @@ void Viewer::updateAnalyzerGui(){
 
     vector<string> curselected = ((ofxUIDropDownList *)guiconf->getWidget("AnalyzerNames"))->getSelectedNames();
     if(curselected.size()>0){
+        aH->curAnalyzer = aH->get(curselected[0]);
         ofPoint pos = guia->getPosition();
         delete guia;
-        guia = new ofxPanel(aH->get(curselected[0])->settings);
+        guia = new ofxPanel(aH->curAnalyzer->settings);
         guia->setPosition(pos);
     }
     else{
@@ -118,10 +132,12 @@ void Viewer::updateSlicerGui(){
     
     vector<string> curselected = ((ofxUIDropDownList *)guiconf->getWidget("SlicerNames"))->getSelectedNames();
     if(curselected.size()>0){
+        aH->sH->curSlicer = aH->sH->get(curselected[0]);
         ofPoint pos = guis->getPosition();
         delete guis;
-        guis = new ofxPanel(aH->sH->get(curselected[0])->settings);
+        guis = new ofxPanel(aH->sH->curSlicer->settings);
         guis->setPosition(pos);
+        
     }
     else{
         ofLogWarning("no slicer Selected");
@@ -139,6 +155,10 @@ void Viewer::guiEvent(ofxUIEventArgs &e){
     }
     else if(name == "SlicerNames"){
         updateSlicerGui();
+    }
+    else if(name == "Recomp"){
+        aH->sH->sliceIt();
+        aH->analyzeIt();
     }
     
 
@@ -170,17 +190,18 @@ void Viewer::autoScale(bool & b){
     ofVec3f min(9999,99999,99999);
     ofVec3f max = -min;
 
-    if(aH->curslice!=NULL){
+    if(aH->curSlice
+       !=NULL){
         
-        for (int i = 0 ; i < aH->curslice->size() ; i++){
+        for (int i = 0 ; i < aH->curSlice->size() ; i++){
             
-            min.x = std::min(aH->curslice->at(i).curpos.x,min.x);
-            min.y = std::min(aH->curslice->at(i).curpos.y,min.y);
-            min.z = std::min(aH->curslice->at(i).curpos.z,min.z);
+            min.x = std::min(aH->curSlice->at(i).curpos.x,min.x);
+            min.y = std::min(aH->curSlice->at(i).curpos.y,min.y);
+            min.z = std::min(aH->curSlice->at(i).curpos.z,min.z);
             
-            max.x = std::max(aH->curslice->at(i).curpos.x,max.x);
-            max.y = std::max(aH->curslice->at(i).curpos.y,max.y);
-            max.z = std::max(aH->curslice->at(i).curpos.z,max.z);
+            max.x = std::max(aH->curSlice->at(i).curpos.x,max.x);
+            max.y = std::max(aH->curSlice->at(i).curpos.y,max.y);
+            max.z = std::max(aH->curSlice->at(i).curpos.z,max.z);
 
         }
 
@@ -208,17 +229,16 @@ void Viewer::update(){
         isCacheDirty = false;
     }
     updateHoverSlice();
-
-
+    
 }
 
 void Viewer::updateHoverSlice(){
     ofVec2f mouse(ofGetMouseX(),ofGetMouseY());
     float nearestDistance = 999999;
     hoverIdx=-1;
-    for (int i = 0 ; i < aH->curslice->size() ; i++){
+    for (int i = 0 ; i < aH->curSlice->size() ; i++){
         //TODO:Cache it
-        ofVec3f pp( (center.get() + aH->curslice->at(i).curpos* scale )*viewR );
+        ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
         ofVec2f cur = cam.worldToScreen(pp);
         float distance = cur.distance(mouse);
 		if(distance<20 && distance < nearestDistance) {
@@ -230,7 +250,17 @@ void Viewer::updateHoverSlice(){
 }
 
 void Viewer::draw(){
+    if(displayFeatures){
+        vector<string> ft = aH->sH->pool->getAxesNames();
+        ofPoint anch(ofGetWidth()/3,20);
+        for (int i = 0 ; i < ft.size() ; i++){
+            ofDrawBitmapString(ofToString(i)+" "+ft[i],anch );
+            anch.y+=20;
+        }
+    }
     ofPushMatrix();
+    
+    
     guiconf->draw();
     
 //    ofTranslate(60,0);
@@ -245,7 +275,7 @@ void Viewer::draw(){
 
 
     cam.begin();
-    if(aH->curslice!=NULL){
+    if(aH->curSlice!=NULL){
         ofEnableAlphaBlending();
 
         ofPushMatrix();
@@ -258,11 +288,11 @@ void Viewer::draw(){
 
         ofPopMatrix();
         ofFill();
-        for (int i = 0 ; i < aH->curslice->size() ; i++){
+        for (int i = 0 ; i < aH->curSlice->size() ; i++){
        ofPushMatrix();
-            ofColor curcolor = colors[aH->curslice->at(i).localid%colors.size()];
+            ofColor curcolor = colors[aH->curSlice->at(i).localid%colors.size()];
        ofSetColor(curcolor,150);
-       ofVec3f pp( (center.get() + aH->curslice->at(i).curpos* scale )*viewR );
+       ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
        
        ofFill();
             float cscale = 1;
@@ -276,7 +306,14 @@ void Viewer::draw(){
        }
        ofTranslate(pp);
             ofSetRectMode(OF_RECTMODE_CENTER);
+            ofVec3f curvec;
+            float curangle;
+            ofQuaternion q = cam.getGlobalOrientation();
+            q.getRotate(curangle, curvec);
+            ofRotate(curangle,curvec.x,curvec.y,curvec.z);
+            
        ofRect(0,0,10*cscale,10*cscale);
+         
        ofPopMatrix();
    }
 }

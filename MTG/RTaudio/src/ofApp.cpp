@@ -16,12 +16,20 @@ void ofApp::setup(){
     aH.setup(&sH);
     pool.load("tst");
     view.setup(&aH);
-    sH.sliceIt("threshold", "envelope");
-    aH.analyzeIt("Direct", "threshold");
+    
+    
+    sH.curSlicer = sH.slicers[0];
+    sH.curNovelty = pool[0]->at("envelope");
+    sH.sliceIt();
+    
+    aH.curSlice = &sH.curSlicer->slices;
+    aH.curAnalyzer = aH.analyzers[0];
+    aH.analyzeIt();
     vector<string> files = pool.getFilePaths();
-    for (vector<string>::iterator it = files.begin();it!= files.end() ; ++it){
-        player.push_back(Player());
-        player.back().load(*it);
+    for (int i = 0 ; i < files.size() ; i++){
+        player.push_back(new Player(i,files[i]));
+
+        
     }
     
 //    player.load(json["filepath"][0].asString());
@@ -44,18 +52,26 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch (key) {
-        case 'r':
+        case 122:
+            view.cam.enableMouseInput();
+            cout<<"enable"<<endl;
+            break;
             
+        case 102:
+            view.displayFeatures=!view.displayFeatures;
             break;
             
         default:
             break;
 
     }
-}
+    cout << key <<endl;
 
+
+}
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
+
 
 }
 
@@ -88,7 +104,7 @@ void ofApp::mousePressed(int x, int y, int button){
 void ofApp::mouseReleased(int x, int y, int button){
     if(view.hoverIdx>-1){
         
-        Slice s =aH.curslice->at(view.hoverIdx);
+        Slice s =aH.curSlice->at(view.hoverIdx);
 
         string msg = "p "+ofToString(s.localid)+" play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
         ofSendMessage(msg);

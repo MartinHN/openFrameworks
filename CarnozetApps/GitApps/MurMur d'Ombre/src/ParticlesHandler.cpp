@@ -380,6 +380,7 @@ void Particles::draw(int w, int h){
    
     
     glPointSize(particleSize);
+    glLineWidth(particleSize);
 
     vbo.draw((ofPolyRenderMode)renderType.get());
 //    glBegin( GL_POINTS );

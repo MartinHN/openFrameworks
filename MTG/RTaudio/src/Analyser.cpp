@@ -15,24 +15,28 @@ void DirectAnalyzer::analyze(vector<Slice> * v,Pooler * p){
 
     
     vector<string> ftn;
+    ftn = p->getAxesNames();
+    if(find(ftn.begin(),ftn.end(),feature1.get())!=ftn.end() && find(ftn.begin(),ftn.end(),feature2.get())!=ftn.end() && find(ftn.begin(),ftn.end(),feature3.get())!=ftn.end()){
     
     for(vector<Slice>::iterator vi = v->begin() ; vi != v->end() ; ++vi){
         vi->curpos.set(0);
         int id = vi->localid;
-        ftn = p->getAxesNames();
         
         
         for(int i = vi->originIdx;i<vi->endIdx ; i++ ){
             
-            vi->curpos.x +=  p->at(id)->poolnd[ftn[feature1]][0].data[i]/1000.;
-            vi->curpos.y +=  p->at(id)->poolnd[ftn[feature2]][0].data[i]/1000.;
-            vi->curpos.z +=  p->at(id)->poolnd[ftn[feature3]][0].data[i]/1000.;
+            vi->curpos.x +=  p->at(id)->poolnd[feature1][0].data[i];
+            vi->curpos.y +=  p->at(id)->poolnd[feature2][0].data[i];
+            vi->curpos.z +=  p->at(id)->poolnd[feature3][0].data[i];
 
             
         }
+        vi->curpos/=(vi->endIdx-vi->originIdx);
+        vi->curpos.z = (vi->endIdx-vi->originIdx);
     }
     
-    
+    }
+    else{ofLogWarning("analyzer :feature not found" + feature1.get() + feature2.get() + feature3.get());}
     
 }
 
@@ -67,7 +71,7 @@ Analyzer * AnalyzerH::get(string n){
 }
 
 
-void AnalyzerH::analyzeIt(){
+bool AnalyzerH::analyzeIt(){
 
     if(curAnalyzer==NULL){
         ofLogWarning("analyserH : curanalyzer not found");
@@ -78,10 +82,11 @@ void AnalyzerH::analyzeIt(){
     else{
         if(curSlice->size()>0){
     curAnalyzer->analyze(curSlice,sH->pool);
-    
+            return true;
         }
         else ofLogWarning("analyzerH : not analyzing (empty slices)");
     }
+    return false;
     
 }
 

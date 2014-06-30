@@ -19,7 +19,7 @@ void ofApp::setup(){
     
     
     sH.curSlicer = sH.slicers[0];
-    sH.curNovelty = pool[0]->at("envelope");
+//    sH.curNovelty = pool[0]->at("envelope");
     sH.sliceIt();
     
     aH.curSlice = &sH.curSlicer->slices;
@@ -97,18 +97,18 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    if(view.hoverIdx>-1){
+        
+        Slice s =aH.curSlice->at(view.hoverIdx);
+        
+        string msg = "p "+ofToString(s.localid)+" play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
+        ofSendMessage(msg);
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-    if(view.hoverIdx>-1){
-        
-        Slice s =aH.curSlice->at(view.hoverIdx);
 
-        string msg = "p "+ofToString(s.localid)+" play4 "+ofToString(s.tb)+" " +ofToString(s.te-s.tb);
-        ofSendMessage(msg);
-    }
 }
 
 //--------------------------------------------------------------

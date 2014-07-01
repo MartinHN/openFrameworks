@@ -604,7 +604,7 @@ void Particles::changeOrigins(int &type){
 //                }
 //            }
 //            break;
-            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
+            vector<ofPoint> vert = readObj("models/sphere59.obj",true);
             numParticles = vert.size();
             textureRes = sqrt((float)numParticles);
             numParticles = textureRes*textureRes;

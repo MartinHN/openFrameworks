@@ -24,8 +24,10 @@ class Slicer{
     
 public:
     
-    virtual void SliceIt(vector<frame> *d){};
-    virtual void registerParams(){};
+    virtual void SliceIt(LocalPool *d){};
+    virtual void registerParams(){
+        MYPARAM(novelty,"envelope","min","max");
+    };
 
     void clear();
     
@@ -33,6 +35,8 @@ public:
     vector<Slice> slices;
     
     ofParameterGroup settings;
+    ofParameter<string> novelty;
+    
     
 };
 
@@ -42,11 +46,12 @@ class ThresholdSlicer : public Slicer{
 public:
 
 
-    void SliceIt(vector<frame> * d);
+    void SliceIt(LocalPool * d);
     void registerParams();
     map<string, int> outputs();
     
     ofParameter<float> threshold;
+    ofParameter<bool> invert;
     
     
     

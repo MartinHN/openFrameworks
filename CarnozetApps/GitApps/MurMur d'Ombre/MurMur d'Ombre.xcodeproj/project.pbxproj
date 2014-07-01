@@ -1681,9 +1681,6 @@
 /* Begin PBXProject section */
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0510;
-			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "MurMur d'Ombre" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;

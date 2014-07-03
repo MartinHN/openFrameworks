@@ -222,7 +222,9 @@ void Particles::setup(){
     
 
     vbo.setMode(OF_PRIMITIVE_POINTS);
-    
+    vbo.disableColors();
+    vbo.disableNormals();
+    vbo.disableTextures();
 
     
 
@@ -604,15 +606,17 @@ void Particles::changeOrigins(int &type){
 //                }
 //            }
 //            break;
-            vector<ofPoint> vert = readObj("models/monkey126.obj",true);
-            numParticles = vert.size();
-            textureRes = sqrt((float)numParticles);
-            numParticles = textureRes*textureRes;
-            pos = new float[numParticles*3];
+
+            vbo.load("models/monk24tri.ply");
+            vector<ofPoint> vert = vbo.setNormal(<#ofIndexType index#>, <#const ofVec3f &n#>)Vertices();
+//            vector<ofPoint> vert = readObj("models/monk24.obj",true);
+            int curnumpart = vert.size();
+            textureRes = sqrt((float)curnumpart);
+            pos = new float[curnumpart*3];
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
                     int i =  x + textureRes * y;
-                    
+                    vbo.setVertex(i,ofVec3f(x,y,0));
                     if(i<vert.size()){
                     pos[i*3 + 0] = vert[i].x;
                     pos[i*3 + 1] = vert[i].y;
@@ -625,6 +629,8 @@ void Particles::changeOrigins(int &type){
                     }
                 }
             }
+            
+            numParticles = textureRes*textureRes;
             break;
         }
     

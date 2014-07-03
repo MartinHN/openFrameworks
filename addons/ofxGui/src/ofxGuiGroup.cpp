@@ -96,8 +96,8 @@ ofxGuiGroup * ofxGuiGroup::setup(const ofParameterGroup & _parameters, string _f
 	}
     
 	parameters = _parameters;
-	ofRegisterMouseEvents(this,OF_EVENT_ORDER_BEFORE_APP);
-    
+    registerMouseEvents();
+
 	generateDraw();
     
 	return this;
@@ -117,7 +117,7 @@ void ofxGuiGroup::add(ofxBaseGui * element){
     
 	//if(b.width<element->getWidth()) b.width = element->getWidth();
     
-	ofUnregisterMouseEvents(element);
+    element->unregisterMouseEvents();
     
 	ofxGuiGroup * subgroup = dynamic_cast<ofxGuiGroup*>(element);
 	if(subgroup!=NULL){
@@ -356,14 +356,6 @@ ofxBaseGui * ofxGuiGroup::getControl(string name){
 		}
 	}
 	return NULL;
-}
-
-void ofxGuiGroup::registerMouseEvents(){
-	ofRegisterMouseEvents(this,OF_EVENT_ORDER_BEFORE_APP);
-}
-
-void ofxGuiGroup::unregisterMouseEvents(){
-	ofUnregisterMouseEvents(this,OF_EVENT_ORDER_BEFORE_APP);
 }
 
 bool ofxGuiGroup::setValue(float mx, float my, bool bCheck){

@@ -221,11 +221,11 @@ void Particles::setup(){
     
     
 
-    vbo.setMode(OF_PRIMITIVE_POINTS);
+    //vbo.setMode(OF_PRIMITIVE_POINTS);
     vbo.disableColors();
     vbo.disableNormals();
     vbo.disableTextures();
-
+    //vbo.setUsage(GL_DYNAMIC_DRAW);
     
 
 
@@ -386,10 +386,11 @@ void Particles::draw(int w, int h){
 
     vbo.draw((ofPolyRenderMode)renderType.get());
 //    glBegin( GL_POINTS );
+//    int i=0;
 //    for(int x = 0; x < textureRes; x++){
 //        for(int y = 0; y < textureRes; y++){
-//            
-//            glVertex3d(x,y,0);
+//
+//            glVertex3d(x+0.5,y+0.5,0);
 //            
 //        }
 //    }
@@ -473,7 +474,7 @@ if(!noReset){
     
     
     
-    vbo = vbo.plane(textureRes,textureRes,textureRes,textureRes);
+    vbo = vbo.plane(textureRes-1,textureRes-1,textureRes,textureRes);
 
     int oritmptyp = origintype.get();
         changeOrigins(oritmptyp);
@@ -552,13 +553,14 @@ void Particles::changeOrigins(int &type){
         case 0:
         {
             pos = new float[numParticles*3];
+            for (int y = 0; y < textureRes; y++){
             for (int x = 0; x < textureRes; x++){
-                for (int y = 0; y < textureRes; y++){
+                
                     int i = textureRes * y + x;
                     
-                    pos[i*3 + 0] = x*1.0/textureRes;
-                    pos[i*3 + 1] = y*1.0/(textureRes);
-                    pos[i*3 + 2] = 0.5;
+                    pos[i*3 + 0] = (float)x*1.0/(textureRes-1);
+                    pos[i*3 + 1] = (float)y*1.0/(textureRes-1);
+                    pos[i*3 + 2] = (float)0.5;
                 }
             }
             break;}
@@ -566,19 +568,19 @@ void Particles::changeOrigins(int &type){
         {
             int zsplit = 2;
             
-            textureRes3 =  (int)pow(numParticles,1.0/3)-1;
+            textureRes3 =  (int)pow(numParticles,1.0/3);
             int curnumpart= textureRes3*textureRes3*textureRes3;
-            textureRes = sqrt((float)curnumpart);
+            //textureRes = sqrt((float)curnumpart);
 
             int count=0;
             pos = new float[numParticles*3];
-            
-                for (int z = 0; z < textureRes3; z++){
+           
+        for (int z = 0; z < textureRes3; z++){
             for (int x = 0; x < textureRes3; x++){
                 for (int y = 0; y < textureRes3; y++){
                    
                     
-                    int i = textureRes3 * textureRes3* z + textureRes3 * y + x;
+                     int i = textureRes3 * textureRes3* z + textureRes3 * y + x;
                     
                     pos[i*3 + 0] = (float) (x*1.0/textureRes3);
                     pos[i*3 + 1] = (float) (y*1.0/textureRes3);
@@ -587,7 +589,11 @@ void Particles::changeOrigins(int &type){
                     }
                 }
             }
-            numParticles = curnumpart;
+            for (int k=curnumpart*3;k<numParticles*3;k++){
+                pos[k]=0;
+                
+            }
+
 //            ofSort(pos,sortOnXYZ);
             break;}
 #ifdef PMOD
@@ -607,30 +613,37 @@ void Particles::changeOrigins(int &type){
 //            }
 //            break;
             cout << vbo.getVertex(3006) << endl;
-            vbo.load("models/monk24tri.ply");
+            ofVboMesh vbotmp(vbo);
+
+            vbo.load("models/cplx.ply");
             vector<ofPoint> vert = vbo.getVertices();
-            numParticles = vert.size();
-            textureRes = sqrt((float)numParticles);
-            numParticles = textureRes*textureRes;
+//            int curnumpart  = vert.size();
+//            textureRes = sqrt((float)numParticles);
+//            curnumpart =textureRes*textureRes;
+            
             pos = new float[numParticles*3];
+            
             for (int x = 0; x < textureRes; x++){
                 for (int y = 0; y < textureRes; y++){
                     int i =  x + textureRes * y;
-                    vbo.setVertex(i,ofVec3f(x,y,0));
+                
                     if(i<vert.size()){
+                    ofVec3f vbot = vbotmp.getVertex(i);
+                    vbo.setVertex(i,ofVec3f(x,y,0));
                     pos[i*3 + 0] = vert[i].x;
                     pos[i*3 + 1] = vert[i].y;
-                    pos[i*3 + 2] = vert[i].z +1;
+                    pos[i*3 + 2] = vert[i].z ;
                     }
                     else {
+                        vbo.addVertex(ofVec3f(x,y,0));
                         pos[i*3 + 0] = 0;
                         pos[i*3 + 1] = 0;
                         pos[i*3 + 2] = 0;
                     }
                 }
             }
-            cout << vbo.getVertex(3006) << endl;
-            numParticles = textureRes*textureRes;
+            
+            //numParticles = curnumpart;
             break;
         }
     
@@ -644,7 +657,8 @@ void Particles::changeOrigins(int &type){
     origins.allocate(textureRes, textureRes,GL_RGB32F_ARB);
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     initFbo();
-        cout << textureRes <<endl;
+        cout << vbo.getVertices().size() << endl;
+       
     }
     
     noReset = false;

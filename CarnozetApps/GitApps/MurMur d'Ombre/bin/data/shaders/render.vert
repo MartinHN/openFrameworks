@@ -31,7 +31,7 @@ void main() {
     // Takes the position of a vertex that was send on porpuse to the same  
     // position on the texture were it´s the information stored on the Red Green channels
     //
-    vec2 verPos = gl_Vertex.xy;
+    vec2 verPos = gl_Vertex.xy + vec2(0.5);
    
     
     vec4 pixPos = texture2DRect( posTex, verPos );
@@ -65,10 +65,9 @@ void main() {
     }
     
 
-    
-    pixPos.x =pixPos.x*screen.x;
-    pixPos.y =pixPos.y*screen.y;
-    pixPos.z =(pixPos.z-0.5)*screen.z;
+    pixPos.z =pixPos.z-0.5;
+    pixPos.xyz =pixPos.xyz*screen;
+
     
     gl_Position = gl_ModelViewProjectionMatrix*pixPos;
     

@@ -606,7 +606,9 @@ void Particles::changeOrigins(int &type){
 //                }
 //            }
 //            break;
-            vector<ofPoint> vert = readObj("models/sphere59.obj",true);
+            cout << vbo.getVertex(3006) << endl;
+            vbo.load("models/monk24tri.ply");
+            vector<ofPoint> vert = vbo.getVertices();
             numParticles = vert.size();
             textureRes = sqrt((float)numParticles);
             numParticles = textureRes*textureRes;
@@ -627,7 +629,7 @@ void Particles::changeOrigins(int &type){
                     }
                 }
             }
-            
+            cout << vbo.getVertex(3006) << endl;
             numParticles = textureRes*textureRes;
             break;
         }
@@ -642,6 +644,7 @@ void Particles::changeOrigins(int &type){
     origins.allocate(textureRes, textureRes,GL_RGB32F_ARB);
     origins.getTextureReference().loadData(pos, textureRes, textureRes, GL_RGB);
     initFbo();
+        cout << textureRes <<endl;
     }
     
     noReset = false;

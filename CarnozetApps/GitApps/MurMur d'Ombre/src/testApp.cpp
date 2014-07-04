@@ -584,7 +584,7 @@ void testApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void testApp::windowResized(int w, int h){
-#ifndef syphonout
+#ifndef GUIMODE
     scrw=width=w;
     scrh=height=h;
     

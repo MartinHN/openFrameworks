@@ -58,6 +58,7 @@ void ofSetupOpenGL(ofAppBaseWindow * windowPtr, int w, int h, int screenMode){
 }
 
 void ofExitCallback();
+void ofURLFileLoaderShutdown();
 
 #if defined(TARGET_LINUX) || defined(TARGET_OSX)
 	#include <signal.h>
@@ -67,7 +68,7 @@ void ofExitCallback();
 		ofLogVerbose("ofAppRunner") << "sighandler caught: " << sig;
 		if(!bExitCalled) {
 			bExitCalled = true;
-			exitApp();
+			std::exit(0);
 		}
 	}
 #endif
@@ -222,9 +223,7 @@ void ofExitCallback(){
 
 	ofNotifyExit();
 
-	ofRemoveAllURLRequests();
-	ofStopURLLoader();
-	Poco::Net::uninitializeSSL();
+	ofURLFileLoaderShutdown();
 
     ofRemoveListener(ofEvents().setup,OFSAptr.get(),&ofBaseApp::setup,OF_EVENT_ORDER_APP);
     ofRemoveListener(ofEvents().update,OFSAptr.get(),&ofBaseApp::update,OF_EVENT_ORDER_APP);

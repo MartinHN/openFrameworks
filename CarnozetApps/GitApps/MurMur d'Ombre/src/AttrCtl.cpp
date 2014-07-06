@@ -17,6 +17,7 @@ AttrCtl::AttrCtl(){
     zonefamilly1.addListener(this,&AttrCtl::zoneChanged);
     zonefamilly2.addListener(this,&AttrCtl::zoneChanged);
     zonefamilly3.addListener(this,&AttrCtl::zoneChanged);
+    registerParam();
 }
 
 void AttrCtl::update(){

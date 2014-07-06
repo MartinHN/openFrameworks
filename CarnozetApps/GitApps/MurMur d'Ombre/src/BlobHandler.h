@@ -19,7 +19,7 @@ class BlobHandler{
     
 public:
     
-    BlobHandler(){};
+    BlobHandler(){registerParams();};
     
     
     void setup(int inwin, int inhin,ScreenHandler * sH);

@@ -186,6 +186,9 @@ public:
     Gui gui;
     string lastpath;
 #endif
+  
     
+    
+    void tstevnt(ofAbstractParameter & p);
 
 };

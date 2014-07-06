@@ -39,7 +39,7 @@ void VisuHandler::setup(AttrCtl *attrctl,BlobHandler* bHin, int inwin, int inhin
     
     bH = bHin;
     
-    
+//    registerParams();
     
     
     

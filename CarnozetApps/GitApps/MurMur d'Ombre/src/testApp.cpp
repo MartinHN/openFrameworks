@@ -98,9 +98,18 @@ void testApp::setup(){
 #endif
     camera2.setup(&scrw,&scrh, &zdepth);
     
-    
     globalParam.setName("OF");
     settings.setName("global");
+    globalParam.add(settings);
+#ifdef syphon
+    globalParam.add(bH.settings);
+#endif
+    globalParam.add(attrctl.settings);
+    globalParam.add(sH.screensCtl);
+    globalParam.add(sH.screensParam);
+    globalParam.add(visuHandler.allParams);
+
+
     MYPARAM(loadName, "", "", "");
     loadName.setSerializable(false);
     MYPARAM(saveName, "", "", "");
@@ -156,16 +165,16 @@ void testApp::setup(){
     sH.registerParams();
     
     
+
     
-    globalParam.add(settings);
-#ifdef syphon
-    globalParam.add(bH.settings);
-#endif
-    globalParam.add(attrctl.settings);
-    globalParam.add(sH.screensCtl);
-    globalParam.add(sH.screensParam);
-    globalParam.add(visuHandler.allParams);
-//    ofParameterGroup pg;
+    
+    
+    
+    
+    
+    
+    
+    //    ofParameterGroup pg;
 //    screensParam.add(sH.screensParam);
 //    screensParam.setName("screensG");
 //    ofParameterGroup pg = screensParam.getGroup("screens");
@@ -198,7 +207,9 @@ void testApp::setup(){
     
 }
 
-
+void testApp::tstevnt(ofAbstractParameter & a){
+    int r=0;
+}
 
 
 //--------------------------------------------------------------
@@ -629,8 +640,15 @@ void testApp::exit(){
 
 void testApp::mouseDragged(int x, int y, int button){
     vector<ofPoint> points;
+    ofPoint mp = ofPoint(x,y,0);
     
-    points.push_back(ofPoint(x*1.0/scrw,y*1.0/scrh,0));
+    ofMatrix4x4 inverseCamera;
+	inverseCamera.makeInvertOf(camera2.camera.getModelViewProjectionMatrix());
+    
+	//convert camera to world
+	mp= mp * inverseCamera;
+    
+    points.push_back(ofPoint(mp.x*1.0/scrw,mp.y*1.0/scrh,0));
     //    points.push_back(ofPoint(0.2,0.2,0));
     
     if(points.size()>0)attrctl.addPoints(points,0);

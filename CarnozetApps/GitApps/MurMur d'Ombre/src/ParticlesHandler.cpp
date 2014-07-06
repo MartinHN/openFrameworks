@@ -615,7 +615,7 @@ void Particles::changeOrigins(int &type){
             cout << vbo.getVertex(3006) << endl;
             ofVboMesh vbotmp(vbo);
 
-            vbo.load("models/cplx.ply");
+            vbo.load("models/libe.ply");
             vector<ofPoint> vert = vbo.getVertices();
 //            int curnumpart  = vert.size();
 //            textureRes = sqrt((float)numParticles);

@@ -21,6 +21,10 @@ ofxOscParameterSync::~ofxOscParameterSync(){
 void ofxOscParameterSync::setup(ofParameterGroup & group, int localPort, string host, int remotePort){
 	syncGroup = &group;
 	ofAddListener(group.parameterChangedE,this,&ofxOscParameterSync::parameterChanged);
+//    for (int i =0; i < group.size();i++){
+//        if(group.get(i).type()==){
+//            ofAddListener(<#EventType &event#>, <#ListenerClass *listener#>, <#void (ListenerClass::*listenerMethod)(const void *, ArgumentsType &)#>)}
+//    }
 	sender.setup(host,remotePort);
 	receiver.setup(localPort);
 }

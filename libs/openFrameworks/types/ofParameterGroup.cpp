@@ -13,6 +13,7 @@ void ofParameterGroup::add(ofAbstractParameter & param){
 	obj->parameters.push_back(group);
 	obj->parametersIndex[group->getEscapedName()] = obj->parameters.size()-1;
 	group->setParent(this);
+    param.setParent(this);
 }
 
 void ofParameterGroup::clear(){

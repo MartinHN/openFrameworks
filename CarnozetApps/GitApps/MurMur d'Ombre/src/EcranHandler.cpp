@@ -16,6 +16,8 @@ screensParam.setName("screens");
     screenPreset.setMax(10);
 
     screenPreset.setSerializable(false);
+    
+    registerParams();
 
     
 }

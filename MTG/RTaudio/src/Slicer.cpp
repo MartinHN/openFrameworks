@@ -35,7 +35,7 @@ void SlicerH::sliceIt(){
     
     
             for (int i = 0 ; i< pool->globalPool.size() ; i++){
-                curSlicer->SliceIt(curNovelty);
+                curSlicer->SliceIt(pool->at(i));
             }
 
 
@@ -62,13 +62,14 @@ void Slicer::clear(){
 
 
 
-void ThresholdSlicer::SliceIt(vector<frame> * din){
-    vector<frame> d = *din;
+void ThresholdSlicer::SliceIt(LocalPool * lp){
+    
+    vector<frame> d = lp->poolnd[novelty];
     bool isSlice = false;
     Slice tmps;
     tmps.tb = 0;
     tmps.te = 0;
-    tmps.origin = din;
+    tmps.origin = &lp->poolnd[novelty];
     tmps.localid = d[0].localid;
     tmps.tb = 0;
     int dimension = d[0].data.size();
@@ -81,7 +82,7 @@ void ThresholdSlicer::SliceIt(vector<frame> * din){
 
         mean/=dimension;
         if(isSlice ){
-            if(mean<threshold){
+            if((invert&&mean>threshold) || (!invert&&mean<threshold)){
                 tmps.te = p->ts;
                 tmps.endIdx = curidx;
                 slices.push_back(tmps);
@@ -89,7 +90,7 @@ void ThresholdSlicer::SliceIt(vector<frame> * din){
                              }
         }
         else{
-            if(mean>threshold){
+            if((invert&&mean<threshold) || (!invert&&mean>threshold)){
                 tmps.tb = p->ts;
                 tmps.originIdx = curidx;
                 isSlice = true;
@@ -100,6 +101,8 @@ void ThresholdSlicer::SliceIt(vector<frame> * din){
 
 
 void ThresholdSlicer::registerParams(){
+    Slicer::registerParams();
     MYPARAM(threshold,0.01,0,1);
+    MYPARAM(invert,false,false,true);
     settings.setName("threshold");
 }

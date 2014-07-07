@@ -31,6 +31,12 @@ void Viewer::setup(AnalyzerH * a){
     viewR = ofGetHeight();
 
 //	void setAspectRatio(float aspectRatio);
+    cam.orbit(0, 0, viewR*2);
+    
+    
+    
+    cam.setFov(10);//2*ofRadToDeg(atan(ofGetWidth()*2.0/(viewR))));//50
+
     
     resetCam = true;
 
@@ -100,12 +106,8 @@ void Viewer::setViewMouse(bool & b){
 
 void Viewer::resetView(bool & b){
     if(b){
-    cam.orbit(0, 0, viewR);
-//        cam.enableOrtho();
-
-//    cam.setDistance(viewBox.z);
-        cam.setFov(10);//2*ofRadToDeg(atan(ofGetWidth()*2.0/(viewR))));//50
-//    cam.setAspectRatio(viewBox.x*1.0/(viewBox.y));
+        cam.reset();
+    
         b= false;}
     
     
@@ -158,7 +160,9 @@ void Viewer::guiEvent(ofxUIEventArgs &e){
     }
     else if(name == "Recomp"){
         aH->sH->sliceIt();
-        aH->analyzeIt();
+        if(aH->analyzeIt()){
+        autoZoom = true;
+        }
     }
     
 
@@ -187,32 +191,47 @@ void Viewer::updateCache(){
 
 void Viewer::autoScale(bool & b){
     if(b){
-    ofVec3f min(9999,99999,99999);
-    ofVec3f max = -min;
+        ofVec3f min(0);
+    ofVec3f max = min;
+        ofVec3f mean(0);
+        ofVec3f stddev(0);
 
-    if(aH->curSlice
-       !=NULL){
-        
-        for (int i = 0 ; i < aH->curSlice->size() ; i++){
+
+    if(aH->curSlice!=NULL){
+        mean+=aH->curSlice->at(0).curpos;
+        min = mean;
+        max = mean;
+        for (int i = 1 ; i < aH->curSlice->size() ; i++){
             
-            min.x = std::min(aH->curSlice->at(i).curpos.x,min.x);
-            min.y = std::min(aH->curSlice->at(i).curpos.y,min.y);
-            min.z = std::min(aH->curSlice->at(i).curpos.z,min.z);
+            mean+=aH->curSlice->at(i).curpos;
+            min.x = std::min(aH->curSlice->at(i).curpos.x*1.0,min.x*1.0);
+            min.y = std::min(aH->curSlice->at(i).curpos.y*1.0,min.y*1.0);
+            min.z = std::min(aH->curSlice->at(i).curpos.z*1.0,min.z*1.0);
             
             max.x = std::max(aH->curSlice->at(i).curpos.x,max.x);
             max.y = std::max(aH->curSlice->at(i).curpos.y,max.y);
             max.z = std::max(aH->curSlice->at(i).curpos.z,max.z);
 
         }
+        mean/=aH->curSlice->size();
+        for (int i = 0 ; i < aH->curSlice->size() ; i++){
+            
+            stddev+=(aH->curSlice->at(i).curpos-mean)*(aH->curSlice->at(i).curpos-mean);
 
-        scale = 1./(max-min);
-        ofVec3f cpy = scale;
-        if(max.x ==min.x){cpy.x=1;}
-        if(max.y ==min.y){cpy.y=1;}
-        if(max.z ==min.z){cpy.z=1;}
+        }
+        stddev/= aH->curSlice->size();
+        stddev.x = sqrt(stddev.x);
+        stddev.y = sqrt(stddev.y);
+        stddev.z = sqrt(stddev.z);
+        
+        
+        ofVec3f cpy = 1./(2.*stddev);
+        if(stddev.x ==0){cpy.x=1;}
+        if(stddev.y ==0){cpy.y=1;}
+        if(stddev.z ==0){cpy.z=1;}
         scale=cpy;
     }
-        center = -scale.get()*(min+max)/2;
+        center = scale.get()*mean;
         b = false;
     }
     
@@ -238,12 +257,13 @@ void Viewer::updateHoverSlice(){
     hoverIdx=-1;
     for (int i = 0 ; i < aH->curSlice->size() ; i++){
         //TODO:Cache it
-        ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
+        ofVec3f pp( (-center.get() + aH->curSlice->at(i).curpos* scale )*viewR/2 );
         ofVec2f cur = cam.worldToScreen(pp);
         float distance = cur.distance(mouse);
-		if(distance<20 && distance < nearestDistance) {
+		if(distance<10 && distance < nearestDistance) {
 			nearestDistance = distance;
 			hoverIdx = i;
+            break;
 		}
 	}
     
@@ -291,8 +311,8 @@ void Viewer::draw(){
         for (int i = 0 ; i < aH->curSlice->size() ; i++){
        ofPushMatrix();
             ofColor curcolor = colors[aH->curSlice->at(i).localid%colors.size()];
-       ofSetColor(curcolor,150);
-       ofVec3f pp( (center.get() + aH->curSlice->at(i).curpos* scale )*viewR );
+       ofSetColor(curcolor,100);
+       ofVec3f pp( (-center.get() + aH->curSlice->at(i).curpos* scale )*viewR/2 );
        
        ofFill();
             float cscale = 1;

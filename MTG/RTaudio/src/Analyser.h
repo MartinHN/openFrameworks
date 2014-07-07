@@ -23,14 +23,14 @@ public:
     
     virtual void analyze(vector<Slice> * v,Pooler * p){};
     virtual void registerParams(){
-        MYPARAM(feature1,0,0,10);
-        MYPARAM(feature2,1,0,10);
-        MYPARAM(feature3,2,0,10);
+        MYPARAM(feature1,"envelope","","");
+        MYPARAM(feature2,"nsdf","","");
+        MYPARAM(feature3,"envelope","","");
         
     };
     
     ofParameterGroup settings;
-    ofParameter<int> feature1,feature2,feature3;
+    ofParameter<string> feature1,feature2,feature3;
 
     
     
@@ -55,7 +55,7 @@ class AnalyzerH{
 public:
     
     void setup(SlicerH * sH);
-    void analyzeIt();
+    bool analyzeIt();
     void registerParams();
     Analyzer * get(string n);
     SlicerH * sH;

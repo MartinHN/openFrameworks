@@ -2,10 +2,8 @@
 #import "ofxiOSExtras.h"
 #import "AVFoundationVideoPlayer.h"
 
-#ifdef __IPHONE_5_0
 CVOpenGLESTextureCacheRef _videoTextureCache = NULL;
 CVOpenGLESTextureRef _videoTextureRef = NULL;
-#endif
 
 ofxiOSVideoPlayer::ofxiOSVideoPlayer() {
 	videoPlayer = NULL;
@@ -20,10 +18,7 @@ ofxiOSVideoPlayer::ofxiOSVideoPlayer() {
     bUpdatePixels = false;
     bUpdatePixelsToRgb = false;
     bUpdateTexture = false;
-    bTextureCacheSupported = false;
-#ifdef __IPHONE_5_0    
     bTextureCacheSupported = (CVOpenGLESTextureCacheCreate != NULL);
-#endif
     bTextureCacheEnabled = true;
 }
 
@@ -60,7 +55,6 @@ bool ofxiOSVideoPlayer::loadMovie(string name) {
     bUpdatePixelsToRgb = true;
     bUpdateTexture = true;
     
-#ifdef __IPHONE_5_0
     if(bTextureCacheSupported == true && bTextureCacheEnabled == true) {
         if(_videoTextureCache == NULL) {
 #ifdef __IPHONE_6_0
@@ -81,7 +75,6 @@ bool ofxiOSVideoPlayer::loadMovie(string name) {
             }    
         }
     }
-#endif
     
     return true;
 }
@@ -139,7 +132,7 @@ bool ofxiOSVideoPlayer::setPixelFormat(ofPixelFormat _internalPixelFormat) {
 
 
 //---------------------------------------------------------------------------
-ofPixelFormat ofxiOSVideoPlayer::getPixelFormat(){
+ofPixelFormat ofxiOSVideoPlayer::getPixelFormat() const {
 	return internalPixelFormat;
 }
 
@@ -188,7 +181,7 @@ void ofxiOSVideoPlayer::stop() {
 }		
 
 //----------------------------------------
-bool ofxiOSVideoPlayer::isFrameNew() {
+bool ofxiOSVideoPlayer::isFrameNew() const {
 	if(videoPlayer != NULL) {
 		return bFrameNew;
 	}	
@@ -219,62 +212,61 @@ unsigned char * ofxiOSVideoPlayer::getPixels() {
     }
     
     CGImageRef currentFrameRef;
-    
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    
-    CVImageBufferRef imageBuffer = [(AVFoundationVideoPlayer *)videoPlayer getCurrentFrame];
-    
-    /*Lock the image buffer*/
-    CVPixelBufferLockBaseAddress(imageBuffer,0);
-    
-    /*Get information about the image*/
-    uint8_t *baseAddress	= (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
-    size_t bytesPerRow		= CVPixelBufferGetBytesPerRow(imageBuffer);
-    size_t width			= CVPixelBufferGetWidth(imageBuffer);
-    size_t height			= CVPixelBufferGetHeight(imageBuffer);
-    
-    /*Create a CGImageRef from the CVImageBufferRef*/
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef newContext = CGBitmapContextCreate(baseAddress,
-                                                    width,
-                                                    height,
-                                                    8,
-                                                    bytesPerRow,
-                                                    colorSpace,
-                                                    kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
-    CGImageRef newImage	= CGBitmapContextCreateImage(newContext);
-    
-    currentFrameRef = CGImageCreateCopy(newImage);
-    
-    /*We release some components*/
-    CGContextRelease(newContext);
-    CGColorSpaceRelease(colorSpace);
-    
-    /*We relase the CGImageRef*/
-    CGImageRelease(newImage);
-    
-    /*We unlock the  image buffer*/
-    CVPixelBufferUnlockBaseAddress(imageBuffer,0);
-    
-    if(bResetPixels) {
-        
-        if(pixelsRGBA != NULL) {
-            free(pixelsRGBA);
-            pixelsRGBA = NULL;
+    size_t width, height;
+
+    @autoreleasepool {
+        CVImageBufferRef imageBuffer = [(AVFoundationVideoPlayer *)videoPlayer getCurrentFrame];
+
+        /*Lock the image buffer*/
+        CVPixelBufferLockBaseAddress(imageBuffer,0);
+
+        /*Get information about the image*/
+        uint8_t *baseAddress    = (uint8_t *)CVPixelBufferGetBaseAddress(imageBuffer);
+        size_t bytesPerRow      = CVPixelBufferGetBytesPerRow(imageBuffer);
+        width                   = CVPixelBufferGetWidth(imageBuffer);
+        height                  = CVPixelBufferGetHeight(imageBuffer);
+
+        /*Create a CGImageRef from the CVImageBufferRef*/
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGContextRef newContext = CGBitmapContextCreate(baseAddress,
+                                                        width,
+                                                        height,
+                                                        8,
+                                                        bytesPerRow,
+                                                        colorSpace,
+                                                        kCGBitmapByteOrder32Little | kCGImageAlphaPremultipliedFirst);
+        CGImageRef newImage = CGBitmapContextCreateImage(newContext);
+
+        currentFrameRef = CGImageCreateCopy(newImage);
+
+        /*We release some components*/
+        CGContextRelease(newContext);
+        CGColorSpaceRelease(colorSpace);
+
+        /*We relase the CGImageRef*/
+        CGImageRelease(newImage);
+
+        /*We unlock the  image buffer*/
+        CVPixelBufferUnlockBaseAddress(imageBuffer,0);
+
+        if(bResetPixels) {
+
+            if(pixelsRGBA != NULL) {
+                free(pixelsRGBA);
+                pixelsRGBA = NULL;
+            }
+
+            if(pixelsRGB != NULL) {
+                free(pixelsRGB);
+                pixelsRGB = NULL;
+            }
+
+            pixelsRGBA = (GLubyte *) malloc(width * height * 4);
+            pixelsRGB  = (GLubyte *) malloc(width * height * 3);
+
+            bResetPixels = false;
         }
-        
-        if(pixelsRGB != NULL) {
-            free(pixelsRGB);
-            pixelsRGB = NULL;
-        }
-        
-        pixelsRGBA = (GLubyte *) malloc(width * height * 4);
-        pixelsRGB  = (GLubyte *) malloc(width * height * 3);
-        
-        bResetPixels = false;
     }
-    
-    [pool drain];
     
     CGContextRef spriteContext;
     spriteContext = CGBitmapContextCreate(pixelsRGBA,
@@ -331,9 +323,14 @@ void ofxiOSVideoPlayer::updatePixelsToRGB () {
 }
 
 //----------------------------------------
-ofPixelsRef ofxiOSVideoPlayer::getPixelsRef() {
+ofPixels& ofxiOSVideoPlayer::getPixelsRef() {
     static ofPixels dummy;
     return dummy;
+}
+
+//----------------------------------------
+const ofPixels& ofxiOSVideoPlayer::getPixelsRef() const {
+    return getPixelsRef();
 }
 
 //----------------------------------------
@@ -393,8 +390,7 @@ ofTexture * ofxiOSVideoPlayer::getTexture() {
 
 //---------------------------------------- texture cache
 void ofxiOSVideoPlayer::initTextureCache() {
-#ifdef __IPHONE_5_0
-    
+
     CVImageBufferRef imageBuffer = [(AVFoundationVideoPlayer *)videoPlayer getCurrentFrame];
     if(imageBuffer == nil) {
         return;
@@ -465,13 +461,9 @@ void ofxiOSVideoPlayer::initTextureCache() {
         CFRelease(_videoTextureRef);
         _videoTextureRef = NULL;
     }
-    
-#endif
 }
 
 void ofxiOSVideoPlayer::killTextureCache() {
-#ifdef __IPHONE_5_0
-    
     if(_videoTextureRef) {
         CFRelease(_videoTextureRef);
         _videoTextureRef = NULL;
@@ -481,12 +473,10 @@ void ofxiOSVideoPlayer::killTextureCache() {
         CFRelease(_videoTextureCache);
         _videoTextureCache = NULL;
     }
-    
-#endif
 }
 
 //----------------------------------------
-float ofxiOSVideoPlayer::getWidth() {
+float ofxiOSVideoPlayer::getWidth() const {
     if(videoPlayer == NULL) {
         return 0;
     }
@@ -495,7 +485,7 @@ float ofxiOSVideoPlayer::getWidth() {
 }
 
 //----------------------------------------
-float ofxiOSVideoPlayer::getHeight() {
+float ofxiOSVideoPlayer::getHeight() const {
     if(videoPlayer == NULL) {
         return 0;
     }
@@ -504,7 +494,7 @@ float ofxiOSVideoPlayer::getHeight() {
 }
 
 //----------------------------------------
-bool ofxiOSVideoPlayer::isPaused() {
+bool ofxiOSVideoPlayer::isPaused() const {
     if(videoPlayer == NULL) {
         return false;
     }
@@ -513,7 +503,7 @@ bool ofxiOSVideoPlayer::isPaused() {
 }
 
 //----------------------------------------
-bool ofxiOSVideoPlayer::isLoaded() {
+bool ofxiOSVideoPlayer::isLoaded() const {
     if(videoPlayer == NULL) {
         return false;
     }
@@ -522,7 +512,7 @@ bool ofxiOSVideoPlayer::isLoaded() {
 }
 
 //----------------------------------------
-bool ofxiOSVideoPlayer::isPlaying() {
+bool ofxiOSVideoPlayer::isPlaying() const {
     if(videoPlayer == NULL) {
         return false;
     }
@@ -531,7 +521,7 @@ bool ofxiOSVideoPlayer::isPlaying() {
 }
 
 //----------------------------------------
-float ofxiOSVideoPlayer::getPosition() {
+float ofxiOSVideoPlayer::getPosition() const {
     if(videoPlayer == NULL) {
         return 0;
     }
@@ -540,7 +530,7 @@ float ofxiOSVideoPlayer::getPosition() {
 }
 
 //----------------------------------------
-float ofxiOSVideoPlayer::getSpeed() {
+float ofxiOSVideoPlayer::getSpeed() const {
     if(videoPlayer == NULL) {
         return 0;
     }
@@ -549,7 +539,7 @@ float ofxiOSVideoPlayer::getSpeed() {
 }
 
 //----------------------------------------
-float ofxiOSVideoPlayer::getDuration() {
+float ofxiOSVideoPlayer::getDuration() const {
     if(videoPlayer == NULL) {
         return 0;
     }
@@ -558,7 +548,7 @@ float ofxiOSVideoPlayer::getDuration() {
 }
 
 //----------------------------------------
-bool ofxiOSVideoPlayer::getIsMovieDone() {
+bool ofxiOSVideoPlayer::getIsMovieDone() const {
     if(videoPlayer == NULL) {
         return false;
     }
@@ -633,7 +623,7 @@ void ofxiOSVideoPlayer::setFrame(int frame) {
 }
 
 //----------------------------------------
-int	ofxiOSVideoPlayer::getCurrentFrame() {
+int	ofxiOSVideoPlayer::getCurrentFrame() const {
     if(videoPlayer == NULL){
         return 0;
     }
@@ -641,7 +631,7 @@ int	ofxiOSVideoPlayer::getCurrentFrame() {
 }
 
 //----------------------------------------
-int	ofxiOSVideoPlayer::getTotalNumFrames() {
+int	ofxiOSVideoPlayer::getTotalNumFrames() const {
     if(videoPlayer == NULL){
         return 0;
     }
@@ -649,7 +639,7 @@ int	ofxiOSVideoPlayer::getTotalNumFrames() {
 }
 
 //----------------------------------------
-ofLoopType	ofxiOSVideoPlayer::getLoopState() {
+ofLoopType	ofxiOSVideoPlayer::getLoopState() const {
     if(videoPlayer == NULL) {
         return OF_LOOP_NONE;
     }

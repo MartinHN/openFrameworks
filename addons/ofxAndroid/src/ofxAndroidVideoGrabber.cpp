@@ -142,11 +142,11 @@ ofxAndroidVideoGrabber::~ofxAndroidVideoGrabber(){
 }
 
 
-vector<ofVideoDevice> ofxAndroidVideoGrabber::listDevices(){
+vector<ofVideoDevice> ofxAndroidVideoGrabber::listDevices() const{
 	return vector<ofVideoDevice>();
 }
 
-bool ofxAndroidVideoGrabber::isFrameNew(){
+bool ofxAndroidVideoGrabber::isFrameNew() const{
 	return bIsFrameNew;
 }
 
@@ -173,14 +173,11 @@ void ofxAndroidVideoGrabber::update(){
 			ofGetJNIEnv()->CallVoidMethod(getCamera(ofGetJNIEnv(),getJavaClass(),cameraId),javaGetTextureMatrix,matrixJava);
 			jfloat * m = ofGetJNIEnv()->GetFloatArrayElements(matrixJava,0);
 
-			for(int i=0;i<16;i++) {
-				texture.texData.textureMatrix.getPtr()[i] = m[i];
-			}
-
 			ofMatrix4x4 vFlipTextureMatrix;
 			vFlipTextureMatrix.scale(1,-1,1);
 			vFlipTextureMatrix.translate(0,1,0);
-			texture.texData.textureMatrix = vFlipTextureMatrix * texture.texData.textureMatrix;
+			ofMatrix4x4 textureMatrix(m);
+			texture.setTextureMatrix( vFlipTextureMatrix * textureMatrix );
 
 			ofGetJNIEnv()->ReleaseFloatArrayElements(matrixJava,m,0);
 		}
@@ -282,7 +279,6 @@ bool ofxAndroidVideoGrabber::initGrabber(int w, int h){
 		td.textureTarget = GL_TEXTURE_EXTERNAL_OES;
 		td.glTypeInternal = GL_RGBA;
 		td.bFlipTexture = false;
-		td.useTextureMatrix = true;
 
 		// hack to initialize gl resources from outside ofTexture
 		texture.texData = td;
@@ -317,6 +313,10 @@ bool ofxAndroidVideoGrabber::initGrabber(int w, int h){
 	return true;
 }
 
+bool ofxAndroidVideoGrabber::isInitialized() const{
+	return bGrabberInited;
+}
+
 void ofxAndroidVideoGrabber::videoSettings(){
 }
 
@@ -324,8 +324,12 @@ unsigned char * ofxAndroidVideoGrabber::getPixels(){
 	return pixels.getPixels();
 }
 
-ofPixelsRef	ofxAndroidVideoGrabber::getPixelsRef(){
+ofPixels&	ofxAndroidVideoGrabber::getPixelsRef(){
 	return pixels;
+}
+
+const ofPixels& ofxAndroidVideoGrabber::getPixelsRef() const {
+    return pixels;
 }
 
 void ofxAndroidVideoGrabber::setVerbose(bool bTalkToMe){
@@ -369,11 +373,11 @@ void ofxAndroidVideoGrabber::setDesiredFrameRate(int framerate){
 	attemptFramerate = framerate;
 }
 
-float ofxAndroidVideoGrabber::getHeight(){
+float ofxAndroidVideoGrabber::getHeight() const{
 	return pixels.getHeight();
 }
 
-float ofxAndroidVideoGrabber::getWidth(){
+float ofxAndroidVideoGrabber::getWidth() const{
 	return pixels.getWidth();
 }
 
@@ -382,7 +386,7 @@ bool ofxAndroidVideoGrabber::setPixelFormat(ofPixelFormat pixelFormat){
 	return true;
 }
 
-ofPixelFormat ofxAndroidVideoGrabber::getPixelFormat(){
+ofPixelFormat ofxAndroidVideoGrabber::getPixelFormat() const{
 	return internalPixelFormat;
 }
 

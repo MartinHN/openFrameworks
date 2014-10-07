@@ -69,6 +69,12 @@ void ofxAndroidVideoPlayer::unloadTexture(){
 	texture.texData.textureID=0;
 }
 
+//---------------------------------------------------------------------------
+void ofxAndroidVideoPlayer::removeTexture(){
+	texture.texData.textureID=0;
+	texture.texData.bAllocated = false;
+}
+
 
 //---------------------------------------------------------------------------
 ofxAndroidVideoPlayer::ofxAndroidVideoPlayer(){
@@ -164,7 +170,6 @@ bool ofxAndroidVideoPlayer::loadMovie(string fileName){
 	td.textureTarget = GL_TEXTURE_EXTERNAL_OES;
 	td.glTypeInternal = GL_RGBA;
 	td.bFlipTexture = false;
-	td.useTextureMatrix = true;
 
 	// hack to initialize gl resources from outside ofTexture
 	texture.texData = td;
@@ -201,14 +206,12 @@ void ofxAndroidVideoPlayer::update(){
 	env->CallVoidMethod(javaVideoPlayer,javaGetTextureMatrix,matrixJava);
 	jfloat * m = env->GetFloatArrayElements(matrixJava,0);
 
-	for(int i=0;i<16;i++) {
-		texture.texData.textureMatrix.getPtr()[i] = m[i];
-	}
+	ofMatrix4x4 textureMatrix(m);
 
 	ofMatrix4x4 vFlipTextureMatrix;
 	vFlipTextureMatrix.scale(1,-1,1);
 	vFlipTextureMatrix.translate(0,1,0);
-	texture.texData.textureMatrix = vFlipTextureMatrix * texture.texData.textureMatrix;
+	texture.setTextureMatrix(vFlipTextureMatrix * textureMatrix);
 	//texture.getTextureData().tex_t = 1.+1-matrix.getPtr()[0]; // Hack!
 	//texture.getTextureData().tex_u = 1.;
 
@@ -244,7 +247,7 @@ void ofxAndroidVideoPlayer::stop(){
 
 
 //---------------------------------------------------------------------------
-bool ofxAndroidVideoPlayer::isPaused(){
+bool ofxAndroidVideoPlayer::isPaused() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "isPaused(): java VideoPlayer not loaded";
@@ -269,7 +272,7 @@ bool ofxAndroidVideoPlayer::isPaused(){
 
 
 //---------------------------------------------------------------------------
-bool ofxAndroidVideoPlayer::isLoaded(){
+bool ofxAndroidVideoPlayer::isLoaded() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "isLoaded(): java VideoPlayer not loaded";
@@ -293,7 +296,7 @@ bool ofxAndroidVideoPlayer::isLoaded(){
 };
 
 //---------------------------------------------------------------------------
-bool ofxAndroidVideoPlayer::isPlaying(){
+bool ofxAndroidVideoPlayer::isPlaying() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "isPlaying(): java VideoPlayer not loaded";
@@ -322,17 +325,17 @@ ofTexture * ofxAndroidVideoPlayer::getTexture(){
 }
 
 //---------------------------------------------------------------------------
-float ofxAndroidVideoPlayer::getWidth(){
+float ofxAndroidVideoPlayer::getWidth() const {
 	return width;
 };
 
 //---------------------------------------------------------------------------
-float ofxAndroidVideoPlayer::getHeight(){
+float ofxAndroidVideoPlayer::getHeight() const {
 	return height;
 };
 
 //---------------------------------------------------------------------------
-float ofxAndroidVideoPlayer::getPosition(){
+float ofxAndroidVideoPlayer::getPosition() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "getPosition(): java VideoPlayer not loaded";
@@ -356,7 +359,7 @@ float ofxAndroidVideoPlayer::getPosition(){
 };
 
 //---------------------------------------------------------------------------
-float ofxAndroidVideoPlayer::getDuration(){
+float ofxAndroidVideoPlayer::getDuration() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "getDuration(): java VideoPlayer not loaded";
@@ -380,7 +383,7 @@ float ofxAndroidVideoPlayer::getDuration(){
 };
 
 //---------------------------------------------------------------------------
-bool ofxAndroidVideoPlayer::getIsMovieDone(){
+bool ofxAndroidVideoPlayer::getIsMovieDone() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "getIsMovieDone(): java VideoPlayer not loaded";
@@ -510,7 +513,7 @@ void ofxAndroidVideoPlayer::setLoopState(ofLoopType state){
 };
 
 //------------------------------------------------------------
-ofLoopType ofxAndroidVideoPlayer::getLoopState(){
+ofLoopType ofxAndroidVideoPlayer::getLoopState() const {
 
 	if(!javaVideoPlayer){
 		ofLogError("ofxAndroidVideoPlayer") << "getLoopState(): java VideoPlayer not loaded";

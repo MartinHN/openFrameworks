@@ -10,5 +10,26 @@
 #define __ViZa__jsonLoader__
 
 #include <iostream>
+#include "Container.h"
+#include "ofxJSONElement.h"
+#include "ofxCsv.h"
+
+
+class jsonLoader{
+ public:   
+    
+    static int globalCount;
+    
+    static jsonLoader * instance();
+    
+    void loadSegments(string audiopath="",string segpath="");
+    static bool audioExt(const ofFile & f);
+    static bool segExt(const ofFile & f);
+    
+    
+private:
+    static jsonLoader * inst;
+    
+};
 
 #endif /* defined(__ViZa__jsonLoader__) */

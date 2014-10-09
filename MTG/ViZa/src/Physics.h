@@ -11,26 +11,21 @@
 
 
 #include "ofMain.h"
+#include "Container.h"
+
 
 #include <iostream>
 
-class phyElement{
-public:
-    Container * c;
-    int level;
-    
-    
-    
-};
+
 
 class Physics{
     
 public:
-    Physics instance;
+    static Physics* instance;
     
-    Vector<float> ks;
+    vector<float> ks;
     
-    Vector<phyElement> elements;
+    
     
     
     ofFbo pos;
@@ -39,7 +34,7 @@ public:
     
     Physics(){if(instance == NULL){instance = this;}    }
     
-    void addElement(Container * c,int level);
+    void addElement(ofVec3f c,int level);
     void updatePhy(float time);
     
     

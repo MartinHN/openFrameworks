@@ -197,6 +197,7 @@ void ofNode::roll(float degrees) {
 void ofNode::rotate(const ofQuaternion& q) {
 	orientation *= q;
 	createMatrix();
+	onOrientationChanged();
 }
 
 //----------------------------------------
@@ -218,7 +219,7 @@ void ofNode::rotateAround(const ofQuaternion& q, const ofVec3f& point) {
 	
 	setGlobalPosition((getGlobalPosition() - point)* q + point); 
 	
-//	onOrientationChanged();
+	onOrientationChanged();
 	onPositionChanged();
 }
 
@@ -347,14 +348,14 @@ void ofNode::resetTransform() {
 }
 
 //----------------------------------------
-void ofNode::draw() {
+void ofNode::draw()  const{
 	transformGL();
-	customDraw();
+	const_cast<ofNode*>(this)->customDraw();
 	restoreTransformGL();
 }
 
 //----------------------------------------
-void ofNode::customDraw() {
+void ofNode::customDraw(){
 	ofDrawBox(10);
 	ofDrawAxis(20);
 }

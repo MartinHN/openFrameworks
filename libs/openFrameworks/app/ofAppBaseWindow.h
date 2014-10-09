@@ -16,10 +16,12 @@ public:
 	ofAppBaseWindow(){};
 	virtual ~ofAppBaseWindow(){};
 
-	virtual void setupOpenGL(int w, int h, int screenMode) {}
+	virtual void setupOpenGL(int w, int h, ofWindowMode screenMode) {}
 	virtual void initializeWindow() {}
 	virtual void runAppViaInfiniteLoop(ofBaseApp * appPtr) {}
-	virtual void windowShouldClose(){std::exit(0);}
+	virtual void windowShouldClose(){
+		std::exit(0);
+	}
 
 	virtual void hideCursor() {}
 	virtual void showCursor() {}
@@ -41,7 +43,7 @@ public:
 
 	virtual void	setWindowTitle(string title){}
 
-	virtual int		getWindowMode() {return 0;}
+	virtual ofWindowMode	getWindowMode() {return OF_WINDOW ;}
 
 	virtual void	setFullscreen(bool fullscreen){}
 	virtual void	toggleFullscreen(){}
@@ -50,6 +52,8 @@ public:
 	virtual void	disableSetupScreen(){}
 	
 	virtual void	setVerticalSync(bool enabled){};
+    virtual void    setClipboardString(const string& text) {}
+    virtual string  getClipboardString() { return ""; }
 
 #if defined(TARGET_LINUX) && !defined(TARGET_RASPBERRY_PI)
 	virtual Display* getX11Display(){return NULL;}
@@ -77,3 +81,14 @@ public:
 #endif
 };
 
+class ofAppBaseGLWindow: public ofAppBaseWindow{
+public:
+	virtual ~ofAppBaseGLWindow(){}
+	virtual void setOpenGLVersion(int glVersionMajor,int glVersionMinor){};
+};
+
+class ofAppBaseGLESWindow: public ofAppBaseWindow{
+public:
+	virtual ~ofAppBaseGLESWindow(){}
+	virtual void setGLESVersion(int glesVersion){};
+};

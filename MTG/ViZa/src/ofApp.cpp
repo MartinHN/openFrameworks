@@ -3,6 +3,7 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(30);
+    ofEnableAlphaBlending();
 //    cam.orbit(0, 0,3);
     cam.setNearClip(.01f);
     cam.setFov(ofRadToDeg(2*atan(.5)));

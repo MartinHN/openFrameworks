@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "ofMain.h"
-
+#include "AudioPlayer.h"
 
 class Container{
 public:
@@ -37,6 +37,13 @@ public:
     static void registerListener();
     
     
+    
+    
+    static std::map<int,ofSoundPlayer> players;
+    static bool Play(Container & c,int s);
+    
+    
+    
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
         pos=ofVec3f(ofRandom(0, 1),ofRandom(0,1),ofRandom(0,1));
         state = 0;
@@ -49,7 +56,7 @@ public:
     float begin;
     float end;
     int level;
-    int index;
+    unsigned int index;
     ofParameter<float> state;
     void setState(float & a);
     

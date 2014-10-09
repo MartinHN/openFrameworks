@@ -1,10 +1,27 @@
 #pragma once
 
 #include "ofMain.h"
+#include "Physics.h"
+#include "jsonLoader.h"
 
 class ofApp : public ofBaseApp{
 
 	public:
+    
+    ofCamera cam;
+    
+    
+    
+    
+    
+
+    
+    ofVec2f scrS;
+    
+
+    void drawMire();
+
+    
 		void setup();
 		void update();
 		void draw();
@@ -19,4 +36,6 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
+    
+    
 };

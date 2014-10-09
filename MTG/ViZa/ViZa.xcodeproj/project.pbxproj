@@ -51,6 +51,11 @@
 		6F15F16D196B046700D21B87 /* Transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F15F15B196B046700D21B87 /* Transaction.cpp */; };
 		6F15F180196B056000D21B87 /* SQLBinder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F15F17E196B056000D21B87 /* SQLBinder.cpp */; };
 		6F2D739BB67B61B0D43AB5BD /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B34D2935437BD95ED6DA2A59 /* ofxOscReceiver.cpp */; };
+		6F30277019E67E250077D5C7 /* jsonLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30276E19E67E250077D5C7 /* jsonLoader.cpp */; };
+		6F30277319E67E370077D5C7 /* Physics.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277119E67E370077D5C7 /* Physics.cpp */; };
+		6F30277619E67E9C0077D5C7 /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277419E67E9C0077D5C7 /* Container.cpp */; };
+		6F30277919E67EA40077D5C7 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */; };
+		6F30277B19E680840077D5C7 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58DCB2C0AEFDE6171E29540 /* Syphon.framework */; };
 		71A4F6BBEA51DEF95C3F5A32 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E8C3FB74CE065668FFE36A8 /* ofxAssimpModelLoader.cpp */; };
 		77385F791172E4320575F365 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05DCAA7DA9FA05C812EB1F35 /* json_reader.cpp */; };
 		78D58CC3C4BDA2D3D0CA8D31 /* ofxUIWaveform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B0B91449B395C88BAC92CA8 /* ofxUIWaveform.cpp */; };
@@ -326,6 +331,14 @@
 		6F15F15E196B046700D21B87 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6F15F17E196B056000D21B87 /* SQLBinder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SQLBinder.cpp; sourceTree = "<group>"; };
 		6F15F17F196B056000D21B87 /* SQLBinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLBinder.h; sourceTree = "<group>"; };
+		6F30276E19E67E250077D5C7 /* jsonLoader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsonLoader.cpp; sourceTree = "<group>"; };
+		6F30276F19E67E250077D5C7 /* jsonLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsonLoader.h; sourceTree = "<group>"; };
+		6F30277119E67E370077D5C7 /* Physics.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Physics.cpp; sourceTree = "<group>"; };
+		6F30277219E67E370077D5C7 /* Physics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Physics.h; sourceTree = "<group>"; };
+		6F30277419E67E9C0077D5C7 /* Container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Container.cpp; sourceTree = "<group>"; };
+		6F30277519E67E9C0077D5C7 /* Container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Container.h; sourceTree = "<group>"; };
+		6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioPlayer.cpp; sourceTree = "<group>"; };
+		6F30277819E67EA40077D5C7 /* AudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioPlayer.h; sourceTree = "<group>"; };
 		6F51180DF61F7A167A205F7F /* ofxAssimpTexture.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAssimpTexture.h; path = ../../addons/ofxAssimpModelLoader/src/ofxAssimpTexture.h; sourceTree = SOURCE_ROOT; };
 		6F8DEBB04960E223982CDABF /* ofxUICanvas.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUICanvas.cpp; path = ../../addons/ofxUI/src/ofxUICanvas.cpp; sourceTree = SOURCE_ROOT; };
 		70AAD97154A7F3A7E07DD2E8 /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSliderGroup.cpp; path = ../../addons/ofxGui/src/ofxSliderGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -564,6 +577,7 @@
 				E45BE9830E8CC7DD009D7055 /* OpenGL.framework in Frameworks */,
 				E45BE9840E8CC7DD009D7055 /* QuickTime.framework in Frameworks */,
 				E4C2424710CC5A17004149E2 /* AppKit.framework in Frameworks */,
+				6F30277B19E680840077D5C7 /* Syphon.framework in Frameworks */,
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
@@ -956,6 +970,15 @@
 				6F15F15C196B046700D21B87 /* Transaction.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		6F30277A19E67FE70077D5C7 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				6F15F17E196B056000D21B87 /* SQLBinder.cpp */,
+				6F15F17F196B056000D21B87 /* SQLBinder.h */,
+			);
+			name = Old;
 			sourceTree = "<group>";
 		};
 		737B033AA777B67BA4F8F4D2 /* opencv */ = {
@@ -1435,11 +1458,18 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6F30277A19E67FE70077D5C7 /* Old */,
+				6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */,
+				6F30277819E67EA40077D5C7 /* AudioPlayer.h */,
+				6F30277419E67E9C0077D5C7 /* Container.cpp */,
+				6F30277519E67E9C0077D5C7 /* Container.h */,
+				6F30277119E67E370077D5C7 /* Physics.cpp */,
+				6F30277219E67E370077D5C7 /* Physics.h */,
+				6F30276E19E67E250077D5C7 /* jsonLoader.cpp */,
+				6F30276F19E67E250077D5C7 /* jsonLoader.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				6F15F17E196B056000D21B87 /* SQLBinder.cpp */,
-				6F15F17F196B056000D21B87 /* SQLBinder.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1582,7 +1612,7 @@
 		E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0510;
 			};
 			buildConfigurationList = E4B69B4D0A3A1720003C02F2 /* Build configuration list for PBXProject "ViZa" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1667,6 +1697,7 @@
 				7B402ED651BC0C49EF93DFF3 /* ofxCvContourFinder.cpp in Sources */,
 				4658A6A134834CAE7045FA19 /* ofxCvFloatImage.cpp in Sources */,
 				40E7CEC62E17A8F6E6A443AE /* ofxCvGrayscaleImage.cpp in Sources */,
+				6F30277019E67E250077D5C7 /* jsonLoader.cpp in Sources */,
 				28189DB43CD152201712E778 /* ofxCvHaarFinder.cpp in Sources */,
 				63512F2008E135A7A3860582 /* ofxCvImage.cpp in Sources */,
 				FEE13C3059BFBFB576FCBAF7 /* ofxCvShortImage.cpp in Sources */,
@@ -1685,6 +1716,7 @@
 				A857235EB7F8624F0C02D157 /* OscOutboundPacketStream.cpp in Sources */,
 				9753D2F373BDF97B89D59B33 /* OscPrintReceivedElements.cpp in Sources */,
 				F95B04FD042E7407B70EE321 /* OscReceivedElements.cpp in Sources */,
+				6F30277619E67E9C0077D5C7 /* Container.cpp in Sources */,
 				014058944CFE6AE1A2171D12 /* OscTypes.cpp in Sources */,
 				10FB75678D18D1BC4795801A /* ofxSyphonClient.mm in Sources */,
 				004F98E10DEE60853D076FF8 /* ofxSyphonServer.mm in Sources */,
@@ -1735,12 +1767,14 @@
 				7F374B126052C645BC8825A7 /* ofxUIValuePlotter.cpp in Sources */,
 				78D58CC3C4BDA2D3D0CA8D31 /* ofxUIWaveform.cpp in Sources */,
 				D65873F81B07E92213914E5F /* ofxUIWidget.cpp in Sources */,
+				6F30277319E67E370077D5C7 /* Physics.cpp in Sources */,
 				F265FF0B49705768728F4D75 /* ofxUIWidgetWithLabel.cpp in Sources */,
 				B9B2330F6F0272D1823E57B2 /* ofxVectorGraphics.cpp in Sources */,
 				0858540A9B11983E79D8C8EA /* CreEPS.cpp in Sources */,
 				0C626D3D484EA5FB87A6AD23 /* ofxXmlSettings.cpp in Sources */,
 				28DC652211D4AF8CC023D568 /* tinyxml.cpp in Sources */,
 				F877D69532909AE487E0EF22 /* tinyxmlerror.cpp in Sources */,
+				6F30277919E67EA40077D5C7 /* AudioPlayer.cpp in Sources */,
 				32E2318B89B6217AE6052155 /* tinyxmlparser.cpp in Sources */,
 				6B510B08B3ABDF0145095143 /* ofxJSONElement.cpp in Sources */,
 				77385F791172E4320575F365 /* json_reader.cpp in Sources */,
@@ -1764,7 +1798,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -1861,6 +1894,7 @@
 					../../addons/ofxJSON/src,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
 					"-lpthread",
@@ -1879,7 +1913,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -1999,6 +2032,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Users/mhermant/Documents/Work/Dev/openFrameworks/addons/ofxSyphon/libs/Syphon/lib/osx,
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../libs/glut/lib/osx\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -2085,6 +2119,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					/Users/mhermant/Documents/Work/Dev/openFrameworks/addons/ofxSyphon/libs/Syphon/lib/osx,
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../libs/glut/lib/osx\"";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;

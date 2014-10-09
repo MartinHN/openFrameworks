@@ -22,7 +22,7 @@ public:
     
     
     
-    SQLite::Database db
+    SQLite::Database db;
 };
 
 #endif /* defined(__ViZa__SQLBinder__) */

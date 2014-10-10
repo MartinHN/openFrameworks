@@ -13,6 +13,9 @@
 #include "ofMain.h"
 #include "AudioPlayer.h"
 
+
+//class AudioPlayer;
+
 class Container{
 public:
     
@@ -39,8 +42,7 @@ public:
     
     
     
-    static std::map<int,ofSoundPlayer> players;
-    static bool Play(Container & c,int s);
+    
     
     
     

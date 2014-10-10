@@ -30,31 +30,39 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
 
     ad = ofDirectory(segpath);
     ad.allowExt("seg");
+    ad.allowExt("csv");
+    ad.allowExt("lab");
+    ad.allowExt("json");
+    
     ad.listDir();
     vector<ofFile> segL = ad.getFiles();
 
     
     
     
-    std::map<string,string> mapL;
+    std::map<ofFile,ofFile> mapL;
     
     for(int i = 0 ; i < audioL.size();i++){
             for(int j = 0 ; j < segL.size();j++){
                 if(audioL[i].getBaseName()==segL[j].getBaseName()){
-                    mapL[audioL[i].path()] = segL[j].path();
+                    mapL[audioL[i]] = segL[j];
                     break;
                 }
             }
     }
     
     int j = 0;
-    for(std::map<string, string>::iterator p=mapL.begin();p!= mapL.end();++p){
+    for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
         wng::ofxCsv csv;
-        csv.loadFile(p->second, "\t");
+        if(p->second.getExtension() =="seg"){
+        csv.loadFile(p->second.path(), "\t");
         
         for(int i = 0 ; i < csv.numRows ; i++){
-            Container::containers.push_back(Container(p->first, csv.getFloat(i, 0), csv.getFloat(i, 1),j));
+            Container::containers.push_back(Container(p->first.path(), csv.getFloat(i, 0), csv.getFloat(i, 1),j));
             j++;
+            
+            
+        }
             
             
         }
@@ -66,14 +74,6 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
 }
 
 
-bool jsonLoader::audioExt(const ofFile & f){
-    return f.getExtension() == ".wav";
-    
-}
-
-bool jsonLoader::segExt(const ofFile & f){
-    return f.getExtension() == ".csv";
-}
 
 
 

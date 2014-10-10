@@ -21,7 +21,7 @@
 class Physics{
     
 public:
-    static Physics* instance;
+   
     
     vector<float> ks;
     
@@ -32,13 +32,13 @@ public:
     ofFbo vel;
     
     
-    Physics(){if(instance == NULL){instance = this;}    }
+    Physics * instance(){if(inst == NULL){inst = this;}    }
     
     void addElement(ofVec3f c,int level);
     void updatePhy(float time);
     
-    
-    
+private:
+     static Physics* inst;
     
     
 };

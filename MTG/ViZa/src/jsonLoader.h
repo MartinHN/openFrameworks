@@ -16,15 +16,14 @@
 
 
 class jsonLoader{
- public:   
+ public:
     
     static int globalCount;
     
     static jsonLoader * instance();
     
     void loadSegments(string audiopath="",string segpath="");
-    static bool audioExt(const ofFile & f);
-    static bool segExt(const ofFile & f);
+
     
     
 private:

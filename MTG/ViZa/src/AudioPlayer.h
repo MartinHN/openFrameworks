@@ -13,22 +13,27 @@
 #include "ofMain.h"
 
 
+#include "Container.h"
+class Container;
+
+
 #define POLYPHONY 10
+
+
 
 class AudioPlayer{
 public:
-    
-    static AudioPlayer * instance(){if(instance==NULL){inst = new AudioPlayer();}return inst;};
-    
-    
-    
-    
-    
     AudioPlayer();
     
-//    bool Play(Container & c);
-//    void Stop(Container & c);
-private:
+    static AudioPlayer * instance(){
+        if(inst==NULL){inst = new AudioPlayer();}return inst;
+    };
+    
+    static std::map<int,ofSoundPlayer> players;
+    static bool Play(Container & c,int s);
+//    static bool Play(int uid,string path,float begin,float end ,ofParameter<float> & s);
+    
+    
     static AudioPlayer * inst;
     
     

@@ -7,10 +7,12 @@
 //
 
 #include "Container.h"
-#include "ofxTweener.h"
+//#include "ofxTweener.h"
 
 
-std::map<int,ofSoundPlayer> Container::players;
+
+
+
 vector<Container> Container::containers;
 ofVbo Container::vbo;
 
@@ -75,44 +77,11 @@ void Container::updateOneColor(int idx,ofColor col){
 void Container::setState(float & s){
    cols[index] = stateColor[(int)s];
     updateOneColor(index,cols[index]);
-    Play(*this,state);
+    AudioPlayer::instance()->Play(*this,(int)s);
+//    AudioPlayer::instance()->Play(index,path,begin,end,state);
     
 }
 
-
-bool Container::Play(Container &c,int s){
-    
-    
-    if(players.size()>POLYPHONY && s>0)return false;
-    
-    
-        for(map<int,ofSoundPlayer>::iterator p= players.begin();p!=players.end();++p){
-            if(p->first==c.index){
-                if(s ==1){
-                    p->second.play();
-                    c.state=0;
-                    players.erase(p++);
-                    
-                    return false;
-                }
-                else if( s ==0){
-                    p->second.stop();
-                    players.erase(p++);
-                    return false;
-                    
-                }
-            }
-        }
-    
-    if(s==1){
-        players[c.index] = ofSoundPlayer();
-        players[c.index].loadSound(c.path);
-        players[c.index].setPositionMS(c.begin*1000.0);
-        players[c.index].play();
-    }
-    
-    return false;
-}
 
 
 

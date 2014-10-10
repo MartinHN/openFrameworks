@@ -54,8 +54,6 @@
 		6F30277919E67EA40077D5C7 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */; };
 		6F30277E19E6848E0077D5C7 /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277C19E6848E0077D5C7 /* Container.cpp */; };
 		6F30279719E6922E0077D5C7 /* ofxCsv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30279319E6922E0077D5C7 /* ofxCsv.cpp */; };
-		6F3027B719E6E2D60077D5C7 /* ofxTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3027B119E6E2D60077D5C7 /* ofxTransitions.cpp */; };
-		6F3027B819E6E2D60077D5C7 /* ofxTweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3027B319E6E2D60077D5C7 /* ofxTweener.cpp */; };
 		71A4F6BBEA51DEF95C3F5A32 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E8C3FB74CE065668FFE36A8 /* ofxAssimpModelLoader.cpp */; };
 		77385F791172E4320575F365 /* json_reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 05DCAA7DA9FA05C812EB1F35 /* json_reader.cpp */; };
 		78D58CC3C4BDA2D3D0CA8D31 /* ofxUIWaveform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8B0B91449B395C88BAC92CA8 /* ofxUIWaveform.cpp */; };
@@ -342,11 +340,6 @@
 		6F30279119E6922E0077D5C7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6F30279319E6922E0077D5C7 /* ofxCsv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCsv.cpp; sourceTree = "<group>"; };
 		6F30279419E6922E0077D5C7 /* ofxCsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCsv.h; sourceTree = "<group>"; };
-		6F3027AF19E6E2D60077D5C7 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		6F3027B119E6E2D60077D5C7 /* ofxTransitions.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTransitions.cpp; sourceTree = "<group>"; };
-		6F3027B219E6E2D60077D5C7 /* ofxTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTransitions.h; sourceTree = "<group>"; };
-		6F3027B319E6E2D60077D5C7 /* ofxTweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTweener.cpp; sourceTree = "<group>"; };
-		6F3027B419E6E2D60077D5C7 /* ofxTweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTweener.h; sourceTree = "<group>"; };
 		6F51180DF61F7A167A205F7F /* ofxAssimpTexture.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAssimpTexture.h; path = ../../addons/ofxAssimpModelLoader/src/ofxAssimpTexture.h; sourceTree = SOURCE_ROOT; };
 		6F8DEBB04960E223982CDABF /* ofxUICanvas.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUICanvas.cpp; path = ../../addons/ofxUI/src/ofxUICanvas.cpp; sourceTree = SOURCE_ROOT; };
 		70AAD97154A7F3A7E07DD2E8 /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSliderGroup.cpp; path = ../../addons/ofxGui/src/ofxSliderGroup.cpp; sourceTree = SOURCE_ROOT; };
@@ -966,27 +959,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		6F30279F19E6E2D60077D5C7 /* ofxTweener */ = {
-			isa = PBXGroup;
-			children = (
-				6F3027AF19E6E2D60077D5C7 /* README */,
-				6F3027B019E6E2D60077D5C7 /* src */,
-			);
-			name = ofxTweener;
-			path = ../../addons/ofxTweener;
-			sourceTree = "<group>";
-		};
-		6F3027B019E6E2D60077D5C7 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				6F3027B119E6E2D60077D5C7 /* ofxTransitions.cpp */,
-				6F3027B219E6E2D60077D5C7 /* ofxTransitions.h */,
-				6F3027B319E6E2D60077D5C7 /* ofxTweener.cpp */,
-				6F3027B419E6E2D60077D5C7 /* ofxTweener.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		737B033AA777B67BA4F8F4D2 /* opencv */ = {
 			isa = PBXGroup;
 			children = (
@@ -1169,7 +1141,6 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				6F30279F19E6E2D60077D5C7 /* ofxTweener */,
 				6F30277F19E6922D0077D5C7 /* ofxCsv */,
 				6F15F0F5196B046600D21B87 /* ofxSQLiteCpp */,
 				9F66160B6D853AA730F370C2 /* ofx3DModelLoader */,
@@ -1714,7 +1685,6 @@
 				6F15F16A196B046700D21B87 /* Column.cpp in Sources */,
 				CB41FEEB32458564AD78EE87 /* UdpSocketWin.cpp in Sources */,
 				A857235EB7F8624F0C02D157 /* OscOutboundPacketStream.cpp in Sources */,
-				6F3027B819E6E2D60077D5C7 /* ofxTweener.cpp in Sources */,
 				9753D2F373BDF97B89D59B33 /* OscPrintReceivedElements.cpp in Sources */,
 				F95B04FD042E7407B70EE321 /* OscReceivedElements.cpp in Sources */,
 				014058944CFE6AE1A2171D12 /* OscTypes.cpp in Sources */,
@@ -1736,7 +1706,6 @@
 				884140A60B4F61F22809ACFE /* ofxUIImageSlider.cpp in Sources */,
 				E9169FACA5153089A1CC1328 /* ofxUIImageToggle.cpp in Sources */,
 				1008E12EC52F9A6735082236 /* ofxUILabel.cpp in Sources */,
-				6F3027B719E6E2D60077D5C7 /* ofxTransitions.cpp in Sources */,
 				6F15F16D196B046700D21B87 /* Transaction.cpp in Sources */,
 				E06EF7AB64E5290D0B6665C2 /* ofxUILabelButton.cpp in Sources */,
 				45856715D4FD8D39DDB28D6A /* ofxUILabelToggle.cpp in Sources */,

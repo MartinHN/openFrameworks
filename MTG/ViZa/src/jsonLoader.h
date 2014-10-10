@@ -10,10 +10,11 @@
 #define __ViZa__jsonLoader__
 
 #include <iostream>
+//#include "stdio.h"
 #include "Container.h"
 #include "ofxJSONElement.h"
 #include "ofxCsv.h"
-
+#include "yamlinput.h"
 
 class jsonLoader{
  public:

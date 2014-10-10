@@ -476,6 +476,8 @@ void ofVbo::updateVertexData(const float * vert0x, int total) {
 	}
 }
 
+
+
 //--------------------------------------------------------------
 void ofVbo::updateColorData(const ofFloatColor * colors, int total) {
 	updateColorData(&colors[0].r,total);
@@ -486,6 +488,14 @@ void ofVbo::updateColorData(const float * color0r, int total) {
 	if(colorId!=0) {
 		glBindBuffer(GL_ARRAY_BUFFER, colorId);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, total*colorStride, color0r);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+	}
+}
+
+void ofVbo::updateOneColorData(const ofFloatColor * color, int idx) {
+	if(colorId!=0) {
+		glBindBuffer(GL_ARRAY_BUFFER, colorId);
+		glBufferSubData(GL_ARRAY_BUFFER, idx*colorStride, colorStride, &color[0].r);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 }

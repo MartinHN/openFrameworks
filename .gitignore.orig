@@ -9,12 +9,18 @@ openFrameworksUniversal.a
 libs/openFrameworksCompiled/lib/*/*
 !libs/openFrameworksCompiled/lib/*/.gitkeep
 
+<<<<<<< HEAD
+#rule to avoid non-official addons going into git
+#see addons/.gitignore
+#addons/*
+=======
 # apothecary
 scripts/apothecary/build
 
 # rule to avoid non-official addons going into git
 # see addons/.gitignore
 addons/*
+>>>>>>> pure/master
 
 # rule to avoid non-official apps going into git
 # see apps/.gitignore
@@ -107,3 +113,13 @@ Desktop.ini
 #########################
 
 .mailmap
+<<<<<<< HEAD
+
+
+#########################
+# specific
+#########################
+
+
+=======
+>>>>>>> pure/master

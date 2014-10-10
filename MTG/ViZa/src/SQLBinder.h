@@ -9,6 +9,20 @@
 #ifndef __ViZa__SQLBinder__
 #define __ViZa__SQLBinder__
 
-#include <iostream>
+
+#include "SQLiteC++.h"
+#include "ofMain.h"
+
+
+class SQLBinder{
+public:
+    SQLBinder();
+    
+    void loadDB(string s = "defaultdb");
+    
+    
+    
+    SQLite::Database db;
+};
 
 #endif /* defined(__ViZa__SQLBinder__) */

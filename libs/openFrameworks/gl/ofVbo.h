@@ -46,6 +46,7 @@ public:
 	
 	void updateVertexData(const float * ver0x, int total);
 	void updateColorData(const float * color0r, int total);
+    void updateOneColorData(const ofFloatColor * color, int idx);
 	void updateNormalData(const float * normal0x, int total);
 	void updateTexCoordData(const float * texCoord0x, int total);
 	

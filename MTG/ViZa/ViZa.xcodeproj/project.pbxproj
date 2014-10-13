@@ -54,6 +54,7 @@
 		6F30277919E67EA40077D5C7 /* AudioPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */; };
 		6F30277E19E6848E0077D5C7 /* Container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30277C19E6848E0077D5C7 /* Container.cpp */; };
 		6F30279719E6922E0077D5C7 /* ofxCsv.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F30279319E6922E0077D5C7 /* ofxCsv.cpp */; };
+		6F4C8BE119EC21B2007A21F3 /* Timed.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4C8BDF19EC21B2007A21F3 /* Timed.cpp */; };
 		6F5E979B19E84FEB009380C3 /* yamlinput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F5E979919E84FEB009380C3 /* yamlinput.cpp */; };
 		6F5E979E19E84FF8009380C3 /* yamlast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F5E979C19E84FF8009380C3 /* yamlast.cpp */; };
 		71A4F6BBEA51DEF95C3F5A32 /* ofxAssimpModelLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9E8C3FB74CE065668FFE36A8 /* ofxAssimpModelLoader.cpp */; };
@@ -342,6 +343,8 @@
 		6F30279119E6922E0077D5C7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		6F30279319E6922E0077D5C7 /* ofxCsv.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxCsv.cpp; sourceTree = "<group>"; };
 		6F30279419E6922E0077D5C7 /* ofxCsv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxCsv.h; sourceTree = "<group>"; };
+		6F4C8BDF19EC21B2007A21F3 /* Timed.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timed.cpp; sourceTree = "<group>"; };
+		6F4C8BE019EC21B2007A21F3 /* Timed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Timed.h; sourceTree = "<group>"; };
 		6F51180DF61F7A167A205F7F /* ofxAssimpTexture.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxAssimpTexture.h; path = ../../addons/ofxAssimpModelLoader/src/ofxAssimpTexture.h; sourceTree = SOURCE_ROOT; };
 		6F5E979919E84FEB009380C3 /* yamlinput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = yamlinput.cpp; sourceTree = "<group>"; };
 		6F5E979A19E84FEB009380C3 /* yamlinput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = yamlinput.h; sourceTree = "<group>"; };
@@ -968,6 +971,8 @@
 		6F5E979819E84FDC009380C3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6F4C8BDF19EC21B2007A21F3 /* Timed.cpp */,
+				6F4C8BE019EC21B2007A21F3 /* Timed.h */,
 				6F5E979C19E84FF8009380C3 /* yamlast.cpp */,
 				6F5E979D19E84FF8009380C3 /* yamlast.h */,
 				6F5E979919E84FEB009380C3 /* yamlinput.cpp */,
@@ -1699,6 +1704,7 @@
 				E717C5A73BE4076EDBC728DC /* IpEndpointName.cpp in Sources */,
 				6F15F169196B046700D21B87 /* sqlite3.c in Sources */,
 				F0509CA2E805D1D5F70A87D0 /* NetworkingUtils.cpp in Sources */,
+				6F4C8BE119EC21B2007A21F3 /* Timed.cpp in Sources */,
 				C9651B24B869083F299EFA4D /* UdpSocket.cpp in Sources */,
 				AF2ED92310AA8151DD57C8E7 /* NetworkingUtilsWin.cpp in Sources */,
 				6F15F16A196B046700D21B87 /* Column.cpp in Sources */,

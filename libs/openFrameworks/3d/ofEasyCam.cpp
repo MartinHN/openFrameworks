@@ -70,7 +70,7 @@ void ofEasyCam::reset(){
 	
 	resetTransform();
 	setPosition(0, 0, lastDistance);
-	
+	orbit(0,0,1);
 		
 	xRot = 0;
 	yRot = 0;

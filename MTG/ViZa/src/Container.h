@@ -38,7 +38,7 @@ public:
     
     
     static void registerListener();
-    
+    static void orderBy(string attr,int axe,bool norm);
     
     
     
@@ -47,7 +47,7 @@ public:
     
     
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
-        pos=ofVec3f(ofRandom(0, 1),ofRandom(0,1),ofRandom(0,1));
+        pos=ofVec3f((end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
         state = 0;
         
     };
@@ -61,6 +61,8 @@ public:
     unsigned int index;
     ofParameter<float> state;
     void setState(float & a);
+    
+    map<string, float> attributes;
     
     
 };

@@ -69,16 +69,35 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
         if(p->second.getExtension() =="json"){
             ofxJSONElement json;
             json.open(p->second.path());
-            vector<string> attrs = json.getMemberNames();
-            for(vector<string>::iterator it = attrs.begin();it!=attrs.end();++it ){
-                string cur = *it;
-                vector<string> subnames=json[cur].getMemberNames();
-                for(vector<string>::iterator itt = subnames.begin();itt!=subnames.end();++itt ){
-                    if(json[cur][*itt].getMemberNames()[0]=="aggregate"){
-                        
-                    }
+            
+            
+
+            map<string,vector<float> > onsets = crawl(json.get("onsets",NULL));
+            
+            if(onsets["slice.time"].size()>1){
+                int ii = 0;
+            for(vector<float>::iterator it  = onsets["slice.time"].begin()+1 ; it!= onsets["slice.time"].end() ; ++it){
+                 Container::containers.push_back(Container(p->first.path(), *(it-1),*it,j));
+                for(map<string,vector<float> >::iterator itt=onsets.begin();itt!=onsets.end() ; ++itt){
+                    if(itt->first!="slice.time")   Container::containers.back().attributes[itt->first]=itt->second[ii];
                 }
+                j++;
+                ii++;
             }
+            }
+            
+           
+//            vector<string> attrs = json.getMemberNames();
+//            for(vector<string>::iterator it = attrs.begin();it!=attrs.end();++it ){
+//                string cur = *it;
+//                vector<string> subnames=json[cur].getMemberNames();
+//                
+//                for(vector<string>::iterator itt = subnames.begin();itt!=subnames.end();++itt ){
+//                    if(json[cur][*itt].getMemberNames()[0]=="aggregate"){
+//                        
+//                    }
+//                }
+//            }
         
         }
         
@@ -118,7 +137,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
 //            yaml_parser_set_input_file(&parser, input);
         }
        
-        cout << j << endl;
+        
         globalCount++;
        
     }
@@ -126,7 +145,24 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
 }
 
 
+map<string,vector<float> > jsonLoader::crawl(Json::Value j){
+    
+    map<string,vector<float> >  RES;
+    
+    for (Json::Value::iterator it = j.begin() ; it != j.end() ; ++it ){
 
+        string attrname =it.memberName();
+                for (Json::Value::iterator itt = (*it).begin() ; itt != (*it).end() ; ++itt ){
+                            string attrtype =itt.memberName();
+                    for (Json::Value::iterator ittt = (*itt).begin() ; ittt != (*itt).end() ; ++ittt ){
+                        RES[attrname+"."+attrtype].push_back((*ittt).asFloat());
+                    }
+                    
+                }
+    
+    }
+               return RES;
+}
 
 
 

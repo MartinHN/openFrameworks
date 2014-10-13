@@ -12,7 +12,7 @@
 #include <iostream>
 #include "ofMain.h"
 
-
+#include "Timed.h"
 #include "Container.h"
 class Container;
 
@@ -26,14 +26,16 @@ public:
     AudioPlayer();
     
     static AudioPlayer * instance(){
-        if(inst==NULL){inst = new AudioPlayer();}return inst;
+        if(inst==NULL){inst = new AudioPlayer();
+        ofAddListener(ofEvents().messageEvent,inst,&AudioPlayer::gotMessage);
+        }return inst;
     };
     
     static std::map<int,ofSoundPlayer> players;
     static bool Play(Container & c,int s);
 //    static bool Play(int uid,string path,float begin,float end ,ofParameter<float> & s);
     
-    
+    void gotMessage(ofMessage & msg);
     static AudioPlayer * inst;
     
     

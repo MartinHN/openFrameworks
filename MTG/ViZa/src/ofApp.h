@@ -8,7 +8,7 @@ class ofApp : public ofBaseApp{
 
 	public:
     
-    ofCamera cam;
+    ofEasyCam cam;
     
     
     

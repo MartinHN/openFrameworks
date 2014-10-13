@@ -14,6 +14,7 @@
 
 
 vector<Container> Container::containers;
+
 ofVbo Container::vbo;
 
 
@@ -103,6 +104,25 @@ void Container::Cast(ofCamera cam, ofVec2f mouse){
     }
     
 }
+
+
+void Container::orderBy(string attr,int axe,bool norm){
+    float max = 1;
+    if(norm){
+        max = -99999;
+    for(vector<Container>::iterator it = containers.begin() ; it!=containers.end();++it){
+        max = MAX(max,it->attributes[attr]);
+    }
+    }
+
+    for(vector<Container>::iterator it = containers.begin() ; it!=containers.end();++it){
+        if(axe==0)          it->pos.x = it->attributes[attr]/max;
+        else if(axe==1)     it->pos.y = it->attributes[attr]/max;
+        else                it->pos.z = it->attributes[attr]/max;
+    }
+    updateVBO();
+}
+
 float Container::distanceVanish(ofCamera cam){
 
     return 2.0f/tan(ofDegToRad(cam.getFov()/2.0f));

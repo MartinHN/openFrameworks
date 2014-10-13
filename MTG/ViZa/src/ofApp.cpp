@@ -8,13 +8,15 @@ void ofApp::setup(){
     cam.setNearClip(.01f);
     cam.setFov(ofRadToDeg(2*atan(.5)));
     cam.orbit(0,0, 1);
-    
-    
+    cam.setAutoDistance(false);
+    cam.enableMouseInput();
+    cam.enableMouseMiddleButton();
+//
     
 
     jsonLoader::instance()->loadSegments();
     
-    Container::radius = 30;
+    Container::radius = 10;
     glPointSize(Container::radius);
     GLfloat attPoints[] = {0,Container::distanceVanish(cam),0};//*,0};
 

@@ -22,15 +22,16 @@ bool AudioPlayer::Play(Container & c, int s){
     
     if(players.size()>POLYPHONY && s>0)return false;
     
-    
+    int i = 0;
     for(map<int,ofSoundPlayer>::iterator p= players.begin();p!=players.end();++p){
         if(p->first==c.index){
             if(s ==1){
-                p->second.play();
-                s=0;
-                players.erase(p++);
+                players[c.index].setPositionMS(c.begin*1000.0);
+                TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+ofToString(c.index));
+//                s=0;
+//                players.erase(p++);
                 
-                return false;
+                return true;
             }
             else if( s ==0){
                 p->second.stop();
@@ -39,19 +40,31 @@ bool AudioPlayer::Play(Container & c, int s){
                 
             }
         }
+        i++;
     }
     
     if(s==1){
         players[c.index] = ofSoundPlayer();
         players[c.index].loadSound(c.path);
-        players[c.index].setPositionMS(c.begin*1000.0);
+        
         players[c.index].play();
+        players[c.index].setPositionMS(c.begin*1000.0);
+        TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+ofToString(c.index));
     }
     
     return false;
 }
 
-
+void AudioPlayer::gotMessage(ofMessage & msg){
+    vector<string> inst = ofSplitString(msg.message," ");
+    if (inst.size()>=2){
+        if(inst[0]=="stop"){
+            players[ofToInt(inst[1])].stop();
+            Container::containers[ofToInt(inst[1])].state = 0;
+        }
+    }
+    
+}
 
 
 //bool AudioPlayer::Play(int uid,string path,float begin,float end ,ofParameter<float> & s){

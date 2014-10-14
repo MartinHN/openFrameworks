@@ -1,5 +1,7 @@
 #include "ofApp.h"
 
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetFrameRate(30);
@@ -16,15 +18,22 @@ void ofApp::setup(){
 
     jsonLoader::instance()->loadSegments();
     
-    Container::radius = 10;
+    
+    
+    Container::radius = 15;
     glPointSize(Container::radius);
-    GLfloat attPoints[] = {0,Container::distanceVanish(cam),0};//*,0};
+    GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
 
     glPointParameterfv(	GL_POINT_DISTANCE_ATTENUATION,&attPoints[0]);
 
 
    
-    Container::updateVBO();
+    Physics::updateVBO();
+    
+    
+    GUI::instance()->setup();
+    
+    GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
 }
 
 //--------------------------------------------------------------
@@ -40,10 +49,11 @@ void ofApp::draw(){
     cam.begin();
 //    glBegin(GL_POINT);
     ofSetColor(ofColor(255,0,0));
-    Container::vbo.drawElements(GL_POINTS,Container::vbo.getNumVertices());
+    Physics::vbo.drawElements(GL_POINTS,Physics::vbo.getNumVertices());
     drawMire();
     cam.end();
     
+     //if(drawGUI)GUI::instance()->draw();
 }
 
 
@@ -63,10 +73,26 @@ void ofApp::drawMire(){
 
 
 
-
+void ofApp::isGUIing(bool & t){
+    if(t){
+        cam.disableMouseInput();
+        cam.disableMouseMiddleButton();
+    }
+    else{
+        cam.enableMouseInput();
+        cam.enableMouseMiddleButton();
+    }
+}
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    
+    switch (key) {
+        case 'g':
+            GUI::instance()->guiconf->toggleMinified();
+            break;
+            
+        default:
+            break;
+    }
 }
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
@@ -85,7 +111,9 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    if(button == 0)Container::Cast(cam, ofVec2f(x,y));
+    Container * cc = Physics::Cast(cam, ofVec2f(x,y));
+    if (cc == NULL) return;
+    if(button == 0)cc->state =cc->state==0?1:0;;
 }
 
 //--------------------------------------------------------------

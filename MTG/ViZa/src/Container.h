@@ -12,35 +12,29 @@
 #include <iostream>
 #include "ofMain.h"
 #include "AudioPlayer.h"
+#include "Physics.h"
 
 
-//class AudioPlayer;
 
 class Container{
 public:
     
     static vector<Container> containers;
-    static ofVbo vbo;
+    static map<string,vector<Container*> > songs;
     
-    static ofVec3f* vs;
-    static ofFloatColor *cols;
-    static unsigned int* idxs;
+
     
     static float radius;
     
-    static void updateOneColor(int idx,ofColor col);
-    static void updateVBO();
-    static void Cast(ofCamera cam,ofVec2f mouse);
-    static void freeVbo();
-    static float distanceVanish(ofCamera c);
+    
     
     static ofFloatColor stateColor [];
     
     
     static void registerListener();
     static void orderBy(string attr,int axe,bool norm);
-    
-    
+    static void selectSong(string name);
+    static string selectedSong;
     
     
     
@@ -49,12 +43,16 @@ public:
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
         pos=ofVec3f((end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
         state = 0;
+        filename = path.substr(path.find_last_of("/")+1);
+//        if(((map<string,vector<Container*> >::iterator)songs.find(filename))==songs.end())
+        songs[filename].push_back(this);
         
     };
     
     
     ofVec3f pos;
     string path;
+    string filename;
     float begin;
     float end;
     int level;

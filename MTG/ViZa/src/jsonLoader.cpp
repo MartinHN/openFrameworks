@@ -78,8 +78,14 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                 int ii = 0;
             for(vector<float>::iterator it  = onsets["slice.time"].begin()+1 ; it!= onsets["slice.time"].end() ; ++it){
                  Container::containers.push_back(Container(p->first.path(), *(it-1),*it,j));
+                
                 for(map<string,vector<float> >::iterator itt=onsets.begin();itt!=onsets.end() ; ++itt){
-                    if(itt->first!="slice.time")   Container::containers.back().attributes[itt->first]=itt->second[ii];
+                    if(itt->first!="slice.time"){
+                        Container::containers.back().attributes[itt->first]=itt->second[ii];
+                    }
+                    else{
+                        Container::containers.back().attributes["length"]=*it - *(it-1);
+                    }
                 }
                 j++;
                 ii++;

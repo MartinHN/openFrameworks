@@ -16,13 +16,24 @@
 
 #include <iostream>
 
-
+class Container;
 
 class Physics{
     
 public:
    
     
+    static ofVec3f* vs;
+    static ofFloatColor *cols;
+    static unsigned int* idxs;
+    static ofVbo vbo;
+    
+    static void updateVBO();
+    static void freeVbo();
+    static void updateOneColor(int idx,ofColor col);
+    static void orderBy(string attr,int axe,bool norm,bool stdnorm);
+    static Container * Cast(ofCamera cam, ofVec2f mouse);
+    static float distanceVanish(ofCamera cam);
     vector<float> ks;
     
     
@@ -32,10 +43,13 @@ public:
     ofFbo vel;
     
     
+    string curAttribute;
+    
     Physics * instance(){if(inst == NULL){inst = this;}    }
     
-    void addElement(ofVec3f c,int level);
+    void buildNetwork();
     void updatePhy(float time);
+
     
 private:
      static Physics* inst;

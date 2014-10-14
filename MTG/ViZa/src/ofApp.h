@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "Physics.h"
 #include "jsonLoader.h"
+#include "GUI.h"
 
 class ofApp : public ofBaseApp{
 
@@ -18,6 +19,7 @@ class ofApp : public ofBaseApp{
     
     ofVec2f scrS;
     
+    bool drawGUI;
 
     void drawMire();
 
@@ -35,7 +37,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+    void isGUIing(bool & t);
     
     
 };

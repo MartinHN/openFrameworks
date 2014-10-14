@@ -149,6 +149,9 @@ void ofEasyCam::enableMouseInput(){
 		ofAddListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
 		ofAddListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
 	}
+    bApplyInertia = false;
+	bDoTranslate = false;
+	bDoRotate = false;
 }
 //----------------------------------------
 void ofEasyCam::disableMouseInput(){

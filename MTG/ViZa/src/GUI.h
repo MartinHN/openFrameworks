@@ -19,8 +19,12 @@
 
 class GUI{
 public:
-    ofxUIDropDownList *attributesX,*attributesY,*attributesZ;
+//    ofxUIDropDownList *attributesX,*attributesY,*attributesZ;
     ofxUISuperCanvas *guiconf;
+    ofxUIDropDownList * attr[3], *aggr[3];
+    ofxUIDropDownList *scaleType[3];
+    ofxUITextInput * min[3],*max[3];
+    ofxUITabBar * global;
     ofxUIScrollableCanvas * scrollNames;
     
     ofParameterGroup settings;
@@ -31,14 +35,21 @@ public:
     
     void setup();
 
-    void draw();
+
     
     ofParameter<bool> isModifiying;
     vector<string> attrNames;
+    vector<string> aggrNames;
     vector<string> songnames;
     static GUI * inst;
     int lastFramenum;
     string lastName;
+    
+    
+    void maxsChanged(ofVec3f & v);
+    void minsChanged(ofVec3f & v);
+    static string numToAxe(int i);
+    static int axeToNum(char s);
 };
 
 

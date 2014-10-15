@@ -21,6 +21,7 @@ public:
     
     static vector<Container> containers;
     static map<string,vector<Container*> > songs;
+    static vector<string> attributeNames;
     
 
     
@@ -34,6 +35,8 @@ public:
     static void registerListener();
     static void orderBy(string attr,int axe,bool norm);
     static void selectSong(string name);
+    static void hoverContainer(int idx);
+    static int hoverIdx;
     static string selectedSong;
     
     
@@ -59,6 +62,12 @@ public:
     unsigned int index;
     ofParameter<float> state;
     void setState(float & a);
+    void setSelected(bool & s);
+    void setHovered(bool & s);
+    ofParameter<bool> isSelected;
+    ofParameter<bool> isHovered;
+    
+    void setAttribute(string n,float v);
     
     map<string, float> attributes;
     

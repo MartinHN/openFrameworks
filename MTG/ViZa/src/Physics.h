@@ -28,15 +28,24 @@ public:
     static unsigned int* idxs;
     static ofVbo vbo;
     
+    
+    static ofParameter<ofVec3f> mins;
+    static ofParameter<ofVec3f> maxs;
+    
     static void updateVBO();
     static void freeVbo();
     static void updateOneColor(int idx,ofColor col);
-    static void orderBy(string attr,int axe,bool norm,bool stdnorm);
-    static Container * Cast(ofCamera cam, ofVec2f mouse);
+    static void updateOnePos(int idx,ofVec3f & pos);
+    static void orderBy(string attr,int axe,int type);
+    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1);
     static float distanceVanish(ofCamera cam);
+    
+    static Container* dragged;
+    static float originDrag;
     vector<float> ks;
     
     
+
     
     
     ofFbo pos;
@@ -49,7 +58,7 @@ public:
     
     void buildNetwork();
     void updatePhy(float time);
-
+    static void updateDrag(ofVec2f mouse);
     
 private:
      static Physics* inst;

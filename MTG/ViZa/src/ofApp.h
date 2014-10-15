@@ -9,11 +9,9 @@ class ofApp : public ofBaseApp{
 
 	public:
     
-    ofEasyCam cam;
-    
-    
-    
-    
+    static ofEasyCam cam;
+
+    unsigned long long Casttime;
     
 
     

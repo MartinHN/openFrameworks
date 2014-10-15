@@ -8,10 +8,18 @@
 
 #include "Physics.h"
 
+#include "ofApp.h"
+
+
 ofVec3f* Physics::vs=NULL;//
 ofFloatColor* Physics::cols=NULL ;
 unsigned int* Physics::idxs=NULL;
 ofVbo Physics::vbo;
+
+ofParameter<ofVec3f> Physics::maxs;
+ofParameter<ofVec3f> Physics::mins;
+Container* Physics::dragged;
+float Physics::originDrag;
 
 void updatePhy(float time){
     
@@ -27,30 +35,44 @@ void buildNetwork(){
 
 
 
-Container * Physics::Cast(ofCamera cam, ofVec2f mouse){
+Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult){
     
-    float mult = Container::radius /distanceVanish(cam);
-    
+    float mult = sphereMult*Container::radius*1.0*cam.getDistance() /distanceVanish(cam);
+    float minDist = 9999;
+    Container * res = NULL;
     for(int i = 0; i < vbo.getNumVertices() ; i++){
-        
-        if((cam.worldToScreen(vs[i])-mouse).length()<mult/(cam.getPosition()-vs[i]).length()){
-            
-            
+        float dist = (cam.worldToScreen(vs[i])-mouse).length();
+        if(dist<mult*1.0/(cam.getPosition()-vs[i]).length()){
+            if(sphereMult>2 && dist < minDist){
+                res = &Container::containers[i];
+                minDist = dist;
+            }
+            else{
             return &Container::containers[i];
-
+            }
         }
     }
-    return NULL;
+    return res;
     
 }
 
 
 
-void Physics::orderBy(string attr,int axe,bool norm,bool stdnorm){
-    float max = 1;
-    float min = 0;
+void Physics::orderBy(string attr,int axe,int type){
+    bool found = false;
+    for (vector<string> ::iterator it = Container::attributeNames.begin(); it!=Container::attributeNames.end(); ++it) {
+        if(*it==attr){
+            found = true;
+            break;
+        }
+    }
+    if(!found){
+        attr = ofSplitString(attr, ".")[0];
+    }
+    float max = maxs.get()[axe];
+    float min = mins.get()[axe];
     float mean = 1;
-    if(norm || stdnorm){
+    if(type<2){
         max = -99999;
         min = 999999;
         mean = 0;
@@ -61,7 +83,7 @@ void Physics::orderBy(string attr,int axe,bool norm,bool stdnorm){
         }
         mean/=Container::containers.size();
     }
-    if(stdnorm){
+    if(type==1){
         float stddev = 0;
         for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
             stddev+= (it->attributes[attr]-mean)*(it->attributes[attr]-mean);
@@ -80,6 +102,10 @@ void Physics::orderBy(string attr,int axe,bool norm,bool stdnorm){
         else if(axe==1)     it->pos.y = (it->attributes[attr]-min)/(max-min);
         else                it->pos.z = (it->attributes[attr]-min)/(max-min);
     }
+    
+    ofVec3f mask(axe==0?1:0,axe==1?1:0,axe==2?1:0);
+    maxs = max*mask + (-mask+ofVec3f(1))*maxs;
+    mins = min*mask + (-mask+ofVec3f(1))*mins;
     Physics::updateVBO();
 }
 
@@ -92,12 +118,8 @@ void Physics::updateVBO(){
         vs =  new ofVec3f[Container::containers.size()];
         cols =new ofFloatColor[Container::containers.size()];
         idxs =new unsigned int[Container::containers.size()];
-        Container::stateColor[0] = ofFloatColor::black;
-        Container::stateColor[0].a=.1;
-        Container::stateColor[1] =ofFloatColor::white;
-        Container::stateColor[1].a=.3;
-        Container::stateColor[2] =ofFloatColor::red;
-        Container::stateColor[2].a=.5;
+
+
     }
     else if (vbo.getNumVertices() !=Container::containers.size() ){
         vs=(ofVec3f*)realloc(vs, Container::containers.size()*sizeof(ofVec3f));
@@ -134,13 +156,29 @@ void Physics::updateOneColor(int idx,ofColor col){
     ofFloatColor* c = new ofFloatColor[1];
     c[0] = (ofFloatColor)col;
     vbo.updateOneColorData(c,idx);
-//    cout << col << endl;
     Physics::cols[idx] = col;
     delete [] c;
+}
+
+void Physics::updateOnePos(int idx,ofVec3f & pos){
+    
+    
+    vbo.updateOneVertexData(&pos, idx);
+    Physics::vs[idx] = pos;
+    
 }
 
 float Physics::distanceVanish(ofCamera cam){
     
     return 2.0f/tan(ofDegToRad(cam.getFov()/2.0f));
 }
+
+
+void Physics::updateDrag(ofVec2f mouse){
+    if(dragged!=NULL){
+        ofVec3f v =ofApp::cam.screenToWorld(ofVec3f(mouse.x,mouse.y,originDrag));
+     updateOnePos(dragged->index,v);
+    }
+}
+
 

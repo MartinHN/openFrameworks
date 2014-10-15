@@ -52,6 +52,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     }
     
     int j = 0;
+
     for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
         wng::ofxCsv csv;
         if(p->second.getExtension() =="seg"){
@@ -81,67 +82,24 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                 
                 for(map<string,vector<float> >::iterator itt=onsets.begin();itt!=onsets.end() ; ++itt){
                     if(itt->first!="slice.time"){
-                        Container::containers.back().attributes[itt->first]=itt->second[ii];
+                        Container::containers.back().setAttribute(itt->first,itt->second[ii]);
                     }
                     else{
-                        Container::containers.back().attributes["length"]=*it - *(it-1);
+                        Container::containers.back().setAttribute("length",*it - *(it-1));
                     }
+                    
                 }
+                Container::containers.back().setAttribute("songIdx",globalCount);
+                
                 j++;
                 ii++;
             }
             }
-            
-           
-//            vector<string> attrs = json.getMemberNames();
-//            for(vector<string>::iterator it = attrs.begin();it!=attrs.end();++it ){
-//                string cur = *it;
-//                vector<string> subnames=json[cur].getMemberNames();
-//                
-//                for(vector<string>::iterator itt = subnames.begin();itt!=subnames.end();++itt ){
-//                    if(json[cur][*itt].getMemberNames()[0]=="aggregate"){
-//                        
-//                    }
-//                }
-//            }
         
         }
         
-        if(p->second.getExtension() =="yml"){
-//            yaml_parser_t parser;
-//            yaml_event_t event;
-//            FILE *input = fopen(p->second.path().c_str(), "rb");
-//            yaml_parser_set_input_file(&parser, input);
-//            int done = 0;
-//            /* Read the event sequence. */
-//            while (!done) {
-//                
-//                /* Get the next event. */
-//                if (!yaml_parser_parse(&parser, &event))
-//                    break;
-//                
-//                /*
-//                 ...
-//                 Process the event.
-//                 ...
-//                 */
-//                
-//                /* Are we finished? */
-//                done = (event.type == YAML_STREAM_END_EVENT);
-//                
-//                /* The application is responsible for destroying the event object. */
-//                yaml_event_delete(&event);
-//                
-//            }
-//            
-//             if(!done)ofLogError("fuckYaml");
-//            
-//            /* Destroy the Parser object. */
-//            yaml_parser_delete(&parser);
-//            
-//            
-//            yaml_parser_set_input_file(&parser, input);
-        }
+
+        
        
         
         globalCount++;

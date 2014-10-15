@@ -70,7 +70,7 @@ void ofEasyCam::reset(){
 	
 	resetTransform();
 	setPosition(0, 0, lastDistance);
-	orbit(0,0,1);
+	
 		
 	xRot = 0;
 	yRot = 0;
@@ -152,6 +152,7 @@ void ofEasyCam::enableMouseInput(){
     bApplyInertia = false;
 	bDoTranslate = false;
 	bDoRotate = false;
+    lastMouse = ofVec2f(ofGetMouseX(),ofGetMouseY());
 }
 //----------------------------------------
 void ofEasyCam::disableMouseInput(){
@@ -159,7 +160,7 @@ void ofEasyCam::disableMouseInput(){
 		bMouseInputEnabled = false;
 		//ofUnregisterMouseEvents(this);
 		ofRemoveListener(ofEvents().update, this, &ofEasyCam::update);
-		ofRemoveListener(ofEvents().mouseDragged, this, &ofEasyCam::mouseDragged, OF_EVENT_ORDER_BEFORE_APP);
+		ofRemoveListener(ofEvents().mouseDragged, this, &ofEasyCam::mouseDragged);
 		ofRemoveListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
 		ofRemoveListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
 	}
@@ -225,7 +226,7 @@ void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 		prevAxisZ = getZAxis();
 		prevPosition = ofCamera::getGlobalPosition();
 		prevOrientation = ofCamera::getGlobalOrientation();
-
+        mouseVel = ofVec2f(0);
 		if ((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || ofGetKeyPressed(doTranslationKey)  || mouse.button == OF_MOUSE_BUTTON_RIGHT){
 			bDoTranslate = true;
 			bDoRotate = false;
@@ -265,6 +266,7 @@ void ofEasyCam::mouseDragged(ofMouseEventArgs & mouse){
 
 
 void ofEasyCam::updateMouse(const ofMouseEventArgs & mouse){
+
 	int vFlip;
 	if(isVFlipped()){
 		vFlip = -1;

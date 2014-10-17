@@ -82,7 +82,7 @@ void ofxUITextArea::drawFill()
         ofSetColor(color_fill);
         for(unsigned int i = 0; i < textLines.size(); i++)
         {
-            label->drawString(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
+                label->drawString(rect->getX(), rect->getY()+(lineHeight+lineSpaceSize)*(i+1)-lineSpaceSize, textLines[i]);
         }
     }
 }
@@ -142,6 +142,14 @@ void ofxUITextArea::formatTextString()
             {
                 bool notFound = true;
                 
+                if(ofSplitString(textstring.substr(0,i)," ")[0].length() == i){
+                    notFound=false;
+                    i--;
+                    line.erase(line.end()-1);
+                    textLines.push_back(line);
+                    line = "";
+                }
+                
                 while (notFound && !overheight)
                 {
                     if(strncmp(&textstring.at(i), " ",1) == 0)
@@ -167,6 +175,7 @@ void ofxUITextArea::formatTextString()
                     {
                         i--;
                         line.erase(line.end()-1);
+                        
                     }
                 }
             }
@@ -175,7 +184,7 @@ void ofxUITextArea::formatTextString()
     
     if(autoSize)
     {
-        rect->setHeight((lineHeight+lineSpaceSize)*textLines.size()-lineSpaceSize);
+        rect->setHeight((lineHeight+lineSpaceSize)*(textLines.size())-lineSpaceSize);
     }
     
     if(overheight)

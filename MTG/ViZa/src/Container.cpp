@@ -18,21 +18,14 @@ map<string,vector<Container*> > Container::songs;
 string Container::selectedSong;
 vector<string> Container::attributeNames;
 int Container::hoverIdx;
-
+bool Container::colorInit = true;
 
 float Container::radius = 10;
 ofFloatColor Container::stateColor[4];
 
 
 void Container::registerListener(){
-    Container::stateColor[0] = ofFloatColor::black;
-    Container::stateColor[0].a=.1;
-    Container::stateColor[1] =ofFloatColor::red;
-    Container::stateColor[1].a=.3;
-    Container::stateColor[2] =ofFloatColor::green;
-    Container::stateColor[2].a=.5;
-    Container::stateColor[3] =ofFloatColor::black;
-    Container::stateColor[3].a=1;
+
     
     for(int i = 0 ; i < containers.size() ; i++){
         containers[i].state = ofParameter<float>();
@@ -59,21 +52,25 @@ void Container::registerListener(){
 }
 
 void Container::setSelected(bool & s){
-    if(s){
-        Physics::updateOneColor(index,stateColor[2]);
-    }
-    else{
-        Physics::updateOneColor(index,stateColor[(int)state]);
-    }
+//    if(s){
+//        Physics::updateOneColor(index,stateColor[2]);
+//    }
+//    else{
+//        Physics::updateOneColor(index,stateColor[isHovered?3:(int)state]);
+//    }
+Physics::updateOneColor(index,getColor());
+
 }
 
 
 void Container::setState(float & s){
     
-    if(s==0 && isSelected)
-        Physics::updateOneColor(index,stateColor[2]);
-    else
-        Physics::updateOneColor(index,stateColor[(int)s]);
+//    if(s==0 )
+//        Physics::updateOneColor(index,stateColor[isHovered?3:isSelected?2:(int)s]);
+//    else
+//        Physics::updateOneColor(index,stateColor[(int)s]);
+
+    Physics::updateOneColor(index,getColor());
     
     if(s<=1)AudioPlayer::instance()->Play(*this,(int)s);
 //    AudioPlayer::instance()->Play(index,path,begin,end,state);
@@ -81,12 +78,16 @@ void Container::setState(float & s){
 }
 
 void Container::setHovered(bool & s){
-    if(s){
-        Physics::updateOneColor(index,stateColor[3]);
-    }
-    else{
-        Physics::updateOneColor(index,stateColor[(int)state]);
-    }
+//    if(s){
+//        Physics::updateOneColor(index,stateColor[3]);
+//    }
+//    else{
+//        Physics::updateOneColor(index,stateColor[isSelected?2:(int)state]);
+//    }
+    
+    
+Physics::updateOneColor(index,getColor());
+    //AudioPlayer::Load(*this,s);
 }
 
 void Container::selectSong(string name){
@@ -103,15 +104,18 @@ void Container::selectSong(string name){
         for(vector<Container*>::iterator it = conts.begin() ; it!=conts.end() ; ++it){
             (*it)->isSelected = true;
         }
+        Physics::setSelected(conts[0]->index,conts.back()->index);
     }
 }
 
-void Container::hoverContainer(int  idx){
+bool Container::hoverContainer(int  idx){
     if(idx!=hoverIdx){
     if(hoverIdx!=-1)containers[hoverIdx].isHovered= false;
         hoverIdx=idx;
     if(hoverIdx!=-1)containers[hoverIdx].isHovered= true;
+        return true;
     }
+    return false;
 }
 
 void Container::setAttribute(string n,float v){
@@ -129,6 +133,21 @@ void Container::setAttribute(string n,float v){
     
 }
 
+
+ofFloatColor Container::getColor(){
+    if(colorInit){
+    Container::stateColor[0] = ofFloatColor::white;
+    Container::stateColor[0].a=.3;
+    Container::stateColor[1] =ofFloatColor::red;
+    Container::stateColor[1].a=.6;
+    Container::stateColor[2] =ofFloatColor::green;
+    Container::stateColor[2].a=.5;
+    Container::stateColor[3] =ofFloatColor::white;
+    Container::stateColor[3].a=1;
+        colorInit = false;
+}
+    return stateColor[(int)state==1?1:isHovered?3:isSelected?2:0];
+}
 
 
 

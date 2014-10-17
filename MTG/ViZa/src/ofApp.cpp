@@ -6,27 +6,22 @@ ofEasyCam ofApp::cam;
 void ofApp::setup(){
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
-//    cam.orbit(0, 0,3);
-    cam.setNearClip(.01f);
-    cam.setDistance(100);
-    cam.setFov(ofRadToDeg(2*atan(.5/cam.getDistance())));
-    cam.orbit(0,0, cam.getDistance());
-    cam.setAutoDistance(false);
-    cam.enableMouseInput();
-    cam.disableMouseMiddleButton();
-//
+//    ofDisableSmoothing();
+//    ofEnableAntiAliasing();
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    ofDisableDepthTest();
+    
+
+    setcamOrtho(true);
+   
+
+
     Casttime=ofGetElapsedTimeMillis();
 
     jsonLoader::instance()->loadSegments();
     
-    ofBackground(255);
+    ofBackground(0);
     
-    Container::radius = cam.getDistance()*15;
-    glPointSize(Container::radius);
-    GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
-
-    glPointParameterfv(	GL_POINT_DISTANCE_ATTENUATION,&attPoints[0]);
-
 
    
     Physics::updateVBO();
@@ -35,6 +30,12 @@ void ofApp::setup(){
     GUI::instance()->setup();
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
+    
+    for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
+        for(int i = 0 ; i <1 ; i++){
+            AudioPlayer::Load(*it->second[i], true);
+        }
+    }
 }
 
 //--------------------------------------------------------------
@@ -48,17 +49,105 @@ void ofApp::draw(){
    
     
     cam.begin();
-//    glBegin(GL_POINT);
-    ofSetColor(ofColor(255,0,0));
-    Physics::vbo.drawElements(GL_POINTS,Physics::vbo.getNumVertices());
+
+    Physics::draw();
+
     drawMire();
+
     cam.end();
+    
+   drawCam();
     
      //if(drawGUI)GUI::instance()->draw();
 }
 
+void ofApp::drawCam(){
+
+    ofPushMatrix();
+    ofPushView();
+    ofEnableDepthTest();
+    ofMatrix4x4 t ;
+    ofMatrix4x4 ortho ;
+    float angle;
+    ofVec3f v;
+    
+	ortho.makeOrthoMatrix(-1000,    1000   , -1000, 1000, .1, 2000);
+    t.makeTranslationMatrix(0,0,-1000);
+    
+    ofSetMatrixMode(OF_MATRIX_PROJECTION);
+	ofLoadMatrix( ortho);
+	ofSetMatrixMode(OF_MATRIX_MODELVIEW);
+	ofLoadMatrix( t);
+
+    
+    cam.getOrientationQuat().getRotate(angle, v);
 
 
+
+    ofTranslate(910,-910,0);
+    
+    ofRotate(angle,v.x,-v.y,v.z);
+//    ofRotateX(180);
+    
+    ofDrawAxis(50);
+    
+
+    
+    ofPopMatrix();
+    ofPopView();
+}
+
+
+void ofApp::setcamOrtho(bool t){
+    
+
+
+    
+  
+
+    if(t){
+        cam.enableOrtho();
+        cam.setNearClip(.000001f);
+    
+        
+        cam.setScale(1.0/ofGetViewportHeight());
+        cam.setDistance(1);//ofGetScreenHeight());
+        cam.setFarClip(cam.getDistance()*2*ofGetScreenHeight());
+
+        cam.setLensOffset(ofVec2f(-1,-1));
+        cam.orbit(0,0, cam.getDistance());
+        cam.setAutoDistance(false);
+        cam.enableMouseInput();
+        cam.enableMouseMiddleButton();
+        Container::radius = 150;
+        glPointSize(Container::radius);
+        GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
+
+        glPointParameterfv(	GL_POINT_DISTANCE_ATTENUATION,&attPoints[0]);
+        
+    }
+    else{
+        cam.disableOrtho();
+        
+        cam.setScale(1);
+        cam.setNearClip(.001f);
+        cam.setDistance(10);
+        cam.setFarClip(cam.getDistance()*3);
+        cam.setFov(2*ofRadToDeg(atan(.5/cam.getDistance())));
+        cam.orbit(0,0, cam.getDistance());
+        cam.setAutoDistance(false);
+        cam.setLensOffset(ofVec2f(0,0));
+        cam.enableMouseInput();
+        cam.enableMouseMiddleButton();
+        Container::radius = 150;
+        glPointSize(Container::radius);
+        GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
+        
+        glPointParameterfv(	GL_POINT_DISTANCE_ATTENUATION,&attPoints[0]);
+        
+        
+    }
+}
 
 void ofApp::drawMire(){
     ofPushMatrix();
@@ -79,21 +168,18 @@ void ofApp::drawMire(){
 void ofApp::isGUIing(bool & t){
     if(t){
         cam.disableMouseInput();
-        cam.disableMouseMiddleButton();
+
     }
     else{
         cam.enableMouseInput();
-        cam.enableMouseMiddleButton();
+        
     }
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     switch (key) {
-        case 'g':
-            GUI::instance()->guiconf->toggleMinified();
-            break;
         case 'x':
-            cam.orbit(90,0,cam.getDistance());
+            cam.orbit(-90,0,cam.getDistance());
             break;
         case 'y':
             cam.orbit(0,90,cam.getDistance());
@@ -114,8 +200,9 @@ void ofApp::keyReleased(int key){
 void ofApp::mouseMoved(int x, int y ){
     if(ofGetElapsedTimeMillis()-Casttime>70){
         Container * cc = Physics::Cast(cam, ofVec2f(x,y),2.5);
-        Container::hoverContainer(cc == NULL?-1:cc->index);
+        bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
         Casttime = ofGetElapsedTimeMillis();
+        if (change)GUI::LogIt(cc == NULL?"":cc->filename);
     }
     
 }
@@ -129,7 +216,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    Container * cc = Physics::Cast(cam, ofVec2f(x,y));
+    if(Container::hoverIdx==-1)return;
+    Container * cc = &Container::containers[Container::hoverIdx];
     if (cc == NULL) return;
     if(button == 2)cc->state =cc->state==0?1:0;
     if(button == 1){

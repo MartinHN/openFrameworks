@@ -19,13 +19,27 @@ void GUI::setup(){
     
     int ch = 0;
     int pad=50;
+    
+    
+    Logger = new ofxUITextArea("Logger","Log",700,0,0,0,OFX_UI_FONT_SMALL);
+    logCanvas = new ofxUISuperCanvas("Log",0,0,700,100,OFX_UI_FONT_SMALL);
+    logCanvas->setName("Log");
+    logCanvas->addWidgetDown(Logger);
+    Logger->setVisible(true);
+    logCanvas->autoSizeToFitWidgets();
+    
+    
+    
+    
+    
     guiconf = new ofxUISuperCanvas("Axes",0,0,700,100);
     guiconf->setName("Axes");
     ch+=guiconf->getRect()->height+pad;
-    scrollNames = new ofxUIScrollableCanvas(0,ch,scrollW,400);
     
-    scrollNames->setName("Songs");
-    scrollNames->setScrollableDirections(false, true);
+    
+    
+    
+
     if(Container::attributeNames.size()>0){
         
         for(vector<string>::iterator it = Container::attributeNames.begin() ; it != Container::attributeNames.end() ;++it){
@@ -75,8 +89,8 @@ void GUI::setup(){
             attr[i]->getToggles()[i]->triggerSelf();
             aggr[i]->getToggles()[0]->setValue(true);
             aggr[i]->getToggles()[0]->triggerSelf();
-            scaleType[i]->getToggles()[1]->setValue(true);
-            scaleType[i]->getToggles()[1]->triggerSelf();
+            scaleType[i]->getToggles()[i==0?0:1]->setValue(true);
+            scaleType[i]->getToggles()[i==0?0:1]->triggerSelf();
             min[i]->setAutoClear(false);
             min[i]->setTriggerOnClick(false);
             max[i]->setAutoClear(false);
@@ -88,16 +102,39 @@ void GUI::setup(){
             songnames.push_back(it->first);
 
         }
+        
+        
+        
+        
+        
+        scrollNames = new ofxUIScrollableCanvas(0,ch,scrollW,400);
+        scrollNames->setName("Songs");
+        scrollNames->setScrollableDirections(false, true);
         scrollNames->addWidgetDown(new ofxUIDropDownList("songNames", songnames,0,0,0,OFX_UI_FONT_SMALL));
         ((ofxUIDropDownList*)scrollNames->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST)[0])->open();
-        
         ofxUIRectangle * r =((ofxUIDropDownList*)scrollNames->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST)[0])->getRect();
         scrollNames->setSnapping(true);
         scrollNames->setDimensions(scrollW,songnames.size()*r->height);
 
-        global = new ofxUITabBar();
-        global->addCanvas(scrollNames);
-        global->addCanvas(guiconf);
+        
+        
+        
+        viewCanvas = new ofxUISuperCanvas("View");
+        viewCanvas->setName("View");
+        
+        alphaView = new ofxUISlider("alphaView",0,1,0.3f,100,10);
+        linkSongs = new ofxUIToggle("linkSongs",false,10,10);
+        orthoCam = new ofxUIToggle("orthoCam",false,10,10);
+        viewCanvas->addWidgetDown(alphaView);
+        viewCanvas->addWidgetDown(linkSongs);
+        viewCanvas->addWidgetDown(orthoCam);
+        
+        
+        
+        
+        
+        
+
         
 
     }
@@ -108,9 +145,21 @@ void GUI::setup(){
         ((ofxUIDropDownList*) ddls[i])->setAutoClose(true);
         ((ofxUIDropDownList*) ddls[i])->setShowCurrentSelected(true);
     }
+    
+    global = new ofxUITabBar();
+    global->setName("Global");
+    global->addCanvas(scrollNames);
+    global->addCanvas(guiconf);
+    global->addCanvas(logCanvas);
+    global->addCanvas(viewCanvas);
 
-   	ofAddListener(guiconf->newGUIEvent,this,&GUI::guiEvent);
-    ofAddListener(scrollNames->newGUIEvent,this,&GUI::guiEvent);
+    map< ofxUIToggle*,ofxUICanvas* > w = global->canvases;
+    for(map< ofxUIToggle*,ofxUICanvas* > ::iterator it = w.begin() ; it!=w.end() ; ++it){
+    it->second->setParent(global);
+   	ofAddListener(((ofxUICanvas*)(it->second))->newGUIEvent,this,&GUI::guiEvent);
+    }
+
+
     
     Physics::maxs.addListener(this,&GUI::maxsChanged);
     Physics::mins.addListener(this,&GUI::minsChanged);
@@ -119,6 +168,9 @@ void GUI::setup(){
         attr[i]->getToggles()[i]->triggerSelf();
     }
     
+    
+    
+    
 
 }
 
@@ -126,23 +178,33 @@ void GUI::guiEvent(ofxUIEventArgs &e){
     string name = e.getName();
 	int kind = e.getKind();
     
-    ofxUICanvas * ee;
-    bool hideothers;
-    
+    ofxUICanvas * root,*parent;
+
+
+    root= (ofxUICanvas*)e.widget->getCanvasParent();
+    parent = root;
+    if(root->getName() == "Global"){
+        root = (ofxUICanvas*)e.widget;
+        parent = root;
+    }
+    else{
+        while(root->getCanvasParent()->getName()!="Global"){root= (ofxUICanvas*)root->getCanvasParent();}
+    }
+   
     //Check modifications
+    isModifiying = ofGetMousePressed();
+    
+    
+    // hack for avoiding double hits on opened DDLists
     switch (kind) {
-        case OFX_UI_WIDGET_SCROLLABLECANVAS:
-            
-            isModifiying = ((ofxUIScrollableCanvas*)e.widget)->isScrolling;
-            break;
         case OFX_UI_WIDGET_DROPDOWNLIST:
-        {hideothers = ((ofxUIDropDownList*)e.widget)->getValue();
-            ee= (ofxUICanvas*)e.widget->getCanvasParent();
-            if(ee!=NULL){
-                vector<ofxUIWidget*> vv = ee->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
+        {bool hideothers = ((ofxUIDropDownList*)e.widget)->getValue();
+            
+            if(parent!=NULL){
+                vector<ofxUIWidget*> vv = parent->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
                 for(vector<ofxUIWidget*>::iterator it = vv.begin() ; it !=vv.end() ; ++it){
                     if(e.widget->getRect()->x ==  (*it)->getRect()->x && e.widget->getRect()->y <  (*it)->getRect()->y &&((ofxUIDropDownList*)*it)!=e.widget){
-                        cout << (*it)->getName().substr(0,(*it)->getName().length()-1) << endl;
+
                         ((ofxUIDropDownList*)*it)->setVisible(!hideothers);
                     }
                 }
@@ -157,46 +219,64 @@ void GUI::guiEvent(ofxUIEventArgs &e){
     
     
     
-    string parentName = "";
-    if(e.widget->getParent()!=NULL){
-        parentName = e.widget->getParent()->getName();
+    if(parent == NULL){
+        cout << "orphan !!! : " <<e.widget->getName() << endl;
+     return;
     }
-    if(parentName == "")return;
+    //ID for GUI Controls
+    string rootName = root->getName();
+    string parentName = parent->getName();
     
     
-    cout << parentName << "//" << name <<endl;
+    
+    if(root!=NULL)cout << root->getName() << "//" << parent->getName() << "//" << name<< endl;
+    
+    
+    // Axes
+    if(rootName == "Axes"){
+    
     int axe = axeToNum(parentName[parentName.length()-1]);
-    
     
     // attributes and aggregator modification
     if(axe!=-1)
         Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
         
     // mins maxs modifications
-    else if (parentName == "Axes" && kind == OFX_UI_WIDGET_TEXTINPUT){
+    else if (kind == OFX_UI_WIDGET_TEXTINPUT){
        axe = axeToNum(name[name.length()-1]);
         string s =((ofxUITextInput*)e.widget)->getTextString();
         if(s=="")return;
-        cout << "minmax" << s << endl;
         ofVec3f mask(axe==0?1:0,axe==1?1:0,axe==2?1:0);
         if(name.substr(0,name.length()-1)=="min"){
-            
             Physics::mins = ofToFloat(s)*mask + (-mask+ofVec3f(1))*Physics::mins;
-
-            Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
         }
         if(name.substr(0,name.length()-1)=="max"){
             Physics::maxs = ofToFloat(s)*mask + (-mask+ofVec3f(1))*Physics::maxs;
-            Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
         }
+        scaleType[axe]->getToggles()[2]->setValue(true);
+        scaleType[axe]->getToggles()[2]->triggerSelf();
+        Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
     
 }
+    }
     
-else    if(parentName == "songNames"){
+    // songs
+else    if(rootName == "Songs" && parentName == "songNames"){
         Container::selectSong(name);
         
     }
-        
+else    if(rootName == "View" ){
+    if(name == "alphaView"){
+        Container::stateColor[0].a = ((ofxUISlider*)e.widget)->getValue();
+        Physics::updateAllColors();
+    }
+    if(name == "linkSongs"){
+        Physics::linksongs = ((ofxUIToggle*)e.widget)->getValue();
+    }
+    if(name == "orthoCam"){
+        ofApp::setcamOrtho(((ofxUIToggle*)e.widget)->getValue());
+    }
+}
 
     
     
@@ -234,7 +314,7 @@ string GUI::numToAxe(int i){
 
 void GUI::maxsChanged(ofVec3f &v){
     ofVec3f dif = Physics::maxs.getLast() - v;
-    cout << dif << endl;
+
     for(int i = 0 ; i < 3 ; i++){
         if(dif[i]!=0){
             max[i]->setTextString(ofToString(v[i]));
@@ -254,4 +334,10 @@ void GUI::minsChanged(ofVec3f &v){
         }
     }
     
+}
+
+void GUI::LogIt(string s){
+    cout << s <<"string" << endl;
+    instance()->Logger->setTextString(s);
+
 }

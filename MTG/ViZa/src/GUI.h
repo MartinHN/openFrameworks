@@ -15,19 +15,28 @@
 #include "ofxGui.h"
 #include <iostream>
 #include "Container.h"
-
+#include "ofApp.h"
 
 class GUI{
 public:
-//    ofxUIDropDownList *attributesX,*attributesY,*attributesZ;
+
+    ofxUITabBar * global;
+    
     ofxUISuperCanvas *guiconf;
     ofxUIDropDownList * attr[3], *aggr[3];
     ofxUIDropDownList *scaleType[3];
     ofxUITextInput * min[3],*max[3];
-    ofxUITabBar * global;
+
     ofxUIScrollableCanvas * scrollNames;
+
+    ofxUISuperCanvas * logCanvas;
+    ofxUITextArea * Logger;
     
-    ofParameterGroup settings;
+    ofxUISuperCanvas * viewCanvas;
+    ofxUISlider * alphaView;
+    ofxUIToggle * linkSongs;
+    ofxUIToggle * orthoCam;
+    
     
      void guiEvent(ofxUIEventArgs &e);
     
@@ -50,6 +59,7 @@ public:
     void minsChanged(ofVec3f & v);
     static string numToAxe(int i);
     static int axeToNum(char s);
+    static void LogIt(string s );
 };
 
 

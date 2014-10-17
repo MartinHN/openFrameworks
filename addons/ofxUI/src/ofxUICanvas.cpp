@@ -856,6 +856,7 @@ void ofxUICanvas::autoSizeToFitWidgets()
         }
     }
     setDimensions(maxWidth, maxHeight);
+
 }
 
 void ofxUICanvas::centerWidgetsOnCanvas(bool centerHorizontally, bool centerVertically)

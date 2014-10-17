@@ -4,7 +4,7 @@
 
 
 #include "ofBaseSoundPlayer.h"
-
+#define FMOD_CHANNELS 50
 
 extern "C" {
 #include "fmod.h"
@@ -74,7 +74,7 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 		float internalFreq; // 44100 ?
 		float speed; // -n to n, 1 = normal, -1 backwards
 		unsigned int length; // in samples;
-
+    
 		FMOD_RESULT result;
 		FMOD_CHANNEL * channel;
 		FMOD_SOUND * sound;

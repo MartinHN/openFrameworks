@@ -20,7 +20,8 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     
     if(audiopath==""){
         audiopath = "/Users/mhermant/Documents/Work/Datasets/beatles/audio/wav";
-        segpath = "/Users/mhermant/Documents/Work/Datasets/beatles/viza/";
+        segpath ="/Users/mhermant/Documents/Work/Dev/openFrameworks/MTG/ViZa/bin/data/tests/";
+//      segpath = "/Users/mhermant/Documents/Work/Datasets/beatles/viza/";
     }
     
     ofDirectory ad =ofDirectory(audiopath);
@@ -42,13 +43,17 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     
     std::map<ofFile,ofFile> mapL;
     
-    for(int i = 0 ; i < audioL.size();i++){
-            for(int j = 0 ; j < segL.size();j++){
-                if(audioL[i].getBaseName()==segL[j].getBaseName()){
-                    mapL[audioL[i]] = segL[j];
+    for(int i = 0 ; i < segL.size();i++){
+        bool found = false;
+            for(int j = 0 ; j < audioL.size();j++){
+                if(audioL[j].getBaseName()==segL[i].getBaseName()){
+                    mapL[audioL[j]] = segL[i];
+                    found = true;
                     break;
                 }
             }
+        // still try if file name is in jsonFile
+        if(!found)mapL[segL[i]] = segL[i];
     }
     
     int j = 0;
@@ -74,12 +79,15 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
             
 
             map<string,vector<float> > onsets = crawl(json.get("onsets",NULL));
-            
+            string apath = "";
+            if(json.get("audiopath",NULL)!=NULL){
+                apath = json.get("audiopath",NULL).asString();
+            }
             if(onsets["slice.time"].size()>1){
                 int ii = 0;
             for(vector<float>::iterator it  = onsets["slice.time"].begin()+1 ; it!= onsets["slice.time"].end() ; ++it){
-                 Container::containers.push_back(Container(p->first.path(), *(it-1),*it,j));
-                
+                Container::containers.push_back(Container(apath!=""?apath:p->first.path(), *(it-1),*it,j));
+                Container::containers.back().setAttribute("songIdx",globalCount);
                 for(map<string,vector<float> >::iterator itt=onsets.begin();itt!=onsets.end() ; ++itt){
                     if(itt->first!="slice.time"){
                         Container::containers.back().setAttribute(itt->first,itt->second[ii]);
@@ -89,7 +97,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                     }
                     
                 }
-                Container::containers.back().setAttribute("songIdx",globalCount);
+                
                 
                 j++;
                 ii++;

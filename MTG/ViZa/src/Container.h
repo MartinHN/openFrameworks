@@ -35,10 +35,10 @@ public:
     static void registerListener();
     static void orderBy(string attr,int axe,bool norm);
     static void selectSong(string name);
-    static void hoverContainer(int idx);
+    static bool hoverContainer(int idx);
     static int hoverIdx;
     static string selectedSong;
-    
+    static bool colorInit;
     
     
     
@@ -68,7 +68,7 @@ public:
     ofParameter<bool> isHovered;
     
     void setAttribute(string n,float v);
-    
+    ofFloatColor getColor();
     map<string, float> attributes;
     
     

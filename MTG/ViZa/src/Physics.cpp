@@ -15,11 +15,14 @@ ofVec3f* Physics::vs=NULL;//
 ofFloatColor* Physics::cols=NULL ;
 unsigned int* Physics::idxs=NULL;
 ofVbo Physics::vbo;
+int Physics::startLines;
+int Physics::amountLines;
 
 ofParameter<ofVec3f> Physics::maxs;
 ofParameter<ofVec3f> Physics::mins;
 Container* Physics::dragged;
 float Physics::originDrag;
+bool Physics::linksongs = false;
 
 void updatePhy(float time){
     
@@ -31,23 +34,38 @@ void buildNetwork(){
 }
 
 
+void Physics::draw(){
+    ofPushMatrix();
+    float ratio = 1;//ofGetScreenHeight()*1.0/ofGetScreenWidth();
+//    if(ofApp::cam.getOrtho())ofScale(ofApp::cam.getDistance()*ratio,ofApp::cam.getDistance()*ratio,ofApp::cam.getDistance()*ratio);
+    ofDisableDepthTest();
+    vbo.drawElements(GL_POINTS,Physics::vbo.getNumVertices());
+    if(linksongs&&amountLines>0){
+        vbo.draw(GL_LINE_STRIP, startLines, amountLines);
+    }
+    ofPopMatrix();
+}
+
+
 
 
 
 
 Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult){
     
-    float mult = sphereMult*Container::radius*1.0*cam.getDistance() /distanceVanish(cam);
-    float minDist = 9999;
+    float radmult = sphereMult*cam.getDistance()*Container::radius*1.0/distanceVanish(cam);
+    float minDist = 99999;
     Container * res = NULL;
     for(int i = 0; i < vbo.getNumVertices() ; i++){
-        float dist = (cam.worldToScreen(vs[i])-mouse).length();
-        if(dist<mult*1.0/(cam.getPosition()-vs[i]).length()){
-            if(sphereMult>2 && dist < minDist){
+        ofVec3f v =vs[i]*(cam.getOrtho()?cam.getDistance():1);
+        float screenDist = (cam.worldToScreen(v)-mouse).length();
+        float worldDist = (cam.getPosition()-v).length();
+        if(screenDist<radmult*1.0/worldDist){
+            if(sphereMult>2 && screenDist < minDist){
                 res = &Container::containers[i];
-                minDist = dist;
+                minDist = screenDist;
             }
-            else{
+            else if (sphereMult<=2){
             return &Container::containers[i];
             }
         }
@@ -129,9 +147,9 @@ void Physics::updateVBO(){
     
     for(int i = 0 ; i < Container::containers.size() ; i++){
         vs[i] = Container::containers[i].pos - ofVec3f(.5);
-        cols[i]= Container::stateColor[0];
-        idxs[i] = (unsigned int)i;
-        Container::containers[i].index=(unsigned int)i;
+        cols[i]= Container::containers[i].getColor();
+        idxs[i] = Container::containers[i].index;
+//        Container::containers[i].index=(unsigned int)i;
     }
     if(vbo.getNumVertices()==0){
         vbo.setVertexData(vs, Container::containers.size(), GL_DYNAMIC_DRAW);
@@ -160,6 +178,14 @@ void Physics::updateOneColor(int idx,ofColor col){
     delete [] c;
 }
 
+void Physics::updateAllColors(){
+for(vector<Container>::iterator it = Container::containers.begin() ; it != Container::containers.end();++it){
+
+    Physics::cols[it->index] = Container::stateColor[it->isSelected?2:it->isHovered?3:(int)it->state];
+        }
+        vbo.updateColorData(Physics::cols,Container::containers.size());
+}
+
 void Physics::updateOnePos(int idx,ofVec3f & pos){
     
     
@@ -169,7 +195,7 @@ void Physics::updateOnePos(int idx,ofVec3f & pos){
 }
 
 float Physics::distanceVanish(ofCamera cam){
-    
+    if(cam.getOrtho())return 100.0*cam.getScale().x;
     return 2.0f/tan(ofDegToRad(cam.getFov()/2.0f));
 }
 
@@ -181,4 +207,9 @@ void Physics::updateDrag(ofVec2f mouse){
     }
 }
 
+
+void Physics::setSelected(int s, int end){
+    startLines = s;
+    amountLines = end-s;
+}
 

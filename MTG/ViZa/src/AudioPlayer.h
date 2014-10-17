@@ -19,6 +19,27 @@ class Container;
 
 #define POLYPHONY 10
 
+typedef struct audioUID{
+    string name;
+    int idx;
+    
+    bool  operator==(const audioUID &o) const{
+        return idx == o.idx && name == o.name;
+    }
+    
+    bool  operator<(const audioUID &o) const{
+        return idx < o.idx ;
+    }
+    
+    string toString() {
+        return  name + "\n" + ofToString(idx) ;
+    }
+    
+    friend class AudioPlayer ;
+    
+}audioUID;
+
+
 
 
 class AudioPlayer{
@@ -31,16 +52,21 @@ public:
         }return inst;
     };
     
-    static std::map<int,ofSoundPlayer> players;
+    static std::map<audioUID,ofSoundPlayer*> players;
     static bool Play(Container & c,int s);
+    static void Load(Container const & c,bool t);
+
 //    static bool Play(int uid,string path,float begin,float end ,ofParameter<float> & s);
     
     void gotMessage(ofMessage & msg);
     static AudioPlayer * inst;
     
-    
+    static audioUID getUID(Container const & c);
+    static audioUID audioUIDfromString(const string s);
     
 };
+
+
 
 
 #endif /* defined(__ViZa__AudioPlayer__) */

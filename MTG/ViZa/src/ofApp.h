@@ -10,6 +10,7 @@ class ofApp : public ofBaseApp{
 	public:
     
     static ofEasyCam cam;
+    
 
     unsigned long long Casttime;
     
@@ -35,7 +36,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-    void isGUIing(bool & t);
-    
+        void isGUIing(bool & t);
+    void drawCam();
+    static void setcamOrtho(bool t);
     
 };

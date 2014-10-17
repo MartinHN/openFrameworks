@@ -732,7 +732,7 @@ ofxUIWidget *ofxUIWidget::getCanvasParent()
 {
     bool notFoundParentCanvas = true;
     ofxUIWidget *parent = this->getParent();
-    
+    if(parent==NULL)return NULL;
     while (notFoundParentCanvas)
     {
         int kind = parent->getKind();

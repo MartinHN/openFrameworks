@@ -34,6 +34,7 @@ public:
     
     static void updateVBO();
     static void freeVbo();
+    static void updateAllColors();
     static void updateOneColor(int idx,ofColor col);
     static void updateOnePos(int idx,ofVec3f & pos);
     static void orderBy(string attr,int axe,int type);
@@ -42,14 +43,17 @@ public:
     
     static Container* dragged;
     static float originDrag;
+    static void draw();
     vector<float> ks;
     
-    
+    static void setSelected(int s,int end);
+    static int startLines;
+    static int amountLines;
+    static bool linksongs;
 
-    
-    
-    ofFbo pos;
-    ofFbo vel;
+//    
+//    ofFbo pos;
+//    ofFbo vel;
     
     
     string curAttribute;

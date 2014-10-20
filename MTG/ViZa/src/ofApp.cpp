@@ -47,9 +47,14 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
    
-    
-    cam.begin();
+    if(cam.getOrtho()){
 
+        ofRectangle VP(0-1.0/(2.0*cam.getDistance()-1) ,-1.0/(2.0*cam.getDistance())-1, ofGetViewportWidth()+1.0/cam.getDistance()-1,ofGetViewportHeight()+1.0/cam.getDistance()-1 );
+        cam.begin();
+    }
+    else{
+    cam.begin();
+    }
     Physics::draw();
 
     drawMire();
@@ -70,8 +75,9 @@ void ofApp::drawCam(){
     ofMatrix4x4 ortho ;
     float angle;
     ofVec3f v;
-    
-	ortho.makeOrthoMatrix(-1000,    1000   , -1000, 1000, .1, 2000);
+    float scrH =ofGetScreenHeight();
+    float scrW =ofGetScreenWidth();
+	ortho.makeOrthoMatrix(-scrW/2,    scrW/2   , -scrH/2, scrH/2, .1, 2000);
     t.makeTranslationMatrix(0,0,-1000);
     
     ofSetMatrixMode(OF_MATRIX_PROJECTION);
@@ -84,7 +90,7 @@ void ofApp::drawCam(){
 
 
 
-    ofTranslate(910,-910,0);
+    ofTranslate(scrW/2 - 90,-scrH/2 + 90,0);
     
     ofRotate(angle,v.x,-v.y,v.z);
 //    ofRotateX(180);
@@ -113,13 +119,13 @@ void ofApp::setcamOrtho(bool t){
         cam.setScale(1.0/ofGetViewportHeight());
         cam.setDistance(1);//ofGetScreenHeight());
         cam.setFarClip(cam.getDistance()*2*ofGetScreenHeight());
-
+        cam.setNearClip(.000001f);
         cam.setLensOffset(ofVec2f(-1,-1));
         cam.orbit(0,0, cam.getDistance());
         cam.setAutoDistance(false);
         cam.enableMouseInput();
         cam.enableMouseMiddleButton();
-        Container::radius = 150;
+        Container::radius = 300;
         glPointSize(Container::radius);
         GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
 
@@ -131,7 +137,7 @@ void ofApp::setcamOrtho(bool t){
         
         cam.setScale(1);
         cam.setNearClip(.001f);
-        cam.setDistance(10);
+        cam.setDistance(1);
         cam.setFarClip(cam.getDistance()*3);
         cam.setFov(2*ofRadToDeg(atan(.5/cam.getDistance())));
         cam.orbit(0,0, cam.getDistance());
@@ -139,7 +145,7 @@ void ofApp::setcamOrtho(bool t){
         cam.setLensOffset(ofVec2f(0,0));
         cam.enableMouseInput();
         cam.enableMouseMiddleButton();
-        Container::radius = 150;
+        Container::radius = 200;
         glPointSize(Container::radius);
         GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
         
@@ -152,6 +158,8 @@ void ofApp::setcamOrtho(bool t){
 void ofApp::drawMire(){
     ofPushMatrix();
     ofPushStyle();
+    
+//    if(ofApp::cam.getOrtho())ofScale(1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance());
     ofSetColor(255,0,0);
     ofNoFill();
     ofSetLineWidth(1);
@@ -199,7 +207,7 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     if(ofGetElapsedTimeMillis()-Casttime>70){
-        Container * cc = Physics::Cast(cam, ofVec2f(x,y),2.5);
+        Container * cc = Physics::Cast(cam, ofVec2f(x,y),1.);
         bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
         Casttime = ofGetElapsedTimeMillis();
         if (change)GUI::LogIt(cc == NULL?"":cc->filename);
@@ -234,6 +242,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
 
+    setcamOrtho(cam.getOrtho());
 }
 
 //--------------------------------------------------------------
@@ -245,3 +254,5 @@ void ofApp::gotMessage(ofMessage msg){
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
 }
+
+

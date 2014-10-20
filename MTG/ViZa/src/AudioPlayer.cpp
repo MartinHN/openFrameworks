@@ -51,7 +51,7 @@ bool AudioPlayer::Play(Container & c, int s){
             }
             //stop it
             else if( s ==0){
-                p->second->stop();
+                if(p->second)p->second->stop();
 //                players.erase(p++);
                 return false;
                 
@@ -59,7 +59,7 @@ bool AudioPlayer::Play(Container & c, int s){
         }
         
         // start preloaded
-        else if(s == 1 && p->first.name == id.name && !p->second->getIsPlaying()){
+        else if(s == 1 && p->first.name == id.name && p->second && !p->second->getIsPlaying()){
             players[id] = p->second;
             players[id]->play();
             players[id]->setPositionMS(c.begin*1000.0);
@@ -94,7 +94,7 @@ void AudioPlayer::gotMessage(ofMessage & msg){
         if(inst[0]=="stop"){
             inst.erase(inst.begin());
             string s  = ofJoinString(inst, " ");
-            players[audioUIDfromString(s)]->stop();
+            if(players[audioUIDfromString(s)]!=NULL)players[audioUIDfromString(s)]->stop();
             Container::containers[audioUIDfromString(s).idx].state = 0;
         }
     }

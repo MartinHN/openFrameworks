@@ -37,7 +37,7 @@ void buildNetwork(){
 void Physics::draw(){
     ofPushMatrix();
     float ratio = 1;//ofGetScreenHeight()*1.0/ofGetScreenWidth();
-//    if(ofApp::cam.getOrtho())ofScale(ofApp::cam.getDistance()*ratio,ofApp::cam.getDistance()*ratio,ofApp::cam.getDistance()*ratio);
+//    if(ofApp::cam.getOrtho())ofScale(1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance());
     ofDisableDepthTest();
     vbo.drawElements(GL_POINTS,Physics::vbo.getNumVertices());
     if(linksongs&&amountLines>0){
@@ -51,21 +51,21 @@ void Physics::draw(){
 
 
 
-Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult){
+Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool nearest){
     
-    float radmult = sphereMult*cam.getDistance()*Container::radius*1.0/distanceVanish(cam);
+    float radmult = sphereMult*cam.getDistance()*Container::radius* 1.0/((cam.getOrtho()?60.0:1)*distanceVanish(cam));
     float minDist = 99999;
     Container * res = NULL;
     for(int i = 0; i < vbo.getNumVertices() ; i++){
-        ofVec3f v =vs[i]*(cam.getOrtho()?cam.getDistance():1);
+        ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
         float screenDist = (cam.worldToScreen(v)-mouse).length();
-        float worldDist = (cam.getPosition()-v).length();
-        if(screenDist<radmult*1.0/worldDist){
-            if(sphereMult>2 && screenDist < minDist){
+        float worldDist = radmult*1.0/(cam.getPosition()-v).length();
+        if(screenDist<worldDist){
+            if(nearest && screenDist < minDist){
                 res = &Container::containers[i];
                 minDist = screenDist;
             }
-            else if (sphereMult<=2){
+            else if (!nearest){
             return &Container::containers[i];
             }
         }
@@ -111,8 +111,8 @@ void Physics::orderBy(string attr,int axe,int type){
         stddev = sqrt(stddev);
         
         
-        min = mean - stddev/2;
-        max = mean + stddev/2;
+        min = mean - stddev;
+        max = mean + stddev;
 
     }
     for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
@@ -175,6 +175,7 @@ void Physics::updateOneColor(int idx,ofColor col){
     c[0] = (ofFloatColor)col;
     vbo.updateOneColorData(c,idx);
     Physics::cols[idx] = col;
+    
     delete [] c;
 }
 
@@ -195,8 +196,8 @@ void Physics::updateOnePos(int idx,ofVec3f & pos){
 }
 
 float Physics::distanceVanish(ofCamera cam){
-    if(cam.getOrtho())return 100.0*cam.getScale().x;
-    return 2.0f/tan(ofDegToRad(cam.getFov()/2.0f));
+    if(cam.getOrtho())return 1.0;
+    else return 2.0f/tan(ofDegToRad(cam.getFov()/2.0f));
 }
 
 

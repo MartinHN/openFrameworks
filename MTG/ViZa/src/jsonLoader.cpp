@@ -59,6 +59,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     int j = 0;
 
     for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
+        int contwatch = Container::containers.size();
         wng::ofxCsv csv;
         if(p->second.getExtension() =="seg"){
         csv.loadFile(p->second.path(), "\t");
@@ -69,8 +70,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
             
             
         }
-            
-            
+   
         }
         if(p->second.getExtension() =="json"){
             ofxJSONElement json;
@@ -103,14 +103,16 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                 ii++;
             }
             }
-        
+
         }
         
 
-        
+        if( contwatch != Container::containers.size()){
+        globalCount++;
+        }
        
         
-        globalCount++;
+        
        
     }
     
@@ -127,7 +129,17 @@ map<string,vector<float> > jsonLoader::crawl(Json::Value j){
                 for (Json::Value::iterator itt = (*it).begin() ; itt != (*it).end() ; ++itt ){
                             string attrtype =itt.memberName();
                     for (Json::Value::iterator ittt = (*itt).begin() ; ittt != (*itt).end() ; ++ittt ){
+                        if((*ittt).isNumeric())
                         RES[attrname+"."+attrtype].push_back((*ittt).asFloat());
+                        else if ((*ittt).isArray()){
+                            int i = 0;
+                            for (Json::Value::iterator itttt = (*ittt).begin() ; itttt != (*ittt).end() ; ++itttt ){
+                               RES[attrname+"."+attrtype+"."+ofToString(i)].push_back((*itttt).asFloat());
+                                i++;
+                            }
+
+                        }
+                            
                     }
                     
                 }

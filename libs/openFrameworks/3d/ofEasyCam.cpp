@@ -70,7 +70,7 @@ void ofEasyCam::reset(){
 	
 	resetTransform();
 	setPosition(0, 0, lastDistance);
-	
+	if(isOrtho && ofGetCurrentRenderer()!=NULL)setScale(1.0/ofGetViewportHeight());
 		
 	xRot = 0;
 	yRot = 0;
@@ -192,8 +192,10 @@ void ofEasyCam::updateTranslation(){
 			bDoTranslate = false;
 		}
 		move((getXAxis() * moveX) + (getYAxis() * moveY) + (getZAxis() * moveZ));
+        if(isOrtho)setScale(getScale()+moveZ/1000.0);
 	}else{
 		setPosition(prevPosition + ofVec3f(prevAxisX * moveX) + (prevAxisY * moveY) + (prevAxisZ * moveZ));
+        if(isOrtho)setScale(getScale()+moveZ/1000.0);
 	}
 }	
 //----------------------------------------
@@ -230,6 +232,7 @@ void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 		if ((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || ofGetKeyPressed(doTranslationKey)  || mouse.button == OF_MOUSE_BUTTON_RIGHT){
 			bDoTranslate = true;
 			bDoRotate = false;
+            updateMouse(mouse);
 		}else if (mouse.button == OF_MOUSE_BUTTON_LEFT) {
 			bDoTranslate = false;
 			bDoRotate = true;

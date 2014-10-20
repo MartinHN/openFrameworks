@@ -146,6 +146,7 @@ ofFloatColor Container::getColor(){
     Container::stateColor[3].a=1;
         colorInit = false;
 }
+    
     return stateColor[(int)state==1?1:isHovered?3:isSelected?2:0];
 }
 

@@ -22,7 +22,7 @@ class ofApp : public ofBaseApp{
 
     void drawMire();
 
-    
+
 		void setup();
 		void update();
 		void draw();

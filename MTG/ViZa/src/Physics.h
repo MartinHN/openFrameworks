@@ -38,7 +38,7 @@ public:
     static void updateOneColor(int idx,ofColor col);
     static void updateOnePos(int idx,ofVec3f & pos);
     static void orderBy(string attr,int axe,int type);
-    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1);
+    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1,bool nearest=true);
     static float distanceVanish(ofCamera cam);
     
     static Container* dragged;

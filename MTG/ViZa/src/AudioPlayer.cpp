@@ -43,9 +43,9 @@ bool AudioPlayer::Play(Container & c, int s){
         //playing start slice
         if(p->first==id){
             //restart
-            if(s ==1){
-                players[id]->play();
-                players[id]->setPositionMS(c.begin*1000.0);
+            if(s ==1 && p->second!=NULL){
+                p->second->play();
+                p->second->setPositionMS(c.begin*1000.0);
                 TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+id.toString());
                 return true;
             }
@@ -117,36 +117,4 @@ audioUID AudioPlayer::audioUIDfromString(const string s){
     res.idx = ofFromString<int>(ss[1]);
     return res;
 }
-//bool AudioPlayer::Play(int uid,string path,float begin,float end ,ofParameter<float> & s){
-//    
-//    
-//    if(players.size()>POLYPHONY && s>0)return false;
-//    
-//    
-//    for(map<int,ofSoundPlayer>::iterator p= players.begin();p!=players.end();++p){
-//        if(p->first==uid){
-//            if(s ==1){
-//                p->second.play();
-//                s=0;
-//                players.erase(p++);
-//                
-//                return false;
-//            }
-//            else if( s ==0){
-//                p->second.stop();
-//                players.erase(p++);
-//                return false;
-//                
-//            }
-//        }
-//    }
-//    
-//    if(s==1){
-//        players[uid] = ofSoundPlayer();
-//        players[uid].loadSound(path);
-//        players[uid].setPositionMS(begin*1000.0);
-//        players[uid].play();
-//    }
-//    
-//    return false;
-//}
+

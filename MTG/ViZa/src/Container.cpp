@@ -52,42 +52,25 @@ void Container::registerListener(){
 }
 
 void Container::setSelected(bool & s){
-//    if(s){
-//        Physics::updateOneColor(index,stateColor[2]);
-//    }
-//    else{
-//        Physics::updateOneColor(index,stateColor[isHovered?3:(int)state]);
-//    }
 Physics::updateOneColor(index,getColor());
 
 }
 
 
 void Container::setState(float & s){
-    
-//    if(s==0 )
-//        Physics::updateOneColor(index,stateColor[isHovered?3:isSelected?2:(int)s]);
-//    else
-//        Physics::updateOneColor(index,stateColor[(int)s]);
 
     Physics::updateOneColor(index,getColor());
     
     if(s<=1)AudioPlayer::instance()->Play(*this,(int)s);
-//    AudioPlayer::instance()->Play(index,path,begin,end,state);
+
     
 }
 
 void Container::setHovered(bool & s){
-//    if(s){
-//        Physics::updateOneColor(index,stateColor[3]);
-//    }
-//    else{
-//        Physics::updateOneColor(index,stateColor[isSelected?2:(int)state]);
-//    }
-    
+
     
 Physics::updateOneColor(index,getColor());
-    //AudioPlayer::Load(*this,s);
+
 }
 
 void Container::selectSong(string name){
@@ -147,7 +130,7 @@ ofFloatColor Container::getColor(){
         colorInit = false;
 }
     
-    return stateColor[(int)state==1?1:isHovered?3:isSelected?2:0];
+    return ofColor(stateColor[(int)state==1?1:isHovered?3:isSelected?2:0]);
 }
 
 

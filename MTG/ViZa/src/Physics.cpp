@@ -61,7 +61,7 @@ Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool n
         float screenDist = (cam.worldToScreen(v)-mouse).length();
         float worldDist = radmult*1.0/(cam.getPosition()-v).length();
         if(screenDist<worldDist){
-            if(nearest && screenDist < minDist){
+            if(nearest && screenDist < minDist && cols[i].a>.1){
                 res = &Container::containers[i];
                 minDist = screenDist;
             }
@@ -73,6 +73,26 @@ Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool n
     return res;
     
 }
+
+
+Container * Physics::Nearest(ofVec3f point,float radius ){
+    
+
+    float minDist = 99999;
+    Container * res = NULL;
+    for(int i = 0; i < vbo.getNumVertices() ; i++){
+        float v =(vs[i]-point).length();//*(cam.getOrtho()?1.0/cam.getDistance():1);
+            if((radius==0 || v<radius) && v < minDist ){
+                res = &Container::containers[i];
+                minDist = v;
+            }
+
+        }
+    
+    return res;
+    
+}
+
 
 
 
@@ -201,11 +221,14 @@ float Physics::distanceVanish(ofCamera cam){
 }
 
 
-void Physics::updateDrag(ofVec2f mouse){
+bool Physics::updateDrag(ofVec2f mouse){
     if(dragged!=NULL){
         ofVec3f v =ofApp::cam.screenToWorld(ofVec3f(mouse.x,mouse.y,originDrag));
+        
      updateOnePos(dragged->index,v);
+        return true;
     }
+    return false;
 }
 
 

@@ -39,6 +39,7 @@ public:
     static void updateOnePos(int idx,ofVec3f & pos);
     static void orderBy(string attr,int axe,int type);
     static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1,bool nearest=true);
+    static Container* Nearest(ofVec3f point,float radius = 0 );
     static float distanceVanish(ofCamera cam);
     
     static Container* dragged;
@@ -62,7 +63,7 @@ public:
     
     void buildNetwork();
     void updatePhy(float time);
-    static void updateDrag(ofVec2f mouse);
+    static bool updateDrag(ofVec2f mouse);
     
 private:
      static Physics* inst;

@@ -18,18 +18,22 @@ void ofApp::setup(){
 
     Casttime=ofGetElapsedTimeMillis();
 
-    jsonLoader::instance()->loadSegments();
+    
+    loadFiles();
+
     
     ofBackground(0);
     
 
    
-    Physics::updateVBO();
+
     
     
-    GUI::instance()->setup();
+    
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
+    
+    Midi::instance()->getPorts();
     
     for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
         for(int i = 0 ; i <1 ; i++){
@@ -40,8 +44,14 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    
+    Midi::update();
    
+}
+
+void ofApp::loadFiles(){
+    jsonLoader::instance()->loadSegments();
+    Physics::updateVBO();
+    GUI::instance()->setup();
 }
 
 //--------------------------------------------------------------
@@ -56,7 +66,7 @@ void ofApp::draw(){
     cam.begin();
     }
     Physics::draw();
-
+    Midi::draw();
     drawMire();
 
     cam.end();
@@ -136,7 +146,7 @@ void ofApp::setcamOrtho(bool t){
         cam.disableOrtho();
         
         cam.setScale(1);
-        cam.setNearClip(.001f);
+        cam.setNearClip(.000001f);
         cam.setDistance(1);
         cam.setFarClip(cam.getDistance()*3);
         cam.setFov(2*ofRadToDeg(atan(.5/cam.getDistance())));
@@ -145,7 +155,7 @@ void ofApp::setcamOrtho(bool t){
         cam.setLensOffset(ofVec2f(0,0));
         cam.enableMouseInput();
         cam.enableMouseMiddleButton();
-        Container::radius = 200;
+        Container::radius = 50;
         glPointSize(Container::radius);
         GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
         
@@ -160,14 +170,38 @@ void ofApp::drawMire(){
     ofPushStyle();
     
 //    if(ofApp::cam.getOrtho())ofScale(1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance(),1.0/ofApp::cam.getDistance());
-    ofSetColor(255,0,0);
+    
     ofNoFill();
     ofSetLineWidth(1);
     ofSetCircleResolution(60);
+    
+
+    
+    
+    ofSetColor(0,0,255);
     ofCircle(ofVec3f(0),.5);
+
+    
     ofRotateX(90);
+    ofSetColor(0,255,0);
     ofCircle(ofVec3f(0),.5);
+
+    
+    ofRotateY(90);
+    ofSetColor(255,0,0);
+    ofCircle(ofVec3f(0),.5);
+
+
+    
     ofPopStyle();
+    ofPopMatrix();
+    
+    ofPushMatrix();
+    for (int i = 0 ; i < 3 ; i++){
+        ofVec3f mask(i==0?255:0,i==1?255:0,i==2?255:0);
+        ofSetColor (mask.x,mask.y,mask.z);
+        ofDrawBitmapString(GUI::instance()->attr[i]->getSelected()[0]->getName(), .45/255.*mask);
+    }
     ofPopMatrix();
 }
 
@@ -195,6 +229,9 @@ void ofApp::keyPressed(int key){
         case 'z':
             cam.orbit(0,0,cam.getDistance());
             break;
+            
+            case 'l':
+            loadFiles();
         default:
             break;
     }
@@ -218,18 +255,25 @@ void ofApp::mouseMoved(int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     if(button==1){
-     Physics::updateDrag(ofVec2f(x,y));
+        if(Physics::updateDrag(ofVec2f(x,y))){
+            
+        }
+
     }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     if(Container::hoverIdx==-1)return;
     Container * cc = &Container::containers[Container::hoverIdx];
-    if (cc == NULL) return;
+    if (cc == NULL) {
+
+        return;}
     if(button == 2)cc->state =cc->state==0?1:0;
     if(button == 1){
-     Physics::dragged = cc;
+    cam.disableMouseMiddleButton();
+    Physics::dragged = cc;
     Physics::originDrag = cam.worldToCamera(Physics::vs[cc->index]).z;
     }
 }
@@ -237,6 +281,7 @@ void ofApp::mousePressed(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     Physics::dragged = NULL;
+    cam.enableMouseMiddleButton();
 }
 
 //--------------------------------------------------------------

@@ -38,6 +38,13 @@ public:
     ofxUIToggle * orthoCam;
     
     
+    ofxUISuperCanvas * midiCanvas;
+    ofxUIDropDownList * midiPorts;
+    ofxUIRangeSlider * midiVel;
+    ofxUISlider * midiRadius;
+    
+    
+    
      void guiEvent(ofxUIEventArgs &e);
     
     static GUI * instance(){if(inst == NULL){inst = new GUI;} return inst;   }

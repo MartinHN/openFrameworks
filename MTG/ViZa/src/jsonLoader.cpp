@@ -38,8 +38,8 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     ad.listDir();
     vector<ofFile> segL = ad.getFiles();
 
-    
-    
+    globalCount=0;
+    Container::containers.clear();
     
     std::map<ofFile,ofFile> mapL;
     
@@ -94,6 +94,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                     }
                     else{
                         Container::containers.back().setAttribute("length",*it - *(it-1));
+                        Container::containers.back().setAttribute("startTime",*(it-1));
                     }
                     
                 }

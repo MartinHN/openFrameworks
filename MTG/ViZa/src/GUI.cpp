@@ -12,6 +12,8 @@
 GUI * GUI::inst;
 
 
+
+
 void GUI::setup(){
     
     int scrollW = 700;
@@ -130,9 +132,17 @@ void GUI::setup(){
         viewCanvas->addWidgetDown(orthoCam);
         
         
+        midiCanvas = new ofxUISuperCanvas("Midi");
+        midiCanvas->setName("Midi");
         
         
+        midiPorts = new ofxUIDropDownList("MidiPorts", Midi::instance()->getPorts(),150,0,0,OFX_UI_FONT_SMALL);
+        midiVel = new ofxUIRangeSlider("VelocityRange",0,1,0,1,100,10);
         
+        midiRadius = new ofxUISlider("Radius",0,.5,0.05,100,10);
+        midiCanvas->addWidgetDown(midiPorts);
+        midiCanvas->addWidgetDown(midiVel);
+        midiCanvas->addWidgetDown(midiRadius);
         
 
         
@@ -141,6 +151,7 @@ void GUI::setup(){
 
     
     vector<ofxUIWidget*> ddls= guiconf->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
+    ddls.push_back(midiPorts);
     for(int i = 0 ; i < ddls.size(); i++){
         ((ofxUIDropDownList*) ddls[i])->setAutoClose(true);
         ((ofxUIDropDownList*) ddls[i])->setShowCurrentSelected(true);
@@ -152,6 +163,7 @@ void GUI::setup(){
     global->addCanvas(guiconf);
     global->addCanvas(logCanvas);
     global->addCanvas(viewCanvas);
+    global->addCanvas(midiCanvas);
 
     map< ofxUIToggle*,ofxUICanvas* > w = global->canvases;
     for(map< ofxUIToggle*,ofxUICanvas* > ::iterator it = w.begin() ; it!=w.end() ; ++it){
@@ -277,7 +289,20 @@ else    if(rootName == "View" ){
         ofApp::setcamOrtho(((ofxUIToggle*)e.widget)->getValue());
     }
 }
-
+else    if(rootName == "Midi" ){
+    if(parentName == "MidiPorts"){
+        Midi::instance()->midiIn.closePort();
+        Midi::instance()->midiIn.openPort(name);
+    }
+    if(name == "VelocityRange"){
+        Midi::velScale.set(((ofxUIRangeSlider*)e.widget)->getValueLow(),((ofxUIRangeSlider*)e.widget)->getValueHigh());
+    }
+    if(name == "Radius"){
+        Midi::radius = ((ofxUISlider*)e.widget)->getValue();
+    }
+    
+    
+}
     
     
     lastFramenum = ofGetFrameNum();

@@ -4,6 +4,7 @@
 #include "Physics.h"
 #include "jsonLoader.h"
 #include "GUI.h"
+#include "Midi.h"
 
 class ofApp : public ofBaseApp{
 
@@ -39,5 +40,6 @@ class ofApp : public ofBaseApp{
         void isGUIing(bool & t);
     void drawCam();
     static void setcamOrtho(bool t);
+    void loadFiles();
     
 };

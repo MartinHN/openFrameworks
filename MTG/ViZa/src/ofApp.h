@@ -40,6 +40,6 @@ class ofApp : public ofBaseApp{
         void isGUIing(bool & t);
     void drawCam();
     static void setcamOrtho(bool t);
-    void loadFiles();
+    void loadFiles(string audiopath="",string segpath="");
     
 };

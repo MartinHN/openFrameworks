@@ -12,33 +12,156 @@
 GUI * GUI::inst;
 
 
+GUI::GUI(){
+    int ch = 0;
+    vector<string> dumb;
+    dumb.push_back("lol");
+    
+    
+    ///LOGGER///////////
 
+    
+    logCanvas = new ofxUISuperCanvas("Log",0,0,700,100,OFX_UI_FONT_SMALL);
+    logCanvas->setName("Log");
+    logCanvas->autoSizeToFitWidgets();
+    
+    Logger = new ofxUITextArea("Logger","Log",700,0,0,0,OFX_UI_FONT_SMALL);
+    Logger->setVisible(true);
+    
+    //AXES/////////////
+    guiconf = new ofxUISuperCanvas("Axes",0,0,700,100);
+    guiconf->setName("Axes");
+    
+    
+    ch+=guiconf->getRect()->height+pad;
+    
+    vector<string> typescales;
+    typescales.push_back("min/max");
+    typescales.push_back("standard deviation");
+    typescales.push_back("range");
+    
+    
+    //Hack for memory corruption
+    attrNames.clear();
+    aggrNames.clear();
+    for(int i = 0  ;i< 10 ; i++){
+    attrNames.push_back(ofToString(i)+" attr");
+    aggrNames.push_back(ofToString(i)+" aggr");
+
+    }
+    
+    
+    
+    
+    for(int i = 0 ; i < 3 ; i++){
+        attr[i] =           new ofxUIDropDownList("Attribute"+numToAxe(i), attrNames,150,0,0,OFX_UI_FONT_SMALL);
+        aggr[i] =         new ofxUIDropDownList("Aggregate"+numToAxe(i), aggrNames,150,0,0,OFX_UI_FONT_SMALL);
+        scaleType[i] =    new ofxUIDropDownList("scaleType"+numToAxe(i), typescales,150,0,0,OFX_UI_FONT_SMALL);
+        min[i] =          new ofxUITextInput("min"+numToAxe(i),"",50);
+        max[i] =          new ofxUITextInput("max"+numToAxe(i),"",50);
+        
+    }
+    
+    
+    
+    //SONGSNAMES////////////////////
+    scrollNames = new ofxUIScrollableCanvas(0,ch,scrollW,400);
+    scrollNames->setName("Songs");
+    scrollNames->setScrollableDirections(false, true);
+    
+    songNames = new ofxUIDropDownList("songNames",dumb ,0,0,0,OFX_UI_FONT_SMALL);
+    
+    scrollNames->addWidgetDown(songNames);
+    scrollNames->setSnapping(true);
+    
+    
+    
+    
+    //MIDI//////////
+    midiCanvas = new ofxUISuperCanvas("Midi");
+    midiCanvas->setName("Midi");
+    
+    
+    midiPorts = new ofxUIDropDownList("MidiPorts", Midi::instance()->getPorts(),150,0,0,OFX_UI_FONT_SMALL);
+    midiVel = new ofxUIRangeSlider("VelocityRange",0,1,0,1,100,10);
+    
+    midiRadius = new ofxUISlider("Radius",0,.5,0.05,100,10);
+    
+    
+    //VIEWWWW/////////////
+    
+    viewCanvas = new ofxUISuperCanvas("View");
+    viewCanvas->setName("View");
+    
+    alphaView = new ofxUISlider("alphaView",0,1,0.3f,100,10);
+    selBrightest = new ofxUIToggle("SelectBrightest",false,10,10);
+    linkSongs = new ofxUIToggle("linkSongs",false,10,10);
+    orthoCam = new ofxUIToggle("orthoCam",false,10,10);
+    
+    
+    
+    
+    
+    ///PLACING//////////////
+    viewCanvas->addWidgetDown(alphaView);
+    viewCanvas->addWidgetDown(selBrightest);
+    viewCanvas->addWidgetDown(linkSongs);
+    viewCanvas->addWidgetDown(orthoCam);
+    
+    
+    
+    midiCanvas->addWidgetDown(midiPorts);
+    midiCanvas->addWidgetDown(midiVel);
+    midiCanvas->addWidgetDown(midiRadius);
+    
+
+    logCanvas->addWidgetDown(Logger);
+    
+    
+    for(int i=0;i<3;i++){
+    guiconf->addWidgetDown(attr[i]);
+    guiconf->addWidgetRight(aggr[i] );
+    guiconf->addWidgetRight(scaleType[i] );
+    guiconf->addWidgetRight(min[i] );
+    guiconf->addWidgetRight(max[i] );
+    }
+
+    
+    
+    //GLOBAL TAB
+    global = new ofxUITabBar();
+    
+    global->setName("Global");
+    global->addCanvas(scrollNames);
+    global->addCanvas(guiconf);
+    global->addCanvas(logCanvas);
+    global->addCanvas(viewCanvas);
+    global->addCanvas(midiCanvas);
+    
+    
+    vector<ofxUIWidget*> ddls= guiconf->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
+    ddls.push_back(midiPorts);
+    for(int i = 0 ; i < ddls.size(); i++){
+        ((ofxUIDropDownList*) ddls[i])->setAutoClose(true);
+        ((ofxUIDropDownList*) ddls[i])->setShowCurrentSelected(true);
+    }
+    
+}
+
+
+GUI::~GUI(){
+//    delete global;
+}
 
 void GUI::setup(){
     
-    int scrollW = 700;
-    
-    
-    int ch = 0;
-    int pad=50;
-    
-    
-    Logger = new ofxUITextArea("Logger","Log",700,0,0,0,OFX_UI_FONT_SMALL);
-    logCanvas = new ofxUISuperCanvas("Log",0,0,700,100,OFX_UI_FONT_SMALL);
-    logCanvas->setName("Log");
-    logCanvas->addWidgetDown(Logger);
-    Logger->setVisible(true);
-    logCanvas->autoSizeToFitWidgets();
+
+   
     
     
     
-    
-    
-    guiconf = new ofxUISuperCanvas("Axes",0,0,700,100);
-    guiconf->setName("Axes");
-    ch+=guiconf->getRect()->height+pad;
-    
-    
+    attrNames.clear();
+    aggrNames.clear();
     
     
 
@@ -69,30 +192,27 @@ void GUI::setup(){
         }
         float ddSize = 100;
         
-        vector<string> typescales;
-        typescales.push_back("min/max");
-        typescales.push_back("standard deviation");
-        typescales.push_back("range");
 
-        
-        for(int i = 0 ; i < 3 ; i++){
-            attr[i] = new ofxUIDropDownList("Attribute"+numToAxe(i), attrNames,150,0,0,OFX_UI_FONT_SMALL);
-            aggr[i] =         new ofxUIDropDownList("Aggregate"+numToAxe(i), aggrNames,150,0,0,OFX_UI_FONT_SMALL);
-            scaleType[i] =    new ofxUIDropDownList("scaleType"+numToAxe(i), typescales,150,0,0,OFX_UI_FONT_SMALL);
-            min[i] =          new ofxUITextInput("min"+numToAxe(i),"",50);
-            max[i] =          new ofxUITextInput("max"+numToAxe(i),"",50);
-            guiconf->addWidgetDown(attr[i]);
-            guiconf->addWidgetRight(aggr[i] );
-            guiconf->addWidgetRight(scaleType[i] );
-            guiconf->addWidgetRight(min[i] );
-            guiconf->addWidgetRight(max[i] );
+
+
             
+          for(int i = 0 ; i < 3 ; i++){
+            
+//            attr[i]->clearEmbeddedWidgets();
+            attr[i]->clearToggles();
+            
+            attr[i]->addToggles(attrNames);
+            aggr[i]->clearToggles();
+            aggr[i]->addToggles(aggrNames);
+
             attr[i]->getToggles()[i]->setValue(true);
-            attr[i]->getToggles()[i]->triggerSelf();
             aggr[i]->getToggles()[0]->setValue(true);
-            aggr[i]->getToggles()[0]->triggerSelf();
             scaleType[i]->getToggles()[i==0?0:1]->setValue(true);
+              
+              
             scaleType[i]->getToggles()[i==0?0:1]->triggerSelf();
+              attr[i]->getToggles()[i]->triggerSelf();
+              aggr[i]->getToggles()[0]->triggerSelf();
             min[i]->setAutoClear(false);
             min[i]->setTriggerOnClick(false);
             max[i]->setAutoClear(false);
@@ -100,82 +220,30 @@ void GUI::setup(){
         }
 
 
+        
+        
+        songnames.clear();
         for(map<string,vector<Container*> > ::iterator it = Container::songs.begin() ; it!=Container::songs.end() ; ++it){
             songnames.push_back(it->first);
 
         }
+        songNames->clearToggles();
+        songNames->addToggles(songnames);
         
         
         
         
         
-        scrollNames = new ofxUIScrollableCanvas(0,ch,scrollW,400);
-        scrollNames->setName("Songs");
-        scrollNames->setScrollableDirections(false, true);
-        scrollNames->addWidgetDown(new ofxUIDropDownList("songNames", songnames,0,0,0,OFX_UI_FONT_SMALL));
+        
+        
         ((ofxUIDropDownList*)scrollNames->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST)[0])->open();
         ofxUIRectangle * r =((ofxUIDropDownList*)scrollNames->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST)[0])->getRect();
-        scrollNames->setSnapping(true);
+        
         scrollNames->setDimensions(scrollW,songnames.size()*r->height);
 
-        
-        
-        
-        viewCanvas = new ofxUISuperCanvas("View");
-        viewCanvas->setName("View");
-        
-        alphaView = new ofxUISlider("alphaView",0,1,0.3f,100,10);
-        linkSongs = new ofxUIToggle("linkSongs",false,10,10);
-        orthoCam = new ofxUIToggle("orthoCam",false,10,10);
-        viewCanvas->addWidgetDown(alphaView);
-        viewCanvas->addWidgetDown(linkSongs);
-        viewCanvas->addWidgetDown(orthoCam);
-        
-        
-        midiCanvas = new ofxUISuperCanvas("Midi");
-        midiCanvas->setName("Midi");
-        
-        
-        midiPorts = new ofxUIDropDownList("MidiPorts", Midi::instance()->getPorts(),150,0,0,OFX_UI_FONT_SMALL);
-        midiVel = new ofxUIRangeSlider("VelocityRange",0,1,0,1,100,10);
-        
-        midiRadius = new ofxUISlider("Radius",0,.5,0.05,100,10);
-        midiCanvas->addWidgetDown(midiPorts);
-        midiCanvas->addWidgetDown(midiVel);
-        midiCanvas->addWidgetDown(midiRadius);
-        
-
-        
-
-    }
-
-    
-    vector<ofxUIWidget*> ddls= guiconf->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
-    ddls.push_back(midiPorts);
-    for(int i = 0 ; i < ddls.size(); i++){
-        ((ofxUIDropDownList*) ddls[i])->setAutoClose(true);
-        ((ofxUIDropDownList*) ddls[i])->setShowCurrentSelected(true);
-    }
-    
-    global = new ofxUITabBar();
-    global->setName("Global");
-    global->addCanvas(scrollNames);
-    global->addCanvas(guiconf);
-    global->addCanvas(logCanvas);
-    global->addCanvas(viewCanvas);
-    global->addCanvas(midiCanvas);
-
-    map< ofxUIToggle*,ofxUICanvas* > w = global->canvases;
-    for(map< ofxUIToggle*,ofxUICanvas* > ::iterator it = w.begin() ; it!=w.end() ; ++it){
-    it->second->setParent(global);
-   	ofAddListener(((ofxUICanvas*)(it->second))->newGUIEvent,this,&GUI::guiEvent);
     }
 
 
-    
-    Physics::maxs.addListener(this,&GUI::maxsChanged);
-    Physics::mins.addListener(this,&GUI::minsChanged);
-    
     for(int i = 0 ; i < 3;i++){
         attr[i]->getToggles()[i]->triggerSelf();
     }
@@ -186,6 +254,20 @@ void GUI::setup(){
 
 }
 
+
+
+void GUI::registerListener(){
+    
+    map< ofxUIToggle*,ofxUICanvas* > w = global->canvases;
+    for(map< ofxUIToggle*,ofxUICanvas* > ::iterator it = w.begin() ; it!=w.end() ; ++it){
+//        it->second->setParent(global);
+        ofAddListener(((ofxUICanvas*)(it->second))->newGUIEvent,this,&GUI::guiEvent);
+    }
+    
+    Physics::maxs.addListener(this,&GUI::maxsChanged);
+    Physics::mins.addListener(this,&GUI::minsChanged);
+}
+
 void GUI::guiEvent(ofxUIEventArgs &e){
     string name = e.getName();
 	int kind = e.getKind();
@@ -193,16 +275,14 @@ void GUI::guiEvent(ofxUIEventArgs &e){
     ofxUICanvas * root,*parent;
 
 
-    root= (ofxUICanvas*)e.widget->getCanvasParent();
-    parent = root;
-    if(root->getName() == "Global"){
-        root = (ofxUICanvas*)e.widget;
-        parent = root;
-    }
-    else{
-        while(root->getCanvasParent()->getName()!="Global"){root= (ofxUICanvas*)root->getCanvasParent();}
-    }
-   
+    
+    root = (ofxUICanvas*)e.widget;
+    
+    while(root->getParent()!=NULL ){root= (ofxUICanvas*)root->getParent();}
+    if(e.widget->getParent()!=NULL){ parent = (ofxUICanvas*)e.widget->getParent();}
+    else{parent = root;}
+
+    
     //Check modifications
     isModifiying = ofGetMousePressed();
     
@@ -250,9 +330,12 @@ void GUI::guiEvent(ofxUIEventArgs &e){
     int axe = axeToNum(parentName[parentName.length()-1]);
     
     // attributes and aggregator modification
-    if(axe!=-1)
-        Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
-        
+        if(axe!=-1 && attr[axe]->getSelected().size()>0 && aggr[axe]->getSelected().size()>0 && scaleType[axe]->getSelectedIndeces().size()>0){
+            string attrtmp =attr[axe]->getSelected()[0]->getName();
+            string aggrtmp = aggr[axe]->getSelected()[0]->getName();
+            int scaletmp =scaleType[axe]->getSelectedIndeces()[0];
+        Physics::orderBy(attrtmp+"."+aggrtmp, axe, scaletmp);
+        }
     // mins maxs modifications
     else if (kind == OFX_UI_WIDGET_TEXTINPUT){
        axe = axeToNum(name[name.length()-1]);

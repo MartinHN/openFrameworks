@@ -248,7 +248,7 @@ void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 
 void ofEasyCam::mouseReleased(ofMouseEventArgs & mouse){
 	unsigned long curTap = ofGetElapsedTimeMillis();
-	if(lastTap != 0 && curTap - lastTap < doubleclickTime){
+	if(mouse.button==0 && lastTap != 0 && curTap - lastTap < doubleclickTime){
 		reset();
 		return;
 	}

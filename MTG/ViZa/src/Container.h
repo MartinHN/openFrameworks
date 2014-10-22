@@ -19,19 +19,18 @@
 class Container{
 public:
     
+    Container(){
+    path="";
+    
+    
+    
+    };
+    
     static vector<Container> containers;
     static map<string,vector<Container*> > songs;
     static vector<string> attributeNames;
-    
-
-    
     static float radius;
-    
-    
-    
     static ofFloatColor stateColor [];
-    
-    
     static void registerListener();
     static void orderBy(string attr,int axe,bool norm);
     static void selectSong(string name);
@@ -44,13 +43,16 @@ public:
     
     
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
-        pos=ofVec3f((end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
+        pos=ofVec3f(0);//(end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
         state = 0;
         filename = path.substr(path.find_last_of("/")+1);
 //        if(((map<string,vector<Container*> >::iterator)songs.find(filename))==songs.end())
         songs[filename].push_back(this);
         
     };
+    
+    
+    void init(string path,float begin,float end,int idx,int level=0);
     
     
     ofVec3f pos;
@@ -61,15 +63,18 @@ public:
     int level;
     unsigned int index;
     ofParameter<float> state;
+    ofParameter<bool> isSelected;
+    ofParameter<bool> isHovered;
+    map<string, float> attributes;
+    
     void setState(float & a);
     void setSelected(bool & s);
     void setHovered(bool & s);
-    ofParameter<bool> isSelected;
-    ofParameter<bool> isHovered;
+
     
     void setAttribute(string n,float v);
     ofFloatColor getColor();
-    map<string, float> attributes;
+    
     
     
 };

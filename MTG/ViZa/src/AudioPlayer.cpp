@@ -101,6 +101,17 @@ void AudioPlayer::gotMessage(ofMessage & msg){
     
 }
 
+
+void AudioPlayer::UnloadAll() {
+    
+    for(map<audioUID,ofSoundPlayer*>::iterator it = players.begin() ; it!= players.end() ;++it){
+        it->second->unloadSound();
+        delete it->second;
+        players.erase(it++);
+    }
+    
+}
+
             
 audioUID AudioPlayer::getUID(Container const & c){
     audioUID id;

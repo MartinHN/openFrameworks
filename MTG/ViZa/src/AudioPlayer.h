@@ -55,7 +55,7 @@ public:
     static std::map<audioUID,ofSoundPlayer*> players;
     static bool Play(Container & c,int s);
     static void Load(Container const & c,bool t);
-
+    static void UnloadAll();
 //    static bool Play(int uid,string path,float begin,float end ,ofParameter<float> & s);
     
     void gotMessage(ofMessage & msg);

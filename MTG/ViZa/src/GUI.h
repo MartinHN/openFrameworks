@@ -20,6 +20,9 @@
 class GUI{
 public:
 
+    GUI();
+    ~GUI();
+    
     ofxUITabBar * global;
     
     ofxUISuperCanvas *guiconf;
@@ -34,15 +37,21 @@ public:
     
     ofxUISuperCanvas * viewCanvas;
     ofxUISlider * alphaView;
+    ofxUIToggle * selBrightest;
     ofxUIToggle * linkSongs;
     ofxUIToggle * orthoCam;
+    
     
     
     ofxUISuperCanvas * midiCanvas;
     ofxUIDropDownList * midiPorts;
     ofxUIRangeSlider * midiVel;
     ofxUISlider * midiRadius;
+    ofxUIDropDownList * songNames;
     
+    
+    int scrollW = 700;
+    int pad=50;
     
     
      void guiEvent(ofxUIEventArgs &e);
@@ -50,7 +59,7 @@ public:
     static GUI * instance(){if(inst == NULL){inst = new GUI;} return inst;   }
     
     void setup();
-
+    void registerListener();
 
     
     ofParameter<bool> isModifiying;

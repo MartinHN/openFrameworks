@@ -11,9 +11,9 @@
 #include "ofApp.h"
 
 
-ofVec3f* Physics::vs=NULL;//
-ofFloatColor* Physics::cols=NULL ;
-unsigned int* Physics::idxs=NULL;
+vector<ofVec3f> Physics::vs;//
+vector<ofFloatColor> Physics::cols;
+vector<unsigned int> Physics::idxs;
 ofVbo Physics::vbo;
 int Physics::startLines;
 int Physics::amountLines;
@@ -51,25 +51,27 @@ void Physics::draw(){
 
 
 
-Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool nearest){
+Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool brightest){
     
     float radmult = sphereMult*cam.getDistance()*Container::radius* 1.0/((cam.getOrtho()?60.0:1)*distanceVanish(cam));
     float minDist = 99999;
     Container * res = NULL;
+    float alpha=0;
     for(int i = 0; i < vbo.getNumVertices() ; i++){
         ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
         float screenDist = (cam.worldToScreen(v)-mouse).length();
         float worldDist = radmult*1.0/(cam.getPosition()-v).length();
         if(screenDist<worldDist){
-            if(nearest && screenDist < minDist && cols[i].a>.1){
+            if( screenDist < minDist ){
                 res = &Container::containers[i];
+                alpha+=cols[i].a;
                 minDist = screenDist;
             }
-            else if (!nearest){
-            return &Container::containers[i];
-            }
+
         }
     }
+    
+    if(brightest && alpha<2*GUI::instance()->alphaView->getValue())res=NULL;
     return res;
     
 }
@@ -96,8 +98,9 @@ Container * Physics::Nearest(ofVec3f point,float radius ){
 
 
 
-void Physics::orderBy(string attr,int axe,int type){
+void Physics::orderBy(string _attr,int axe,int type){
     bool found = false;
+    string attr = _attr;
     for (vector<string> ::iterator it = Container::attributeNames.begin(); it!=Container::attributeNames.end(); ++it) {
         if(*it==attr){
             found = true;
@@ -105,7 +108,7 @@ void Physics::orderBy(string attr,int axe,int type){
         }
     }
     if(!found){
-        attr = ofSplitString(attr, ".")[0];
+        attr = ofSplitString(_attr, ".")[0];
     }
     float max = maxs.get()[axe];
     float min = mins.get()[axe];
@@ -152,34 +155,32 @@ void Physics::orderBy(string attr,int axe,int type){
 
 
 void Physics::updateVBO(){
-    if(vs==NULL){
-        vs =  new ofVec3f[Container::containers.size()];
-        cols =new ofFloatColor[Container::containers.size()];
-        idxs =new unsigned int[Container::containers.size()];
+
+    int newSize = Container::containers.size();
+    if(vs.size() !=newSize){
+        vs .resize(newSize);
+        cols.resize(newSize);
+        idxs.resize(newSize);
 
 
     }
-    else if (vbo.getNumVertices() !=Container::containers.size() ){
-        vs=(ofVec3f*)realloc(vs, Container::containers.size()*sizeof(ofVec3f));
-        cols=(ofFloatColor*)realloc(vs, Container::containers.size()*sizeof(ofFloatColor));
-        idxs=(unsigned int*)realloc(vs, Container::containers.size()*sizeof(unsigned int));
-    }
-    
-    for(int i = 0 ; i < Container::containers.size() ; i++){
+
+        
+
+    for(int i = 0 ; i < newSize ; i++){
         vs[i] = Container::containers[i].pos - ofVec3f(.5);
         cols[i]= Container::containers[i].getColor();
         idxs[i] = Container::containers[i].index;
-//        Container::containers[i].index=(unsigned int)i;
     }
-    if(vbo.getNumVertices()==0){
-        vbo.setVertexData(vs, Container::containers.size(), GL_DYNAMIC_DRAW);
-        vbo.setIndexData(idxs, Container::containers.size(), GL_DYNAMIC_DRAW);
-        vbo.setColorData(cols, Container::containers.size(), GL_DYNAMIC_DRAW);
+    if(vbo.getNumVertices()!=newSize){
+        vbo.setVertexData(&vs[0], newSize, GL_DYNAMIC_DRAW);
+        vbo.setIndexData(&idxs[0], newSize, GL_DYNAMIC_DRAW);
+        vbo.setColorData(&cols[0], newSize, GL_DYNAMIC_DRAW);
     }
     else{
-        vbo.updateVertexData(vs, Container::containers.size());
-        vbo.updateIndexData(idxs, Container::containers.size());
-        vbo.updateColorData(cols, Container::containers.size());
+        vbo.updateVertexData(&vs[0], newSize);
+        vbo.updateIndexData(&idxs[0], newSize);
+        vbo.updateColorData(&cols[0], newSize);
     }
     Container::registerListener();
     
@@ -204,7 +205,7 @@ for(vector<Container>::iterator it = Container::containers.begin() ; it != Conta
 
     Physics::cols[it->index] = Container::stateColor[it->isSelected?2:it->isHovered?3:(int)it->state];
         }
-        vbo.updateColorData(Physics::cols,Container::containers.size());
+        vbo.updateColorData(&cols[0],Container::containers.size());
 }
 
 void Physics::updateOnePos(int idx,ofVec3f & pos){

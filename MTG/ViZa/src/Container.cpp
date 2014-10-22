@@ -23,7 +23,20 @@ bool Container::colorInit = true;
 float Container::radius = 10;
 ofFloatColor Container::stateColor[4];
 
+void Container::init(string pathin, float beginin, float endin, int idxin,int levelin){
+    path=pathin;
+    begin=beginin;
+    end=endin;
+    level=levelin;
+    index=idxin;
+    pos=ofVec3f((end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
+    state = 0;
+    filename = path.substr(path.find_last_of("/")+1);
+    songs[filename].push_back(this);
+        
 
+
+}
 void Container::registerListener(){
 
     

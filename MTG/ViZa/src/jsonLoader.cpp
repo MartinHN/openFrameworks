@@ -20,6 +20,8 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     
     if(audiopath==""){
         audiopath = "/Users/mhermant/Documents/Work/Datasets/beatles/audio/wav";
+    }
+        if(segpath==""){
         segpath ="/Users/mhermant/Documents/Work/Dev/openFrameworks/MTG/ViZa/bin/data/tests/";
 //      segpath = "/Users/mhermant/Documents/Work/Datasets/beatles/viza/";
     }
@@ -40,6 +42,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
 
     globalCount=0;
     Container::containers.clear();
+    Container::attributeNames.clear();
     
     std::map<ofFile,ofFile> mapL;
     
@@ -57,9 +60,11 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     }
     
     int j = 0;
-
+    Container::containers.reserve(mapL.size());
     for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
-        int contwatch = Container::containers.size();
+        int contwatch = j;
+        
+        
         wng::ofxCsv csv;
         if(p->second.getExtension() =="seg"){
         csv.loadFile(p->second.path(), "\t");
@@ -108,7 +113,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
         }
         
 
-        if( contwatch != Container::containers.size()){
+        if( contwatch != j){
         globalCount++;
         }
        
@@ -116,6 +121,8 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
         
        
     }
+    
+    Container::containers.resize(j);
     
 }
 

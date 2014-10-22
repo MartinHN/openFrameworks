@@ -23,9 +23,9 @@ class Physics{
 public:
    
     
-    static ofVec3f* vs;
-    static ofFloatColor *cols;
-    static unsigned int* idxs;
+    static vector<ofVec3f> vs;
+    static vector<ofFloatColor> cols;
+    static vector<unsigned int> idxs;
     static ofVbo vbo;
     
     
@@ -38,7 +38,7 @@ public:
     static void updateOneColor(int idx,ofColor col);
     static void updateOnePos(int idx,ofVec3f & pos);
     static void orderBy(string attr,int axe,int type);
-    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1,bool nearest=true);
+    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1,bool brightest=false);
     static Container* Nearest(ofVec3f point,float radius = 0 );
     static float distanceVanish(ofCamera cam);
     

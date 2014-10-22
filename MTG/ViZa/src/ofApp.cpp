@@ -24,7 +24,7 @@ void ofApp::setup(){
     
     ofBackground(0);
     
-
+    ofShowCursor();
    
 
     
@@ -33,13 +33,8 @@ void ofApp::setup(){
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
     
-    Midi::instance()->getPorts();
     
-    for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
-        for(int i = 0 ; i <1 ; i++){
-            AudioPlayer::Load(*it->second[i], true);
-        }
-    }
+
 }
 
 //--------------------------------------------------------------
@@ -48,10 +43,19 @@ void ofApp::update(){
    
 }
 
-void ofApp::loadFiles(){
-    jsonLoader::instance()->loadSegments();
+void ofApp::loadFiles(string audiopath,string segpath){
+    AudioPlayer::UnloadAll();
+    jsonLoader::instance()->loadSegments(audiopath,segpath);
     Physics::updateVBO();
+    GUI::instance()->registerListener();
     GUI::instance()->setup();
+    
+    for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
+        for(int i = 0 ; i <1 ; i++){
+            AudioPlayer::Load(*it->second[i], true);
+        }
+    }
+   
 }
 
 //--------------------------------------------------------------
@@ -230,8 +234,11 @@ void ofApp::keyPressed(int key){
             cam.orbit(0,0,cam.getDistance());
             break;
             
-            case 'l':
-            loadFiles();
+        case 'l':{
+            ofFileDialogResult f = ofSystemLoadDialog("analysisFiles",true);
+            loadFiles("",f.filePath);
+            break;
+    }
         default:
             break;
     }
@@ -244,10 +251,10 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     if(ofGetElapsedTimeMillis()-Casttime>70){
-        Container * cc = Physics::Cast(cam, ofVec2f(x,y),1.);
+        Container * cc = Physics::Cast(cam, ofVec2f(x,y),1.,GUI::instance()->selBrightest->getValue());
         bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
         Casttime = ofGetElapsedTimeMillis();
-        if (change)GUI::LogIt(cc == NULL?"":cc->filename);
+        if (change)GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->pos*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
     }
     
 }

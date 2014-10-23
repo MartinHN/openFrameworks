@@ -15,7 +15,8 @@ class ofApp : public ofBaseApp{
 
     unsigned long long Casttime;
     
-
+    float scrH ;
+    float scrW;
     
     ofVec2f scrS;
     

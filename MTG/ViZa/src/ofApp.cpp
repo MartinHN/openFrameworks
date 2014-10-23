@@ -1,9 +1,18 @@
 #include "ofApp.h"
-
+//#include <omp.h>
+#include <stdio.h>
 ofEasyCam ofApp::cam;
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    
+    
+    
+    
+//
+//#pragma omp parallel
+//        printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
+    
     ofSetFrameRate(30);
     ofEnableAlphaBlending();
 //    ofDisableSmoothing();
@@ -33,7 +42,8 @@ void ofApp::setup(){
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
     
-    
+    scrH =ofGetScreenHeight();
+    scrW =ofGetScreenWidth();
 
 }
 
@@ -46,12 +56,12 @@ void ofApp::update(){
 void ofApp::loadFiles(string audiopath,string segpath){
     AudioPlayer::UnloadAll();
     jsonLoader::instance()->loadSegments(audiopath,segpath);
-    Physics::updateVBO();
+    Physics::resizeVBO();
     GUI::instance()->registerListener();
     GUI::instance()->setup();
     
     for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
-        for(int i = 0 ; i <1 ; i++){
+        for(int i = 0 ; i <POLYPHONY ; i++){
             AudioPlayer::Load(*it->second[i], true);
         }
     }
@@ -89,8 +99,7 @@ void ofApp::drawCam(){
     ofMatrix4x4 ortho ;
     float angle;
     ofVec3f v;
-    float scrH =ofGetScreenHeight();
-    float scrW =ofGetScreenWidth();
+
 	ortho.makeOrthoMatrix(-scrW/2,    scrW/2   , -scrH/2, scrH/2, .1, 2000);
     t.makeTranslationMatrix(0,0,-1000);
     
@@ -254,7 +263,7 @@ void ofApp::mouseMoved(int x, int y ){
         Container * cc = Physics::Cast(cam, ofVec2f(x,y),1.,GUI::instance()->selBrightest->getValue());
         bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
         Casttime = ofGetElapsedTimeMillis();
-        if (change)GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->pos*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
+        if (change)GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->getPos()*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
     }
     
 }
@@ -293,7 +302,8 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+   scrH =ofGetScreenHeight();
+    scrW =ofGetScreenWidth();
     setcamOrtho(cam.getOrtho());
 }
 

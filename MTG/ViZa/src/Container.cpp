@@ -23,13 +23,17 @@ bool Container::colorInit = true;
 float Container::radius = 10;
 ofFloatColor Container::stateColor[4];
 
+ map<string,float > Container::mins;
+ map<string,float > Container::maxs;
+ map<string,float > Container::means;
+ map<string,unsigned int > Container::total;
+
 void Container::init(string pathin, float beginin, float endin, int idxin,int levelin){
     path=pathin;
     begin=beginin;
     end=endin;
     level=levelin;
     index=idxin;
-    pos=ofVec3f((end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
     state = 0;
     filename = path.substr(path.find_last_of("/")+1);
     songs[filename].push_back(this);
@@ -114,17 +118,37 @@ bool Container::hoverContainer(int  idx){
     return false;
 }
 
-void Container::setAttribute(string n,float v){
+void Container::setAttribute(const string n,const float v){
         bool found = false;
+    int idx = 0;
         for(vector<string>::iterator itt = attributeNames.begin() ; itt!= attributeNames.end() ; ++itt){
             if(*itt==n){
+                map<string , float >::iterator itMin = mins.find(n);
+                map<string , float >::iterator itMax = maxs.find(n);
+                map<string , float >::iterator itMean = means.find(n);
+                itMin->second = MIN(itMin->second, v);
+               itMax->second = MAX(itMax->second, v);
+                float t = total[n];
+                itMean->second=(itMean->second*t+v)*1.0/(t+1.0);
+
+                total[n]++;
+                
                 found = true;
                 break;
             }
+            idx++;
         }
-        if(!found)attributeNames.push_back(n);
+    if(!found){
+        mins[n]=v;
+        maxs[n]=v;
+        means[n]=v;
+        total[n]++;
+        attributeNames.push_back(n);
+        idx++;
     
-    attributes[n] = v;
+    }
+    
+    attributes[idx] = v;
     
     
 }
@@ -148,5 +172,7 @@ ofFloatColor Container::getColor(){
 
 
 
-
+ofVec3f Container::getPos(){
+    return Physics::vs[index]+.5;
+}
 

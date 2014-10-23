@@ -195,6 +195,10 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
 	unloadSound();
 
 	// [3] load sound
+    
+    //FMOD_CREATESOUNDEXINFO and suggestedsoundtype entry.
+    //2. Use FMOD_LOWMEM flag to avoid some allocs.
+    //3. Use FMOD_IGNORETAGS
 
 	//choose if we want streaming
 	int fmodFlags =  FMOD_SOFTWARE;

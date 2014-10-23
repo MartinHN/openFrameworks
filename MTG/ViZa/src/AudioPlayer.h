@@ -17,7 +17,7 @@
 class Container;
 
 
-#define POLYPHONY 10
+#define POLYPHONY 2
 
 typedef struct audioUID{
     string name;

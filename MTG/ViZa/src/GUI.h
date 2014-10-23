@@ -71,8 +71,7 @@ public:
     string lastName;
     
     
-    void maxsChanged(ofVec3f & v);
-    void minsChanged(ofVec3f & v);
+    void checkMinsMaxsChanged();
     static string numToAxe(int i);
     static int axeToNum(char s);
     static void LogIt(string s );

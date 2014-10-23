@@ -12,7 +12,8 @@
 
 #include "ofMain.h"
 #include "Container.h"
-
+#include "ofApp.h"
+#include "ofxNearestNeighbour.h"
 
 #include <iostream>
 
@@ -33,6 +34,7 @@ public:
     static ofParameter<ofVec3f> maxs;
     
     static void updateVBO();
+    static void resizeVBO();
     static void freeVbo();
     static void updateAllColors();
     static void updateOneColor(int idx,ofColor col);
@@ -52,6 +54,8 @@ public:
     static int amountLines;
     static bool linksongs;
 
+    
+    
 //    
 //    ofFbo pos;
 //    ofFbo vel;
@@ -67,6 +71,8 @@ public:
     
 private:
      static Physics* inst;
+    
+    static ofxNearestNeighbour3D kNN;
     
     
 };

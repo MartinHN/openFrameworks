@@ -23,7 +23,7 @@ GUI::GUI(){
     
     logCanvas = new ofxUISuperCanvas("Log",0,0,700,100,OFX_UI_FONT_SMALL);
     logCanvas->setName("Log");
-    logCanvas->autoSizeToFitWidgets();
+    
     
     Logger = new ofxUITextArea("Logger","Log",700,0,0,0,OFX_UI_FONT_SMALL);
     Logger->setVisible(true);
@@ -249,7 +249,7 @@ void GUI::setup(){
     }
     
     
-    
+    logCanvas->autoSizeToFitWidgets();
     
 
 }
@@ -264,8 +264,7 @@ void GUI::registerListener(){
         ofAddListener(((ofxUICanvas*)(it->second))->newGUIEvent,this,&GUI::guiEvent);
     }
     
-    Physics::maxs.addListener(this,&GUI::maxsChanged);
-    Physics::mins.addListener(this,&GUI::minsChanged);
+
 }
 
 void GUI::guiEvent(ofxUIEventArgs &e){
@@ -351,8 +350,9 @@ void GUI::guiEvent(ofxUIEventArgs &e){
         scaleType[axe]->getToggles()[2]->setValue(true);
         scaleType[axe]->getToggles()[2]->triggerSelf();
         Physics::orderBy(attr[axe]->getSelected()[0]->getName()+"."+aggr[axe]->getSelected()[0]->getName(), axe, scaleType[axe]->getSelectedIndeces()[0]);
-    
+       
 }
+         checkMinsMaxsChanged();
     }
     
     // songs
@@ -420,26 +420,16 @@ string GUI::numToAxe(int i){
 }
 
 
-void GUI::maxsChanged(ofVec3f &v){
-    ofVec3f dif = Physics::maxs.getLast() - v;
+
+
+
+
+void GUI::checkMinsMaxsChanged(){
 
     for(int i = 0 ; i < 3 ; i++){
-        if(dif[i]!=0){
-            max[i]->setTextString(ofToString(v[i]));
-        }
-    }
-    
-}
-
-
-
-
-void GUI::minsChanged(ofVec3f &v){
-    ofVec3f dif = Physics::mins.getLast() - v;
-    for(int i = 0 ; i < 3 ; i++){
-        if(dif[i]!=0){
-            min[i]->setTextString(ofToString(v[i]));
-        }
+        max[i]->setTextString(ofToString(Physics::maxs.get()[i]));
+        min[i]->setTextString(ofToString(Physics::mins.get()[i]));
+        
     }
     
 }

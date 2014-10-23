@@ -60,7 +60,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     }
     
     int j = 0;
-    Container::containers.reserve(mapL.size());
+    Container::containers.reserve(mapL.size()*500);
     for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
         int contwatch = j;
         

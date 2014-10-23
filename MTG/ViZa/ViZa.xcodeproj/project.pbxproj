@@ -396,6 +396,10 @@
 		6F78D50719F68E560021A3E9 /* ofxMidiTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiTypes.h; sourceTree = "<group>"; };
 		6F78D52919F6985A0021A3E9 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		6F8DEBB04960E223982CDABF /* ofxUICanvas.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUICanvas.cpp; path = ../../addons/ofxUI/src/ofxUICanvas.cpp; sourceTree = SOURCE_ROOT; };
+		6FD54C0B19F92E4D0063F1CE /* nanoflann.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = nanoflann.hpp; path = "../../nanoflann-master/include/nanoflann.hpp"; sourceTree = "<group>"; };
+		6FD54C0D19F932C30063F1CE /* NearestNeighbour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NearestNeighbour.h; sourceTree = "<group>"; };
+		6FD54C0E19F932C30063F1CE /* ofxNearestNeighbour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxNearestNeighbour.h; sourceTree = "<group>"; };
+		6FD54C0F19F932C30063F1CE /* PointCloud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointCloud.h; sourceTree = "<group>"; };
 		70AAD97154A7F3A7E07DD2E8 /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxSliderGroup.cpp; path = ../../addons/ofxGui/src/ofxSliderGroup.cpp; sourceTree = SOURCE_ROOT; };
 		723AE465948C9C9893893BC8 /* tinyxmlparser.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = tinyxmlparser.cpp; path = ../../addons/ofxXmlSettings/libs/tinyxmlparser.cpp; sourceTree = SOURCE_ROOT; };
 		72B09CED9EDEB5AF9DE0104C /* ml.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ml.h; path = ../../addons/ofxOpenCv/libs/opencv/include/opencv/ml.h; sourceTree = SOURCE_ROOT; };
@@ -1017,6 +1021,7 @@
 		6F5E979819E84FDC009380C3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6FD54C0C19F932C30063F1CE /* nearestNeighbors */,
 				6F30277719E67EA40077D5C7 /* AudioPlayer.cpp */,
 				6F30277819E67EA40077D5C7 /* AudioPlayer.h */,
 				6F4C8BDF19EC21B2007A21F3 /* Timed.cpp */,
@@ -1112,6 +1117,18 @@
 				6F78D4F019F68E560021A3E9 /* ofxRtMidiOut.h */,
 			);
 			path = desktop;
+			sourceTree = "<group>";
+		};
+		6FD54C0C19F932C30063F1CE /* nearestNeighbors */ = {
+			isa = PBXGroup;
+			children = (
+				6FD54C0B19F92E4D0063F1CE /* nanoflann.hpp */,
+				6FD54C0D19F932C30063F1CE /* NearestNeighbour.h */,
+				6FD54C0E19F932C30063F1CE /* ofxNearestNeighbour.h */,
+				6FD54C0F19F932C30063F1CE /* PointCloud.h */,
+			);
+			name = nearestNeighbors;
+			path = "../../../../../../../Downloads/ofxNearestNeighbour-master/src";
 			sourceTree = "<group>";
 		};
 		737B033AA777B67BA4F8F4D2 /* opencv */ = {
@@ -2041,6 +2058,7 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+					"-fopenmp",
 				);
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
@@ -2048,6 +2066,7 @@
 					../../addons/ofxOpenCv/libs/opencv/lib/osx/opencv.a,
 				);
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -2158,6 +2177,7 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+					"-fopenmp",
 				);
 				OTHER_LDFLAGS = (
 					"$(OF_CORE_LIBS)",
@@ -2165,6 +2185,7 @@
 					../../addons/ofxOpenCv/libs/opencv/lib/osx/opencv.a,
 				);
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};

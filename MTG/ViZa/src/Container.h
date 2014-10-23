@@ -29,6 +29,12 @@ public:
     static vector<Container> containers;
     static map<string,vector<Container*> > songs;
     static vector<string> attributeNames;
+    
+    static map<string,float > mins;
+    static map<string,float> maxs;
+    static map<string,float > means;
+    static map<string,unsigned int > total;
+    
     static float radius;
     static ofFloatColor stateColor [];
     static void registerListener();
@@ -38,12 +44,12 @@ public:
     static int hoverIdx;
     static string selectedSong;
     static bool colorInit;
-    
+
     
     
     
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
-        pos=ofVec3f(0);//(end-begin)/.50,ofRandom(0,1),ofRandom(0,1));
+        
         state = 0;
         filename = path.substr(path.find_last_of("/")+1);
 //        if(((map<string,vector<Container*> >::iterator)songs.find(filename))==songs.end())
@@ -55,7 +61,7 @@ public:
     void init(string path,float begin,float end,int idx,int level=0);
     
     
-    ofVec3f pos;
+    ofVec3f getPos();
     string path;
     string filename;
     float begin;
@@ -65,14 +71,14 @@ public:
     ofParameter<float> state;
     ofParameter<bool> isSelected;
     ofParameter<bool> isHovered;
-    map<string, float> attributes;
+    map<int, float> attributes;
     
     void setState(float & a);
     void setSelected(bool & s);
     void setHovered(bool & s);
 
     
-    void setAttribute(string n,float v);
+    void setAttribute(const string n,const float v);
     ofFloatColor getColor();
     
     

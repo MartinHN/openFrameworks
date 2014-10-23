@@ -14,8 +14,8 @@
 #include "ofxMidi.h"
 #include "Physics.h"
 #include "Container.h"
-#include "ofApp.h"
-
+//#include "ofApp.h"
+class Container;
 
 
 typedef struct swaplist{
@@ -60,7 +60,7 @@ class Midi:public ofxMidiListener {
     
     
     static map<int,ofPoint> curpoints;
-    static map<int,Container*> curCont;
+    static map<int,Container * > curCont;
     static ofxMidiIn midiIn;
     
 

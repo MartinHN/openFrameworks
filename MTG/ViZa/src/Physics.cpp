@@ -8,7 +8,6 @@
 
 #include "Physics.h"
 
-#include "ofApp.h"
 
 
 vector<ofVec3f> Physics::vs;//
@@ -18,11 +17,12 @@ ofVbo Physics::vbo;
 int Physics::startLines;
 int Physics::amountLines;
 
-ofParameter<ofVec3f> Physics::maxs;
-ofParameter<ofVec3f> Physics::mins;
+ofParameter<ofVec3f> Physics::maxs = ofVec3f(1,1,1);
+ofParameter<ofVec3f> Physics::mins = ofVec3f(0,0,0);
 Container* Physics::dragged;
 float Physics::originDrag;
 bool Physics::linksongs = false;
+ofxNearestNeighbour3D Physics::kNN;
 
 void updatePhy(float time){
     
@@ -52,11 +52,14 @@ void Physics::draw(){
 
 
 Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool brightest){
+
+    
     
     float radmult = sphereMult*cam.getDistance()*Container::radius* 1.0/((cam.getOrtho()?60.0:1)*distanceVanish(cam));
     float minDist = 99999;
     Container * res = NULL;
     float alpha=0;
+    #pragma omp parallel for
     for(int i = 0; i < vbo.getNumVertices() ; i++){
         ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
         float screenDist = (cam.worldToScreen(v)-mouse).length();
@@ -79,19 +82,30 @@ Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool b
 
 Container * Physics::Nearest(ofVec3f point,float radius ){
     
-
-    float minDist = 99999;
-    Container * res = NULL;
-    for(int i = 0; i < vbo.getNumVertices() ; i++){
-        float v =(vs[i]-point).length();//*(cam.getOrtho()?1.0/cam.getDistance():1);
-            if((radius==0 || v<radius) && v < minDist ){
-                res = &Container::containers[i];
-                minDist = v;
-            }
-
-        }
+    vector<pair<size_t, float> > res;
     
-    return res;
+    kNN.findPointsWithinRadius(point, radius, res);
+    
+    if(res.size()>0){
+        return &Container::containers[res[0].first];
+    }
+    else{
+        return NULL;
+    }
+    
+//    float minDist = 99999;
+//    Container * res = NULL;
+//    #pragma omp parallel for
+//    for(int i = 0; i < vbo.getNumVertices() ; i++){
+//        float v =(vs[i]-point).length();//*(cam.getOrtho()?1.0/cam.getDistance():1);
+//            if((radius==0 || v<radius) && v < minDist ){
+//                res = &Container::containers[i];
+//                minDist = v;
+//            }
+//
+//        }
+//    
+//    return res;
     
 }
 
@@ -110,38 +124,37 @@ void Physics::orderBy(string _attr,int axe,int type){
     if(!found){
         attr = ofSplitString(_attr, ".")[0];
     }
-    float max = maxs.get()[axe];
-    float min = mins.get()[axe];
-    float mean = 1;
-    if(type<2){
-        max = -99999;
-        min = 999999;
-        mean = 0;
-        for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
-            max = MAX(max,it->attributes[attr]);
-            min = MIN(min,it->attributes[attr]);
-            mean+=it->attributes[attr];
-        }
-        mean/=Container::containers.size();
+    float max = Container::maxs[attr];
+    float min = Container::mins[attr];
+    float mean = Container::means[attr];
+    int idxAttr = ofFind(Container::attributeNames, attr);
+    if(type==2){
+        max = Physics::maxs.get()[axe];
+        min = Physics::mins.get()[axe];
     }
-    if(type==1){
-        float stddev = 0;
+    else if(type==1){
+        ofVec2f stddev(0);
+        ofVec2f stdlength(0);
+
         for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
-            stddev+= (it->attributes[attr]-mean)*(it->attributes[attr]-mean);
+            float delta = it->attributes[idxAttr]-mean;
+            stddev[delta>0?1:0]+= delta*delta;
+            stdlength[delta>0?1:0]++;
         }
         
-        stddev/=Container::containers.size();
-        stddev = sqrt(stddev);
+        stddev/=stdlength;
         
-        
-        min = mean - stddev;
-        max = mean + stddev;
+        min = mean - sqrt(stddev.x);
+        max = mean + sqrt(stddev.y);
 
     }
+    #pragma omp parallel for
+    
+    
     for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
-        if(axe==0)          it->pos.x = (it->attributes[attr]-min)/(max-min);
-        else if(axe==1)     it->pos.y = (it->attributes[attr]-min)/(max-min);
-        else                it->pos.z = (it->attributes[attr]-min)/(max-min);
+        if(axe==0)          vs[it->index].x = (it->attributes[idxAttr]-min)/(max-min)-.5;
+        else if(axe==1)     vs[it->index].y = (it->attributes[idxAttr]-min)/(max-min)-.5;
+        else                vs[it->index].z = (it->attributes[idxAttr]-min)/(max-min)-.5;
     }
     
     ofVec3f mask(axe==0?1:0,axe==1?1:0,axe==2?1:0);
@@ -152,38 +165,41 @@ void Physics::orderBy(string _attr,int axe,int type){
 
 
 
-
-
-void Physics::updateVBO(){
-
+void Physics::resizeVBO(){
     int newSize = Container::containers.size();
     if(vs.size() !=newSize){
         vs .resize(newSize);
         cols.resize(newSize);
         idxs.resize(newSize);
-
-
-    }
-
         
+        
+    }
+}
 
-    for(int i = 0 ; i < newSize ; i++){
-        vs[i] = Container::containers[i].pos - ofVec3f(.5);
+void Physics::updateVBO(){
+
+
+
+    int curSize = vs.size();
+#pragma omp parallel for
+    for(int i = 0 ; i < curSize ; i++){
+//        vs[i] = Container::containers[i].pos - ofVec3f(.5);
         cols[i]= Container::containers[i].getColor();
         idxs[i] = Container::containers[i].index;
     }
-    if(vbo.getNumVertices()!=newSize){
-        vbo.setVertexData(&vs[0], newSize, GL_DYNAMIC_DRAW);
-        vbo.setIndexData(&idxs[0], newSize, GL_DYNAMIC_DRAW);
-        vbo.setColorData(&cols[0], newSize, GL_DYNAMIC_DRAW);
+    if(vbo.getNumVertices()!=curSize){
+        vbo.setVertexData(&vs[0], curSize, GL_DYNAMIC_DRAW);
+        vbo.setIndexData(&idxs[0], curSize, GL_DYNAMIC_DRAW);
+        vbo.setColorData(&cols[0], curSize, GL_DYNAMIC_DRAW);
     }
     else{
-        vbo.updateVertexData(&vs[0], newSize);
-        vbo.updateIndexData(&idxs[0], newSize);
-        vbo.updateColorData(&cols[0], newSize);
+        vbo.updateVertexData(&vs[0], curSize);
+        vbo.updateIndexData(&idxs[0], curSize);
+        vbo.updateColorData(&cols[0], curSize);
     }
     Container::registerListener();
     
+    kNN.buildIndex(vs);
 }
 
 

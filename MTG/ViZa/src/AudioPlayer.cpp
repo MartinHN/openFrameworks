@@ -22,7 +22,7 @@ void AudioPlayer::Load(Container const & c,bool t){
 audioUID id = getUID(c);
     if(t){
         players[id] = new ofSoundPlayer();
-        if(!players[id]->loadSound(c.path))ofLogError("can't load : "+id.name);
+        if(!players[id]->loadSound(c.path,true))ofLogError("can't load : "+id.name);
     }
     else{
     
@@ -105,8 +105,10 @@ void AudioPlayer::gotMessage(ofMessage & msg){
 void AudioPlayer::UnloadAll() {
     
     for(map<audioUID,ofSoundPlayer*>::iterator it = players.begin() ; it!= players.end() ;++it){
-        it->second->unloadSound();
-        delete it->second;
+        if(it->second!=NULL){
+            it->second->unloadSound();
+            delete it->second;
+        }
         players.erase(it++);
     }
     

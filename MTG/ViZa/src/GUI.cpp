@@ -86,6 +86,7 @@ GUI::GUI(){
     midiVel = new ofxUIRangeSlider("VelocityRange",0,1,0,1,100,10);
     
     midiRadius = new ofxUISlider("Radius",0,.5,0.05,100,10);
+    midiHold = new ofxUIToggle("Hold",false,10,10);
     
     
     //VIEWWWW/////////////
@@ -113,7 +114,7 @@ GUI::GUI(){
     midiCanvas->addWidgetDown(midiPorts);
     midiCanvas->addWidgetDown(midiVel);
     midiCanvas->addWidgetDown(midiRadius);
-    
+    midiCanvas->addWidgetDown(midiHold);
 
     logCanvas->addWidgetDown(Logger);
     
@@ -383,6 +384,9 @@ else    if(rootName == "Midi" ){
     if(name == "Radius"){
         Midi::radius = ((ofxUISlider*)e.widget)->getValue();
     }
+    if(name=="Hold"){
+        Midi::hold=((ofxUIToggle*)e.widget)->getValue();
+    }
     
     
 }
@@ -435,7 +439,7 @@ void GUI::checkMinsMaxsChanged(){
 }
 
 void GUI::LogIt(string s){
-    cout << s <<"string" << endl;
+//    cout << s <<"string" << endl;
     instance()->Logger->setTextString(s);
 
 }

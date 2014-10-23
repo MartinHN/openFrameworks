@@ -18,6 +18,7 @@ int Midi::midiRoot=24;
 int Midi::midiMax = 60;
 float Midi::radius = .05;
 ofVec2f Midi::velScale(0,1);
+bool Midi::hold;
 
 bool Midi::isReading=false;
 swaplist Midi::msg;
@@ -76,11 +77,12 @@ void Midi::update(){
             }
             
         }
-        else if(it->status==MIDI_NOTE_OFF){
+        else if(it->status==MIDI_NOTE_OFF ){
             curpoints.erase(it->pitch);
             if(curCont[it->pitch]!=NULL){
-                curCont[it->pitch]->state=0;
-            curCont.erase(it->pitch);
+                if(!hold)curCont[it->pitch]->state=0;
+            
+                curCont.erase(it->pitch);
             }
         }
     

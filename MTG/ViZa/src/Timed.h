@@ -27,7 +27,7 @@ public:
     };
     void update(ofEventArgs & args);
     void addDel(float del,string s);
-    
+    void delDel(string s);
     
     vector<Wtng> list;
 };

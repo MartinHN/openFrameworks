@@ -44,12 +44,26 @@ void ofApp::setup(){
     
     scrH =ofGetScreenHeight();
     scrW =ofGetScreenWidth();
+    lastCamPos =cam.getPosition();
 
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     Midi::update();
+    
+    if((cam.getPosition()-lastCamPos).length()>0.0001){
+
+        lastCamPos = cam.getPosition();
+        isCamSteady = false;
+    }
+    else if (!isCamSteady){
+        Physics::updateVScreen();
+        
+        lastCamPos = cam.getPosition();
+        isCamSteady = true;
+        cout << "steadyCam" << endl;
+    }
    
 }
 
@@ -286,7 +300,7 @@ void ofApp::mousePressed(int x, int y, int button){
     if (cc == NULL) {
 
         return;}
-    if(button == 2)cc->state =cc->state==0?1:0;
+    if(button == 2)cc->state =1;//cc->state==0?1:0;
     if(button == 1){
     cam.disableMouseMiddleButton();
     Physics::dragged = cc;

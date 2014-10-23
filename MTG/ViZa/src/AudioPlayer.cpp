@@ -44,6 +44,7 @@ bool AudioPlayer::Play(Container & c, int s){
         if(p->first==id){
             //restart
             if(s ==1 && p->second!=NULL){
+                TimeLine.delDel("stop "+id.toString());
                 p->second->play();
                 p->second->setPositionMS(c.begin*1000.0);
                 TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+id.toString());

@@ -48,6 +48,7 @@ public:
     ofxUIRangeSlider * midiVel;
     ofxUISlider * midiRadius;
     ofxUIDropDownList * songNames;
+    ofxUIToggle * midiHold;
     
     
     int scrollW = 700;

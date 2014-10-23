@@ -11,8 +11,8 @@ class ofApp : public ofBaseApp{
 	public:
     
     static ofEasyCam cam;
-    
-
+    ofVec3f lastCamPos;
+    bool isCamSteady;
     unsigned long long Casttime;
     
     float scrH ;

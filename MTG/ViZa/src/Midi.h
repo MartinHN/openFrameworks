@@ -66,6 +66,7 @@ class Midi:public ofxMidiListener {
 
     static swaplist msg;
     static bool isReading;
+    static bool hold;
     
 private:
     static Midi* midi;

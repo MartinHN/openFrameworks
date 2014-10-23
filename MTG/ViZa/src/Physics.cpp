@@ -10,7 +10,8 @@
 
 
 
-vector<ofVec3f> Physics::vs;//
+vector<ofVec3f> Physics::vs;
+vector<ofVec2f> Physics::vScreen;
 vector<ofFloatColor> Physics::cols;
 vector<unsigned int> Physics::idxs;
 ofVbo Physics::vbo;
@@ -23,6 +24,7 @@ Container* Physics::dragged;
 float Physics::originDrag;
 bool Physics::linksongs = false;
 ofxNearestNeighbour3D Physics::kNN;
+ofxNearestNeighbour2D Physics::kNN2D;
 
 void updatePhy(float time){
     
@@ -54,28 +56,43 @@ void Physics::draw(){
 Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool brightest){
 
     
-    
+    vector<size_t> resI;
+    vector<float>  resD;
     float radmult = sphereMult*cam.getDistance()*Container::radius* 1.0/((cam.getOrtho()?60.0:1)*distanceVanish(cam));
-    float minDist = 99999;
-    Container * res = NULL;
-    float alpha=0;
-    #pragma omp parallel for
-    for(int i = 0; i < vbo.getNumVertices() ; i++){
-        ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
-        float screenDist = (cam.worldToScreen(v)-mouse).length();
-        float worldDist = radmult*1.0/(cam.getPosition()-v).length();
-        if(screenDist<worldDist){
-            if( screenDist < minDist ){
-                res = &Container::containers[i];
-                alpha+=cols[i].a;
-                minDist = screenDist;
-            }
-
-        }
+    
+    kNN2D.findNClosestPoints(mouse, 1, resI,resD);
+    
+    if(resI.size()>0){
+        return &Container::containers[resI[0]];
+    }
+    else{
+        return NULL;
     }
     
-    if(brightest && alpha<2*GUI::instance()->alphaView->getValue())res=NULL;
-    return res;
+    
+//    float minDist = 99999;
+//    Container * res = NULL;
+
+    
+    
+//    float alpha=0;
+//    #pragma omp parallel for
+//    for(int i = 0; i < vbo.getNumVertices() ; i++){
+//        ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
+//        float screenDist = (cam.worldToScreen(v)-mouse).length();
+//        float worldDist = radmult*1.0/(cam.getPosition()-v).length();
+//        if(screenDist<worldDist){
+//            if( screenDist < minDist ){
+//                res = &Container::containers[i];
+//                alpha+=cols[i].a;
+//                minDist = screenDist;
+//            }
+//
+//        }
+//    }
+//    
+//    if(brightest && alpha<2*GUI::instance()->alphaView->getValue())res=NULL;
+//    return res;
     
 }
 
@@ -92,20 +109,6 @@ Container * Physics::Nearest(ofVec3f point,float radius ){
     else{
         return NULL;
     }
-    
-//    float minDist = 99999;
-//    Container * res = NULL;
-//    #pragma omp parallel for
-//    for(int i = 0; i < vbo.getNumVertices() ; i++){
-//        float v =(vs[i]-point).length();//*(cam.getOrtho()?1.0/cam.getDistance():1);
-//            if((radius==0 || v<radius) && v < minDist ){
-//                res = &Container::containers[i];
-//                minDist = v;
-//            }
-//
-//        }
-//    
-//    return res;
     
 }
 
@@ -152,9 +155,7 @@ void Physics::orderBy(string _attr,int axe,int type){
     
     
     for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
-        if(axe==0)          vs[it->index].x = (it->attributes[idxAttr]-min)/(max-min)-.5;
-        else if(axe==1)     vs[it->index].y = (it->attributes[idxAttr]-min)/(max-min)-.5;
-        else                vs[it->index].z = (it->attributes[idxAttr]-min)/(max-min)-.5;
+               vs[it->index][axe] = (it->attributes[idxAttr]-min)/(max-min)-.5;
     }
     
     ofVec3f mask(axe==0?1:0,axe==1?1:0,axe==2?1:0);
@@ -200,8 +201,20 @@ void Physics::updateVBO(){
     Container::registerListener();
     
     kNN.buildIndex(vs);
+    kNN2D.buildIndex(vScreen);
 }
 
+
+void Physics::updateVScreen(){
+    vScreen.resize(vs.size());
+    int i = 0;
+    ofCamera cam = ofApp::cam;
+    for(vector<ofVec3f>::iterator it = vs.begin() ; it!=vs.end();++it){
+        vScreen[i] = cam.worldToScreen(*it);
+                i++;
+    }
+    kNN2D.buildIndex(vScreen);
+}
 
 
 

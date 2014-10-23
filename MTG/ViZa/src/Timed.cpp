@@ -19,6 +19,15 @@ void Timed::addDel(float del, string s){
     
 }
 
+void Timed::delDel(string s){
+    for(vector<Wtng>::iterator it = list.begin() ; it !=list.end() ; ++it){
+        if((*it).msg == s){
+            list.erase(it++);
+            break;
+        }
+    }
+}
+
 void Timed::update(ofEventArgs & args){
    
     vector<Wtng>::iterator it = list.begin();

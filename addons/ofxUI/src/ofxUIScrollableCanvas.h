@@ -71,10 +71,10 @@ public:
     void mouseReleased(int x, int y, int button);
     ofxUIRectangle *getSRect();
     virtual bool isHit(int x, int y);
-
+    bool isScrolling;
 protected:
     ofxUIRectangle *sRect;
-    bool isScrolling;
+    
     bool snapping; 
     bool scrollX, scrollY; 
     bool nearTop, nearBot, nearRight, nearLeft;

@@ -10,10 +10,11 @@
 #define __ViZa__jsonLoader__
 
 #include <iostream>
+//#include "stdio.h"
 #include "Container.h"
 #include "ofxJSONElement.h"
 #include "ofxCsv.h"
-
+#include "yamlinput.h"
 
 class jsonLoader{
  public:
@@ -23,12 +24,12 @@ class jsonLoader{
     static jsonLoader * instance();
     
     void loadSegments(string audiopath="",string segpath="");
-
     
+
     
 private:
     static jsonLoader * inst;
-    
+    map<string,vector<float> >  crawl(Json::Value j);
 };
 
 #endif /* defined(__ViZa__jsonLoader__) */

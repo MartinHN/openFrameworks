@@ -61,6 +61,7 @@ public:
 	ofParameter(string name, ParameterType v, ParameterType min, ParameterType max);
 
 	const ParameterType & get() const;
+    const ParameterType & getLast() const;
 	const ParameterType * operator->() const;
 	operator const ParameterType & () const;
 
@@ -218,6 +219,7 @@ inline const ParameterType & ofParameter<ParameterType>::operator=(const Paramet
 
 template<typename ParameterType>
 inline ofParameter<ParameterType> & ofParameter<ParameterType>::set(ParameterType v){
+    
 	(this->*setMethod)(v);
 	return *this;
 }
@@ -242,6 +244,13 @@ template<typename ParameterType>
 inline const ParameterType & ofParameter<ParameterType>::get() const{
 	return obj->value;
 }
+
+template<typename ParameterType>
+inline const ParameterType & ofParameter<ParameterType>::getLast() const{
+	return obj->prevValue;
+}
+
+
 template<typename ParameterType>
 inline const ParameterType * ofParameter<ParameterType>::operator->() const{
 	return &obj->value;
@@ -254,6 +263,7 @@ inline void ofParameter<ParameterType>::eventsSetValue(ParameterType v){
 		return;
 	}
 	obj->bInNotify = true;
+    obj->prevValue = obj->value;
 	obj->value = v;
 	ofNotifyEvent(obj->changedE,obj->value,this);
 	notifyParent();
@@ -262,6 +272,7 @@ inline void ofParameter<ParameterType>::eventsSetValue(ParameterType v){
 
 template<typename ParameterType>
 inline void ofParameter<ParameterType>::noEventsSetValue(ParameterType v){
+    obj->prevValue = obj->value;
 	obj->value = v;
 }
 
@@ -487,6 +498,7 @@ public:
 	ofReadOnlyParameter(string name, ParameterType v, ParameterType min, ParameterType max);
 
 	const ParameterType & get() const;
+    const ParameterType & getLast() const;
 	const ParameterType * operator->() const;
 	operator const ParameterType & () const;
 
@@ -590,6 +602,10 @@ inline ofReadOnlyParameter<ParameterType,Friend>::ofReadOnlyParameter(string nam
 template<typename ParameterType,typename Friend>
 inline const ParameterType & ofReadOnlyParameter<ParameterType,Friend>::get() const{
 	return parameter.get();
+}
+template<typename ParameterType,typename Friend>
+inline const ParameterType & ofReadOnlyParameter<ParameterType,Friend>::getLast() const{
+	return parameter.getLast();
 }
 
 template<typename ParameterType,typename Friend>

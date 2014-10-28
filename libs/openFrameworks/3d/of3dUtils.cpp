@@ -28,7 +28,7 @@ void ofDrawAxis(float size) {
 		
 		// draw y axis
 		ofSetColor(ofColor::green);
-		ofLine(0, 0, 0, 0, size, 0);
+		ofLine(0, 0, 0, 0, -size, 0);
 		
 		// draw z axis
 		ofSetColor(ofColor::blue);

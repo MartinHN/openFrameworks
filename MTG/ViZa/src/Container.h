@@ -12,55 +12,75 @@
 #include <iostream>
 #include "ofMain.h"
 #include "AudioPlayer.h"
+#include "Physics.h"
 
 
-//class AudioPlayer;
 
 class Container{
 public:
     
-    static vector<Container> containers;
-    static ofVbo vbo;
+    Container(){
+    path="";
     
-    static ofVec3f* vs;
-    static ofFloatColor *cols;
-    static unsigned int* idxs;
+    
+    
+    };
+    
+    static vector<Container> containers;
+    static map<string,vector<Container*> > songs;
+    static vector<string> attributeNames;
+    
+    static map<string,float > mins;
+    static map<string,float> maxs;
+    static map<string,float > means;
+    static map<string,unsigned int > total;
     
     static float radius;
-    
-    static void updateOneColor(int idx,ofColor col);
-    static void updateVBO();
-    static void Cast(ofCamera cam,ofVec2f mouse);
-    static void freeVbo();
-    static float distanceVanish(ofCamera c);
-    
     static ofFloatColor stateColor [];
-    
-    
     static void registerListener();
-    
-    
-    
-    
-    
+    static void orderBy(string attr,int axe,bool norm);
+    static void selectSong(string name);
+    static bool hoverContainer(int idx);
+    static int hoverIdx;
+    static string selectedSong;
+    static bool colorInit;
+
     
     
     
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){
-        pos=ofVec3f(ofRandom(0, 1),ofRandom(0,1),ofRandom(0,1));
+        
         state = 0;
+        filename = path.substr(path.find_last_of("/")+1);
+//        if(((map<string,vector<Container*> >::iterator)songs.find(filename))==songs.end())
+        songs[filename].push_back(this);
         
     };
     
     
-    ofVec3f pos;
+    void init(string path,float begin,float end,int idx,int level=0);
+    
+    
+    ofVec3f getPos();
     string path;
+    string filename;
     float begin;
     float end;
     int level;
     unsigned int index;
     ofParameter<float> state;
+    ofParameter<bool> isSelected;
+    ofParameter<bool> isHovered;
+    map<int, float> attributes;
+    
     void setState(float & a);
+    void setSelected(bool & s);
+    void setHovered(bool & s);
+
+    
+    void setAttribute(const string n,const float v);
+    ofFloatColor getColor();
+    
     
     
 };

@@ -1,0 +1,76 @@
+{
+"metadata": {
+    "version": {
+        "essentia": "2.1-beta1"
+    }
+},
+"onsets": {
+    "barkbands_kurtosis": {
+        "Centroid": [0.682550013065],
+        "Mean": [2751.62792969],
+        "Median": [3655.2421875],
+        "derAvAfterMax": [-0.0192166063935],
+        "maxDerBeforeMax": [991.694335938]
+    },
+    "barkbands_skewness": {
+        "Centroid": [0.661632061005],
+        "Mean": [40.8008003235],
+        "Median": [55.0978126526],
+        "derAvAfterMax": [-0.00165515556],
+        "maxDerBeforeMax": [7.25630569458]
+    },
+    "barkbands_spread": {
+        "Centroid": [0.123092517257],
+        "Mean": [2.12294697762],
+        "Median": [0.109835073352],
+        "derAvAfterMax": [-0.0043904511258],
+        "maxDerBeforeMax": [8.70606136322]
+    },
+    "envelope": {
+        "Centroid": [0.11781270057],
+        "Mean": [0.00545610580593],
+        "Median": [0.000924692023546],
+        "derAvAfterMax": [-1.08501171781e-05],
+        "maxDerBeforeMax": [0.0135998679325]
+    },
+    "mainHPCP0": {
+        "Centroid": [0.490456491709],
+        "Mean": [5.79592466354],
+        "Median": [6],
+        "derAvAfterMax": [0.00036813429324],
+        "maxDerBeforeMax": [8]
+    },
+    "mainHPCP1": {
+        "Centroid": [0.558163642883],
+        "Mean": [4.35780620575],
+        "Median": [3],
+        "derAvAfterMax": [0.000305064051645],
+        "maxDerBeforeMax": [11]
+    },
+    "pitchSalience": {
+        "Centroid": [0.500220477581],
+        "Mean": [0.994268715382],
+        "Median": [0.994696617126],
+        "derAvAfterMax": [4.36087502749e-05],
+        "maxDerBeforeMax": [0.992387354374]
+    },
+    "spectral_crest": {
+        "Centroid": [0.533405780792],
+        "Mean": [24.9679145813],
+        "Median": [26.9421615601],
+        "derAvAfterMax": [-7.42731790524e-05],
+        "maxDerBeforeMax": [11.3730726242]
+    },
+    "spectral_flatness_db": {
+        "Centroid": [0.522471427917],
+        "Mean": [0.486698627472],
+        "Median": [0.510712623596],
+        "derAvAfterMax": [-0.000853104807902],
+        "maxDerBeforeMax": [0.236442804337]
+    },
+    "slice": {
+        "time": [0.599228858948, 39.3462142944]
+    }
+},
+"audiopath": "\/Users\/mhermant\/Documents\/Work\/Datasets\/IOWA\/theremin.music.uiowa.edu\/sound files\/MIS\/Piano_Other\/piano\/Piano.ff.Eb4.aiff"
+}

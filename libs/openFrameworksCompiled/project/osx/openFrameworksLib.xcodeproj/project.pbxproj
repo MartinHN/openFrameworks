@@ -862,6 +862,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = openFrameworksDebug;
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -896,6 +897,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = openFrameworks;
 				SDKROOT = macosx;
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};

@@ -856,6 +856,7 @@ void ofxUICanvas::autoSizeToFitWidgets()
         }
     }
     setDimensions(maxWidth, maxHeight);
+
 }
 
 void ofxUICanvas::centerWidgetsOnCanvas(bool centerHorizontally, bool centerVertically)
@@ -965,9 +966,9 @@ void ofxUICanvas::clearWidgets()
 
 void ofxUICanvas::removeWidget(ofxUIWidget *widget)
 {
-    //        cout << endl;
-    //        cout << "Widget to find: " << widget->getName() << endl;
-    //        cout << endl;
+//            cout << endl;
+//            cout << "Widget to find: " << widget->getName() << endl;
+//            cout << endl;
     
     if(widget->isModal())
     {
@@ -985,7 +986,7 @@ void ofxUICanvas::removeWidget(ofxUIWidget *widget)
     it=widgets_map.find(widget->getName());
     if(it != widgets_map.end())
     {
-        //            cout << "FOUND IT IN MAP, DELETING" << endl;
+//                    cout << "FOUND IT IN MAP, DELETING" << endl;
         widgets_map.erase(it);
     }
     
@@ -995,36 +996,42 @@ void ofxUICanvas::removeWidget(ofxUIWidget *widget)
         ofxUIWidget *other = widgetsWithState[i];
         if(widget->getName() == other->getName())
         {
-            //                cout << "FOUND IT IN WIDGETS WITH STATE, DELETING" << endl;
+//                            cout << "FOUND IT IN WIDGETS WITH STATE, DELETING" << endl;
             widgetsWithState.erase(widgetsWithState.begin()+i);
             break;
         }
     }
     vector<ofxUIWidget *>::iterator wit;
     //for all the widgets
+
     for(wit=widgets.begin(); wit != widgets.end(); wit++)
     {
         ofxUIWidget *other = *wit;
-        //            cout << other->getName() << endl;
+//                     cout << other->getName()  << endl;
         if(widget->getName() == other->getName())
         {
-            //                cout << "FOUND IT\t" << other->getName() << " " << widget->getName() << endl;
+//                            cout << "FOUND IT\t" << other->getName() << " " << widget->getName() << endl;
             widgets.erase(wit);
             break;
         }
     }
     
-    if(widget->hasLabel())
-    {
-        //            cout << "HAS LABEL" << endl;
-        ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget;
-        ofxUILabel *label = wwl->getLabelWidget();
-        removeWidget(label);
+    ofxUILabel *label=NULL;
+    if(   widget->hasLabel()){
+    ofxUIWidgetWithLabel *wwl = (ofxUIWidgetWithLabel *) widget;
+     label= wwl->getLabelWidget();
+}
+    for(int i = 0; i < widget->getEmbeddedWidgetsSize(); i++)
+    {   if((ofxUILabel *)widget->getEmbeddedWidget(i)!= label){
+        removeWidget(widget->getEmbeddedWidget(i));
+        }
+        
     }
     
-    for(int i = 0; i < widget->getEmbeddedWidgetsSize(); i++)
+    if(widget->hasLabel())
     {
-        removeWidget(widget->getEmbeddedWidget(i));
+        
+        removeWidget(label);
     }
     widget->clearEmbeddedWidgets();
     

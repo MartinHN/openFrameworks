@@ -2,10 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
-#include "ofxAndroidApp.h"
-#include "ofxOsc.h"
 
-class ofApp : public ofxAndroidApp{
+class ofApp : public ofBaseApp{
 	
 public:
 	void setup();
@@ -23,9 +21,7 @@ public:
 	void windowResized(int w, int h);
 	void dragEvent(ofDragInfo dragInfo);
 	void gotMessage(ofMessage msg);		
-	void touchDown(int x, int y, int id) ;
-	void touchMoved(int x, int y, int id) ;
-	void touchUp(int x, int y, int id) ;
+
 	void circleResolutionChanged(int & circleResolution);
 	void ringButtonPressed();
 

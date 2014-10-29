@@ -7,6 +7,8 @@
 //
 
 #include "Cursor.h"
+#include "Screens.h"
+
 
 vector<Cursor*> Cursor::cursors;
 
@@ -40,28 +42,12 @@ void Cursor::update(ofEventArgs & a){
     registerOSC();
     parseMessage();
 
-    
 }
 
 
 void Cursor::draw(ofEventArgs & a){
     cursorImg.draw(cursor2D);
 }
-
-//void Cursor::updateOrientations(){
-//    for(vector<IGloveListener*>::iterator it = listeners.begin() ; it!=listeners.end() ; ++it){
-//        (*it)->moved(this,orientation);
-//    }
-//    
-//}
-//
-//
-//void Cursor::updateRelativeOrientations(){
-//    for(vector<IGloveListener*>::iterator it = listeners.begin() ; it!=listeners.end() ; ++it){
-//        (*it)->relativeMoved(this,relativeOrientation);
-//    }
-//    
-//}
 
 
 void Cursor::registerOSC(){
@@ -109,7 +95,6 @@ void Cursor::parseMessage(){
             else if(addr == "/orientation"){
                 if(gloveID == m.getArgAsString(0)){
                     orientation = ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-//                    updateOrientations();
                     pair<Cursor*,ofVec3f> a(this,orientation);
                     ofNotifyEvent(orientationEvent,a ,this);
                 }
@@ -117,7 +102,6 @@ void Cursor::parseMessage(){
             else if(addr == "/relative"){
                 if(gloveID == m.getArgAsString(0)){
                     const ofVec3f _relativeOrientation = ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-//                    updateRelativeOrientations();
                      pair<Cursor*,ofVec3f> a(this,relativeOrientation);
                     ofNotifyEvent(relativeOrientationEvent, a,this);
                     
@@ -130,7 +114,7 @@ void Cursor::parseMessage(){
                     touch[tid] = type;
                     
                     touchEventArgs a;
-                    a.touchId = tid;
+                    a.touchId = (TouchAction)tid;
                     a.gloveId = this;
                     a.type = type;
                     ofNotifyEvent(touchEvent,a,this);
@@ -146,7 +130,7 @@ void Cursor::parseMessage(){
             else if(addr == "/cursor2D"){
                 if(gloveID == m.getArgAsString(0)){
                     cursor2D = ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2));
-                    
+                    cursor2D*=Screens::instance()->resolution;
                     pair<Cursor*,ofVec2f>a(this,cursor2D);
                     ofNotifyEvent(cursor2DEvent, a,this);
                 }
@@ -171,11 +155,5 @@ void Cursor::unregisterOSC(){
     toServer.sendMessage(m);
 }
 
-//
-//void Cursor::registerListener(IGloveListener *l){
-//    if(find(listeners.begin(), listeners.end(),l)!=listeners.end()){
-//        listeners.push_back(l);
-//    }
-//    
-//    
-//}
+
+

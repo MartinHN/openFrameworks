@@ -11,44 +11,53 @@
 
 #include <stdio.h>
 #include "ofMain.h"
-//#include "IGloveListener.h"
 #include "Cursor.h"
 
 
 
 
 
-class GloveInteract : public  IGloveListener {
+class GloveInteract  {
   
 
 public:
     
     GloveInteract();
     ~GloveInteract();
-  
+
   // from Glove
     void click(touchEventArgs & a);
 //    void moved(Cursor* c,ofVec3f & pos);
 //    void relativeMoved(Cursor* c,ofVec3f & pos);
     void cursor2DMoved(pair<Cursor*,ofVec2f> & arg);
     
-    void update(ofEventArgs & e);
-    void draw(ofEventArgs & e);
-    void draw();
+    virtual void update(ofEventArgs & e);
+    virtual void draw(ofEventArgs & e);
+
+    
+    
     
     
     ofRectangle box;
     ofColor backColor;
-    bool isDraggable;
+    string name;
     
+    static vector<GloveInteract*> allElements;
+    static ofRectangle getFreeSpace();
     
+    bool isDraggable=true;
+    static GloveInteract * dragged;
+    void updateDrag(ofVec2f & c);
     // triggered functions
     
-    virtual bool isHit(ofVec2f & p){box.inside(p);}
+    virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
-    virtual void clicked(Cursor* gId,int & tid,touchType & state){};
+    virtual void clicked(Cursor* gId,touchType & state){};
     virtual void exited(){};
     virtual void entered(){};
+    
+    bool operator==(const string& other) {return name == other;};
+    
     
     
 protected:

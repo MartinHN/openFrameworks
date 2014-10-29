@@ -12,16 +12,27 @@
 #include <stdio.h>
 #include "GloveInteract.h"
 #include "ofMain.h"
-
+#include "ofxMtlWatchFolder.h"
+#include "Config.h"
+#include "ProjectBox.h"
 
 class GUIProjects: public GloveInteract{
     
     
     public :
     
-    GUIProjects(){};
+    GUIProjects();
+    ofxMtlWatchFolder watch;
+    vector<ProjectBox*> projects;
     
-    void draw();
+    void draw(ofEventArgs & a);
+    void update(ofEventArgs & a);
+    
+    void startWatch();
+    void projectsAdded(string& filename);
+    void projectsRemoved(string& filename);
+    
+    
     
     
     

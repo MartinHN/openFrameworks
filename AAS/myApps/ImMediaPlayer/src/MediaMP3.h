@@ -17,13 +17,13 @@ class MediaMP3 :public  Media{
     
     
 public:
-    MediaMP3();
-    ~MediaMP3();
+    MediaMP3(){};
+    ~MediaMP3(){};
     
   
     void load(string filePath){};
     void unLoad(){};
-   void draw(){};
+   void draw(ofEventArgs & a){};
 };
 
 

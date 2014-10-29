@@ -9,8 +9,21 @@
 #ifndef __ImMedia__Screens__
 #define __ImMedia__Screens__
 
-#include <stdio.h>
+
 #include "ofMain.h"
+#include "GloveInteract.h"
+
+
+
+class ScreenSpace : public ofRectangle{
+    
+    public :
+    ScreenSpace();
+    ScreenSpace(bool l){updw = l;};
+    
+    GloveInteract anchor;
+    bool updw;
+};
 
 
 
@@ -20,21 +33,23 @@ public:
     
     Screens();
     
-    vector<ofRectangle> screens;
+    vector<ScreenSpace> screens;
     
-    ofVec2f totalRes();
-    ofRectangle getWall(int i);
+
+
     
+    ofVec2f resolution;
+    vector<ScreenSpace> walls;
+
     
-    
-    
+
     
     static Screens* instance(){if(inst==NULL)inst = new Screens();
                                 return inst;}
     
     private :
     static Screens * inst;
-    
+    ofRectangle getWall(int i);
 };
 
 #endif /* defined(__ImMedia__Screens__) */

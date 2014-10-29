@@ -14,25 +14,24 @@
 #include "ofxOsc.h"
 #include "ofMain.h"
 
-#include "IGloveListener.h"
-#define SERVERPORT 25000
-#define LOCALPORT 25100
-#define APPNAME "ImMedia"
-#define NUMTOUCH 4
-#define NUMFLEX 4
-
-class IGloveListener;
-//class Cursor;
+#include "Config.h"
 
 
-typedef enum {T_DOWN=0,T_UP,T_CLICK,T_LONGPRESS} touchType;
+
+
+class Cursor;
+
+
 
 class touchEventArgs : public ofEventArgs{
 public:
     Cursor* gloveId;
-    int touchId;
+    TouchAction touchId;
     touchType type;
 };
+
+
+
 
 class Cursor {
 public:
@@ -55,17 +54,17 @@ public:
     vector<float>  flex;
     ofVec2f cursor2D;
     
-    
     ofEvent<std::pair<Cursor* ,ofVec3f> > orientationEvent;
     ofEvent<std::pair<Cursor* ,ofVec3f> > relativeOrientationEvent;
     ofEvent<touchEventArgs > touchEvent;
     ofEvent<std::pair<Cursor* , vector < float> > > flexEvent;
     ofEvent<std::pair<Cursor* ,ofVec2f> > cursor2DEvent;
     
+
+
     
-// a voir ..
-    vector<IGloveListener * > listeners;
-    void registerListener(IGloveListener * l);
+    
+
     
 private:
     ofxOscReceiver reciever;

@@ -11,7 +11,7 @@
 
 
 extern ofEvent<ofEventArgs> drawSyphonEvent;
-vector<GloveInteract*> GloveInteract::allElements;
+
 GloveInteract * GloveInteract::dragged=NULL;
 
 GloveInteract::GloveInteract(){
@@ -26,9 +26,8 @@ GloveInteract::GloveInteract(){
     ofAddListener(ofEvents().update, this, &GloveInteract::update);
     ofAddListener(drawSyphonEvent, this, &GloveInteract::draw);
     
-    box = Screens::instance()->walls[0];
+    box.set(ofRandom(1000),ofRandom(1000),400,400);// = Screens::instance()->walls[0];
     
-    allElements.push_back(this);
 }
 
 
@@ -42,7 +41,6 @@ GloveInteract::~GloveInteract(){
     
     ofRemoveListener(ofEvents().update, this, &GloveInteract::update);
     ofRemoveListener(drawSyphonEvent, this, &GloveInteract::draw);
-    allElements.erase(find(allElements.begin(),allElements.end(),this));
 }
 
 void GloveInteract::cursor2DMoved(pair<Cursor*,ofVec2f> & arg){
@@ -104,10 +102,10 @@ void GloveInteract::updateDrag(ofVec2f & v){
     if(dragged==this){
         ofVec2f cen =box.getCenter();
         float alpha =ofClamp(0.7 - (cen-v).length()/700,0,1);
-        dragged->box.setFromCenter(alpha*cen+v*(1-alpha), dragged->box.width, dragged->box.height);
+        box.setFromCenter(alpha*cen+v*(1-alpha), box.width, box.height);
     }
     if(dragged !=NULL){
-        int tttt=0;
+//        int tttt=0;
     }
 }
 

@@ -19,6 +19,14 @@ typedef enum{PDF,IMAGE,VIDEO} MediaType;
 
 
 
+
+
+//Screen
+
+
+#define ANCHOR_WIDTH 100
+#define ANCHOR_HEIGHT 50
+
 //Glove
 #define SERVERPORT 25000
 #define LOCALPORT 25100

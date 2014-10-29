@@ -33,6 +33,7 @@ public:
     
     void setTime(float pct);
 
+    void update(ofEventArgs & a);
     
 };
 #endif /* defined(__ImMedia__MediaVideo__) */

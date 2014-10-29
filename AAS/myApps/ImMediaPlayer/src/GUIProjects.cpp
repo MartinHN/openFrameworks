@@ -16,7 +16,7 @@ GUIProjects::GUIProjects(){
 }
 
 void GUIProjects::startWatch(){
-    watch.start(PROJECTPATH, 2000);
+    watch.start(PROJECTPATH, 1000);
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
     

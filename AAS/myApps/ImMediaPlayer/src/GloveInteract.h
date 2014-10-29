@@ -42,7 +42,7 @@ public:
     ofColor backColor;
     string name;
     
-    static vector<GloveInteract*> allElements;
+
     static ofRectangle getFreeSpace();
     
     bool isDraggable=true;

@@ -12,9 +12,10 @@
 
 Screens * Screens::inst=NULL;
 
+
 Screens::Screens(){
     
-    screens.reserve(6);
+    screens.resize(6);
     
     int cux = 0;
     int sizex = 900;
@@ -36,23 +37,18 @@ Screens::Screens(){
     sizex = 900;
     screens[5].set(cux,0,sizex,sizey);
     
+    
+    resolution.set(cux,sizey);
 
-    
-    
-    
-    
-    
-}
-
-
-ofVec2f Screens::totalRes(){
-    ofVec2f res(0);
-    res.y = screens[0].height;
-    for (int i = 0 ; i < screens.size() ; i++){
-        res.x+=screens[i].width;
+    for(int i = 0 ; i < 3 ; i++){
+        walls.push_back(getWall(i));
     }
-    return res;
+    
+
+    
+    
 }
+
 
 
 ofRectangle Screens::getWall(int i){

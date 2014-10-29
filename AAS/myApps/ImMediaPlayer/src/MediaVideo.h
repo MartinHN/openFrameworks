@@ -11,21 +11,24 @@
 
 #include <stdio.h>
 
+//class Media;
+
 #include "Media.h"
+#include "ofQTKitPlayer.h"
 
 
 class MediaVideo: public Media {
     
 public:
-    MediaVideo();
-    ~MediaVideo();
+    MediaVideo(){};
+    ~MediaVideo(){};
     
     ofVideoPlayer player;
     
     
     void load(string filePath);
     void unLoad();
-    void draw();
+    void draw(ofEventArgs & a);
     
     
     void setTime(float pct);

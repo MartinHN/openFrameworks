@@ -17,15 +17,15 @@ class MediaPdf:public  Media {
     
     
 public:
-    MediaPdf();
-    ~MediaPdf();
+    MediaPdf(){};
+    ~MediaPdf(){};
   
     
     ofxPDF pdf;
   
    void load(string filePath);
    void unLoad();
-   void draw();
+   void draw(ofEventArgs & a);
     void offset(ofVec2f t);
 };
 

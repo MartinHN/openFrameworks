@@ -10,24 +10,22 @@
 #define __ImMedia__Media__
 
 #include <stdio.h>
-#include "GloveInteract.h"
 #include "ofMain.h"
 
+#include "GloveInteract.h"
 
 
 
 
-typedef enum{PDF,IMAGE,VIDEO} MediaType;
+
 
 
 class Media : public GloveInteract{
     
     
     public :
-    static Media* createMedia(string filePath);
+
     
-    
-    string name;
     MediaType type;
     string path;
 

@@ -14,9 +14,14 @@ void MediaImage::load(string filePath){
     image.loadImage(filePath);
 }
 
-void MediaImage::draw(){
+void MediaImage::draw(ofEventArgs & a){
     image.draw(box);
 }
 
+
+
+void MediaImage::unLoad(){
+    image.clear();
+}
 
 

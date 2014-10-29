@@ -13,7 +13,7 @@ void MediaPdf::load(string fp){
     pdf.load(fp);
 }
 
-void MediaPdf::draw(){
+void MediaPdf::draw(ofEventArgs & a){
     ofSetColor(255);
     ofRect(box);
     pdf.draw(box);
@@ -23,4 +23,8 @@ void MediaPdf::draw(){
 void MediaPdf::offset(ofVec2f t){
  
     
+}
+
+void MediaPdf::unLoad(){
+    pdf.close();
 }

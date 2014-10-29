@@ -11,21 +11,21 @@
 
 #include <stdio.h>
 #include "Media.h"
-//class Media;
+
 
 
 class MediaImage : public Media{
     
     
 public:
-    MediaImage();
-    ~MediaImage();
+    MediaImage(){};
+    ~MediaImage(){};
    
     
     ofImage image;
    
    void load(string filePath);
    void unLoad();
-   void draw();
+   void draw(ofEventArgs & a);
 };
 #endif /* defined(__ImMedia__MediaImage__) */

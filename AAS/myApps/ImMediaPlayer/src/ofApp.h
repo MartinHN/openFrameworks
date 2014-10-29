@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Watcher.h"
+
 #include "ofxSyphon.h"
 #include "Screens.h"
 #include "GUIProjects.h"
@@ -22,9 +22,9 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-        Watcher watchFiles;
+
     
-    ofVec2f resolution;
+
     ofFbo outTexture;
     ofxSyphonServer syphonOut;
 
@@ -32,5 +32,9 @@ class ofApp : public ofBaseApp{
     GUIProjects projects;
     
     
+    ofEventArgs drawSyphon;
+    
+    
+    Cursor glove;
    
 };

@@ -19,12 +19,13 @@
 class GButton : public GloveInteract{
     public :
     
-    GButton() {GloveInteract::GloveInteract();isDraggable =false;img.loadImage("UI/screenAnchor.png");};
+    GButton();
     ~GButton(){};
+    GButton(ofVec2f center, ofVec2f size,const string & impath,const string & name);
     void draw(ofEventArgs & e);
-    ofImage img;
+    ofImage image;
     void clicked(Cursor* gId,touchType & state);
-    
+
     
     
     

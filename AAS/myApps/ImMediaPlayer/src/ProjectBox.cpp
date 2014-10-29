@@ -9,6 +9,7 @@
 #include "ProjectBox.h"
 
 
+
 void ProjectBox::draw(ofEventArgs & e){
     ofPushStyle();
     
@@ -27,8 +28,20 @@ void ProjectBox::draw(ofEventArgs & e){
     
     ofPopStyle();
 }
-
+//TODO : Implement recursion
 void ProjectBox::clicked(Cursor *gId, touchType & s){
     if(s==T_UP){
-        MediaPool::instance()->loadMedia(PROJECTPATH+name);}
+        if(!MediaPool::instance()->loadMedia(PROJECTPATH+name)){
+            if(ofFile(PROJECTPATH+name).isDirectory()){
+//                GUI
+            }
+            
+        }
+    
+    }
+}
+
+void ProjectBox::parentHasMoved(GloveInteract & p){
+    box.set((p).box.x,(p).box.y,box.width,box.height);
+    int aaa=0;
 }

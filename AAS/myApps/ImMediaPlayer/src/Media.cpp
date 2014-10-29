@@ -11,4 +11,3 @@
 
 
 
-vector<Media*> Media::allElements;

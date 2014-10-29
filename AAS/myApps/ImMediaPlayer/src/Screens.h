@@ -16,17 +16,27 @@
 
 
 
-class ScreenSpace : public ofRectangle{
+class MetaScreen : public ofRectangle{
     
     public :
-    ScreenSpace(){};
-    ~ScreenSpace(){};
-    ScreenSpace(ofRectangle r,bool l=false){
+    MetaScreen(){};
+    ~MetaScreen(){
+        delete anchor;
+        
+    };
+    MetaScreen(ofRectangle r,ofVec2f center,const string & _name = "defaultName"){
+        
         set(r);
-        anchor.isDraggable = false;
-        anchor.box.set(getCenter().x - ANCHOR_WIDTH/2,l?this->height:0,  ANCHOR_WIDTH,ANCHOR_HEIGHT );
+        anchor = new GButton(center,ofVec2f(ANCHOR_WIDTH,ANCHOR_HEIGHT),"UI/screenAnchor.png",_name);
+        anchor->isDraggable = false;
+        
     }
-    GButton anchor;
+    
+    
+    ofRectangle rectScreen(){
+        return *((ofRectangle*)this);
+    }
+    GButton *  anchor;
 
 };
 
@@ -38,10 +48,10 @@ public:
     
     Screens();
     
-    vector<ScreenSpace> screens;
-    vector<ScreenSpace> walls;
+    vector<MetaScreen*> screens;
+    vector<MetaScreen*> walls;
     
-    ScreenSpace full;
+    MetaScreen* full;
 
 
     

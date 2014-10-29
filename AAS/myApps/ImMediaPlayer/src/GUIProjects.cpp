@@ -9,14 +9,27 @@
 #include "GUIProjects.h"
 
 
+
 GUIProjects::GUIProjects(){
 
     name = "Projects";
+    
+    box = *Screens::instance()->walls[0];
     box.width = PROJECTWIDTH;
 }
 
-void GUIProjects::startWatch(){
-    watch.start(PROJECTPATH, 1000);
+
+
+void GUIProjects::startWatch(string s){
+    
+    if(watch.isRunning())watch.stop();
+    
+    for(vector<ProjectBox*>::iterator it = projects.begin();it!=projects.end();++it){
+        delete (*it);
+    }
+    projects.clear();
+    
+    watch.start(PROJECTPATH+s, 1000);
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
     
@@ -41,9 +54,10 @@ void GUIProjects::update(ofEventArgs & a){
 void GUIProjects::projectsAdded(string &filename){
     ofFile file(PROJECTPATH+filename);
     if(file.isDirectory()){
-        ProjectBox* pb = new ProjectBox();
+        ofVec2f offset(box.x,projects.size()* (PROJECTBHEIGHT+PROJECTPAD));
+        ProjectBox* pb = new ProjectBox(this,offset);
         pb->name = filename;
-        pb->box.set(box.x,projects.size()* (PROJECTBHEIGHT+PROJECTPAD),PROJECTWIDTH,PROJECTBHEIGHT);
+
 
         projects.push_back(pb);
     }

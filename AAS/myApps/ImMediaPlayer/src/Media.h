@@ -25,18 +25,17 @@ class Media : public GloveInteract{
     
     public :
 
-    static vector<Media*> allElements;
+
     MediaType type;
     string path;
 
     
     
     Media(){
-        allElements.push_back(this);
+        isCollider = true;
     };
     ~Media(){
-        vector<Media*>::iterator it =find(allElements.begin(),allElements.end(),this);
-        if(it!=allElements.end())allElements.erase(it);
+
 };
     
     

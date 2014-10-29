@@ -17,7 +17,7 @@ void MediaVideo::load(string filePath){
     player.play();
     
     
-    box.set(0,0,600,100);//player.getWidth(),player.getHeight());
+
 }
 
 void MediaVideo::unLoad(){
@@ -25,16 +25,23 @@ void MediaVideo::unLoad(){
     player.close();
 }
 void MediaVideo::update(ofEventArgs & a){
+
     GloveInteract::update(a);
+    if(!loaded && player.isLoaded()){
+        box.set(0,0,player.getWidth(),player.getHeight());
+        loaded = true;
+    }
     player.update();
 }
 
 void MediaVideo::draw(ofEventArgs & a){
-    ofPushMatrix();
-    ofTranslate(box.x, box.y);
-    ofScale(box.width*1.0/player.width,box.height*1.0/player.height);
-   if(player.isLoaded()) player.draw(0,0);
-    ofPopMatrix();
+    if(loaded){
+
+        player.width = box.width;
+        player.height = box.height;
+    player.draw(box.x,box.y);
+
+    }
 //        player.draw(box);
 }
 

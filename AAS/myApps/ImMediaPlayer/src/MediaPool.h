@@ -12,13 +12,14 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+
 //#include "Media.h"
 #include "MediaVideo.h"
 #include "MediaImage.h"
 #include "MediaMP3.h"
 #include "MediaPdf.h"
 
-
+#include "Screens.h"
 
 class MediaPool{
     
@@ -29,7 +30,7 @@ public:
     
     
     Media* createMedia(string filePath);
-    void loadMedia(string path);
+    bool loadMedia(string path);
     void unloadAll();
     
     

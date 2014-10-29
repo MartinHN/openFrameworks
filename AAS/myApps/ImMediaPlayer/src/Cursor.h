@@ -38,7 +38,7 @@ public:
     static vector<Cursor*> cursors;    
     Cursor();
     ~Cursor();
-    ofImage cursorImg;
+    ofImage * cursorImg;
     void update(ofEventArgs & a);
     void draw(ofEventArgs & a);
     bool isConnectedToServer;
@@ -62,8 +62,8 @@ public:
     
 
 
-    
-    
+    void registerOSC();    
+    void unregisterOSC();
 
     
 private:
@@ -71,8 +71,8 @@ private:
     void parseMessage();
     ofxOscSender toServer;
     float lastACK;
-    void registerOSC();
-    void unregisterOSC();
+
+
     
     void updateOrientations();
     void updateRelativeOrientations();

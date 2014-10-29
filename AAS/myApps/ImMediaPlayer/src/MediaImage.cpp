@@ -16,11 +16,13 @@ void MediaImage::load(string filePath){
 }
 
 void MediaImage::draw(ofEventArgs & a){
-    ofPushMatrix();
-    ofTranslate(box.x, box.y);
-    image.resize(box.width, box.height);
-    image.draw(0,0);
-    ofPopMatrix();
+
+
+    image.width = box.width;
+    image.height = box.height;
+
+    image.draw(box.x-image.width/2.0, box.y-image.height/2.0);
+
 }
 
 

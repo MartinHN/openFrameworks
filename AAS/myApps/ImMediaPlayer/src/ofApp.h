@@ -22,6 +22,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+    void exit();
 
     
 
@@ -29,12 +30,26 @@ class ofApp : public ofBaseApp{
     ofxSyphonServer syphonOut;
 
     
+    
+
+    
+    // keep it ordered !!!
+    ofEventArgs drawSyphon;
+    Cursor glove;
+    Screens screens;
     GUIProjects projects;
     
     
-    ofEventArgs drawSyphon;
+
     
     
-    Cursor glove;
+#ifdef MOUSEDBG
+    ofVec2f relMouse;
+#endif
+    
+    static ofVboMesh gradientMesh;
+    void drawBackground(ofColor start, ofColor end, ofGradientMode mode);
+    
+    ofImage back;
    
 };

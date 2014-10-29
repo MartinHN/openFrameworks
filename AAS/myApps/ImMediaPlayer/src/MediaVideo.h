@@ -14,14 +14,14 @@
 //class Media;
 
 #include "Media.h"
-#include "ofQTKitPlayer.h"
+
 
 
 class MediaVideo: public Media {
     
 public:
     MediaVideo(){};
-    ~MediaVideo(){};
+    ~MediaVideo(){player.close();};
     
     ofVideoPlayer player;
     
@@ -35,5 +35,8 @@ public:
 
     void update(ofEventArgs & a);
     
+    
+private:
+    bool loaded = false;
 };
 #endif /* defined(__ImMedia__MediaVideo__) */

@@ -28,12 +28,12 @@ class GUIProjects: public GloveInteract{
     void draw(ofEventArgs & a);
     void update(ofEventArgs & a);
     
-    void startWatch();
+    void startWatch(string s="");
     void projectsAdded(string& filename);
     void projectsRemoved(string& filename);
     
     
-    
+//    hide(bool t);
     
     
 };

@@ -15,38 +15,62 @@ Screens * Screens::inst=NULL;
 
 Screens::Screens(){
     
+
+    
     screens.resize(6);
     
     int cux = 0;
-    int sizex = 900;
+
+    int sizex;
     int sizey= 1080;
-    screens[0].set(0,0,sizex,sizey);
-    cux+=sizex;
-    sizex = 900;
-    screens[1].set(cux,0,sizex,sizey);
-    cux+=sizex;
-    sizex = 900;
-    screens[2].set(cux,0,sizex,sizey);
-    cux+=sizex;
-    sizex = 900;
-    screens[3].set(cux,0,sizex,sizey);
-    cux+=sizex;
-    sizex = 900;
-    screens[4].set(cux,0,sizex,sizey);
-    cux+=sizex;
-    sizex = 900;
-    screens[5].set(cux,0,sizex,sizey);
+    ofRectangle curR;
     
+    
+    int i = 0;
+    sizex = TOTALRES_X*0.3568/2.0;
+    curR =ofRectangle(0,0,sizex,sizey);
+    screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+    cux+=sizex;
+    
+    i++;
+    curR =ofRectangle(cux,0,sizex,sizey);
+    screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+
+    cux+=sizex;
+    curR =ofRectangle(cux,0,sizex,sizey);
+    
+    i++;
+    sizex = TOTALRES_X*0.3120/2.0;
+    screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+    cux+=sizex;
+    curR =ofRectangle(cux,0,sizex,sizey);
+    i++;
+    screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+    cux+=sizex;
+    curR =ofRectangle(cux,0,sizex,sizey);
+    
+    
+    i++;
+    sizex = TOTALRES_X*0.3310/2.0;
+      screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+    cux+=sizex;
+    curR =ofRectangle(cux,0,sizex,sizey);
+    
+    i++;
+    screens[i] =new MetaScreen( curR, ofVec2f (curR.getCenter().x,curR.height-ANCHOR_HEIGHT/2.0),"screenAnchor"+ofToString(i));
+    cux+=sizex;
     
     resolution.set(cux,sizey);
 
-    for(int i = 0 ; i < 3 ; i++){
-        walls.push_back(ScreenSpace(getWall(i),true));
+    walls.resize(3);
+    for(int ii = 0 ; ii < 3 ; ii++){
+
+        walls[ii] = new MetaScreen(getWall(ii),ofVec2f (getWall(ii).getCenter().x,0+ANCHOR_HEIGHT/2.0),"wscreenAnchor"+ofToString(ii));
     }
     
     
-    
-
+    ofRectangle screenR = ofRectangle(0,0,resolution.x,resolution.y);
+full = new MetaScreen(screenR,screenR.getCenter(),"fullScreen");
     
     
 }
@@ -55,5 +79,5 @@ Screens::Screens(){
 
 ofRectangle Screens::getWall(int i){
     
-     return ofRectangle(screens[i*2].x,screens[i*2].y,screens[i*2].width + screens[(i+1)*2].width,screens[i*2].height);
+     return ofRectangle(screens[i*2]->x,screens[i*2]->y,screens[i*2]->width + screens[(i)*2+1]->width,screens[i*2]->height);
 }

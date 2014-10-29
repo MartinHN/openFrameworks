@@ -18,14 +18,25 @@
 class ProjectBox : public GloveInteract{
     public :
     
-    ProjectBox() {isDraggable =false;};
-    ~ProjectBox(){};
+    ProjectBox(GloveInteract * root,ofVec2f offset) {
+        
+        parent = root;
+        ofAddListener(parent->hasMovedEvent, this,&ProjectBox::parentHasMoved);
+        box.set(parent->box.x+offset.x,parent->box.y+offset.y,PROJECTWIDTH,PROJECTBHEIGHT);
+        isDraggable =false;};
+    ~ProjectBox(){
+        ofRemoveListener(parent->hasMovedEvent,this,&ProjectBox::parentHasMoved);
+
+    };
     void draw(ofEventArgs & e);
     
     void clicked(Cursor* gId,touchType & state);
     
+    void parentHasMoved(GloveInteract  &p);
     
     
+    GloveInteract * parent;
+    ofVec2f offset;
     
 };
 

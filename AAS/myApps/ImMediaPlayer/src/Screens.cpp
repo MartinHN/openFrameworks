@@ -41,8 +41,10 @@ Screens::Screens(){
     resolution.set(cux,sizey);
 
     for(int i = 0 ; i < 3 ; i++){
-        walls.push_back(getWall(i));
+        walls.push_back(ScreenSpace(getWall(i),true));
     }
+    
+    
     
 
     

@@ -12,28 +12,30 @@
 void MediaVideo::load(string filePath){
 //    player.setPixelFormat(OF_PIXELS_RGB);
     bool Loaded = player.loadMovie((filePath));
-    player.setPaused(false);
+
     player.setLoopState(OF_LOOP_NORMAL);
-    box.set(0,0,100,100);//player.getWidth(),player.getHeight());
+    player.play();
+    
+    
+    box.set(0,0,600,100);//player.getWidth(),player.getHeight());
 }
 
 void MediaVideo::unLoad(){
     
     player.close();
 }
-
+void MediaVideo::update(ofEventArgs & a){
+    GloveInteract::update(a);
+    player.update();
+}
 
 void MediaVideo::draw(ofEventArgs & a){
-    player.update();
-    if(player.isLoaded()){
-//        if(player.isPaused()||!player.isPlaying()){
-         player.play();
-//        }
-        player.nextFrame();
-        player.draw(box);
-    }
-
-//    player.draw(box);
+    ofPushMatrix();
+    ofTranslate(box.x, box.y);
+    ofScale(box.width*1.0/player.width,box.height*1.0/player.height);
+   if(player.isLoaded()) player.draw(0,0);
+    ofPopMatrix();
+//        player.draw(box);
 }
 
 

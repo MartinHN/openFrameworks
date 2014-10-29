@@ -153,6 +153,8 @@
 		F26C674D1A004E1B0039F116 /* Syphon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F256084B19FD30AB00191994 /* Syphon.framework */; };
 		F26C674E1A004E440039F116 /* Syphon.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = F256084B19FD30AB00191994 /* Syphon.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F26C67511A0060860039F116 /* MediaPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26C674F1A0060860039F116 /* MediaPool.cpp */; };
+		F28B3ECF1A00E64600B91C88 /* Media.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F28B3ECE1A00E64600B91C88 /* Media.cpp */; };
+		F2AE14F81A009E1900D8B7E5 /* GButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F2AE14F61A009E1800D8B7E5 /* GButton.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -422,6 +424,9 @@
 		F26C674B1A0044000039F116 /* ProjectBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectBox.h; sourceTree = "<group>"; };
 		F26C674F1A0060860039F116 /* MediaPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPool.cpp; sourceTree = "<group>"; };
 		F26C67501A0060860039F116 /* MediaPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPool.h; sourceTree = "<group>"; };
+		F28B3ECE1A00E64600B91C88 /* Media.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Media.cpp; sourceTree = "<group>"; };
+		F2AE14F61A009E1800D8B7E5 /* GButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GButton.cpp; sourceTree = "<group>"; };
+		F2AE14F71A009E1900D8B7E5 /* GButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GButton.h; sourceTree = "<group>"; };
 		F4F5B6B8BA2BD52C646ED908 /* OscException.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscException.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscException.h; sourceTree = SOURCE_ROOT; };
 		F7FBC56859535E597B24BB91 /* NetworkingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = NetworkingUtils.h; path = ../../../addons/ofxOsc/libs/oscpack/src/ip/NetworkingUtils.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -1049,6 +1054,7 @@
 				F26C672D19FFE7B00039F116 /* MediaVideo.cpp */,
 				F26C672E19FFE7B00039F116 /* MediaVideo.h */,
 				F256086E19FD318800191994 /* Media.h */,
+				F28B3ECE1A00E64600B91C88 /* Media.cpp */,
 				F26C673219FFE9F50039F116 /* MediaImage.cpp */,
 				F26C673319FFE9F50039F116 /* MediaImage.h */,
 				F26C673519FFEA150039F116 /* MediaPdf.cpp */,
@@ -1079,6 +1085,8 @@
 				F26C673D19FFF9F10039F116 /* GUIProjects.h */,
 				F26C674A1A0044000039F116 /* ProjectBox.cpp */,
 				F26C674B1A0044000039F116 /* ProjectBox.h */,
+				F2AE14F61A009E1800D8B7E5 /* GButton.cpp */,
+				F2AE14F71A009E1900D8B7E5 /* GButton.h */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -1254,10 +1262,12 @@
 				F26C671F19FFCE150039F116 /* Cursor.cpp in Sources */,
 				F26C66E319FD45E20039F116 /* memento.c in Sources */,
 				F26C66D919FD45E20039F116 /* doc_outline.c in Sources */,
+				F2AE14F81A009E1900D8B7E5 /* GButton.cpp in Sources */,
 				F26C66DB19FD45E20039F116 /* filt_faxd.c in Sources */,
 				F26C66E119FD45E20039F116 /* image_save.c in Sources */,
 				F26C663719FD45CE0039F116 /* ofxMtlWatchFolder.cpp in Sources */,
 				F26C66CB19FD45E20039F116 /* base_memory.c in Sources */,
+				F28B3ECF1A00E64600B91C88 /* Media.cpp in Sources */,
 				F26C66EC19FD45E20039F116 /* res_text.c in Sources */,
 				F26C66BD19FD45E20039F116 /* draw_blend.c in Sources */,
 				F26C670819FD45E20039F116 /* pdf_stream.c in Sources */,

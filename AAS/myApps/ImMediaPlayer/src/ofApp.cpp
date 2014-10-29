@@ -10,6 +10,10 @@ void ofApp::setup(){
     
     projects.startWatch();
     
+    
+    
+    Screens::instance();
+    
 }
 
 //--------------------------------------------------------------
@@ -29,9 +33,7 @@ void ofApp::draw(){
     
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
     
-    
-    ofSetColor(0);
-    ofDrawBitmapString("lala", 50, 50);
+
     
     
     

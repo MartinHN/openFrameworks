@@ -27,10 +27,8 @@ void MediaPool::unloadAll(){
     bool last = false;
     for(vector<Media*>::iterator it = medias.begin() ; it!=medias.end() ; ++it){
         delete (*it);
-        medias.erase(it++);
-        if(medias.size() == 0)break;
-        
     }
+    medias.clear();
     
 }
 

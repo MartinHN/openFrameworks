@@ -17,14 +17,14 @@
 
 class ProjectBox : public GloveInteract{
     public :
-
+    
     ProjectBox() {isDraggable =false;};
     ~ProjectBox(){};
     void draw(ofEventArgs & e);
     
     void clicked(Cursor* gId,touchType & state);
     
-   
+    
     
     
 };

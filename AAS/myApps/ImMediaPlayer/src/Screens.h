@@ -11,18 +11,23 @@
 
 
 #include "ofMain.h"
-#include "GloveInteract.h"
+//#include "GloveInteract.h"
+#include "GButton.h"
 
 
 
 class ScreenSpace : public ofRectangle{
     
     public :
-    ScreenSpace();
-    ScreenSpace(bool l){updw = l;};
-    
-    GloveInteract anchor;
-    bool updw;
+    ScreenSpace(){};
+    ~ScreenSpace(){};
+    ScreenSpace(ofRectangle r,bool l=false){
+        set(r);
+        anchor.isDraggable = false;
+        anchor.box.set(getCenter().x - ANCHOR_WIDTH/2,l?this->height:0,  ANCHOR_WIDTH,ANCHOR_HEIGHT );
+    }
+    GButton anchor;
+
 };
 
 
@@ -34,12 +39,14 @@ public:
     Screens();
     
     vector<ScreenSpace> screens;
+    vector<ScreenSpace> walls;
     
+    ScreenSpace full;
 
 
     
     ofVec2f resolution;
-    vector<ScreenSpace> walls;
+
 
     
 

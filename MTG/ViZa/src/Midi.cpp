@@ -19,6 +19,7 @@ int Midi::midiMax = 60;
 float Midi::radius = .05;
 ofVec2f Midi::velScale(0,1);
 bool Midi::hold;
+bool Midi::link2Cam=true;
 
 bool Midi::isReading=false;
 swaplist Midi::msg;
@@ -29,7 +30,7 @@ map<int,Container*> Midi::curCont;
 
 vector<string> Midi::getPorts(){
     midiIn.listPorts();
-    midiIn.openPort("USB2.0-MIDI Port 1");
+    
     return midiIn.getPortList();
 
 }
@@ -67,11 +68,23 @@ void Midi::update(){
     for(vector<ofxMidiMessage>::iterator it = msg.front->begin() ; it!=msg.front->end() ; ++it){
     
         if(it->status==MIDI_NOTE_ON){
-            ofVec3f v (((it->pitch-midiRoot)%midiModulo)*1.0/(midiModulo) ,(int)((it->pitch-midiRoot)/midiModulo)*1.0/((midiMax-midiRoot)/midiModulo), ofMap(it->velocity, 0, 127, velScale.x, velScale.y));
-            v-= ofVec3f(.5);
-            curpoints[it->pitch] = v;
-            Container* cc =Physics::Nearest(v,radius);
-            if(cc!=NULL && cc->state==0){
+            ofVec3f v (((it->pitch-midiRoot)%midiModulo +.5)*1.0/(midiModulo) ,((int)((it->pitch-midiRoot)/midiModulo) + 0.5)*1.0/((midiMax-midiRoot)/midiModulo), ofMap(it->velocity, 0, 127, velScale.x, velScale.y));
+            
+            
+            Container* cc = NULL;
+            if(link2Cam){
+
+                v.y = 1-v.y;
+                v.z = ofApp::toCamZ(v.z-.5);//)*2.0/;//*ofApp::scrS.y/ofApp::scrS.x;
+//                cout<< v << endl;
+                v=ofApp::cam.screenToWorld(v*ofVec3f(ofApp::scrS.x,ofApp::scrS.y,1));
+            }
+            else{
+                v-= ofVec3f(.5);
+            }
+               curpoints[it->pitch] = v;
+             cc =Physics::Nearest(v,radius);
+                      if(cc!=NULL && cc->state==0){
                 cc->state = 1;
                 curCont[it->pitch]=cc;
             }

@@ -11,7 +11,7 @@
 
 
 vector<ofVec3f> Physics::vs;
-vector<ofVec2f> Physics::vScreen;
+vector<ofVec3f> Physics::vScreen;
 vector<ofFloatColor> Physics::cols;
 vector<unsigned int> Physics::idxs;
 ofVbo Physics::vbo;
@@ -24,7 +24,7 @@ Container* Physics::dragged;
 float Physics::originDrag;
 bool Physics::linksongs = false;
 ofxNearestNeighbour3D Physics::kNN;
-ofxNearestNeighbour2D Physics::kNN2D;
+ofxNearestNeighbour3D Physics::kNNCam;
 
 void updatePhy(float time){
     
@@ -53,14 +53,14 @@ void Physics::draw(){
 
 
 
-Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool brightest){
+Container * Physics::NearestCam( ofVec3f mouse , float sphereMult,bool brightest){
 
-    
+    ofEasyCam cam = ofApp::cam;
     vector<size_t> resI;
     vector<float>  resD;
     float radmult = sphereMult*cam.getDistance()*Container::radius* 1.0/((cam.getOrtho()?60.0:1)*distanceVanish(cam));
     
-    kNN2D.findNClosestPoints(mouse, 1, resI,resD);
+    kNNCam.findNClosestPoints(mouse, 1, resI,resD);
     
     if(resI.size()>0){
         return &Container::containers[resI[0]];
@@ -69,30 +69,7 @@ Container * Physics::Cast(ofEasyCam cam, ofVec2f mouse , float sphereMult,bool b
         return NULL;
     }
     
-    
-//    float minDist = 99999;
-//    Container * res = NULL;
 
-    
-    
-//    float alpha=0;
-//    #pragma omp parallel for
-//    for(int i = 0; i < vbo.getNumVertices() ; i++){
-//        ofVec3f v =vs[i];//*(cam.getOrtho()?1.0/cam.getDistance():1);
-//        float screenDist = (cam.worldToScreen(v)-mouse).length();
-//        float worldDist = radmult*1.0/(cam.getPosition()-v).length();
-//        if(screenDist<worldDist){
-//            if( screenDist < minDist ){
-//                res = &Container::containers[i];
-//                alpha+=cols[i].a;
-//                minDist = screenDist;
-//            }
-//
-//        }
-//    }
-//    
-//    if(brightest && alpha<2*GUI::instance()->alphaView->getValue())res=NULL;
-//    return res;
     
 }
 
@@ -173,7 +150,10 @@ void Physics::resizeVBO(){
         cols.resize(newSize);
         idxs.resize(newSize);
         
-        
+        vbo.setVertexData(&vs[0], newSize, GL_DYNAMIC_DRAW);
+        vbo.setIndexData(&idxs[0], newSize, GL_DYNAMIC_DRAW);
+        vbo.setColorData(&cols[0], newSize, GL_DYNAMIC_DRAW);
+         Container::registerListener();
     }
 }
 
@@ -188,20 +168,16 @@ void Physics::updateVBO(){
         cols[i]= Container::containers[i].getColor();
         idxs[i] = Container::containers[i].index;
     }
-    if(vbo.getNumVertices()!=curSize){
-        vbo.setVertexData(&vs[0], curSize, GL_DYNAMIC_DRAW);
-        vbo.setIndexData(&idxs[0], curSize, GL_DYNAMIC_DRAW);
-        vbo.setColorData(&cols[0], curSize, GL_DYNAMIC_DRAW);
-    }
-    else{
-        vbo.updateVertexData(&vs[0], curSize);
-        vbo.updateIndexData(&idxs[0], curSize);
-        vbo.updateColorData(&cols[0], curSize);
-    }
-    Container::registerListener();
+
+    vbo.updateVertexData(&vs[0], curSize);
+    vbo.updateIndexData(&idxs[0], curSize);
+    vbo.updateColorData(&cols[0], curSize);
     
+   
+    if(curSize>0){
     kNN.buildIndex(vs);
-    kNN2D.buildIndex(vScreen);
+    kNNCam.buildIndex(vScreen);
+    }
 }
 
 
@@ -213,7 +189,7 @@ void Physics::updateVScreen(){
         vScreen[i] = cam.worldToScreen(*it);
                 i++;
     }
-    kNN2D.buildIndex(vScreen);
+    kNNCam.buildIndex(vScreen);
 }
 
 

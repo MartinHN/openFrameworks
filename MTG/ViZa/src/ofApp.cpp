@@ -2,6 +2,9 @@
 //#include <omp.h>
 #include <stdio.h>
 ofEasyCam ofApp::cam;
+ofVec3f ofApp::scrS;
+
+
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -13,17 +16,18 @@ void ofApp::setup(){
 //#pragma omp parallel
 //        printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
     
-    ofSetFrameRate(30);
+    ofSetFrameRate(70);
     ofEnableAlphaBlending();
 //    ofDisableSmoothing();
 //    ofEnableAntiAliasing();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofDisableDepthTest();
     
-
+    
     setcamOrtho(true);
-   
-
+    cam.reset();
+    cam.setTranslationKey('a');
+    cam.setZoomKey('s');
 
     Casttime=ofGetElapsedTimeMillis();
 
@@ -42,9 +46,9 @@ void ofApp::setup(){
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
     
-    scrH =ofGetScreenHeight();
-    scrW =ofGetScreenWidth();
+    windowResized(ofGetWindowWidth(), ofGetWindowHeight());
     lastCamPos =cam.getPosition();
+
 
 }
 
@@ -52,18 +56,21 @@ void ofApp::setup(){
 void ofApp::update(){
     Midi::update();
     
-    if((cam.getPosition()-lastCamPos).length()>0.0001){
-
-        lastCamPos = cam.getPosition();
+    if((cam.getPosition()-lastCamPos).length()>0 ){
         isCamSteady = false;
+        if(ofGetElapsedTimef()-lastCamUpdate>.3){
+            Physics::updateVScreen();
+            lastCamUpdate = ofGetElapsedTimef();
+        }
     }
-    else if (!isCamSteady){
+    else if (!isCamSteady ){
         Physics::updateVScreen();
-        
-        lastCamPos = cam.getPosition();
         isCamSteady = true;
         cout << "steadyCam" << endl;
     }
+    lastCamPos = cam.getPosition();
+    
+    
    
 }
 
@@ -84,15 +91,9 @@ void ofApp::loadFiles(string audiopath,string segpath){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-   
-    if(cam.getOrtho()){
 
-        ofRectangle VP(0-1.0/(2.0*cam.getDistance()-1) ,-1.0/(2.0*cam.getDistance())-1, ofGetViewportWidth()+1.0/cam.getDistance()-1,ofGetViewportHeight()+1.0/cam.getDistance()-1 );
-        cam.begin();
-    }
-    else{
     cam.begin();
-    }
+    
     Physics::draw();
     Midi::draw();
     drawMire();
@@ -100,8 +101,7 @@ void ofApp::draw(){
     cam.end();
     
    drawCam();
-    
-     //if(drawGUI)GUI::instance()->draw();
+
 }
 
 void ofApp::drawCam(){
@@ -114,7 +114,7 @@ void ofApp::drawCam(){
     float angle;
     ofVec3f v;
 
-	ortho.makeOrthoMatrix(-scrW/2,    scrW/2   , -scrH/2, scrH/2, .1, 2000);
+	ortho.makeOrthoMatrix(-scrS.x/2,    scrS.x/2   , -scrS.y/2, scrS.y/2, .1, 2000);
     t.makeTranslationMatrix(0,0,-1000);
     
     ofSetMatrixMode(OF_MATRIX_PROJECTION);
@@ -127,10 +127,10 @@ void ofApp::drawCam(){
 
 
 
-    ofTranslate(scrW/2 - 90,-scrH/2 + 90,0);
+    ofTranslate(scrS.x/2 - 90,-scrS.y/2 + 90,0);
     
     ofRotate(angle,v.x,-v.y,v.z);
-//    ofRotateX(180);
+
     
     ofDrawAxis(50);
     
@@ -151,11 +151,12 @@ void ofApp::setcamOrtho(bool t){
     if(t){
         cam.enableOrtho();
         cam.setNearClip(.000001f);
-    
         
-        cam.setScale(1.0/ofGetViewportHeight());
+        
+        cam.setScale(1.0/ofGetWindowHeight());
         cam.setDistance(1);//ofGetScreenHeight());
-        cam.setFarClip(cam.getDistance()*2*ofGetScreenHeight());
+        scrS.z = cam.getDistance()*2*ofGetWindowHeight();
+        cam.setFarClip(scrS.z);
         cam.setNearClip(.000001f);
         cam.setLensOffset(ofVec2f(-1,-1));
         cam.orbit(0,0, cam.getDistance());
@@ -175,14 +176,15 @@ void ofApp::setcamOrtho(bool t){
         cam.setScale(1);
         cam.setNearClip(.000001f);
         cam.setDistance(1);
-        cam.setFarClip(cam.getDistance()*3);
+        scrS.z = cam.getDistance()*3;
+        cam.setFarClip(scrS.z);
         cam.setFov(2*ofRadToDeg(atan(.5/cam.getDistance())));
         cam.orbit(0,0, cam.getDistance());
         cam.setAutoDistance(false);
         cam.setLensOffset(ofVec2f(0,0));
         cam.enableMouseInput();
         cam.enableMouseMiddleButton();
-        Container::radius = 50;
+        Container::radius = 20;
         glPointSize(Container::radius);
         GLfloat attPoints[] = {0,Physics::distanceVanish(cam),0};//*,0};
         
@@ -190,6 +192,7 @@ void ofApp::setcamOrtho(bool t){
         
         
     }
+    
 }
 
 void ofApp::drawMire(){
@@ -235,17 +238,21 @@ void ofApp::drawMire(){
 
 
 void ofApp::isGUIing(bool & t){
-    if(t){
-        cam.disableMouseInput();
-
-    }
-    else{
-        cam.enableMouseInput();
-        
-    }
+//    if(t){
+//        cam.disableMouseInput();
+//
+//    }
+//    else{
+//        cam.enableMouseInput();
+//        
+//    }
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
+
+}
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
     switch (key) {
         case 'x':
             cam.orbit(-90,0,cam.getDistance());
@@ -261,20 +268,16 @@ void ofApp::keyPressed(int key){
             ofFileDialogResult f = ofSystemLoadDialog("analysisFiles",true);
             loadFiles("",f.filePath);
             break;
-    }
+        }
         default:
             break;
     }
-}
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     if(ofGetElapsedTimeMillis()-Casttime>70){
-        Container * cc = Physics::Cast(cam, ofVec2f(x,y),1.,GUI::instance()->selBrightest->getValue());
+        Container * cc = Physics::NearestCam( ofVec3f(x,y,0),1.,GUI::instance()->selBrightest->getValue());
         bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
         Casttime = ofGetElapsedTimeMillis();
         if (change)GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->getPos()*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
@@ -289,6 +292,17 @@ void ofApp::mouseDragged(int x, int y, int button){
             
         }
 
+    }
+    else if (button ==2 && GUI::instance()->continuousPB->getValue()){
+        if(ofGetElapsedTimeMillis()-Casttime>70){
+            Container * cc = Physics::NearestCam( ofVec3f(x,y,0),1.,GUI::instance()->selBrightest->getValue());
+            bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
+            Casttime = ofGetElapsedTimeMillis();
+            if (change){
+             GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->getPos()*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
+                cc->state =1;
+            }
+        }
     }
 
 }
@@ -316,9 +330,11 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-   scrH =ofGetScreenHeight();
-    scrW =ofGetScreenWidth();
+
     setcamOrtho(cam.getOrtho());
+    scrS.x =w;
+    scrS.y =h;
+    scrS.z = cam.getFarClip()-cam.getNearClip();
 }
 
 //--------------------------------------------------------------
@@ -329,6 +345,12 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+
+float ofApp::toCamZ(float z){
+    float nZ = (cam.getDistance()-z)/cam.getScale().z;
+    return ofMap(nZ,cam.getNearClip(), cam.getFarClip(), -1, 1);
 }
 
 

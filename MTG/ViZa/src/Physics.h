@@ -25,7 +25,7 @@ public:
    
     
     static vector<ofVec3f> vs;
-    static vector<ofVec2f> vScreen;
+    static vector<ofVec3f> vScreen;
     static vector<ofFloatColor> cols;
     static vector<unsigned int> idxs;
     static ofVbo vbo;
@@ -43,7 +43,7 @@ public:
     static void orderBy(string attr,int axe,int type);
     static void updateVScreen();
     
-    static Container * Cast(ofEasyCam cam, ofVec2f mouse,float sphereMult=1,bool brightest=false);
+    static Container * NearestCam( ofVec3f mouse,float sphereMult=1,bool brightest=false);
     static Container* Nearest(ofVec3f point,float radius = 0 );
     static float distanceVanish(ofCamera cam);
     
@@ -76,7 +76,7 @@ private:
      static Physics* inst;
     
     static ofxNearestNeighbour3D kNN;
-    static ofxNearestNeighbour2D kNN2D;
+    static ofxNearestNeighbour3D kNNCam;
     
 };
 #endif /* defined(__ViZa__Physics__) */

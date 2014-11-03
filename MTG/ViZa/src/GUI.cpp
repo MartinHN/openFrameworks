@@ -88,6 +88,7 @@ GUI::GUI(){
     midiRadius = new ofxUISlider("Radius",0,.5,0.05,100,10);
     midiHold = new ofxUIToggle("Hold",false,10,10);
     
+    midiLink2Cam = new ofxUIToggle("link2Cam",true,10,10);
     
     //VIEWWWW/////////////
     
@@ -97,9 +98,14 @@ GUI::GUI(){
     alphaView = new ofxUISlider("alphaView",0,1,0.3f,100,10);
     selBrightest = new ofxUIToggle("SelectBrightest",false,10,10);
     linkSongs = new ofxUIToggle("linkSongs",false,10,10);
-    orthoCam = new ofxUIToggle("orthoCam",false,10,10);
+    orthoCam = new ofxUIToggle("orthoCam",true,10,10);
+    pointSize = new ofxUISlider("pointSize",0,2,1,100,10);
     
+    //// PLAYBACK /////////////
+    playBack =new ofxUISuperCanvas("playBack");
+    playBack->setName("playBack");
     
+    continuousPB = new ofxUIToggle("continuousPlayBack",false,10,10);
     
     
     
@@ -108,13 +114,14 @@ GUI::GUI(){
     viewCanvas->addWidgetDown(selBrightest);
     viewCanvas->addWidgetDown(linkSongs);
     viewCanvas->addWidgetDown(orthoCam);
-    
+    viewCanvas->addWidgetDown(pointSize);
     
     
     midiCanvas->addWidgetDown(midiPorts);
     midiCanvas->addWidgetDown(midiVel);
     midiCanvas->addWidgetDown(midiRadius);
     midiCanvas->addWidgetDown(midiHold);
+    midiCanvas->addWidgetDown(midiLink2Cam);
 
     logCanvas->addWidgetDown(Logger);
     
@@ -128,6 +135,8 @@ GUI::GUI(){
     }
 
     
+    playBack->addWidgetDown(continuousPB);
+    
     
     //GLOBAL TAB
     global = new ofxUITabBar();
@@ -138,7 +147,7 @@ GUI::GUI(){
     global->addCanvas(logCanvas);
     global->addCanvas(viewCanvas);
     global->addCanvas(midiCanvas);
-    
+    global->addCanvas(playBack);
     
     vector<ofxUIWidget*> ddls= guiconf->getWidgetsOfType(OFX_UI_WIDGET_DROPDOWNLIST);
     ddls.push_back(midiPorts);
@@ -321,7 +330,9 @@ void GUI::guiEvent(ofxUIEventArgs &e){
     
     
     
-    if(root!=NULL)cout << root->getName() << "//" << parent->getName() << "//" << name<< endl;
+    if(root!=NULL){
+     cout << root->getName() << "//" << parent->getName() << "//" << name<< endl;   
+    }
     
     
     // Axes
@@ -372,6 +383,10 @@ else    if(rootName == "View" ){
     if(name == "orthoCam"){
         ofApp::setcamOrtho(((ofxUIToggle*)e.widget)->getValue());
     }
+    if(name == "pointSize"){
+        Container::radius = ((ofxUISlider*)e.widget)->getValue()*150.0;
+        glPointSize(Container::radius);
+    }
 }
 else    if(rootName == "Midi" ){
     if(parentName == "MidiPorts"){
@@ -387,8 +402,20 @@ else    if(rootName == "Midi" ){
     if(name=="Hold"){
         Midi::hold=((ofxUIToggle*)e.widget)->getValue();
     }
+    if(name == "link2Cam"){
+        Midi::link2Cam = ((ofxUIToggle*)e.widget)->getValue();
+    }
     
     
+}
+else if (rootName=="playBack"){
+    if(name=="continuousPlayBack"){
+        if(e.getToggle()->getValue()){
+         ofApp::cam.disableMouseInput();
+        }else{
+            ofApp::cam.enableMouseInput();
+        }
+    }
 }
     
     

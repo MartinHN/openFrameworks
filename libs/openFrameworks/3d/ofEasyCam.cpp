@@ -135,6 +135,11 @@ float ofEasyCam::getDrag() const {
 void ofEasyCam::setTranslationKey(char key){
 	doTranslationKey = key;
 }
+
+//----------------------------------------
+void ofEasyCam::setZoomKey(char key){
+	doZoomKey = key;
+}
 //----------------------------------------
 char ofEasyCam::getTranslationKey(){
 	return doTranslationKey;
@@ -229,7 +234,7 @@ void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 		prevPosition = ofCamera::getGlobalPosition();
 		prevOrientation = ofCamera::getGlobalOrientation();
         mouseVel = ofVec2f(0);
-		if ((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || ofGetKeyPressed(doTranslationKey)  || mouse.button == OF_MOUSE_BUTTON_RIGHT){
+		if ((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || (mouse.button == OF_MOUSE_BUTTON_LEFT && (ofGetKeyPressed(doTranslationKey)  || ofGetKeyPressed(doZoomKey)))){
 			bDoTranslate = true;
 			bDoRotate = false;
             updateMouse(mouse);
@@ -280,7 +285,7 @@ void ofEasyCam::updateMouse(const ofMouseEventArgs & mouse){
 		moveX = 0;
 		moveY = 0;
 		moveZ = 0;
-		if (mouse.button == OF_MOUSE_BUTTON_RIGHT) {
+		if (mouse.button == OF_MOUSE_BUTTON_RIGHT || ofGetKeyPressed(doZoomKey)) {
 			moveZ = mouseVel.y * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;
 		}else {
 			moveX = -mouseVel.x * sensitivityXY * (getDistance() + FLT_EPSILON)/viewport.width;

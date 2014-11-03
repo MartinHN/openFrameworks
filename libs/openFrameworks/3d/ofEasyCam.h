@@ -30,6 +30,8 @@ public:
 	// translation happens only when the key is pressed.
 	void setTranslationKey(char key);
     char getTranslationKey();
+    void setZoomKey(char key);
+    
 	// enable or disable mouse input to navigate
 	void enableMouseInput();
 	void disableMouseInput();
@@ -85,7 +87,8 @@ private:
 	void updateMouse(const ofMouseEventArgs & mouse);
 	
 	char doTranslationKey;
-	
+	char doZoomKey;
+    
 	unsigned long lastTap;
 		
 	ofQuaternion curRot;  

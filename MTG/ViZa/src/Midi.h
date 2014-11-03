@@ -37,7 +37,7 @@ typedef struct swaplist{
 class Midi:public ofxMidiListener {
     public :
     
-    Midi(){midiIn.addListener(this);}
+    Midi(){midiIn.addListener(this);getPorts();midiIn.openPort(0);}
     ~Midi(){midiIn.closePort();
         midiIn.removeListener(this);}
     
@@ -67,7 +67,7 @@ class Midi:public ofxMidiListener {
     static swaplist msg;
     static bool isReading;
     static bool hold;
-    
+    static bool link2Cam;
 private:
     static Midi* midi;
 

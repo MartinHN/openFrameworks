@@ -158,6 +158,7 @@ void ofFmodSoundPlayer::initializeFmod(){
 		FMOD_System_Init(sys, FMOD_CHANNELS, FMOD_INIT_NORMAL, NULL);  //do we want just 32 channels?
 		FMOD_System_GetMasterChannelGroup(sys, &channelgroup);
 		bFmodInitialized_ = true;
+        FMOD_System_SetDSPBufferSize       (sys, 32, 1);
 	}
 }
 
@@ -202,7 +203,8 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
 
 	//choose if we want streaming
 	int fmodFlags =  FMOD_SOFTWARE;
-	if(stream)fmodFlags =  FMOD_SOFTWARE | FMOD_CREATESTREAM;
+
+	if(stream)fmodFlags =  FMOD_HARDWARE | FMOD_CREATESTREAM | FMOD_IGNORETAGS | FMOD_LOWMEM ;
 
 	result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, NULL, &sound);
 

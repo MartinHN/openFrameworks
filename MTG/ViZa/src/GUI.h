@@ -40,7 +40,7 @@ public:
     ofxUIToggle * selBrightest;
     ofxUIToggle * linkSongs;
     ofxUIToggle * orthoCam;
-    
+    ofxUISlider * pointSize;
     
     
     ofxUISuperCanvas * midiCanvas;
@@ -49,7 +49,11 @@ public:
     ofxUISlider * midiRadius;
     ofxUIDropDownList * songNames;
     ofxUIToggle * midiHold;
+    ofxUIToggle * midiLink2Cam;
     
+    
+    ofxUISuperCanvas * playBack;
+    ofxUIToggle * continuousPB;
     
     int scrollW = 700;
     int pad=50;

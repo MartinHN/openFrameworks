@@ -13,12 +13,11 @@ class ofApp : public ofBaseApp{
     static ofEasyCam cam;
     ofVec3f lastCamPos;
     bool isCamSteady;
+    float lastCamUpdate;
     unsigned long long Casttime;
     
-    float scrH ;
-    float scrW;
-    
-    ofVec2f scrS;
+
+    static ofVec3f scrS;
     
     bool drawGUI;
 
@@ -42,5 +41,6 @@ class ofApp : public ofBaseApp{
     void drawCam();
     static void setcamOrtho(bool t);
     void loadFiles(string audiopath="",string segpath="");
+    static float toCamZ(float z);
     
 };

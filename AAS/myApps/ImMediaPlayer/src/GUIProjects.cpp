@@ -10,14 +10,22 @@
 
 
 
-GUIProjects::GUIProjects(){
+GUIProjects::GUIProjects():ofxUIDropDownList::ofxUIDropDownList("Projects",vector<string>()){
 
-    name = "Projects";
-    
+
+
     box = *Screens::instance()->walls[0];
     box.width = PROJECTWIDTH;
 }
 
+
+//vector<string> GUIProjects::getProjectsNames(){
+//    vector<string> res;
+//    for(int i = 0 ; i < projects.size() ; i++){
+//        res.push_back(projects->filename);
+//    }
+//    return res;
+//}
 
 
 void GUIProjects::startWatch(string s){

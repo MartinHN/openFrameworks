@@ -12,27 +12,31 @@
 #include <stdio.h>
 #include "GloveInteract.h"
 #include "MediaPool.h"
+#include "ofxUIToggle.h"
 
 
-
-class ProjectBox : public GloveInteract{
+class ProjectBox : public GloveInteract,public ofxUIToggle{
     public :
     
     ProjectBox(GloveInteract * root,ofVec2f offset) {
         
         parent = root;
-        ofAddListener(parent->hasMovedEvent, this,&ProjectBox::parentHasMoved);
+        
         box.set(parent->box.x+offset.x,parent->box.y+offset.y,PROJECTWIDTH,PROJECTBHEIGHT);
-        isDraggable =false;};
+        GloveInteract::isDraggable =false;
+        ofxUIToggle::ofxUIToggle();
+    };
+   
+    
     ~ProjectBox(){
-        ofRemoveListener(parent->hasMovedEvent,this,&ProjectBox::parentHasMoved);
+        
 
     };
     void draw(ofEventArgs & e);
     
     void clicked(Cursor* gId,touchType & state);
     
-    void parentHasMoved(GloveInteract  &p);
+
     
     
     GloveInteract * parent;

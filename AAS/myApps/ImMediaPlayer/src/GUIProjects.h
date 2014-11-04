@@ -15,8 +15,9 @@
 #include "ofxMtlWatchFolder.h"
 #include "Config.h"
 #include "ProjectBox.h"
+#include "ofxUI.h"
 
-class GUIProjects: public GloveInteract{
+class GUIProjects: public GloveInteract,public ofxUIDropDownList{
     
     
     public :
@@ -31,7 +32,7 @@ class GUIProjects: public GloveInteract{
     void startWatch(string s="");
     void projectsAdded(string& filename);
     void projectsRemoved(string& filename);
-    
+//    vector<string> projectsNames();
     
 //    hide(bool t);
     

@@ -13,14 +13,14 @@
 #include "ofMain.h"
 
 #include "GloveInteract.h"
+#include "ofxUIImageButton.h"
 
 
 
 
 
 
-
-class Media : public GloveInteract{
+class Media : public GloveInteract,ofxUIImageButton{
     
     
     public :
@@ -32,6 +32,7 @@ class Media : public GloveInteract{
     
     
     Media(){
+        ofxUIImageButton();
         isCollider = true;
     };
     ~Media(){

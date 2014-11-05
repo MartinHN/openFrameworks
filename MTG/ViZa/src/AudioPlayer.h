@@ -52,7 +52,7 @@ public:
         }return inst;
     };
     
-    static std::map<audioUID,ofSoundPlayer*> players;
+    static std::map<audioUID,ofFmodSoundPlayer*> players;
     static bool Play(Container & c,int s);
     static void Load(Container const & c,bool t);
     static void UnloadAll();

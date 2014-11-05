@@ -9,7 +9,7 @@
 #include "AudioPlayer.h"
 
 
-std::map<audioUID,ofSoundPlayer*>  AudioPlayer::players;
+std::map<audioUID,ofFmodSoundPlayer*>  AudioPlayer::players;
 AudioPlayer * AudioPlayer::inst;
 
 
@@ -21,8 +21,8 @@ AudioPlayer::AudioPlayer(){
 void AudioPlayer::Load(Container const & c,bool t){
 audioUID id = getUID(c);
     if(t){
-        players[id] = new ofSoundPlayer();
-        if(!players[id]->loadSound(c.path,true))ofLogError("can't load : "+id.name);
+        players[id] = new ofFmodSoundPlayer();
+        if(!players[id]->loadSound(c.path,true));//ofLogError("can't load : "+id.name);
     }
     else{
     
@@ -30,24 +30,33 @@ audioUID id = getUID(c);
         delete players[id];
     players.erase(id);
     }
+    players[id]->setMultiPlay(false);
 }
 
 bool AudioPlayer::Play(Container & c, int s){
     audioUID id = getUID(c);
     
 //    if(players.size()>POLYPHONY && s>0)return false;
-
+    
     int i = 0;
-    for(map<audioUID,ofSoundPlayer*>::iterator p= players.begin();p!=players.end();++p){
+    for(map<audioUID,ofFmodSoundPlayer*>::iterator p= players.begin();p!=players.end();++p){
         
         //playing start slice
         if(p->first==id){
             //restart
             if(s ==1 && p->second!=NULL){
+                
                 TimeLine.delDel("stop "+id.toString());
+                // underlying FMOD_play_sound seems faster to reload in streaming mode  (2ms Vs 20ms)
+                cout << "restart playing " << ofGetElapsedTimef() << endl;
+                players[id]->loadSound(c.path,true);
+                
                 p->second->play();
                 p->second->setPositionMS(c.begin*1000.0);
-                TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+id.toString());
+                p->second->setStopMS((c.end-c.begin)*1000.0);
+                
+                cout << "end load playing " << ofGetElapsedTimef() << endl;
+                TimeLine.addDel((c.end-c.begin)*1001.0f,"stop "+id.toString());
                 return true;
             }
             //stop it
@@ -62,9 +71,11 @@ bool AudioPlayer::Play(Container & c, int s){
         // start preloaded
         else if(s == 1 && p->first.name == id.name && p->second && !p->second->getIsPlaying()){
             players[id] = p->second;
+            cout << "start playing " << ofGetElapsedTimef() << endl;
             players[id]->play();
             players[id]->setPositionMS(c.begin*1000.0);
-            TimeLine.addDel((c.end-c.begin)*1000.0f,"stop "+id.toString());
+            p->second->setStopMS((c.end-c.begin)*1000.0);
+            TimeLine.addDel((c.end-c.begin)*1001.0f,"stop "+id.toString());
             
             players.erase(p++);
             
@@ -77,7 +88,7 @@ bool AudioPlayer::Play(Container & c, int s){
     
     // load on the go
     if(s==1){
-        players[id] = new ofSoundPlayer();
+        players[id] = new ofFmodSoundPlayer();
         players[id]->loadSound(c.path);
         
         players[id]->play();
@@ -105,7 +116,7 @@ void AudioPlayer::gotMessage(ofMessage & msg){
 
 void AudioPlayer::UnloadAll() {
     
-    for(map<audioUID,ofSoundPlayer*>::iterator it = players.begin() ; it!= players.end() ;++it){
+    for(map<audioUID,ofFmodSoundPlayer*>::iterator it = players.begin() ; it!= players.end() ;++it){
         if(it->second!=NULL){
             it->second->unloadSound();
             delete it->second;

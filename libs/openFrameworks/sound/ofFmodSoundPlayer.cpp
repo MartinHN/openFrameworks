@@ -15,6 +15,8 @@ float fftSpectrum_[8192];		// maximum #ofFmodSoundPlayer is 8192, in fmodex....
 static FMOD_CHANNELGROUP * channelgroup;
 static FMOD_SYSTEM       * sys;
 
+std::map<FMOD_CHANNEL *,ofEvent<bool>* > ofFmodSoundPlayer::evDic;
+
 // these are global functions, that affect every sound / channel:
 // ------------------------------------------------------------
 // ------------------------------------------------------------
@@ -139,6 +141,8 @@ ofFmodSoundPlayer::ofFmodSoundPlayer(){
 	speed 			= 1;
 	bPaused 		= false;
 	isStreaming		= false;
+    
+
 }
 
 ofFmodSoundPlayer::~ofFmodSoundPlayer(){
@@ -155,10 +159,10 @@ void ofFmodSoundPlayer::initializeFmod(){
 		#ifdef TARGET_LINUX
 			FMOD_System_SetOutput(sys,FMOD_OUTPUTTYPE_ALSA);
 		#endif
-		FMOD_System_Init(sys, FMOD_CHANNELS, FMOD_INIT_NORMAL, NULL);  //do we want just 32 channels?
+		FMOD_System_Init(sys, FMOD_CHANNELS, FMOD_INIT_ASYNCREAD_FAST, NULL);  //do we want just 32 channels?
 		FMOD_System_GetMasterChannelGroup(sys, &channelgroup);
 		bFmodInitialized_ = true;
-        FMOD_System_SetDSPBufferSize       (sys, 32, 1);
+
 	}
 }
 
@@ -202,11 +206,35 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
     //3. Use FMOD_IGNORETAGS
 
 	//choose if we want streaming
+
+    
 	int fmodFlags =  FMOD_SOFTWARE;
 
-	if(stream)fmodFlags =  FMOD_HARDWARE | FMOD_CREATESTREAM | FMOD_IGNORETAGS | FMOD_LOWMEM ;
+	if(stream){
+        FMOD_CREATESOUNDEXINFO exinfo;
+        memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+        exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+//        exinfo.decodebuffersize = 128;
 
-	result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, NULL, &sound);
+        string ext = ofFile(fileName).getExtension();
+        if(ext == "mp3"){
+        exinfo.suggestedsoundtype = FMOD_SOUND_TYPE_MPEG;
+        }
+        else if(ext == "wav"){
+        exinfo.suggestedsoundtype = FMOD_SOUND_TYPE_WAV;
+        }
+
+        
+//        exinfo.decodebuffersize = 512;
+
+     fmodFlags =  FMOD_SOFTWARE | FMOD_CREATESTREAM  | FMOD_LOWMEM | FMOD_2D ;
+        result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, &exinfo, &sound);
+    }
+    else{
+        result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, NULL, &sound);
+    }
+
+	
 
 	if (result != FMOD_OK){
 		bLoadedOk = false;
@@ -230,6 +258,27 @@ void ofFmodSoundPlayer::unloadSound(){
 }
 
 //------------------------------------------------------------
+
+void ofFmodSoundPlayer::setStopEvent(ofEvent<bool> & ev){
+    evDic[channel] =  &ev;
+
+}
+
+
+void ofFmodSoundPlayer::setStopMS(float ms){
+
+    unsigned int lo,hi;
+    
+    FMOD_System_GetDSPClock(sys, &hi, &lo);
+    FMOD_64BIT_ADD(hi, lo, 0, 32);
+    FMOD_Channel_SetDelay(channel, FMOD_DELAYTYPE_DSPCLOCK_START, hi,lo);
+    
+    FMOD_64BIT_ADD(hi, lo, 0, internalFreq*ms/1000.0);
+
+    FMOD_Channel_SetDelay(channel,FMOD_DELAYTYPE_DSPCLOCK_END, hi,lo);
+    FMOD_Channel_SetCallback(channel, stopCallback);
+}
+
 bool ofFmodSoundPlayer::getIsPlaying(){
 
 	if (!bLoadedOk) return false;
@@ -354,7 +403,7 @@ void ofFmodSoundPlayer::setMultiPlay(bool bMp){
 
 // ----------------------------------------------------------------------------
 void ofFmodSoundPlayer::play(){
-
+    
 	// if it's a looping sound, we should try to kill it, no?
 	// or else people will have orphan channels that are looping
 	if (bLoop == true){
@@ -375,11 +424,15 @@ void ofFmodSoundPlayer::play(){
 	FMOD_Channel_SetFrequency(channel, internalFreq * speed);
 	FMOD_Channel_SetMode(channel,  (bLoop == true) ? FMOD_LOOP_NORMAL : FMOD_LOOP_OFF);
 
+    
+    
 	//fmod update() should be called every frame - according to the docs.
 	//we have been using fmod without calling it at all which resulted in channels not being able
 	//to be reused.  we should have some sort of global update function but putting it here
 	//solves the channel bug
 	FMOD_System_Update(sys);
+    
+    
 
 }
 

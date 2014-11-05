@@ -9,7 +9,12 @@
 extern "C" {
 #include "fmod.h"
 #include "fmod_errors.h"
+    
+    
+
 }
+
+#include "ofEvents.h"
 
 //		TO DO :
 //		---------------------------
@@ -78,5 +83,26 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 		FMOD_RESULT result;
 		FMOD_CHANNEL * channel;
 		FMOD_SOUND * sound;
+    
+    
+    void setStopMS(float ms);
+    void setStopEvent(ofEvent<bool> & ev);
+    static std::map<FMOD_CHANNEL *,ofEvent<bool>* > evDic;
+
+    
 };
 
+
+extern "C"{
+    FMOD_RESULT F_CALLBACK stopCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2){
+        for(std::map<FMOD_CHANNEL *,ofEvent<bool>* >::iterator it = ofFmodSoundPlayer::evDic.begin(); it != ofFmodSoundPlayer::evDic.end();++it){
+            if(it->first == channel){
+                bool t = true;
+                ofNotifyEvent(*it->second, t, channel);
+                ofFmodSoundPlayer::evDic.erase(it->first);
+                return FMOD_OK;
+            }
+        }
+        return FMOD_ERR_ALREADYLOCKED;
+    };
+}

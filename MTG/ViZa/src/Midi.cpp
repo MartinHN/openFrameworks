@@ -39,7 +39,7 @@ void Midi::newMidiMessage(ofxMidiMessage& msgin){
     if(!isReading){
     if(msg.back->size()<MAX_MIDI_QUEUE){
         msg.back->push_back(msgin);
-
+        cout << "midicallback " << ofGetElapsedTimef() << endl;
     }
     }
     
@@ -83,8 +83,10 @@ void Midi::update(){
                 v-= ofVec3f(.5);
             }
                curpoints[it->pitch] = v;
+            
              cc =Physics::Nearest(v,radius);
                       if(cc!=NULL && cc->state==0){
+        cout << "call play " << ofGetElapsedTimef() << endl;                       
                 cc->state = 1;
                 curCont[it->pitch]=cc;
             }

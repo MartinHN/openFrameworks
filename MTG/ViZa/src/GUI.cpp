@@ -105,8 +105,8 @@ GUI::GUI(){
     playBack =new ofxUISuperCanvas("playBack");
     playBack->setName("playBack");
     
-    continuousPB = new ofxUIToggle("continuousPlayBack",false,10,10);
-    
+    continuousPB = new ofxUIToggle("continuousPlayBack",true,10,10);
+    holdPB = new ofxUIToggle("hold",false,10,10);
     
     
     ///PLACING//////////////
@@ -136,6 +136,7 @@ GUI::GUI(){
 
     
     playBack->addWidgetDown(continuousPB);
+    playBack->addWidgetDown(holdPB);
     
     
     //GLOBAL TAB
@@ -409,13 +410,10 @@ else    if(rootName == "Midi" ){
     
 }
 else if (rootName=="playBack"){
-    if(name=="continuousPlayBack"){
-        if(e.getToggle()->getValue()){
-         ofApp::cam.disableMouseInput();
-        }else{
-            ofApp::cam.enableMouseInput();
-        }
-    }
+
+
+    
+    
 }
     
     

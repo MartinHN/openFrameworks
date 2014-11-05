@@ -21,7 +21,7 @@ public:
     
     Container(){
     path="";
-    
+    filename = "";
     
     
     };
@@ -45,7 +45,7 @@ public:
     static string selectedSong;
     static bool colorInit;
 
-    
+    static void clearAll();
     
     
     Container(string path,float begin,float end,int idx,int level=0): path(path),begin(begin),end(end),level(level),index(idx){

@@ -75,11 +75,9 @@ Physics::updateOneColor(index,getColor());
 
 
 void Container::setState(float & s){
-
-    Physics::updateOneColor(index,getColor());
+Physics::updateOneColor(index,getColor());
+    if(s<=1){AudioPlayer::instance()->Play(*this,(int)s);}
     
-    if(s<=1)AudioPlayer::instance()->Play(*this,(int)s);
-
     
 }
 
@@ -118,6 +116,18 @@ bool Container::hoverContainer(int  idx){
     return false;
 }
 
+
+void Container::clearAll(){
+    containers.clear();
+    attributeNames.clear();
+
+    maxs.clear();
+    mins.clear();
+    means.clear();
+    total.clear();
+    
+  
+}
 void Container::setAttribute(const string n,const float v){
         bool found = false;
     int idx = 0;

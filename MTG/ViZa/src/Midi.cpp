@@ -47,6 +47,8 @@ void Midi::newMidiMessage(ofxMidiMessage& msgin){
         cout<< "dropping MIDI" << endl;
         
     }
+    
+
 
    
 }

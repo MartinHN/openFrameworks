@@ -14,10 +14,11 @@
 
 #include "Timed.h"
 #include "Container.h"
+
 class Container;
 
 
-#define POLYPHONY 2
+#define POLYPHONY 10
 
 typedef struct audioUID{
     string name;
@@ -34,7 +35,8 @@ typedef struct audioUID{
     string toString() {
         return  name + "\n" + ofToString(idx) ;
     }
-    
+
+
     friend class AudioPlayer ;
     
 }audioUID;
@@ -48,7 +50,8 @@ public:
     
     static AudioPlayer * instance(){
         if(inst==NULL){inst = new AudioPlayer();
-        ofAddListener(ofEvents().messageEvent,inst,&AudioPlayer::gotMessage);
+            ofAddListener(ofFmodSoundPlayer::audioEvent,inst,&AudioPlayer::gotAudioEvent);
+            ofAddListener(ofEvents().update,inst,&AudioPlayer::update);
         }return inst;
     };
     
@@ -57,12 +60,14 @@ public:
     static void Load(Container const & c,bool t);
     static void UnloadAll();
 //    static bool Play(int uid,string path,float begin,float end ,ofParameter<float> & s);
-    
-    void gotMessage(ofMessage & msg);
+    void update(ofEventArgs &a);
+    void gotAudioEvent(std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE> & ev);
     static AudioPlayer * inst;
     
     static audioUID getUID(Container const & c);
     static audioUID audioUIDfromString(const string s);
+    
+    static ofEvent<std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE> > stopEvent;
     
 };
 

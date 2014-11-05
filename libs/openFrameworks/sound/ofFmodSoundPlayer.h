@@ -45,6 +45,7 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 		virtual ~ofFmodSoundPlayer();
 
 		bool loadSound(string fileName, bool stream = false);
+        bool loadSound(string fileName, bool stream,float begin,float end);
 		void unloadSound();
 		void play();
 		void stop();
@@ -86,8 +87,8 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
     
     
     void setStopMS(float ms);
-    void setStopEvent(ofEvent<bool> & ev);
-    static std::map<FMOD_CHANNEL *,ofEvent<bool>* > evDic;
+
+    static ofEvent<std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE> >  audioEvent;
 
     
 };
@@ -95,14 +96,14 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 
 extern "C"{
     FMOD_RESULT F_CALLBACK stopCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2){
-        for(std::map<FMOD_CHANNEL *,ofEvent<bool>* >::iterator it = ofFmodSoundPlayer::evDic.begin(); it != ofFmodSoundPlayer::evDic.end();++it){
-            if(it->first == channel){
-                bool t = true;
-                ofNotifyEvent(*it->second, t, channel);
-                ofFmodSoundPlayer::evDic.erase(it->first);
-                return FMOD_OK;
-            }
-        }
-        return FMOD_ERR_ALREADYLOCKED;
+
+        
+            std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE>arg(channel,type);
+            ofNotifyEvent(ofFmodSoundPlayer::audioEvent,arg, channel);
+        
+            return FMOD_OK;
+        
+        
+        
     };
 }

@@ -54,6 +54,8 @@ public:
     
     ofxUISuperCanvas * playBack;
     ofxUIToggle * continuousPB;
+    ofxUIToggle * holdPB;
+    
     
     int scrollW = 700;
     int pad=50;

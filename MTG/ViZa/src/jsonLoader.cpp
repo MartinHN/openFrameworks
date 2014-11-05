@@ -41,8 +41,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     vector<ofFile> segL = ad.getFiles();
 
     globalCount=0;
-    Container::containers.clear();
-    Container::attributeNames.clear();
+
     
     std::map<ofFile,ofFile> mapL;
     
@@ -60,7 +59,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
     }
     
     int j = 0;
-    Container::containers.reserve(mapL.size()*500);
+    Container::containers.reserve(Container::containers.size()+mapL.size()*800);
     for(std::map<ofFile, ofFile>::iterator p=mapL.begin();p!= mapL.end();++p){
         int contwatch = j;
         
@@ -77,6 +76,8 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
         }
    
         }
+        
+        
         if(p->second.getExtension() =="json"){
             ofxJSONElement json;
             json.open(p->second.path());
@@ -109,7 +110,7 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
                 ii++;
             }
             }
-
+            json.clear();
         }
         
 
@@ -119,10 +120,11 @@ void jsonLoader::loadSegments(string audiopath,string segpath){
        
         
         
-       
+        
     }
     
     Container::containers.resize(j);
+    
     
 }
 

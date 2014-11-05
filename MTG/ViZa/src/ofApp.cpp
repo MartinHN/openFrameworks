@@ -9,17 +9,11 @@ ofVec3f ofApp::scrS;
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    
-    
-    
-//
-//#pragma omp parallel
-//        printf("Hello from thread %d, nthreads %d\n", omp_get_thread_num(), omp_get_num_threads());
-    
-    ofSetFrameRate(200);
+    ofSetFrameRate(70);
     ofEnableAlphaBlending();
 //    ofDisableSmoothing();
-//    ofEnableAntiAliasing();
+    ofEnableSmoothing();
+    ofEnableAntiAliasing();
     ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     ofDisableDepthTest();
     
@@ -45,7 +39,7 @@ void ofApp::setup(){
     
     
     GUI::instance()->isModifiying.addListener(this, &ofApp::isGUIing);
-    
+    AudioPlayer::instance();
     windowResized(ofGetWindowWidth(), ofGetWindowHeight());
     lastCamPos =cam.getPosition();
 
@@ -75,12 +69,15 @@ void ofApp::update(){
 }
 
 void ofApp::loadFiles(string audiopath,string segpath){
+    
+        
     AudioPlayer::UnloadAll();
+    Container::clearAll();
     jsonLoader::instance()->loadSegments(audiopath,segpath);
     Physics::resizeVBO();
     GUI::instance()->registerListener();
     GUI::instance()->setup();
-    
+    Container::registerListener();
     for(map<string,vector<Container* > >::iterator it = Container::songs.begin() ; it != Container::songs.end() ; ++it ){
         for(int i = 0 ; i <POLYPHONY ; i++){
             AudioPlayer::Load(*it->second[i], true);
@@ -299,11 +296,13 @@ void ofApp::mouseDragged(int x, int y, int button){
     else if (button ==2 && GUI::instance()->continuousPB->getValue()){
         if(ofGetElapsedTimeMillis()-Casttime>70){
             Container * cc = Physics::NearestCam( ofVec3f(x,y,0),1.,GUI::instance()->selBrightest->getValue());
+            int oldIdx = Container::hoverIdx;
             bool change = Container::hoverContainer(cc == NULL?-1:cc->index);
             Casttime = ofGetElapsedTimeMillis();
             if (change){
              GUI::LogIt(cc == NULL?"":cc->filename +" : "+ ofToString((cc->getPos()*(Physics::maxs.get()-Physics::mins)+Physics::mins)));
                 cc->state =1;
+                if(oldIdx>=0 && !GUI::instance()->holdPB->getValue())Container::containers[oldIdx].state=0;
             }
         }
     }

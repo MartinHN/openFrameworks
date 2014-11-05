@@ -128,7 +128,7 @@ void Physics::orderBy(string _attr,int axe,int type){
         max = mean + sqrt(stddev.y);
 
     }
-    #pragma omp parallel for
+ 
     
     
     for(vector<Container>::iterator it = Container::containers.begin() ; it!=Container::containers.end();++it){
@@ -139,6 +139,7 @@ void Physics::orderBy(string _attr,int axe,int type){
     maxs = max*mask + (-mask+ofVec3f(1))*maxs;
     mins = min*mask + (-mask+ofVec3f(1))*mins;
     Physics::updateVBO();
+    Physics::updateVScreen();
 }
 
 

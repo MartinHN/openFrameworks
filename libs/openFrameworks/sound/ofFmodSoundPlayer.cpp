@@ -15,7 +15,7 @@ float fftSpectrum_[8192];		// maximum #ofFmodSoundPlayer is 8192, in fmodex....
 static FMOD_CHANNELGROUP * channelgroup;
 static FMOD_SYSTEM       * sys;
 
-std::map<FMOD_CHANNEL *,ofEvent<bool>* > ofFmodSoundPlayer::evDic;
+ofEvent<std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE> > ofFmodSoundPlayer::audioEvent;
 
 // these are global functions, that affect every sound / channel:
 // ------------------------------------------------------------
@@ -214,7 +214,8 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
         FMOD_CREATESOUNDEXINFO exinfo;
         memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
         exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-//        exinfo.decodebuffersize = 128;
+        
+        exinfo.decodebuffersize = 68;
 
         string ext = ofFile(fileName).getExtension();
         if(ext == "mp3"){
@@ -227,7 +228,7 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
         
 //        exinfo.decodebuffersize = 512;
 
-     fmodFlags =  FMOD_SOFTWARE | FMOD_CREATESTREAM  | FMOD_LOWMEM | FMOD_2D ;
+        fmodFlags =  FMOD_SOFTWARE | FMOD_CREATESTREAM| FMOD_LOWMEM | FMOD_2D;// | FMOD_NONBLOCKING ;
         result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, &exinfo, &sound);
     }
     else{
@@ -248,35 +249,125 @@ bool ofFmodSoundPlayer::loadSound(string fileName, bool stream){
 	return bLoadedOk;
 }
 
+
+
+
+
+//------------------------------------------------------------
+bool ofFmodSoundPlayer::loadSound(string fileName, bool stream,float begin,float end){
+    
+	fileName = ofToDataPath(fileName);
+    
+	// fmod uses IO posix internally, might have trouble
+	// with unicode paths...
+	// says this code:
+	// http://66.102.9.104/search?q=cache:LM47mq8hytwJ:www.cleeker.com/doxygen/audioengine__fmod_8cpp-source.html+FSOUND_Sample_Load+cpp&hl=en&ct=clnk&cd=18&client=firefox-a
+	// for now we use FMODs way, but we could switch if
+	// there are problems:
+    
+	bMultiPlay = false;
+    
+	// [1] init fmod, if necessary
+    
+	initializeFmod();
+    
+	// [2] try to unload any previously loaded sounds
+	// & prevent user-created memory leaks
+	// if they call "loadSound" repeatedly, for example
+    
+	unloadSound();
+    
+	// [3] load sound
+    
+    //FMOD_CREATESOUNDEXINFO and suggestedsoundtype entry.
+    //2. Use FMOD_LOWMEM flag to avoid some allocs.
+    //3. Use FMOD_IGNORETAGS
+    
+	//choose if we want streaming
+    
+    
+	int fmodFlags =  FMOD_SOFTWARE;
+    FMOD_CREATESOUNDEXINFO exinfo;
+    memset(&exinfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+    exinfo.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+    string ext = ofFile(fileName).getExtension();
+    if(ext == "mp3"){
+        exinfo.suggestedsoundtype = FMOD_SOUND_TYPE_MPEG;
+    }
+    else if(ext == "wav"){
+        exinfo.suggestedsoundtype = FMOD_SOUND_TYPE_WAV;
+    }
+    
+	if(stream){
+
+        
+        exinfo.decodebuffersize = 0;
+        exinfo.initialseekposition = 44100*begin/1000.0;
+        exinfo.initialseekpostype = FMOD_TIMEUNIT_PCM;
+        
+        fmodFlags =  fmodFlags | FMOD_CREATESTREAM| FMOD_LOWMEM | FMOD_2D;// | FMOD_NONBLOCKING ;
+    result = FMOD_System_CreateStream(sys, fileName.c_str(),  fmodFlags, &exinfo, &sound);
+    }
+
+    
+    else{
+        // max size
+//        exinfo.length = 5*2*44200*(end-begin)/1000.0;
+//        exinfo.fileoffset = 44100*begin;
+//        fmodFlags =  fmodFlags | FMOD_CREATESAMPLE| FMOD_LOWMEM | FMOD_2D;
+//        result = FMOD_System_CreateSound(sys, fileName.c_str(),  fmodFlags, &exinfo, &sound);
+        
+    }
+    
+    
+    
+	
+    
+	if (result != FMOD_OK){
+		bLoadedOk = false;
+		ofLogError("ofFmodSoundPlayer") << "loadSound(): could not load \"" << fileName << "\"";
+	} else {
+		bLoadedOk = true;
+		FMOD_Sound_GetLength(sound, &length, FMOD_TIMEUNIT_PCM);
+		isStreaming = stream;
+	}
+    
+	return bLoadedOk;
+}
+
+
+
+
+
+
+
 //------------------------------------------------------------
 void ofFmodSoundPlayer::unloadSound(){
 	if (bLoadedOk){
 		stop();						// try to stop the sound
-		if(!isStreaming)FMOD_Sound_Release(sound);
+		FMOD_Sound_Release(sound);
 		bLoadedOk = false;
 	}
 }
 
 //------------------------------------------------------------
 
-void ofFmodSoundPlayer::setStopEvent(ofEvent<bool> & ev){
-    evDic[channel] =  &ev;
 
-}
 
 
 void ofFmodSoundPlayer::setStopMS(float ms){
 
     unsigned int lo,hi;
-    
     FMOD_System_GetDSPClock(sys, &hi, &lo);
-    FMOD_64BIT_ADD(hi, lo, 0, 32);
+    
+    FMOD_64BIT_ADD(hi, lo, 0, 128);
     FMOD_Channel_SetDelay(channel, FMOD_DELAYTYPE_DSPCLOCK_START, hi,lo);
     
     FMOD_64BIT_ADD(hi, lo, 0, internalFreq*ms/1000.0);
 
     FMOD_Channel_SetDelay(channel,FMOD_DELAYTYPE_DSPCLOCK_END, hi,lo);
     FMOD_Channel_SetCallback(channel, stopCallback);
+
 }
 
 bool ofFmodSoundPlayer::getIsPlaying(){
@@ -326,6 +417,7 @@ void ofFmodSoundPlayer::setPosition(float pct){
 
 void ofFmodSoundPlayer::setPositionMS(int ms) {
 	if (getIsPlaying() == true){
+//        FMOD_Channel_SetPosition(channel,internalFreq * ms/1000.0, FMOD_TIMEUNIT_PCM);
 		FMOD_Channel_SetPosition(channel, ms, FMOD_TIMEUNIT_MS);
 	}
 }

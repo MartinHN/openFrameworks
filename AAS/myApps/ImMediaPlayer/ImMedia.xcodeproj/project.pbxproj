@@ -50,7 +50,6 @@
 		F256086619FD30AB00191994 /* ofxSyphonServerDirectory.mm in Sources */ = {isa = PBXBuildFile; fileRef = F256085719FD30AB00191994 /* ofxSyphonServerDirectory.mm */; };
 		F26C663619FD45CE0039F116 /* mtlWatchFolderExampleApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26C662F19FD45CD0039F116 /* mtlWatchFolderExampleApp.cpp */; };
 		F26C663719FD45CE0039F116 /* ofxMtlWatchFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26C663319FD45CE0039F116 /* ofxMtlWatchFolder.cpp */; };
-		F26C66BB19FD45E20039F116 /* testApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F26C664D19FD45E10039F116 /* testApp.cpp */; };
 		F26C66BC19FD45E20039F116 /* draw_affine.c in Sources */ = {isa = PBXBuildFile; fileRef = F26C665419FD45E10039F116 /* draw_affine.c */; };
 		F26C66BD19FD45E20039F116 /* draw_blend.c in Sources */ = {isa = PBXBuildFile; fileRef = F26C665519FD45E10039F116 /* draw_blend.c */; };
 		F26C66BE19FD45E20039F116 /* draw_device.c in Sources */ = {isa = PBXBuildFile; fileRef = F26C665619FD45E10039F116 /* draw_device.c */; };
@@ -178,13 +177,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = E4B69B5B0A3A1756003C02F2;
 			remoteInfo = mtlWatchFolderExample;
-		};
-		F26C671219FD45E20039F116 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = F26C664519FD45E10039F116 /* example.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4B69B5B0A3A1756003C02F2;
-			remoteInfo = example;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -392,15 +384,6 @@
 		F26C663319FD45CE0039F116 /* ofxMtlWatchFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMtlWatchFolder.cpp; sourceTree = "<group>"; };
 		F26C663419FD45CE0039F116 /* ofxMtlWatchFolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMtlWatchFolder.h; sourceTree = "<group>"; };
 		F26C663E19FD45E10039F116 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		F26C664019FD45E10039F116 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		F26C664319FD45E10039F116 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		F26C664419FD45E10039F116 /* tiger.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = tiger.pdf; sourceTree = "<group>"; };
-		F26C664519FD45E10039F116 /* example.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = example.xcodeproj; sourceTree = "<group>"; };
-		F26C664919FD45E10039F116 /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
-		F26C664A19FD45E10039F116 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
-		F26C664C19FD45E10039F116 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		F26C664D19FD45E10039F116 /* testApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = testApp.cpp; sourceTree = "<group>"; };
-		F26C664E19FD45E10039F116 /* testApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = testApp.h; sourceTree = "<group>"; };
 		F26C665119FD45E10039F116 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		F26C665419FD45E10039F116 /* draw_affine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_affine.c; sourceTree = "<group>"; };
 		F26C665519FD45E10039F116 /* draw_blend.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_blend.c; sourceTree = "<group>"; };
@@ -1020,60 +1003,11 @@
 			isa = PBXGroup;
 			children = (
 				F26C663E19FD45E10039F116 /* .gitignore */,
-				F26C663F19FD45E10039F116 /* example */,
 				F26C664F19FD45E10039F116 /* libs */,
 				F26C66B619FD45E20039F116 /* src */,
 			);
 			name = ofxPDF;
 			path = ../../../addons/ofxPDF;
-			sourceTree = "<group>";
-		};
-		F26C663F19FD45E10039F116 /* example */ = {
-			isa = PBXGroup;
-			children = (
-				F26C664019FD45E10039F116 /* .gitignore */,
-				F26C664119FD45E10039F116 /* bin */,
-				F26C664519FD45E10039F116 /* example.xcodeproj */,
-				F26C664919FD45E10039F116 /* openFrameworks-Info.plist */,
-				F26C664A19FD45E10039F116 /* Project.xcconfig */,
-				F26C664B19FD45E10039F116 /* src */,
-			);
-			path = example;
-			sourceTree = "<group>";
-		};
-		F26C664119FD45E10039F116 /* bin */ = {
-			isa = PBXGroup;
-			children = (
-				F26C664219FD45E10039F116 /* data */,
-			);
-			path = bin;
-			sourceTree = "<group>";
-		};
-		F26C664219FD45E10039F116 /* data */ = {
-			isa = PBXGroup;
-			children = (
-				F26C664319FD45E10039F116 /* .gitignore */,
-				F26C664419FD45E10039F116 /* tiger.pdf */,
-			);
-			path = data;
-			sourceTree = "<group>";
-		};
-		F26C664619FD45E10039F116 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				F26C671319FD45E20039F116 /* exampleDebug.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		F26C664B19FD45E10039F116 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				F26C664C19FD45E10039F116 /* main.cpp */,
-				F26C664D19FD45E10039F116 /* testApp.cpp */,
-				F26C664E19FD45E10039F116 /* testApp.h */,
-			);
-			path = src;
 			sourceTree = "<group>";
 		};
 		F26C664F19FD45E10039F116 /* libs */ = {
@@ -1372,10 +1306,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = F26C664619FD45E10039F116 /* Products */;
-					ProjectRef = F26C664519FD45E10039F116 /* example.xcodeproj */;
-				},
-				{
 					ProductGroup = F26C662819FD45CD0039F116 /* Products */;
 					ProjectRef = F26C662719FD45CD0039F116 /* mtlWatchFolderExample.xcodeproj */;
 				},
@@ -1404,13 +1334,6 @@
 			fileType = wrapper.application;
 			path = mtlWatchFolderExampleDebug.app;
 			remoteRef = F26C663919FD45CE0039F116 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		F26C671319FD45E20039F116 /* exampleDebug.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = exampleDebug.app;
-			remoteRef = F26C671219FD45E20039F116 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1512,7 +1435,6 @@
 				F26C66CE19FD45E20039F116 /* crypt_aes.c in Sources */,
 				F256086519FD30AB00191994 /* ofxSyphonServer.mm in Sources */,
 				F256086319FD30AB00191994 /* README.md in Sources */,
-				F26C66BB19FD45E20039F116 /* testApp.cpp in Sources */,
 				F26C670119FD45E20039F116 /* pdf_outline.c in Sources */,
 				F26C66E019FD45E20039F116 /* image_png.c in Sources */,
 				F26C66F019FD45E20039F116 /* pdf_annot.c in Sources */,
@@ -1578,7 +1500,6 @@
 /* Begin XCBuildConfiguration section */
 		E4B69B4E0A3A1720003C02F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";
@@ -1632,7 +1553,6 @@
 		};
 		E4B69B4F0A3A1720003C02F2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E4EB6923138AFD0F00A09F29 /* Project.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/bin/";

@@ -24,5 +24,8 @@ ofxAndroid/ofAndroidLib/gen
 !ofxXmlSettings
 !ofxEmscripten
 
+
+!ofxPdf
+
 # don't ignore the .gitignore file
 !.gitignore

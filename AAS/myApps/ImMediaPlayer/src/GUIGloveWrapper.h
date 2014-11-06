@@ -6,34 +6,42 @@
 //
 //
 
-#ifndef ImMedia_GUIGloveWrapper_h
-#define ImMedia_GUIGloveWrapper_h
-#include "ofMain.h"
-//#include "ofxUIOFWrapper.h"
+// class thats wraps glove events into standards mouse events for using any interactive openframeworks functionality
 
-class GUIGloveWrapper {
+
+#ifndef ImMedia_GloveWrapper_h
+#define ImMedia_GloveWrapper_h
+#include "ofMain.h"
+
+
+#include "GloveInteract.h"
+
+
+
+
+class GUIGloveWrapper : GloveInteract {
 public:
-  
+    GUIGloveWrapper(){};
+    ~GUIGloveWrapper(){};
     
-    void enableCallbacks(){
-//        ofAddListener(ofEv)
+    virtual void touch( TouchType num, TouchState s,GloveInstance* gid){
+        ofMouseEventArgs a;
+//        a.x=
+        if(num==GLOVE_CLICK){
+            if(s == GLOVE_DOWN){
+                ofNotifyEvent(ofEvents().mousePressed, a, this );
+            }
+            else if(s == GLOVE_UP){
+                ofNotifyEvent(ofEvents().mouseReleased, a, this );
+            }
+        }
         
         
-    }
+    };
+    virtual void relativeMoved(ofVec3f v, GloveInstance* gid){};
+    virtual void cursor2DMoved(ofVec2f v, GloveInstance* gid){};
     
-    
-    void cursorMoved(ofVec2f & c){
-        
-    }
-    
-    void onCursorPressed(){
-        
-    }
-    
-    void onCursorReleased(){
-        
-    }
-    
+    virtual void update(){};
     
     
 };

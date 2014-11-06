@@ -14,17 +14,25 @@
 #include "ofMain.h"
 #include "ofxMtlWatchFolder.h"
 #include "Config.h"
-#include "ProjectBox.h"
+
+
+
 #include "ofxUI.h"
 
-class GUIProjects: public GloveInteract,public ofxUIDropDownList{
+
+
+class GUIProjects{
     
     
     public :
     
     GUIProjects();
+    virtual ~GUIProjects(){};
     ofxMtlWatchFolder watch;
-    vector<ProjectBox*> projects;
+    
+    
+    void init();
+    void registerListeners();
     
     void draw(ofEventArgs & a);
     void update(ofEventArgs & a);
@@ -32,9 +40,15 @@ class GUIProjects: public GloveInteract,public ofxUIDropDownList{
     void startWatch(string s="");
     void projectsAdded(string& filename);
     void projectsRemoved(string& filename);
-//    vector<string> projectsNames();
     
-//    hide(bool t);
+    void GUIevent(ofxUIEventArgs & a);
+    
+
+    
+    
+
+    ofxUIDropDownList* projectsList;
+    ofxUISuperCanvas* projectsCanvas;
     
     
 };

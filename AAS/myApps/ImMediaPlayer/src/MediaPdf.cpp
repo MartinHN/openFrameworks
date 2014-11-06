@@ -16,7 +16,8 @@ void MediaPdf::load(string fp){
 void MediaPdf::draw(ofEventArgs & a){
     ofSetColor(255);
     ofRect(box);
-    pdf.draw(box);
+    pdf.resize(box.width, box.height);
+    pdf.draw();
 }
 
 

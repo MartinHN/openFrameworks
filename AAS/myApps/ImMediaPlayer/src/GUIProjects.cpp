@@ -7,53 +7,69 @@
 //
 
 #include "GUIProjects.h"
+#include "Screens.h"
+
+extern ofEvent<ofEventArgs> drawSyphonEvent;
 
 
-
-GUIProjects::GUIProjects():ofxUIDropDownList::ofxUIDropDownList("Projects",vector<string>()){
-
-
-
-    box = *Screens::instance()->walls[0];
-    box.width = PROJECTWIDTH;
+GUIProjects::GUIProjects(){
+    
+    
 }
 
+void GUIProjects::init(){
+    ofRectangle  r =Screens::instance()->walls[0]->rectScreen();
+    
+    projectsList = new ofxUIDropDownList("List",vector<string>(),PROJECTWIDTH,r.x,r.y);
+    projectsList->setAutoClose(false);
+    
+    
+    projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
+    
+    projectsCanvas->addWidgetDown(projectsList);
+    
+    projectsCanvas->setAutoDraw(false);
+    projectsCanvas->DisableCallbacks();
+    
+    ofAddListener(drawSyphonEvent, this, &GUIProjects::draw,OF_EVENT_ORDER_BEFORE_APP);
+    ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
+    
+    
+    
+}
 
-//vector<string> GUIProjects::getProjectsNames(){
-//    vector<string> res;
-//    for(int i = 0 ; i < projects.size() ; i++){
-//        res.push_back(projects->filename);
-//    }
-//    return res;
-//}
 
 
 void GUIProjects::startWatch(string s){
     
     if(watch.isRunning())watch.stop();
-    
-    for(vector<ProjectBox*>::iterator it = projects.begin();it!=projects.end();++it){
-        delete (*it);
-    }
-    projects.clear();
-    
+    projectsList->clearToggles();
     watch.start(PROJECTPATH+s, 1000);
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
+}
+
+void GUIProjects::registerListeners() {
+    
     
 }
 
 
+
 void GUIProjects::draw(ofEventArgs & a){
-    GloveInteract::draw(a);
+    projectsCanvas->draw();
     
 }
 
 
 void GUIProjects::update(ofEventArgs & a){
-    GloveInteract::update(a);
     
     
+    
+}
+
+
+void GUIProjects::GUIevent(ofxUIEventArgs & a){
     
 }
 
@@ -62,26 +78,18 @@ void GUIProjects::update(ofEventArgs & a){
 void GUIProjects::projectsAdded(string &filename){
     ofFile file(PROJECTPATH+filename);
     if(file.isDirectory()){
-        ofVec2f offset(box.x,projects.size()* (PROJECTBHEIGHT+PROJECTPAD));
-        ProjectBox* pb = new ProjectBox(this,offset);
-        pb->name = filename;
-
-
-        projects.push_back(pb);
+        
+        projectsList->addToggle(filename);
+        
+        
+        
     }
 }
 
 void GUIProjects::projectsRemoved(string &filename){
     
-    int idx = 0;
-    for(vector<ProjectBox*>::iterator it = projects.begin();it!=projects.end();++it){
-        if((*it)->name == filename){
-            break;
-        }
-        idx++;
-    }
-    if(idx != projects.size()){
-        delete projects[idx];
-        projects.erase(projects.begin()+idx);
-    }
+    projectsList->removeToggle(filename);
+    
+    
+    
 }

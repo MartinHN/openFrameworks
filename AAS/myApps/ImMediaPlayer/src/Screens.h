@@ -12,8 +12,9 @@
 
 #include "ofMain.h"
 //#include "GloveInteract.h"
-#include "GButton.h"
-
+//#include "GButton.h"
+#include "Config.h"
+//#include "ofxUI.h"
 
 
 class MetaScreen : public ofRectangle{
@@ -21,14 +22,14 @@ class MetaScreen : public ofRectangle{
     public :
     MetaScreen(){};
     ~MetaScreen(){
-        delete anchor;
+//        delete anchor;
         
     };
     MetaScreen(ofRectangle r,ofVec2f center,const string & _name = "defaultName"){
         
         set(r);
-        anchor = new GButton(center,ofVec2f(ANCHOR_WIDTH,ANCHOR_HEIGHT),"UI/screenAnchor.png",_name);
-        anchor->isDraggable = false;
+//        anchor = new ofxUIImageButton(center.x,center.y,ANCHOR_WIDTH,ANCHOR_HEIGHT,false,ofToDataPath("UI/screenAnchor.png"),_name);
+//        anchor-> = false;
         
     }
     
@@ -36,7 +37,7 @@ class MetaScreen : public ofRectangle{
     ofRectangle rectScreen(){
         return *((ofRectangle*)this);
     }
-    GButton *  anchor;
+//    ofxUIImageButton *  anchor;
 
 };
 

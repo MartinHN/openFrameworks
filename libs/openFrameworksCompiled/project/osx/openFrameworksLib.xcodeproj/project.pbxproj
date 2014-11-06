@@ -29,6 +29,7 @@
 		6433E9AA19BCDB8900869EE5 /* ofAVFoundationPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 6433E9A619BCDB8900869EE5 /* ofAVFoundationPlayer.h */; };
 		6433E9AB19BCDB8900869EE5 /* ofAVFoundationPlayer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6433E9A719BCDB8900869EE5 /* ofAVFoundationPlayer.mm */; };
 		67D96B971651AF6D00D5242D /* ofGLUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 67D96B941651AF6D00D5242D /* ofGLUtils.cpp */; };
+		6F70B54D1A0B870D00C7B3EF /* ofMain.h in Headers */ = {isa = PBXBuildFile; fileRef = E4B27AC710CBE92A00536013 /* ofMain.h */; };
 		772BDF73146928600030F0EE /* ofOpenALSoundPlayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 772BDF71146928600030F0EE /* ofOpenALSoundPlayer.cpp */; };
 		772BDF74146928600030F0EE /* ofOpenALSoundPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 772BDF72146928600030F0EE /* ofOpenALSoundPlayer.h */; };
 		92C55F88132DA7DD00EC2631 /* ofPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92C55F86132DA7DD00EC2631 /* ofPath.cpp */; };
@@ -640,6 +641,7 @@
 				E4F3BA6C12F4C4BF002D19BB /* ofEasyCam.h in Headers */,
 				E4F3BA7412F4C4BF002D19BB /* ofNode.h in Headers */,
 				E4F3BA8912F4C4C9002D19BB /* ofBaseSoundPlayer.h in Headers */,
+				6F70B54D1A0B870D00C7B3EF /* ofMain.h in Headers */,
 				E4F3BA8B12F4C4C9002D19BB /* ofFmodSoundPlayer.h in Headers */,
 				E4F3BA8F12F4C4C9002D19BB /* ofSoundPlayer.h in Headers */,
 				E4F3BA9112F4C4C9002D19BB /* ofSoundStream.h in Headers */,
@@ -910,6 +912,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../lib/osx/";
 				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/../../lib/osx/build/debug/";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = "$(SRCROOT)/../../lib/osx/build/debug/";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -925,6 +928,7 @@
 				CLANG_CXX_LIBRARY = "libstdc++";
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/../../lib/osx/";
 				CONFIGURATION_TEMP_DIR = "$(SRCROOT)/../../lib/osx/build/release/";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OBJROOT = "$(SRCROOT)/../../lib/osx/build/release";
 				SDKROOT = macosx;
 			};

@@ -24,6 +24,11 @@
 class MediaPool{
     
 public:
+    
+    MediaPool(){};
+    ~MediaPool(){};
+    
+    
     static MediaPool * instance(){if(insti==NULL){insti = new MediaPool();}return insti;};
 
     vector<Media*> medias;

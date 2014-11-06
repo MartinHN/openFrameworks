@@ -44,8 +44,8 @@ typedef enum{PDF,IMAGE,VIDEO} MediaType;
 #define NUMTOUCH 4
 #define NUMFLEX 4
 
-typedef enum{A_CLICK=0,A_DRAG,A_ZOOM,A_BACK}TouchAction;
-typedef enum {T_DOWN=0,T_UP,T_CLICK,T_LONGPRESS} touchType;
+typedef enum{GLOVE_CLICK=0,GLOVE_DRAG,GLOVE_ZOOM,GLOVE_BACK}TouchType;
+typedef enum {GLOVE_DOWN=0,GLOVE_UP,GLOVE_SHORTPRESS,GLOVE_LONGPRESS} TouchState;
 
 #define SYPHON
 #define MOUSEDBG

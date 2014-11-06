@@ -12,15 +12,15 @@
 #include <stdio.h>
 #include "ofMain.h"
 
-#include "GloveInteract.h"
-#include "ofxUIImageButton.h"
+#include "GloveInteractBox.h"
 
 
 
 
 
 
-class Media : public GloveInteract,ofxUIImageButton{
+
+class Media : public GloveInteractBox{
     
     
     public :
@@ -32,7 +32,6 @@ class Media : public GloveInteract,ofxUIImageButton{
     
     
     Media(){
-        ofxUIImageButton();
         isCollider = true;
     };
     ~Media(){
@@ -44,6 +43,8 @@ class Media : public GloveInteract,ofxUIImageButton{
     virtual void unLoad(){};
     virtual void draw(){};
 
+
+    
 
 };
 

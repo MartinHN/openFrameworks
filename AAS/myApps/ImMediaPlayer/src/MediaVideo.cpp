@@ -26,7 +26,7 @@ void MediaVideo::unLoad(){
 }
 void MediaVideo::update(ofEventArgs & a){
 
-    GloveInteract::update(a);
+    GloveInteractBox::update(a);
     if(!loaded && player.isLoaded()){
         box.set(0,0,player.getWidth(),player.getHeight());
         loaded = true;

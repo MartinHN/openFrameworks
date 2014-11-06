@@ -1,17 +1,24 @@
 //
-//  Draggable.h
+//  GloveInteract.h
 //  ImMedia
 //
 //  Created by Tinmar on 28/10/2014.
 //
 //
 
-#ifndef __ImMedia__Draggable__
-#define __ImMedia__Draggable__
+
+
+
+// Base class for handling glove events
+
+
+
+#ifndef __ImMedia__GloveInteract__
+#define __ImMedia__GloveInteract__
 
 #include <stdio.h>
-#include "ofMain.h"
-#include "Cursor.h"
+
+#include "GloveInstance.h"
 
 
 
@@ -24,63 +31,40 @@ public:
     
     GloveInteract();
     ~GloveInteract();
-
-  // from Glove
-    void click(touchEventArgs & a);
-//    void moved(Cursor* c,ofVec3f & pos);
-    void relativeMoved(pair<Cursor*,ofVec3f> & pos);
-    void cursor2DMoved(pair<Cursor*,ofVec2f> & arg);
     
-    virtual void update(ofEventArgs & e);
-    virtual void draw(ofEventArgs & e);
-
-    bool isCollider = false;
-    
-    ofEvent< GloveInteract > hasMovedEvent;
-    
-    
-    ofRectangle box;
-    ofColor backColor;
-    string name;
+    static ofVec2f* cursor2D;
+    static ofVec3f* relative;
+    static ofVec3f* orientation;
+    static vector<TouchState>* touchs;
     
 
-    static ofRectangle getFreeSpace();
-    
-    bool isDraggable=true;
-    static GloveInteract * dragged;
-    void updateDrag(ofVec2f & c);
-    ofVec2f dragOffset;
-    
-    
-    bool isZoomable = true;
-    static GloveInteract * zoomed;
-    void updateZoom(float & c);
-    
-    bool isSelectable = true;
-    static GloveInteract* selected;
-    
-    
-    static vector<GloveInteract* > allElements;
-    
-    // triggered functions
-    
-    virtual bool isHit(ofVec2f & p){return box.inside(p);}
-    virtual void hover(ofVec2f & p){};
-    virtual void clicked(Cursor* gId,touchType & state){};
-    
-
-    virtual void exited(){};
-    virtual void entered(){};
-    
-    bool operator==(const string& other) {return name == other;};
-    
-    bool isValid(ofRectangle & newR);
-    
-protected:
-    bool isHovered;
+  // from Glove events
+    virtual void touch(touchEventArgs & a){
+        setcurrentData(a.gloveId);
+        touch(a.touchId,a.state,a.gloveId);
+    };
+    virtual void relativeMoved(pair<GloveInstance*,ofVec3f> & pos){
+        setcurrentData(pos.first);
+        relativeMoved(pos.second, pos.first);
+    };
+    virtual void cursor2DMoved(const void* ee,pair<GloveInstance*,ofVec2f> & pos){
+        setcurrentData(pos.first);
+        cursor2DMoved(pos.second, pos.first);
+    };
+    virtual void update(const void * ee,ofEventArgs & e){
+        update();
+    };
     
     
-
+    // overriden in sub class
+    virtual void touch( TouchType num, TouchState s,GloveInstance* gid){};
+    virtual void relativeMoved(ofVec3f v, GloveInstance* gid){};
+    virtual void cursor2DMoved(ofVec2f v, GloveInstance* gid){};
+    
+    virtual void update(){};
+    
+    
+    void setcurrentData(GloveInstance* gid);
 
 
 };

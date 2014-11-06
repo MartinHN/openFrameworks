@@ -10,25 +10,25 @@
 #define __ImMedia__GButton__
 
 
-#include <stdio.h>
-#include "GloveInteract.h"
-
-
-
-
-class GButton : public GloveInteract{
-    public :
-    
-    GButton();
-    ~GButton(){};
-    GButton(ofVec2f center, ofVec2f size,const string & impath,const string & name);
-    void draw(ofEventArgs & e);
-    ofImage image;
-    void clicked(Cursor* gId,touchType & state);
-
-    
-    
-    
-};
+//#include <stdio.h>
+//#include "GloveInteract.h"
+//
+//
+//
+//
+//class GButton : public GloveInteract,public ofxUIImageButton{
+//    public :
+//    
+//    GButton();
+//    ~GButton(){};
+//    GButton(ofVec2f center, ofVec2f size,const string & impath,const string & name);
+//    void draw(ofEventArgs & e);
+//    ofImage image;
+//    void clicked(Cursor* gId,touchType & state);
+//
+//    
+//    
+//    
+//};
 
 #endif /* defined(__ImMedia__GButton__) */

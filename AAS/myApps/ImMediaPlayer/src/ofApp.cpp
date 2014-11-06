@@ -6,24 +6,43 @@ ofEvent<ofEventArgs> drawSyphonEvent;
 void ofApp::setup(){
     
 #ifndef DEBUG
-//    ofSetDataPathRoot("../Resources/data/");
+    //    ofSetDataPathRoot("../Resources/data/");
 #endif
+    
+    
     ofEnableAlphaBlending();
     cout << PROJECTPATH << endl;
     cout << ofToDataPath("/lala") << endl;
     ofSetFrameRate(30);
-
+    
     outTexture.allocate(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
     
+    
+    // GUI Init
+    projects.init();
     projects.startWatch();
+    
+    
+    
+    
+    // Syphon
     syphonOut.setName(APPNAME);
     
     
+    //Screens
     Screens::instance();
     
+    
+    
+    // Background
     ofSetBackgroundAuto(true);
     
     back.loadImage("mire.png");
+    
+    GloveOSC::gloves.push_back(new GloveInstance("mouse"));
+    
+    
+    
     
 }
 
@@ -36,18 +55,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
-
+    
+    
 #ifdef SYPHON
     outTexture.begin();
 #endif
     ofSetColor(0);
     ofVec2f res (Screens::instance()->resolution.x,Screens::instance()->resolution.y);
     ofRect(0,0,Screens::instance()->resolution.x,Screens::instance()->resolution.y);
-//    back.width = res.x;
-//    back.height = res.y;
-//    back.draw(0,0);
-//    ofBackgroundGradient(ofColor::gray, ofColor::black, OF_GRADIENT_BAR);
+    //    back.width = res.x;
+    //    back.height = res.y;
+    //    back.draw(0,0);
+    drawBackground(ofColor::gray, ofColor::black, OF_GRADIENT_BAR);
     ofSetColor(255);
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
     
@@ -58,26 +77,30 @@ void ofApp::draw(){
 #endif
     
     ofSetColor(255);
-    outTexture.draw(0,0);
+    outTexture.draw(0,0,ofGetScreenWidth(),ofGetScreenHeight());
 }
 
 #ifdef MOUSEDBG
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     touchEventArgs ev;
+    // avoid feedback loop when emulating glove events with mouse as glove events are already wrapped to mouse events ->GUIgloveWrapper
+    if(!isEventing){
+        isEventing=true;
+        GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
-            case 'z':
-            ev.gloveId =&glove;
-            ev.touchId = A_ZOOM;
-            ev.type = T_DOWN;
-            ofNotifyEvent(glove.touchEvent,ev, this);
+        case 'z':
+            ev.gloveId = curGlove;
+            ev.touchId = GLOVE_ZOOM;
+            ev.state = GLOVE_DOWN;
+            ofNotifyEvent(curGlove->touchEvent,ev, this);
             break;
             
         case 'd':
-            ev.gloveId =&glove;
-            ev.touchId = A_DRAG;
-            ev.type = T_DOWN;
-            ofNotifyEvent(glove.touchEvent,ev, this);
+            ev.gloveId =curGlove;
+            ev.touchId = GLOVE_DRAG;
+            ev.state = GLOVE_DOWN;
+            ofNotifyEvent(curGlove->touchEvent,ev, this);
             break;
             
             
@@ -85,6 +108,8 @@ void ofApp::keyPressed(int key){
             break;
             
             
+    }
+        isEventing=false;
     }
     relMouse = ofVec2f(ofGetMouseX(),ofGetMouseY());
 }
@@ -92,19 +117,22 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
     touchEventArgs ev;
+    if(!isEventing){
+        isEventing=true;
+        GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            ev.gloveId =&glove;
-            ev.touchId = A_ZOOM;
-            ev.type = T_UP;
-            ofNotifyEvent(glove.touchEvent,ev, this);
+            ev.gloveId =curGlove;
+            ev.touchId = GLOVE_ZOOM;
+            ev.state = GLOVE_UP;
+            ofNotifyEvent(curGlove->touchEvent,ev, this);
             break;
             
         case 'd':
-            ev.gloveId =&glove;
-            ev.touchId = A_DRAG;
-            ev.type = T_UP;
-            ofNotifyEvent(glove.touchEvent,ev, this);
+            ev.gloveId =curGlove;
+            ev.touchId = GLOVE_DRAG;
+            ev.state = GLOVE_UP;
+            ofNotifyEvent(curGlove->touchEvent,ev, this);
             break;
             
             
@@ -113,78 +141,99 @@ void ofApp::keyReleased(int key){
             
             
     }
+        isEventing=false;
+    }
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void ofApp::mouseMoved( int x, int y ){
+    GloveInstance * curGlove = glove.getGlove("mouse");
+    // avoid conflict when using mouse and glove at the same time
     if(!glove.isConnectedToServer){
-    pair<Cursor*,ofVec2f> ev(&glove,ofVec2f(x,y));
-    ofNotifyEvent(glove.cursor2DEvent,ev,&glove);
-    
-    
-    
-    if(ofGetKeyPressed()){
-    std::pair<Cursor*,ofVec3f> ev2(&glove,ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/400.0));
-        ofNotifyEvent(glove.relativeOrientationEvent, ev2, this);
+        
+        
+        
+        if(!isEventing){
+            isEventing=true;
+        
+        
+        pair<GloveInstance*,ofVec2f> ev(curGlove,ofVec2f(mouseX,mouseY));
+        ofNotifyEvent(curGlove->cursor2DEvent,ev,this);
+        
+            isEventing=false;
+        }
+        
+        
+        // any keypress emulates relative orientation events almost as in real world...
+        if(ofGetKeyPressed()){
+            std::pair<GloveInstance*,ofVec3f> ev2(curGlove,ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/400.0));
+            ofNotifyEvent(curGlove->relativeOrientationEvent, ev2, this);
+        }
     }
-    }
-
-
+    
+    
     
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
-    std::pair<Cursor*,ofVec2f> ev(&glove,ofVec2f(x,y));
-    ofNotifyEvent(glove.cursor2DEvent,ev, this);
+    GloveInstance * curGlove = glove.getGlove("mouse");
+    if(!isEventing){
+        isEventing=true;
+    // still sends events when dragging
+    std::pair<GloveInstance*,ofVec2f> ev(curGlove,ofVec2f(x,y));
+    ofNotifyEvent(curGlove->cursor2DEvent,ev, this);
+        isEventing=false;
+    }
     
-
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    GloveInstance * curGlove = glove.getGlove("mouse");
+    if(!isEventing){
+    isEventing=true;
     touchEventArgs ev;
-    ev.gloveId =&glove;
-    ev.type = T_DOWN;
-    ev.touchId = A_CLICK;
-    ofNotifyEvent(glove.touchEvent,ev, this);
-    
-    
-    
-
+    ev.gloveId =curGlove;
+    ev.state = GLOVE_DOWN;
+    ev.touchId = GLOVE_CLICK;
+    ofNotifyEvent(curGlove->touchEvent,ev, this);
+ 
+        isEventing=false;
+    }
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
-
-    touchEventArgs ev;
-    ev.gloveId =&glove;
-    ev.type = T_UP;
-    ev.touchId = A_CLICK;
-    ofNotifyEvent(glove.touchEvent,ev, this);
+    GloveInstance * curGlove = glove.getGlove("mouse");
+    if(!isEventing){
+        isEventing=true;
     
-
+    touchEventArgs ev;
+    ev.gloveId =curGlove;
+    ev.state = GLOVE_UP;
+    ev.touchId = GLOVE_CLICK;
+    ofNotifyEvent(curGlove->touchEvent,ev, this);
+    
+        isEventing=false;
+    }
     
     
 }
 #endif
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
 }
 
 void ofApp::exit(){
@@ -202,7 +251,7 @@ void ofApp::drawBackground(ofColor start, ofColor end, ofGradientMode mode){
     
     gradientMesh.clear();
     gradientMesh.setMode(OF_PRIMITIVE_TRIANGLE_FAN);
-
+    
     gradientMesh.setUsage(GL_STREAM_DRAW);
     if(mode == OF_GRADIENT_CIRCULAR) {
         // this could be optimized by building a single mesh once, then copying
@@ -249,7 +298,7 @@ void ofApp::drawBackground(ofColor start, ofColor end, ofGradientMode mode){
     GLboolean depthMaskEnabled;
     glGetBooleanv(GL_DEPTH_WRITEMASK,&depthMaskEnabled);
     glDepthMask(GL_FALSE);
-//    glBegin(OF_PRIMITIVE_TRIANGLE_FAN);
+    //    glBegin(OF_PRIMITIVE_TRIANGLE_FAN);
     gradientMesh.draw();
     if(depthMaskEnabled){
         glDepthMask(GL_TRUE);

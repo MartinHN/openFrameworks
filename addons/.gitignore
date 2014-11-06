@@ -26,6 +26,8 @@ ofxAndroid/ofAndroidLib/gen
 
 
 !ofxPdf
+!ofxMtlWatchFolder
+
 
 # don't ignore the .gitignore file
 !.gitignore

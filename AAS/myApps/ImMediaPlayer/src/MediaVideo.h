@@ -27,7 +27,6 @@ public:
     
     
     virtual void load(string filePath);
-    virtual void unLoad();
     virtual void draw();
     virtual void resize(int x, int y);
     virtual void update();    

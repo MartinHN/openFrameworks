@@ -27,8 +27,6 @@ void MediaImage::resize(int x, int y){
 }
 
 
-void MediaImage::unLoad(){
-    image.clear();
-}
+
 
 

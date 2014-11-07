@@ -18,13 +18,12 @@ class MediaPdf:public  Media {
     
 public:
     MediaPdf(){};
-    ~MediaPdf(){};
+    ~MediaPdf(){pdf.close();};
   
     
     ofxPDF pdf;
   
     virtual void load(string filePath);
-    virtual void unLoad();
     virtual void draw();
     virtual void resize(int x, int y);
     void offset(ofVec2f t);

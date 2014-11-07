@@ -28,9 +28,8 @@ class GloveInstance;
 
 class touchEventArgs : public ofEventArgs{
 public:
-    GloveInstance* gloveId;
     TouchType touchId;
-    TouchState state;
+    TouchAction state;
 };
 
 
@@ -41,12 +40,12 @@ public:
     static vector<GloveInstance*> gloves;
     static GloveInstance * getGlove(string gloveID);
     static void deleteGlove(string gloveID);
-
+    
     
     GloveOSC();
     ~GloveOSC();
-
- 
+    
+    
     
     void update(ofEventArgs & a);
     void draw(ofEventArgs & a);
@@ -57,6 +56,11 @@ public:
     void registerOSC();
     void unregisterOSC();
     
+    static ofEvent<ofVec3f > orientationEvent;
+    static ofEvent<ofVec3f > relativeOrientationEvent;
+    static ofEvent<touchEventArgs > touchEvent;
+    static ofEvent< vector < float> > flexEvent;
+    static ofEvent<ofVec2f > cursor2DEvent;
     
     
 private:

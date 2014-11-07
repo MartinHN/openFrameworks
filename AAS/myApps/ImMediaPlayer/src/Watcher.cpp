@@ -7,24 +7,19 @@
 //
 
 #include "Watcher.h"
+#include "Config.h"
+
 
 vector<ofFile> Watcher::files;
 string Watcher::folderPath = "/Users/Sha/Movies";
 
 void Watcher::setup(){
-    watch.allowExt("avi");
-    watch.allowExt("mp4");
-    watch.allowExt("mov");
     
-    
-    watch.allowExt("pdf");
-    
-    watch.allowExt("png");
-    watch.allowExt("jpg");
-    watch.allowExt("jpeg");
-    
-    watch.allowExt("mp3");
-    watch.allowExt("wav");
+    for(vector<string>::iterator it = supported_formats.begin() ; it !=supported_formats.end();++it){
+    watch.allowExt(*it);
+        cout << *it <<endl;
+    }
+
 
 //    watch.isRecursive = true;
     

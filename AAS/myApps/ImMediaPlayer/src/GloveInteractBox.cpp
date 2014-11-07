@@ -46,8 +46,8 @@ GloveInteractBox::~GloveInteractBox(){
     if(it!=allElements.end())allElements.erase(it);
 }
 
-void GloveInteractBox::cursor2DMoved(pair<GloveInstance*,ofVec2f> & arg){
-    ofVec2f pos = arg.second;
+void GloveInteractBox::cursor2DMoved(ofVec2f & pos){
+    
     bool _isHovered = this->isHit(pos);
     if(_isHovered && !isHovered){this->entered();}
     if(!_isHovered && isHovered){this->exited();}
@@ -58,17 +58,17 @@ void GloveInteractBox::cursor2DMoved(pair<GloveInstance*,ofVec2f> & arg){
         this->hover(newPos);
     }
     
-    updateDrag(arg.second);
+    updateDrag(pos);
     
 }
 
-void GloveInteractBox::relativeMoved(pair<GloveInstance*,ofVec3f> & pos){
-    float ofZoom = 1.0+pos.second.z;
+void GloveInteractBox::relativeMoved(ofVec3f & pos){
+    float ofZoom = 1.0+pos.z;
     updateZoom(ofZoom);
     
 }
 
-void GloveInteractBox::click(touchEventArgs & a){
+void GloveInteractBox::touch(touchEventArgs & a){
 
     if(a.state == GLOVE_UP){
         dragged=NULL;
@@ -77,14 +77,14 @@ void GloveInteractBox::click(touchEventArgs & a){
     }
 
     if(isHovered){
-        if(a.touchId == GLOVE_CLICK ){
-        this->clicked(a.gloveId,a.state);
+        if(a.touchId == GLOVE_CLICK  ){
+        this->clicked(a.state);
             selected = this;
         }
-        else if(isgDraggable && a.touchId == GLOVE_DRAG){
+        else if(isDraggable && a.touchId == GLOVE_DRAG){
             if(a.state == GLOVE_DOWN && dragged == NULL){
                 dragged = this;
-                dragOffset = a.gloveId->cursor2D-box.getCenter();
+                dragOffset = curGlove->cursor2D-box.getCenter();
             }
 
         }

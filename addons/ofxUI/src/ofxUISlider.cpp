@@ -101,10 +101,12 @@ void ofxUISlider_<T>::init(string _name, T _min, T _max, T *_value, float w, flo
     }
     addEmbeddedWidget(label);
     label->setVisible(drawLabel);
-    
+
     increment = ABS(max - min) / 100.0;
     bRoundedToNearestInt = false;
     bClampValue = true;
+    bSticky = false;
+    stickyValue = MAX(10.0*ceil(increment), 1.0);
 }
 
 template<typename T>
@@ -170,6 +172,26 @@ template<typename T>
 void ofxUISlider_<T>::setClampValue(bool _bClampValue)
 {
     bClampValue = _bClampValue;
+}
+
+template<typename T>
+ofxUISlider_<T>* ofxUISlider_<T>::enableSticky(bool _bSticky)
+{
+    bSticky = _bSticky;
+    return this;
+}
+
+template<typename T>
+ofxUISlider_<T>* ofxUISlider_<T>::setStickyValue(double _stickyValue)
+{
+    stickyValue = _stickyValue;
+    return this;
+}
+
+template<typename T>
+double ofxUISlider_<T>::getStickyValue()
+{
+    return stickyValue;
 }
 
 template<typename T>
@@ -289,9 +311,9 @@ void ofxUISlider_<T>::mouseDragged(int x, int y, int button)
     if(hit)
     {
         state = OFX_UI_STATE_DOWN;
+        input(x, y);
         if(triggerType & OFX_UI_TRIGGER_CHANGE)
         {
-            input(x, y);
             triggerEvent(this);
         }
     }
@@ -309,9 +331,9 @@ void ofxUISlider_<T>::mousePressed(int x, int y, int button)
     {
         hit = true;
         state = OFX_UI_STATE_DOWN;
+        input(x, y);
         if(triggerType & OFX_UI_TRIGGER_BEGIN)
         {
-            input(x, y);
             triggerEvent(this);
         }
     }
@@ -332,9 +354,9 @@ void ofxUISlider_<T>::mouseReleased(int x, int y, int button)
 #else
         state = OFX_UI_STATE_OVER;
 #endif
+        input(x, y);
         if(triggerType & OFX_UI_TRIGGER_END)
         {
-            input(x, y);
             triggerEvent(this);
         }
     }
@@ -380,6 +402,11 @@ void ofxUISlider_<T>::keyPressed(int key)
 #endif
                 bRoundedToNearestInt = true;
                 break;
+
+            case OF_KEY_COMMAND:
+                bSticky = true;
+                break;
+                
             default:
                 break;
         }
@@ -390,6 +417,7 @@ template<typename T>
 void ofxUISlider_<T>::keyReleased(int key)
 {
     bRoundedToNearestInt = false;
+    bSticky = false;
 }
 
 template<typename T>
@@ -510,7 +538,12 @@ float ofxUISlider_<T>::getPercentValue()
 template<typename T>
 T ofxUISlider_<T>::getScaledValue()
 {
-    return ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
+    T val = ofxUIMap(value, 0.0, 1.0, min, max, bClampValue);
+    if(!bRoundedToNearestInt && bSticky)
+    {
+        val = ceil(val/stickyValue)*stickyValue;
+    }
+    return val; 
 }
 
 template<typename T>

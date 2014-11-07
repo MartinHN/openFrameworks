@@ -50,10 +50,7 @@ void ofxUIDropDownList::init(string _name, vector<string> items, float w, float 
     kind = OFX_UI_WIDGET_DROPDOWNLIST;
     
     size = _size;
-//    if(autoSize){
-        label = new ofxUILabel(0,0,(name+" LABEL"), name, _size);
-//    }
-//    else{label = new ofxUILabel(0,0,(name+" LABEL"), name, _size);}
+    label = new ofxUILabel(0,0,(name+" LABEL"), name, _size);
     addEmbeddedWidget(label);
     
     value = new bool();
@@ -94,7 +91,6 @@ void ofxUIDropDownList::clearToggles()
         ofxUILabelToggle *t = toggles[0];
         removeToggle(t->getName());
     }
-    clearEmbeddedWidgets();
 }
 
 void ofxUIDropDownList::clearSelected()
@@ -179,8 +175,6 @@ void ofxUIDropDownList::removeToggle(string toggleName)
             break;
         }
     }
-    
-
     if(t != NULL)
     {
         parent->removeWidget(t);

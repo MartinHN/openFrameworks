@@ -24,22 +24,44 @@ public:
     GUIGloveWrapper(){};
     ~GUIGloveWrapper(){};
     
-    virtual void touch( TouchType num, TouchState s,GloveInstance* gid){
-        ofMouseEventArgs a;
-//        a.x=
+    virtual void touch( TouchType num, TouchAction s){
+        ofTouchEventArgs a;
+        int  idTouch = 0 ;
+        for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
+            if(GloveOSC::gloves[i] == curGlove)idTouch = i;
+        };
+        a.id = idTouch;
+        a.set(curGlove->cursor2D);
+        
         if(num==GLOVE_CLICK){
             if(s == GLOVE_DOWN){
-                ofNotifyEvent(ofEvents().mousePressed, a, this );
+                a.type = ofTouchEventArgs::down;
+                ofNotifyEvent(ofEvents().touchDown, a );
             }
             else if(s == GLOVE_UP){
-                ofNotifyEvent(ofEvents().mouseReleased, a, this );
+                a.type = ofTouchEventArgs::up;
+                ofNotifyEvent(ofEvents().touchUp, a);
             }
         }
         
         
     };
-    virtual void relativeMoved(ofVec3f v, GloveInstance* gid){};
-    virtual void cursor2DMoved(ofVec2f v, GloveInstance* gid){};
+    virtual void relativeMoved(ofVec3f v){
+    };
+    virtual void cursor2DMoved(ofVec2f v){
+        ofTouchEventArgs a;
+        int  idTouch = 0 ;
+        for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
+            if(GloveOSC::gloves[i] == curGlove)idTouch = i;
+        };
+        a.id = idTouch;
+        a.set(v);
+        
+        ofNotifyEvent(ofEvents().touchMoved,a);
+        
+        
+        
+    };
     
     virtual void update(){};
     

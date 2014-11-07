@@ -374,10 +374,10 @@ void ofxUIScrollableCanvas::draw()
 
 void ofxUIScrollableCanvas::setPosition(int x, int y)
 {
-    rect->x = x;
-    rect->y = y;
     sRect->x = x;
     sRect->y = y;
+    rect->x = x;
+    rect->y = y;
 }
 
 void ofxUIScrollableCanvas::setDimensions(float _width, float _height)
@@ -534,14 +534,10 @@ void ofxUIScrollableCanvas::mousePressed(int x, int y, int button)
                 }
             }
         }
-        isScrolling = true;
-        triggerEvent(this);
     }
-    
     
     isScrolling = false;
     vel.set(0,0);
-    
 }
 
 void ofxUIScrollableCanvas::mouseReleased(int x, int y, int button)
@@ -557,10 +553,7 @@ void ofxUIScrollableCanvas::mouseReleased(int x, int y, int button)
     {
         isScrolling = false;
         pos = ofPoint(x,y);
-        
     }
-    triggerEvent(this);
-    
 }
 
 ofxUIRectangle *ofxUIScrollableCanvas::getSRect()

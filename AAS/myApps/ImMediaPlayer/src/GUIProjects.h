@@ -14,7 +14,7 @@
 #include "ofMain.h"
 #include "ofxMtlWatchFolder.h"
 #include "Config.h"
-
+#include "MediaPool.h"
 
 
 #include "ofxUI.h"
@@ -29,7 +29,10 @@ class GUIProjects{
     GUIProjects();
     virtual ~GUIProjects(){};
     ofxMtlWatchFolder watch;
+    static ofFile currentDirectory;
     
+    ofxUIDropDownList* projectsList;
+    ofxUISuperCanvas* projectsCanvas;
     
     void init();
     void registerListeners();
@@ -42,13 +45,10 @@ class GUIProjects{
     void projectsRemoved(string& filename);
     
     void GUIevent(ofxUIEventArgs & a);
+    void setCurrentDirectory(string path);
+    static bool isProject(ofFile d);
     
 
-    
-    
-
-    ofxUIDropDownList* projectsList;
-    ofxUISuperCanvas* projectsCanvas;
     
     
 };

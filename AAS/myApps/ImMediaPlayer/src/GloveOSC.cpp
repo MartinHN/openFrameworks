@@ -17,6 +17,12 @@ vector<GloveInstance*> GloveOSC::gloves;
 ofxOscReceiver GloveOSC::reciever;
 ofxOscSender GloveOSC::toServer;
 
+ofEvent<ofVec3f > GloveOSC::orientationEvent;
+ofEvent<ofVec3f > GloveOSC::relativeOrientationEvent;
+ofEvent<touchEventArgs > GloveOSC::touchEvent;
+ofEvent< vector < float> > GloveOSC::flexEvent;
+ofEvent<ofVec2f > GloveOSC::cursor2DEvent;
+
 
 GloveOSC::GloveOSC(){
     reciever.setup(LOCALPORT);
@@ -24,9 +30,9 @@ GloveOSC::GloveOSC(){
     
     toServer.setup(SERVERIP, SERVERPORT);
     lastACK = ofGetElapsedTimef();
-
-
-
+    
+    
+    
 }
 
 
@@ -35,19 +41,19 @@ GloveOSC::~GloveOSC(){
     for(  vector<GloveInstance*>::iterator it =gloves.begin() ; it!= gloves.end();++it){
         delete *it;
     }
-
+    
 }
 
 
 void GloveOSC::update(ofEventArgs & a){
     registerOSC();
     parseMessage();
-
+    
 }
 
 
 void GloveOSC::draw(ofEventArgs & a){
-
+    
 }
 
 
@@ -61,9 +67,9 @@ void GloveOSC::registerOSC(){
         
         toServer.sendMessage(regMsg);
         
-
+        
     }
-
+    
 }
 
 
@@ -75,7 +81,7 @@ void GloveOSC::parseMessage(){
         
         string addr = m.getAddress();
         GloveInstance *curGlove = NULL;
-//        cout << m.getArgAsString(0) << endl;
+        //        cout << m.getArgAsString(0) << endl;
         //from Server
         if((addr.find_first_of("/glove"))==0){
             addr = addr.substr(6,addr.length()-6);
@@ -96,75 +102,68 @@ void GloveOSC::parseMessage(){
             }
             else if(addr == "/orientation"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->orientation = ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-                    pair<GloveInstance*,ofVec3f> a(curGlove,curGlove->orientation);
-                    ofNotifyEvent(curGlove->orientationEvent,a ,this);
+                    ofVec3f orientation(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
+                    curGlove->orientation = orientation;
+                    ofNotifyEvent(orientationEvent,orientation ,curGlove);
                 }
             }
             else if(addr == "/relative"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->relativeOrientation = ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-                     pair<GloveInstance*,ofVec3f> a(curGlove,curGlove->relativeOrientation);
-                    ofNotifyEvent(curGlove->relativeOrientationEvent, a,this);
+                    ofNotifyEvent(relativeOrientationEvent, curGlove->relativeOrientation,curGlove);
                     
                 }
             }
             else if(addr == "/touch"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     int tid =m.getArgAsInt32(1);
-                    TouchState state = (TouchState)m.getArgAsInt32(2);
-                    curGlove->touchs[tid] = state;
+                    TouchAction state = (TouchAction)m.getArgAsInt32(2);
+                    if(state == GLOVE_DOWN)curGlove->touchs[tid] = true;
+                    else curGlove->touchs[tid] = false;
                     touchEventArgs a;
                     a.touchId = (TouchType)tid;
-                    a.gloveId = curGlove;
                     a.state = state;
-                    ofNotifyEvent(curGlove->touchEvent,a,this);
+                    ofNotifyEvent(touchEvent,a,curGlove);
                 }
             }
             else if(addr == "/flex"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->flex[m.getArgAsInt32(1)] = m.getArgAsFloat(2);
-                    pair<GloveInstance*,vector<float> >a(curGlove,curGlove->flex);
-                    ofNotifyEvent(curGlove->flexEvent, a,this);
+                    ofNotifyEvent(flexEvent, curGlove->flex,curGlove);
                 }
             }
             else if(addr == "/cursor2D"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->cursor2D = ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2));
                     curGlove->cursor2D*=Screens::instance()->resolution;
-                    pair<GloveInstance*,ofVec2f>a(curGlove,curGlove->cursor2D);
-//                    cout << cursor2D << endl;
-                    ofNotifyEvent(curGlove->cursor2DEvent, a,this);
+                    ofNotifyEvent(cursor2DEvent, curGlove->cursor2D,curGlove);
                 }
             }
             return;
-        
+            
+        }
     }
-    
-        
-    }
-    
-    
-    
 }
-                                                          GloveInstance* GloveOSC::getGlove(string gloveID){
-                                                        
-                                                              for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
-                                                                  if((*it)->gloveID==gloveID)return *it;
-                                                        
-                                                              }
-                                                              return NULL;
-                                                          }
-                                                        
-                                                          void GloveOSC::deleteGlove(string gloveID){
-                                                              for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
-                                                                  if((*it)->gloveID==gloveID){
-                                                                      delete *it;
-                                                                      gloves.erase(it);
-                                                                      return;
-                                                                  }
-                                                                  
-                                                              }
+
+
+GloveInstance* GloveOSC::getGlove(string gloveID){
+    
+    for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
+        if((*it)->gloveID==gloveID)return *it;
+        
+    }
+    return NULL;
+}
+
+void GloveOSC::deleteGlove(string gloveID){
+    for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
+        if((*it)->gloveID==gloveID){
+            delete *it;
+            gloves.erase(it);
+            return;
+        }
+        
+    }
     
 }
 

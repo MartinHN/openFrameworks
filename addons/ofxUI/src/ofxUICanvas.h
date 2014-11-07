@@ -36,9 +36,11 @@ class ofxUICanvas : public ofxUIWidget, public ofxUIAppCBGlue
 {
 public:
     ~ofxUICanvas();
+    //Default Constructor:
     ofxUICanvas(float defaultWidthSize = OFX_UI_GLOBAL_CANVAS_WIDTH, float defaultHeightSize = OFX_UI_GLOBAL_CANVAS_WIDTH);
     ofxUICanvas(const ofxUICanvas &other);              // Mitchell Nordine 2/2/14
     ofxUICanvas& operator=(const ofxUICanvas &other);   // Mitchell Nordine 2/2/14
+    
     ofxUICanvas(ofxUIRectangle r);
     ofxUICanvas(float x, float y, float w, float h);
     ofxUICanvas(float x, float y, float w, float h, ofxUICanvas *sharedResources);
@@ -97,6 +99,7 @@ public:
     
     void stateChange();
     virtual void autoSizeToFitWidgets();
+    virtual void alignWidgetsVertically(ofxUIWidget *widgetToBeAligned, ofxUIWidget *widgetToBeingAlignedTo);
     virtual void centerWidgetsOnCanvas(bool centerHorizontally=true, bool centerVertically=true);
     virtual void centerWidgetsHorizontallyOnCanvas();
     virtual void centerWidgetsVerticallyOnCanvas();
@@ -210,7 +213,7 @@ public:
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items);
     ofxUIDropDownList* addDropDownList(string _name, vector<string> items, float w, float x = 0, float y = 0);
 
-    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT);
+    ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min = -1.0, float _max = 1.0, float _h = -1);
     ofxUIWaveform* addWaveform(string _name, float *_buffer, int _bufferSize, float _min, float _max, float _w, float _h);
     
     ofxUISpectrum* addSpectrum(string _name, float *_buffer, int _bufferSize, float _min = 0.0, float _max = 1.0, float _h = OFX_UI_GLOBAL_GRAPH_HEIGHT);
@@ -302,8 +305,6 @@ public:
 	void setWidgetColor(int _target, ofxUIColor _color);
     ofxUIWidget *getWidget(string _name, int widgetID = -1);
     void removeWidget(string _name);
-    virtual void setAutoUpdate(bool _autoUpdate);
-    virtual void setAutoDraw(bool _autoDraw);
     virtual void setPosition(int x, int y);
     virtual void setHeight(float _height);
     virtual void setWidth(float _width);
@@ -327,21 +328,18 @@ protected:
 	ofxUIFont *font_large;
 	ofxUIFont *font_medium; 		
 	ofxUIFont *font_small;
+    ofxUIEventArgs *GUIevent;
+
     bool bInsideCanvas;
- 	
-	ofxUIEventArgs *GUIevent; 
-    int state;
     bool hasSharedResources;
-    bool autoDraw;
-    bool autoUpdate;
     
     multimap<string, ofxUIWidget*> widgets_map;
 	vector<ofxUIWidget*> widgets;
     map<string, ofxUIWidget*> widgetsAreModal;
 	vector<ofxUIWidget*> widgetsWithState;
 	vector<ofxUIWidget*> lastAddeds; 
-	ofxUIWidget *activeFocusedWidget; 
-	bool enable_highlight_outline; 
+
+	bool enable_highlight_outline;
 	bool enable_highlight_fill;
 	bool enabled;
     bool bTriggerWidgetsUponLoad;

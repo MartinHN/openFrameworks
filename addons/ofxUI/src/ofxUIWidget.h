@@ -37,12 +37,13 @@ public:
     ofxUIWidget();
     virtual ~ofxUIWidget();
     ofxUIWidget(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
-    ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
+    virtual ofxUIWidget& operator=(const ofxUIWidget &other); // Mitchell Nordine 2/2/14
     
     virtual void initRect(float x = 0, float y = 0, float w = 0, float h = 0);
     virtual void initPaddingRect();
     virtual void calculatePaddingRect();
-        
+    
+    virtual void setup(); 
     virtual void update();
     virtual void draw();
     
@@ -92,8 +93,8 @@ public:
     
     void setID(int _id);
     int getID();
-    virtual void setKind(int _kind);
-    virtual int getKind();
+    virtual void setKind(ofxUIWidgetType _kind);
+    virtual ofxUIWidgetType getKind();
     
     virtual bool isDraggable();
     virtual bool hasLabel();
@@ -170,7 +171,12 @@ public:
     
     virtual bool hasState();
     
-#ifndef OFX_UI_NO_XML   
+    virtual bool getIsBindedToKey(int key); 
+    virtual void bindToKey(int key);
+    virtual void unbindToKey(int key);
+    virtual void unbindAllKeys(); 
+
+#ifndef OFX_UI_NO_XML
     
     virtual void saveState(ofxXmlSettings *XML);
     virtual void loadState(ofxXmlSettings *XML);
@@ -183,7 +189,7 @@ protected:
 	ofxUIFont *font;
 	
     std::string name;                    
-	int kind; 
+	ofxUIWidgetType kind; 
 	bool visible;
     int ID;
     bool hit; 
@@ -213,7 +219,9 @@ protected:
 	ofxUIColor color_padded_rect_outline;
     
     vector<ofxUIWidget *> embeddedWidgets; 
-    
+
+    bool bKeyHit;
+    map<int, bool> keyBindings;
 #ifdef OFX_UI_TARGET_TOUCH       
     int touchId;     
 #endif

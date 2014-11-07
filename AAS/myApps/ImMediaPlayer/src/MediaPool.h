@@ -35,7 +35,7 @@ public:
     
     
     Media* createMedia(string filePath);
-    bool loadMedia(string path);
+    bool loadMedias(string path);
     void unloadAll();
     
     

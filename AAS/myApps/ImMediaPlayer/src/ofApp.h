@@ -38,7 +38,6 @@ class ofApp : public ofBaseApp{
     // keep it ordered !!!
     ofEventArgs drawSyphon;
     GloveOSC glove;
-    Screens screens;
     GUIProjects projects;
     
     GUIGloveWrapper gloveWrapper;
@@ -50,7 +49,7 @@ class ofApp : public ofBaseApp{
     bool isEventing=false;
     
 #endif
-    
+    ofVec2f scrS;
     ofVboMesh gradientMesh;
     void drawBackground(ofColor start, ofColor end, ofGradientMode mode);
     

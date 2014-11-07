@@ -26,8 +26,8 @@ class touchEventArgs;
 class GloveInstance {
 public:
 
-    GloveInstance();
-    GloveInstance(string _gloveID):gloveID(_gloveID){};
+//    GloveInstance();
+    GloveInstance(string _gloveID);
     ~GloveInstance();
     
     
@@ -47,17 +47,13 @@ public:
     
     ofVec3f orientation;
     ofVec3f relativeOrientation;
-    vector<TouchState>  touchs;
+    vector<bool>  touchs;
     vector<float>  flex;
     ofVec2f cursor2D;
     
-    ofEvent<std::pair<GloveInstance* ,ofVec3f> > orientationEvent;
-    ofEvent<std::pair<GloveInstance* ,ofVec3f> > relativeOrientationEvent;
-    ofEvent<touchEventArgs > touchEvent;
-    ofEvent<std::pair<GloveInstance* , vector < float> > > flexEvent;
-    ofEvent<std::pair<GloveInstance* ,ofVec2f> > cursor2DEvent;
+    
 
-    ofImage * cursorImg;
+    ofImage cursorImg;
     
 
     

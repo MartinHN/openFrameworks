@@ -34,7 +34,7 @@ void MediaPool::unloadAll(){
     
 }
 
-bool MediaPool::loadMedia(string path){
+bool MediaPool::loadMedias(string path){
     unloadAll();
     ofDirectory dir(path);
     dir.listDir();

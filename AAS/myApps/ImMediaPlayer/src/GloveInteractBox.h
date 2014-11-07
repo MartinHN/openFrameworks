@@ -26,28 +26,19 @@ public:
     GloveInteractBox();
     ~GloveInteractBox();
 
-  // from Glove
-    virtual void click(touchEventArgs & a);
-//    void moved(GloveOSC* c,ofVec3f & pos);
-    virtual void relativeMoved(pair<GloveInstance*,ofVec3f> & pos);
-    virtual void cursor2DMoved(pair<GloveInstance*,ofVec2f> & arg);
+    // box state
     
-    virtual void update(ofEventArgs & e);
-    virtual void draw(ofEventArgs & e);
-
+    string name;
+    
     bool isCollider = false;
-    
-    ofEvent< GloveInteractBox > hasMovedEvent;
-    
-    
     ofRectangle box;
     ofColor backColor;
-//    string name;
     
-
-    static ofRectangle getFreeSpace();
     
-    bool isgDraggable=true;
+    
+    
+    
+    bool isDraggable=true;
     static GloveInteractBox * dragged;
     void updateDrag(ofVec2f & c);
     ofVec2f dragOffset;
@@ -61,24 +52,39 @@ public:
     static GloveInteractBox* selected;
     
     
+    
+  // from GloveInteract used to trigger box functions
+    virtual void touch(touchEventArgs & a);
+    virtual void relativeMoved(ofVec3f & pos);
+    virtual void cursor2DMoved(ofVec2f & arg);
+    
+    virtual void update(ofEventArgs & e);
+    virtual void draw(ofEventArgs & e);
+
+    
+    
+
+    
+    static ofRectangle getFreeSpace();
     static vector<GloveInteractBox* > allElements;
+    bool isValid(ofRectangle & newR);
+    
+    
     
     // triggered functions
     
     virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
-    virtual void clicked(GloveInstance* gId,TouchState & state){};
+    virtual void clicked(TouchAction & state){};
     
 
     virtual void exited(){};
     virtual void entered(){};
     
-//    bool operator==(const string& other) {return name == other;};
-    
-    bool isValid(ofRectangle & newR);
     
     
-    string name;
+    
+    
 protected:
     bool isHovered;
     

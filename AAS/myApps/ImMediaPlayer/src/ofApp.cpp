@@ -9,13 +9,22 @@ void ofApp::setup(){
     //    ofSetDataPathRoot("../Resources/data/");
 #endif
     
-    
+    cout << supported_formats.size() << endl;
+    // video
     ofEnableAlphaBlending();
-    cout << PROJECTPATH << endl;
-    cout << ofToDataPath("/lala") << endl;
     ofSetFrameRate(30);
     
     outTexture.allocate(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
+    
+    
+    // keep it ordered
+    
+    
+    
+    //Screens
+    Screens::instance();
+    
+    
     
     
     // GUI Init
@@ -29,8 +38,7 @@ void ofApp::setup(){
     syphonOut.setName(APPNAME);
     
     
-    //Screens
-    Screens::instance();
+    
     
     
     
@@ -40,6 +48,10 @@ void ofApp::setup(){
     back.loadImage("mire.png");
     
     GloveOSC::gloves.push_back(new GloveInstance("mouse"));
+    
+    
+//    ofSetWindowShape(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
+    windowResized(ofGetWindowWidth(), ofGetWindowHeight());
     
     
     
@@ -77,7 +89,7 @@ void ofApp::draw(){
 #endif
     
     ofSetColor(255);
-    outTexture.draw(0,0,ofGetScreenWidth(),ofGetScreenHeight());
+    outTexture.draw(0,0,scrS.x,scrS.y);
 }
 
 #ifdef MOUSEDBG
@@ -90,20 +102,19 @@ void ofApp::keyPressed(int key){
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            ev.gloveId = curGlove;
             ev.touchId = GLOVE_ZOOM;
             ev.state = GLOVE_DOWN;
-            ofNotifyEvent(curGlove->touchEvent,ev, this);
+            ofNotifyEvent(glove.touchEvent,ev, curGlove);
             break;
             
         case 'd':
-            ev.gloveId =curGlove;
             ev.touchId = GLOVE_DRAG;
             ev.state = GLOVE_DOWN;
-            ofNotifyEvent(curGlove->touchEvent,ev, this);
+            ofNotifyEvent(glove.touchEvent,ev, curGlove);
             break;
             
-            
+        case 'l':
+            projects.setCurrentDirectory(ofSystemLoadDialog("Load Project",true).filePath);
         default:
             break;
             
@@ -111,63 +122,55 @@ void ofApp::keyPressed(int key){
     }
         isEventing=false;
     }
-    relMouse = ofVec2f(ofGetMouseX(),ofGetMouseY());
+    relMouse = ofVec2f(mouseX,mouseY);
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
     touchEventArgs ev;
-    if(!isEventing){
-        isEventing=true;
+
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            ev.gloveId =curGlove;
             ev.touchId = GLOVE_ZOOM;
             ev.state = GLOVE_UP;
-            ofNotifyEvent(curGlove->touchEvent,ev, this);
+            ofNotifyEvent(glove.touchEvent,ev, curGlove);
             break;
             
         case 'd':
-            ev.gloveId =curGlove;
             ev.touchId = GLOVE_DRAG;
             ev.state = GLOVE_UP;
-            ofNotifyEvent(curGlove->touchEvent,ev, this);
+            ofNotifyEvent(glove.touchEvent,ev, curGlove);
             break;
             
-            
+        case 'l':
+            projects.setCurrentDirectory(ofSystemLoadDialog("Load Projects",true).filePath);
+            break;
         default:
             break;
             
             
     }
-        isEventing=false;
-    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved( int x, int y ){
     GloveInstance * curGlove = glove.getGlove("mouse");
+    curGlove->cursor2D.set(x,y);
+    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
     // avoid conflict when using mouse and glove at the same time
     if(!glove.isConnectedToServer){
-        
-        
-        
-        if(!isEventing){
-            isEventing=true;
-        
-        
-        pair<GloveInstance*,ofVec2f> ev(curGlove,ofVec2f(mouseX,mouseY));
-        ofNotifyEvent(curGlove->cursor2DEvent,ev,this);
-        
+
+            ofNotifyEvent(glove.cursor2DEvent,curGlove->cursor2D,curGlove);
             isEventing=false;
-        }
+
         
         
         // any keypress emulates relative orientation events almost as in real world...
         if(ofGetKeyPressed()){
-            std::pair<GloveInstance*,ofVec3f> ev2(curGlove,ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/400.0));
-            ofNotifyEvent(curGlove->relativeOrientationEvent, ev2, this);
+            curGlove->relativeOrientation = ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/400.0);
+            ofNotifyEvent(glove.relativeOrientationEvent, curGlove->relativeOrientation, curGlove);
         }
     }
     
@@ -178,52 +181,48 @@ void ofApp::mouseMoved( int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    if(!isEventing){
-        isEventing=true;
+    curGlove->cursor2D.set(x,y);
+    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+
     // still sends events when dragging
-    std::pair<GloveInstance*,ofVec2f> ev(curGlove,ofVec2f(x,y));
-    ofNotifyEvent(curGlove->cursor2DEvent,ev, this);
-        isEventing=false;
-    }
+    ofNotifyEvent(glove.cursor2DEvent,curGlove->cursor2D, curGlove);
+
     
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    if(!isEventing){
-    isEventing=true;
+    curGlove->cursor2D.set(x,y);
+    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+
     touchEventArgs ev;
-    ev.gloveId =curGlove;
     ev.state = GLOVE_DOWN;
     ev.touchId = GLOVE_CLICK;
-    ofNotifyEvent(curGlove->touchEvent,ev, this);
+    ofNotifyEvent(glove.touchEvent,ev, curGlove);
  
-        isEventing=false;
-    }
+
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    if(!isEventing){
-        isEventing=true;
-    
+    curGlove->cursor2D.set(x,y);
+    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+
     touchEventArgs ev;
-    ev.gloveId =curGlove;
     ev.state = GLOVE_UP;
     ev.touchId = GLOVE_CLICK;
-    ofNotifyEvent(curGlove->touchEvent,ev, this);
+    ofNotifyEvent(glove.touchEvent,ev, curGlove);
     
-        isEventing=false;
-    }
+
     
     
 }
 #endif
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    
+    scrS.set(w,h);
 }
 
 //--------------------------------------------------------------

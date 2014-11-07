@@ -8,21 +8,17 @@
 
 #include "GloveInteract.h"
 
-ofVec2f* GloveInteract::cursor2D;
-ofVec3f* GloveInteract::relative;
-ofVec3f* GloveInteract::orientation;
-vector<TouchState>* GloveInteract::touchs;
+GloveInstance * GloveInteract::curGlove = NULL;
 
 
 
 GloveInteract::GloveInteract(){
 
+
+        ofAddListener( GloveOSC::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
+        ofAddListener(GloveOSC::touchEvent,this,&GloveInteract::touch);
+        ofAddListener(GloveOSC::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
     
-    for(vector<GloveInstance*>::iterator it =GloveOSC::gloves.begin() ; it!= GloveOSC::gloves.end() ; ++it){
-        ofAddListener((*it)->cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-        ofAddListener((*it)->touchEvent,this,&GloveInteract::touch);
-        ofAddListener((*it)->relativeOrientationEvent,this,&GloveInteract::relativeMoved);
-    }
     
     ofAddListener(ofEvents().update, this, &GloveInteract::update);
 
@@ -31,28 +27,19 @@ GloveInteract::GloveInteract(){
 
 
 GloveInteract::~GloveInteract(){
-    
-    for(vector<GloveInstance*>::iterator it =GloveOSC::gloves.begin() ; it!= GloveOSC::gloves.end() ; ++it){
-        ofRemoveListener((*it)->cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-        ofRemoveListener((*it)->touchEvent,this,&GloveInteract::touch);
-        ofRemoveListener((*it)->relativeOrientationEvent,this,&GloveInteract::relativeMoved);
+
+        ofRemoveListener( GloveOSC::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
+        ofRemoveListener(GloveOSC::touchEvent,this,&GloveInteract::touch);
+        ofRemoveListener(GloveOSC::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
         
-    }
+    
     
     ofRemoveListener(ofEvents().update, this, &GloveInteract::update);
 
 }
 
 
-void GloveInteract::setcurrentData(GloveInstance *gid){
-    vector<GloveInstance*>::iterator it =std::find(GloveOSC::gloves.begin(),GloveOSC::gloves.end(),gid);
-    if(it!= GloveOSC::gloves.end()){
-        cursor2D = &(*it)->cursor2D;
-        touchs = &(*it)->touchs;
-        relative = &(*it)->relativeOrientation;
-        orientation = &(*it)->orientation;
-    }
-}
+
 
 
 

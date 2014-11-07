@@ -50,6 +50,7 @@ void ofxUITextInput::init(string _name, string _textstring, float w, float h, fl
     cursorWidth = 0; spaceOffset = 0;
     theta = 0;
     autoUnfocus = true;
+    onlyNumericInput = false;
     cursorPosition = 0;
     firstVisibleCharacterIndex = 0;
 }
@@ -287,6 +288,16 @@ void ofxUITextInput::keyPressed(int key)
                 
             default:
             {
+                if (onlyNumericInput)
+                {
+                    if((!isdigit(key) && key != 46  && key != 45) || (key == 45 && cursorPosition != 0))
+                    {
+                        // The key pressed is not numeric (0-9) or the '.' character.
+                        // Or the '-' character at the beginning of the string.
+                        break;
+                    }
+                }
+                
                 textstring.insert(cursorPosition, 1, key);
                 cursorPosition++;
                 recalculateDisplayString();
@@ -351,6 +362,22 @@ string ofxUITextInput::getTextString()
     return textstring;
 }
 
+int ofxUITextInput::getIntValue()
+{
+    if (!onlyNumericInput)
+        return  0;
+        
+    return ofToInt(textstring);
+}
+
+float ofxUITextInput::getFloatValue()
+{
+    if (!onlyNumericInput)
+        return  0;
+    
+    return ofToFloat(textstring);
+}
+
 void ofxUITextInput::setInputTriggerType(int _triggerType)
 {
     inputTriggerType = _triggerType;
@@ -388,6 +415,7 @@ void ofxUITextInput::setTextString(string s)
         label->setLabel(textstring);
     }
     displaystring = textstring;
+    cursorPosition = textstring.length();
 }
 
 void ofxUITextInput::setParent(ofxUIWidget *_parent)
@@ -453,6 +481,11 @@ bool ofxUITextInput::isFocused()
 void ofxUITextInput::setAutoUnfocus(bool _autoUnfocus)
 {
     autoUnfocus = _autoUnfocus;
+}
+
+void ofxUITextInput::setOnlyNumericInput(bool _onlyNumericInput)
+{
+    onlyNumericInput = _onlyNumericInput;
 }
 
 void ofxUITextInput::setTriggerOnClick(bool _triggerOnClick)

@@ -30,7 +30,7 @@
 class ofxUIButton : public ofxUIWidgetWithLabel
 {
 public:
-    ofxUIButton();
+    ofxUIButton();    
     ofxUIButton(string _name, bool _value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     ofxUIButton(string _name, bool *_value, float w, float h, float x = 0, float y = 0, int _size = OFX_UI_FONT_SMALL);
     ~ofxUIButton();
@@ -49,8 +49,12 @@ public:
     virtual bool isHit(float x, float y);
     void setLabelPosition(ofxUIWidgetPosition pos);
     virtual bool hasState(){ return false; };
+
+    virtual void keyPressed(int key);
+    virtual void keyReleased(int key);
+    
 protected:
     bool *value; 
     bool useReference; 
-    bool bLabelRight; 
+    ofxUIWidgetPosition labelPosition;
 }; 

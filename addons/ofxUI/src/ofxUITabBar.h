@@ -45,8 +45,8 @@ public:
     bool isHit(int x, int y);
     void saveSettings(string pathToSaveTo, string fileNamePrefix);
     void loadSettings(string pathToLoadFrom, string fileNamePrefix);
-    map<ofxUIToggle*, ofxUICanvas*> canvases;
-protected:
     
+protected:
+    map<ofxUIToggle*, ofxUICanvas*> canvases;
     ofxUICanvas *active;
 };

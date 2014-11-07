@@ -10,15 +10,7 @@
 #define ImMedia_Config_h
 
 //projects
-//#ifdef DEBUG
-#define PROJECTPATH "/Users/Sha/Movies/"
-//#endif
-#ifndef DEBUG
-//#define PROJECTPATH "/Users/immersif/Documents/GOSS/ImMedia/"
-#endif
-#define PROJECTBHEIGHT 40
-#define PROJECTWIDTH 400
-#define PROJECTPAD 10
+
 
 typedef enum{PDF,IMAGE,VIDEO} MediaType;
 
@@ -45,8 +37,25 @@ typedef enum{PDF,IMAGE,VIDEO} MediaType;
 #define NUMFLEX 4
 
 typedef enum{GLOVE_CLICK=0,GLOVE_DRAG,GLOVE_ZOOM,GLOVE_BACK}TouchType;
-typedef enum {GLOVE_DOWN=0,GLOVE_UP,GLOVE_SHORTPRESS,GLOVE_LONGPRESS} TouchState;
+typedef enum {GLOVE_DOWN=0,GLOVE_UP,GLOVE_SHORTPRESS,GLOVE_LONGPRESS} TouchAction;
 
 #define SYPHON
 #define MOUSEDBG
 #endif
+
+
+#ifndef SUPPORTED_FORMATS
+#define SUPPORTED_FORMATS
+static vector<string> supported_formats;
+static int dumb_for_formats = (supported_formats.push_back("avi"),
+                               supported_formats.push_back("mp4"),
+                               supported_formats.push_back("mov"),
+                               supported_formats.push_back("pdf"),
+                               supported_formats.push_back("png"),
+                               supported_formats.push_back("jpg"),
+                               supported_formats.push_back("jpeg"),
+                               supported_formats.push_back("mp3"),
+                               supported_formats.push_back("wav"),0);
+#endif
+
+

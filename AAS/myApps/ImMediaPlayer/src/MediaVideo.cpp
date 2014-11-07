@@ -10,11 +10,12 @@
 
 
 void MediaVideo::load(string filePath){
-//    player.setPixelFormat(OF_PIXELS_RGB);
-    bool Loaded = player.loadMovie((filePath));
 
-    player.setLoopState(OF_LOOP_NORMAL);
-    player.play();
+    bool Loaded = player.loadMovie(filePath);
+    player.setLoopState(OF_LOOP_NONE);
+    
+    
+//    player.play();
     
     
 
@@ -24,27 +25,29 @@ void MediaVideo::unLoad(){
     
     player.close();
 }
-void MediaVideo::update(ofEventArgs & a){
+void MediaVideo::update(){
 
-    GloveInteractBox::update(a);
+
     if(!loaded && player.isLoaded()){
         box.set(0,0,player.getWidth(),player.getHeight());
+        format = player.getWidth()*1.0/player.getHeight();
         loaded = true;
     }
     player.update();
 }
 
-void MediaVideo::draw(ofEventArgs & a){
+void MediaVideo::draw(){
     if(loaded){
-
-        player.width = box.width;
-        player.height = box.height;
-    player.draw(box.x,box.y);
+    player.draw(box.x,box.y,box.width,box.height);
 
     }
-//        player.draw(box);
+
 }
 
+
+void MediaVideo::resize(int x, int y){
+
+}
 
 
 void MediaVideo::setTime(float pct){

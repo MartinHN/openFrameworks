@@ -24,13 +24,8 @@
 
 
 
-class GloveInstance;
+//class GloveInstance;
 
-class touchEventArgs : public ofEventArgs{
-public:
-    TouchType touchId;
-    TouchAction state;
-};
 
 
 
@@ -56,11 +51,7 @@ public:
     void registerOSC();
     void unregisterOSC();
     
-    static ofEvent<ofVec3f > orientationEvent;
-    static ofEvent<ofVec3f > relativeOrientationEvent;
-    static ofEvent<touchEventArgs > touchEvent;
-    static ofEvent< vector < float> > flexEvent;
-    static ofEvent<ofVec2f > cursor2DEvent;
+
     
     
 private:

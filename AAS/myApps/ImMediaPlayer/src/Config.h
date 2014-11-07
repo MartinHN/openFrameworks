@@ -14,8 +14,9 @@
 
 typedef enum{PDF,IMAGE,VIDEO} MediaType;
 
-
-
+#define MIN_BOX_WIDTH 200
+#define MIN_BOX_HEIGHT 200
+#define ZOOM_FACTOR 0.001
 
 
 //Screen
@@ -41,7 +42,7 @@ typedef enum {GLOVE_DOWN=0,GLOVE_UP,GLOVE_SHORTPRESS,GLOVE_LONGPRESS} TouchActio
 
 #define SYPHON
 #define MOUSEDBG
-#endif
+
 
 
 #ifndef SUPPORTED_FORMATS
@@ -58,4 +59,4 @@ static int dumb_for_formats = (supported_formats.push_back("avi"),
                                supported_formats.push_back("wav"),0);
 #endif
 
-
+#endif

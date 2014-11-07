@@ -15,6 +15,11 @@
 
 extern ofEvent<ofEventArgs> drawSyphonEvent;
 
+ofEvent<ofVec3f > GloveInstance::orientationEvent;
+ofEvent<ofVec3f > GloveInstance::relativeOrientationEvent;
+ofEvent<touchEventArgs > GloveInstance::touchEvent;
+ofEvent< vector < float> > GloveInstance::flexEvent;
+ofEvent<ofVec2f > GloveInstance::cursor2DEvent;
 
 
 GloveInstance::GloveInstance(string _gloveID):gloveID(_gloveID){
@@ -41,7 +46,7 @@ GloveInstance::~GloveInstance(){
 
 
 void GloveInstance::update(ofEventArgs & a){
-
+    
     
 }
 
@@ -51,6 +56,37 @@ void GloveInstance::draw(ofEventArgs & a){
 }
 
 
+
+
+void GloveInstance::setOrientation(ofVec3f _orientation){
+    orientation = _orientation;
+    ofNotifyEvent(orientationEvent,orientation ,this);
+}
+
+void GloveInstance::setRelativeOrientation(ofVec3f _r){
+    relativeOrientation = _r;
+    ofNotifyEvent(relativeOrientationEvent, relativeOrientation,this);
+}
+
+void GloveInstance::setTouch(TouchType tid,TouchAction state){
+    if(state == GLOVE_DOWN)touchs[tid] = true;
+    else touchs[tid] = false;
+    touchEventArgs a;
+    a.touchId = (TouchType)tid;
+    a.state = state;
+    ofNotifyEvent(touchEvent,a,this);
+}
+
+void GloveInstance::setFlex(int n,float f){
+    flex[n] = f;
+    ofNotifyEvent(flexEvent, flex,this);
+}
+
+void GloveInstance::setCursor2D(ofVec2f c){
+    cursor2D = c;
+    ofNotifyEvent(cursor2DEvent, cursor2D,this);
+    
+}
 
 
 

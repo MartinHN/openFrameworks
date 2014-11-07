@@ -12,7 +12,7 @@ void ofApp::setup(){
     cout << supported_formats.size() << endl;
     // video
     ofEnableAlphaBlending();
-    ofSetFrameRate(30);
+    ofSetFrameRate(70);
     
     outTexture.allocate(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
     
@@ -102,15 +102,11 @@ void ofApp::keyPressed(int key){
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            ev.touchId = GLOVE_ZOOM;
-            ev.state = GLOVE_DOWN;
-            ofNotifyEvent(glove.touchEvent,ev, curGlove);
+            curGlove->setTouch(GLOVE_ZOOM, GLOVE_DOWN);
             break;
             
         case 'd':
-            ev.touchId = GLOVE_DRAG;
-            ev.state = GLOVE_DOWN;
-            ofNotifyEvent(glove.touchEvent,ev, curGlove);
+            curGlove->setTouch(GLOVE_DRAG, GLOVE_DOWN);
             break;
             
         case 'l':
@@ -132,15 +128,11 @@ void ofApp::keyReleased(int key){
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            ev.touchId = GLOVE_ZOOM;
-            ev.state = GLOVE_UP;
-            ofNotifyEvent(glove.touchEvent,ev, curGlove);
+            curGlove->setTouch(GLOVE_ZOOM, GLOVE_UP);
             break;
             
         case 'd':
-            ev.touchId = GLOVE_DRAG;
-            ev.state = GLOVE_UP;
-            ofNotifyEvent(glove.touchEvent,ev, curGlove);
+            curGlove->setTouch(GLOVE_DRAG, GLOVE_UP);
             break;
             
         case 'l':
@@ -157,20 +149,14 @@ void ofApp::keyReleased(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved( int x, int y ){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->cursor2D.set(x,y);
-    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+
     // avoid conflict when using mouse and glove at the same time
     if(!glove.isConnectedToServer){
 
-            ofNotifyEvent(glove.cursor2DEvent,curGlove->cursor2D,curGlove);
-            isEventing=false;
+        curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
 
-        
-        
-        // any keypress emulates relative orientation events almost as in real world...
-        if(ofGetKeyPressed()){
-            curGlove->relativeOrientation = ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/400.0);
-            ofNotifyEvent(glove.relativeOrientationEvent, curGlove->relativeOrientation, curGlove);
+        if(ofGetKeyPressed('z')){
+            curGlove->setRelativeOrientation (ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/4.0));
         }
     }
     
@@ -181,11 +167,8 @@ void ofApp::mouseMoved( int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->cursor2D.set(x,y);
-    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
 
-    // still sends events when dragging
-    ofNotifyEvent(glove.cursor2DEvent,curGlove->cursor2D, curGlove);
 
     
 }
@@ -193,28 +176,20 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->cursor2D.set(x,y);
-    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
+    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
 
-    touchEventArgs ev;
-    ev.state = GLOVE_DOWN;
-    ev.touchId = GLOVE_CLICK;
-    ofNotifyEvent(glove.touchEvent,ev, curGlove);
- 
+    curGlove->setTouch(GLOVE_CLICK, GLOVE_DOWN);
+    
 
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->cursor2D.set(x,y);
-    curGlove->cursor2D*=Screens::instance()->resolution/scrS;
-
-    touchEventArgs ev;
-    ev.state = GLOVE_UP;
-    ev.touchId = GLOVE_CLICK;
-    ofNotifyEvent(glove.touchEvent,ev, curGlove);
     
+    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
+    
+    curGlove->setTouch(GLOVE_CLICK, GLOVE_UP);
 
     
     

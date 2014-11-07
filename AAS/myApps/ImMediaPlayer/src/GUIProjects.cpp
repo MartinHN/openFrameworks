@@ -34,7 +34,7 @@ void GUIProjects::init(){
     
     
     projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
-    
+
     projectsCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->DisableCallbacks();

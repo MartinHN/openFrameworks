@@ -46,7 +46,7 @@ GloveInteractBox::~GloveInteractBox(){
     if(it!=allElements.end())allElements.erase(it);
 }
 
-void GloveInteractBox::cursor2DMoved(ofVec2f & pos){
+void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
     
     bool _isHovered = this->isHit(pos);
     if(_isHovered && !isHovered){this->entered();}
@@ -62,34 +62,34 @@ void GloveInteractBox::cursor2DMoved(ofVec2f & pos){
     
 }
 
-void GloveInteractBox::relativeMoved(ofVec3f & pos){
-    float ofZoom = 1.0+pos.z;
+void GloveInteractBox::relativeMoved(ofVec3f  pos){
+    float ofZoom = 1.0+ZOOM_FACTOR*pos.z;
     updateZoom(ofZoom);
     
 }
 
-void GloveInteractBox::touch(touchEventArgs & a){
+void GloveInteractBox::touch(TouchType touchId,TouchAction state){
 
-    if(a.state == GLOVE_UP){
+    if(state == GLOVE_UP){
         dragged=NULL;
         zoomed == NULL;
-        selected = NULL;
+//        selected = NULL;
     }
 
     if(isHovered){
-        if(a.touchId == GLOVE_CLICK  ){
-        this->clicked(a.state);
+        if(touchId == GLOVE_CLICK  ){
+        this->clicked(state);
             selected = this;
         }
-        else if(isDraggable && a.touchId == GLOVE_DRAG){
-            if(a.state == GLOVE_DOWN && dragged == NULL){
+        else if(isDraggable && touchId == GLOVE_DRAG){
+            if(state == GLOVE_DOWN && dragged == NULL){
                 dragged = this;
                 dragOffset = curGlove->cursor2D-box.getCenter();
             }
 
         }
-        else if(isZoomable && a.touchId == GLOVE_ZOOM){
-            if(a.state == GLOVE_DOWN && zoomed == NULL){
+        else if(isZoomable && touchId == GLOVE_ZOOM){
+            if(state == GLOVE_DOWN ){
                 zoomed = selected;
             }
 
@@ -104,65 +104,100 @@ void GloveInteractBox::touch(touchEventArgs & a){
 
 
 
-void GloveInteractBox::draw(ofEventArgs &e){
+void GloveInteractBox::drawFrontMask(){
     ofPushStyle();
 
-    ofSetColor(backColor);
-    ofRect(box);
+    ofSetColor(backColor,30);
+    if(isHovered){
+        ofRectangle frame;
+        frame.setFromCenter(box.getCenter(), box.width, box.height);
+        ofRect(frame);
+    }
+    if(this == selected){
+        ofRectangle frame;
+        ofNoFill();
+        ofSetLineWidth(10);
+        ofSetColor(255,0,0);
+        frame.setFromCenter(box.getCenter(), box.width+5, box.height+5);
+        ofRect(frame);
+    }
+    
 
     ofPopStyle();
     
 }
 
-void GloveInteractBox::update(ofEventArgs &e){
-    
-}
+
 
 void GloveInteractBox::updateDrag(ofVec2f & v){
-//    cout << "up" << endl;
+
     if(dragged==this){
         ofRectangle newR (box);
         ofVec2f cen =box.getCenter()-dragOffset ;
         float alpha =ofClamp(0.7 - (cen-v).length()/700,0,1);
         newR.setFromCenter(alpha*cen+v*(1-alpha), box.width, box.height);
-        isValid(newR);
+        makeValid(newR);
         box.set(newR);
+
         
     }
 }
 
 void GloveInteractBox::updateZoom(float & z){
     
-    if(zoomed==this && box.width*z>100 && box.height*z>100 && box.height*z<Screens::instance()->resolution.y){
-        ofRectangle newR (box);
-        newR.setFromCenter(box.getCenter(),box.width* z,box.height* z);
+    if(zoomed==this ){
+        ofRectangle newR;
+        newR.setFromCenter(box.getCenter(),box.width*z,box.height* z);
         
-        isValid(newR);
+        makeValid(newR);
         box.set(newR);
-        
+        this->resize(box.x,box.y);
     }
 }
 
-bool GloveInteractBox::isValid(ofRectangle & newR){
-    ofRectangle rr = (*Screens::instance()->full);
-    if(!(*Screens::instance()->full).inside(newR)){
-        newR.x = MAX(rr.getMinX()+1,newR.x);
-        newR.width = MIN(rr.getMaxX()-1,newR.getMaxX()) -newR.getMinX();
-        newR.y = MAX(rr.getMinY()+1,newR.y);
-        newR.height = MIN(rr.getMaxY()-1,newR.getMaxY()) -newR.getMinY();
-        
-        return false;
-    }
+void GloveInteractBox::makeValid(ofRectangle & newR){
+    ofRectangle fullScreen = (*Screens::instance()->full);
     
-    bool res = true;
+    
+    // TODO: check 2d collision
+
     for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it!=allElements.end() ; ++it){
-        if((*it)->isCollider && (*it)->box.intersects(newR)){
-            res = false;
-            break;
+        if((*it)->isCollider && *it!=this && (*it)->box.intersects(newR)){
+            newR = box;
+            return;
         }
         
     }
-    return res;
+    
+    
+    
+    // lock to minimal size (format is checked at the end)
+    if(newR.width<MIN_BOX_WIDTH){
+        newR.setFromCenter(box.getCenter(), MIN_BOX_WIDTH, newR.height);
+    }
+    if(newR.height<MIN_BOX_HEIGHT){
+        newR.setFromCenter(box.getCenter(), newR.width,MIN_BOX_HEIGHT);
+    }
+    
+    // keep format
+    newR.setFromCenter(newR.getCenter(),newR.width , newR.width*1.0/format);
+    
+    // check that box is inside full screen
+    if(!fullScreen.inside(newR)){
+        newR.x = MAX(fullScreen.getMinX()+1,newR.x);
+        newR.width = MIN(fullScreen.getMaxX()-1,newR.getMaxX()) -newR.getMinX();
+        newR.y = MAX(fullScreen.getMinY()+1,newR.y);
+        newR.height = MIN(fullScreen.getMaxY()-1,newR.getMaxY()) -newR.getMinY();
+        
+        
+    }
+    
+
+
+    
+    
+
+    
     
 }
 

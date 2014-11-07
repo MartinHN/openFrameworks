@@ -21,10 +21,7 @@ void MediaVideo::load(string filePath){
 
 }
 
-void MediaVideo::unLoad(){
-    
-    player.close();
-}
+
 void MediaVideo::update(){
 
 

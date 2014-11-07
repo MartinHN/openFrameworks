@@ -1246,7 +1246,7 @@ int ofDirectory::listDir(){
 			ofLogWarning() << "couldn't add file " << e.what();
 		}
 	}
-    if(files.empty()){
+    if(files.size()==0){
         return 0;
     }
 	if(!showHidden){

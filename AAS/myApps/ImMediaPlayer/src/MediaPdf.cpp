@@ -30,6 +30,4 @@ void MediaPdf::offset(ofVec2f t){
     
 }
 
-void MediaPdf::unLoad(){
-    pdf.close();
-}
+

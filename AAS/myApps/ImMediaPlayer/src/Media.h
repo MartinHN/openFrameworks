@@ -34,14 +34,13 @@ class Media : public GloveInteractBox{
     Media(){
         isCollider = true;
     };
-    ~Media(){
+    virtual ~Media(){
 
 };
     
     
     virtual void load(string filePath){};
     virtual void resize(int x, int y){};
-    virtual void unLoad(){};
     virtual void draw(){};
     virtual void update(){};
 

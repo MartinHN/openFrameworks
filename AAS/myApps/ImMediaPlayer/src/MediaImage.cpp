@@ -12,19 +12,19 @@
 void MediaImage::load(string filePath){
     
     image.loadImage(filePath);
+    format = image.width*1.0/image.height;
+}
+
+void MediaImage::draw(){
+    
+    image.draw(box.x, box.y,box.width,box.height);
 
 }
 
-void MediaImage::draw(ofEventArgs & a){
 
-
-    image.width = box.width;
-    image.height = box.height;
-
-    image.draw(box.x-image.width/2.0, box.y-image.height/2.0);
+void MediaImage::resize(int x, int y){
 
 }
-
 
 
 void MediaImage::unLoad(){

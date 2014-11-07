@@ -34,7 +34,7 @@ public:
     ofRectangle box;
     ofColor backColor;
     
-    
+    float format = 1;
     
     
     
@@ -51,23 +51,19 @@ public:
     bool isSelectable = true;
     static GloveInteractBox* selected;
     
-    
-    
-  // from GloveInteract used to trigger box functions
-    virtual void touch(touchEventArgs & a);
-    virtual void relativeMoved(ofVec3f & pos);
-    virtual void cursor2DMoved(ofVec2f & arg);
-    
-    virtual void update(ofEventArgs & e);
-    virtual void draw(ofEventArgs & e);
 
     
+  // from GloveInteract used to trigger box functions
+    
+    virtual void touch( TouchType num, TouchAction s);
+    virtual void relativeMoved( ofVec3f v);
+    virtual void cursor2DMoved( ofVec2f v );
     
 
     
     static ofRectangle getFreeSpace();
     static vector<GloveInteractBox* > allElements;
-    bool isValid(ofRectangle & newR);
+    void makeValid(ofRectangle & newR);
     
     
     
@@ -76,14 +72,26 @@ public:
     virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
     virtual void clicked(TouchAction & state){};
-    
+    virtual void resize(int x,int y){};
 
     virtual void exited(){};
     virtual void entered(){};
     
     
+    virtual void update(ofEventArgs & e){
+        this->update();
+    }
+    virtual void draw(ofEventArgs & e){
+        this->draw();
+        drawFrontMask();
+    };
+    
+    virtual void draw(){};
+    virtual void update(){};
     
     
+    // automatic draw hover and selected masks
+    void drawFrontMask();
     
 protected:
     bool isHovered;

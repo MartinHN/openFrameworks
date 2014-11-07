@@ -11,15 +11,19 @@
 
 void MediaPdf::load(string fp){
     pdf.load(fp);
+    format = pdf.getWidth()*1.0/pdf.getHeight();
 }
 
-void MediaPdf::draw(ofEventArgs & a){
+void MediaPdf::draw(){
     ofSetColor(255);
     ofRect(box);
-    pdf.resize(box.width, box.height);
+    
     pdf.draw();
 }
 
+void MediaPdf::resize(int x, int y){
+    pdf.resize(box.width, box.height);
+}
 
 void MediaPdf::offset(ofVec2f t){
  

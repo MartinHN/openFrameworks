@@ -39,15 +39,15 @@ bool MediaPool::loadMedias(string path){
     ofDirectory dir(path);
     dir.listDir();
     vector<ofFile> mediasf = dir.getFiles();
-
+    
     for(vector<ofFile>::iterator it=mediasf.begin() ; it!=mediasf.end() ; ++it){
         
         Media * m =createMedia(it->path());
-
+        
         if(m!=NULL){
             medias.push_back(m);
         }
-                  
+        
     }
     if( medias.size()==0){
         return false;
@@ -68,6 +68,7 @@ bool MediaPool::loadMedias(string path){
         pos+= ofVec2f(rr.x,rr.y);
         tmp.setFromCenter(pos.x,pos.y,step.x*.8,step.y*.8);
         (*it)->box = tmp;
+        (*it)->resize(step.x/2, step.y/2);
         idxx++;
     }
     
@@ -101,6 +102,7 @@ Media * MediaPool::createMedia(string filePath){
     m->name = file.getBaseName();
     m->path = filePath;
     m->load(filePath);
+    
     
     return m;
 };

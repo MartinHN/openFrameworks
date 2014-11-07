@@ -28,7 +28,7 @@ class Media : public GloveInteractBox{
 
     MediaType type;
     string path;
-
+    
     
     
     Media(){
@@ -40,9 +40,10 @@ class Media : public GloveInteractBox{
     
     
     virtual void load(string filePath){};
+    virtual void resize(int x, int y){};
     virtual void unLoad(){};
     virtual void draw(){};
-
+    virtual void update(){};
 
     
 

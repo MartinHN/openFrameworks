@@ -17,11 +17,7 @@ vector<GloveInstance*> GloveOSC::gloves;
 ofxOscReceiver GloveOSC::reciever;
 ofxOscSender GloveOSC::toServer;
 
-ofEvent<ofVec3f > GloveOSC::orientationEvent;
-ofEvent<ofVec3f > GloveOSC::relativeOrientationEvent;
-ofEvent<touchEventArgs > GloveOSC::touchEvent;
-ofEvent< vector < float> > GloveOSC::flexEvent;
-ofEvent<ofVec2f > GloveOSC::cursor2DEvent;
+
 
 
 GloveOSC::GloveOSC(){
@@ -103,40 +99,34 @@ void GloveOSC::parseMessage(){
             else if(addr == "/orientation"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     ofVec3f orientation(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-                    curGlove->orientation = orientation;
-                    ofNotifyEvent(orientationEvent,orientation ,curGlove);
+                    curGlove->setOrientation ( orientation);
+                    
                 }
             }
             else if(addr == "/relative"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->relativeOrientation = ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
-                    ofNotifyEvent(relativeOrientationEvent, curGlove->relativeOrientation,curGlove);
+                    curGlove->setRelativeOrientation (ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3)));
+                    
                     
                 }
             }
             else if(addr == "/touch"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    int tid =m.getArgAsInt32(1);
-                    TouchAction state = (TouchAction)m.getArgAsInt32(2);
-                    if(state == GLOVE_DOWN)curGlove->touchs[tid] = true;
-                    else curGlove->touchs[tid] = false;
-                    touchEventArgs a;
-                    a.touchId = (TouchType)tid;
-                    a.state = state;
-                    ofNotifyEvent(touchEvent,a,curGlove);
+                    curGlove->setTouch((TouchType)m.getArgAsInt32(1),(TouchAction)m.getArgAsInt32(2));
+
                 }
             }
             else if(addr == "/flex"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->flex[m.getArgAsInt32(1)] = m.getArgAsFloat(2);
-                    ofNotifyEvent(flexEvent, curGlove->flex,curGlove);
+                    curGlove->setFlex(m.getArgAsInt32(1), m.getArgAsFloat(2));
+
                 }
             }
             else if(addr == "/cursor2D"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->cursor2D = ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2));
-                    curGlove->cursor2D*=Screens::instance()->resolution;
-                    ofNotifyEvent(cursor2DEvent, curGlove->cursor2D,curGlove);
+                    curGlove->setCursor2D ( ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2))*Screens::instance()->resolution);
+                   
+
                 }
             }
             return;

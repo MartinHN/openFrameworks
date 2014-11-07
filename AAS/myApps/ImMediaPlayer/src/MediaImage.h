@@ -24,8 +24,9 @@ public:
     
     ofImage image;
    
-   virtual void load(string filePath);
-   virtual void unLoad();
-   virtual void draw(ofEventArgs & a);
+    virtual void load(string filePath);
+    virtual void unLoad();
+    virtual void draw();
+    virtual void resize(int x, int y);
 };
 #endif /* defined(__ImMedia__MediaImage__) */

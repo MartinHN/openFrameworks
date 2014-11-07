@@ -15,9 +15,9 @@ GloveInstance * GloveInteract::curGlove = NULL;
 GloveInteract::GloveInteract(){
 
 
-        ofAddListener( GloveOSC::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-        ofAddListener(GloveOSC::touchEvent,this,&GloveInteract::touch);
-        ofAddListener(GloveOSC::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
+        ofAddListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
+        ofAddListener(GloveInstance::touchEvent,this,&GloveInteract::touch);
+        ofAddListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
     
     
     ofAddListener(ofEvents().update, this, &GloveInteract::update);
@@ -28,9 +28,9 @@ GloveInteract::GloveInteract(){
 
 GloveInteract::~GloveInteract(){
 
-        ofRemoveListener( GloveOSC::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-        ofRemoveListener(GloveOSC::touchEvent,this,&GloveInteract::touch);
-        ofRemoveListener(GloveOSC::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
+        ofRemoveListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
+        ofRemoveListener(GloveInstance::touchEvent,this,&GloveInteract::touch);
+        ofRemoveListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
         
     
     

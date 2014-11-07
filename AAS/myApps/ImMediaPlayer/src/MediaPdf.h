@@ -23,9 +23,10 @@ public:
     
     ofxPDF pdf;
   
-   void load(string filePath);
-   void unLoad();
-   void draw(ofEventArgs & a);
+    virtual void load(string filePath);
+    virtual void unLoad();
+    virtual void draw();
+    virtual void resize(int x, int y);
     void offset(ofVec2f t);
 };
 

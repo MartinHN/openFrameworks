@@ -29,7 +29,10 @@ public:
     virtual void load(string filePath);
     virtual void draw();
     virtual void resize(int x, int y);
-    virtual void update();    
+    virtual void update();
+    
+    
+    virtual void touch(TouchType t,TouchAction a);
     
     void setTime(float pct);
 

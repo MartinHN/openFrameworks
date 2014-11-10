@@ -6,6 +6,12 @@
 //
 //
 
+// this class is responsible for GUI handling
+// normal touch events are recieved from GUIGloveWrapper
+// specific action can be listened too from GloveInteractBox inheritance
+// GloveInteractBox is for handling drawlayer and collisions
+
+
 #ifndef __ImMedia__GUIProjects__
 #define __ImMedia__GUIProjects__
 
@@ -21,24 +27,25 @@
 
 
 
-class GUIProjects{
+class GUIProjects : public GloveInteractBox{
     
     
     public :
     
     GUIProjects();
-    virtual ~GUIProjects(){};
+    ~GUIProjects(){};
     ofxMtlWatchFolder watch;
     static ofFile currentDirectory;
     
     ofxUIDropDownList* projectsList;
+    ofxUIImageButton* backButton;
     ofxUISuperCanvas* projectsCanvas;
     
     void init();
     void registerListeners();
     
-    void draw(ofEventArgs & a);
-    void update(ofEventArgs & a);
+    virtual void draw(ofEventArgs & a);
+    virtual void update(ofEventArgs & a);
     
     void startWatch(string s="");
     void projectsAdded(string& filename);
@@ -48,6 +55,9 @@ class GUIProjects{
     void setCurrentDirectory(string path);
     static bool isProject(ofFile d);
     
+    
+    
+    // specific glove action from Glove Interact
 
     
     

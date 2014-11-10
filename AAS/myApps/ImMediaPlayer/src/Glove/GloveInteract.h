@@ -32,6 +32,7 @@ public:
     GloveInteract();
     ~GloveInteract();
     
+    // can be accessed by subclasses when notifyied
     static GloveInstance * curGlove;
     
 
@@ -62,7 +63,6 @@ public:
     virtual void update(){};
     
     
-    void setcurrentData(GloveInstance* gid);
 
 
 };

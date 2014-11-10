@@ -9,7 +9,7 @@ void ofApp::setup(){
     //    ofSetDataPathRoot("../Resources/data/");
 #endif
     
-    cout << supported_formats.size() << endl;
+
     // video
     ofEnableAlphaBlending();
     ofSetFrameRate(70);
@@ -29,7 +29,7 @@ void ofApp::setup(){
     
     // GUI Init
     projects.init();
-    projects.startWatch();
+
     
     
     
@@ -180,17 +180,25 @@ void ofApp::mousePressed(int x, int y, int button){
 
     curGlove->setTouch(GLOVE_CLICK, GLOVE_DOWN);
     
-
+    lastMousePress = ofGetElapsedTimef();
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
+
     GloveInstance * curGlove = glove.getGlove("mouse");
     
     curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
     
     curGlove->setTouch(GLOVE_CLICK, GLOVE_UP);
 
+    if(ofGetElapsedTimef()-lastMousePress>.15){
+        curGlove->setTouch(GLOVE_CLICK,GLOVE_LONGPRESS);
+    }
+    else{
+        curGlove->setTouch(GLOVE_CLICK,GLOVE_SHORTPRESS);
+    }
+    
     
     
 }

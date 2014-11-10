@@ -29,6 +29,10 @@ void GUIProjects::init(){
     
     ofRectangle  r =Screens::instance()->walls[0]->rectScreen();
     
+    
+    backButton = new ofxUIImageButton(r.width,100,false,"UI/backButton.png","backButton");
+
+    
     projectsList = new ofxUIDropDownList("List",vector<string>(),400,r.x,r.y);
     projectsList->setAutoClose(false);
     projectsList->open();
@@ -37,6 +41,8 @@ void GUIProjects::init(){
     projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
     projectsCanvas->setName("Projects");
     
+    
+    projectsCanvas->addWidgetDown(backButton);
     projectsCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->DisableCallbacks();
@@ -123,7 +129,10 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
 
         
         if(canvas->getName()=="Projects"){
-            if(parent->getName()=="List"){
+            if (a.widget->getName()=="backButton"){
+                
+            }
+            else if(parent->getName()=="List"){
                 string curpath = currentDirectory.path()+"/"+a.widget->getName();
                 ofFile f(curpath);
                 if(isProject(f)){

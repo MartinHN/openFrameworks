@@ -17,7 +17,6 @@ void Watcher::setup(){
     
     for(vector<string>::iterator it = supported_formats.begin() ; it !=supported_formats.end();++it){
     watch.allowExt(*it);
-        cout << *it <<endl;
     }
 
 

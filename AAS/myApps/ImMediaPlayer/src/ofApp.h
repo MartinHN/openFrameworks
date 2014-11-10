@@ -47,7 +47,7 @@ class ofApp : public ofBaseApp{
 #ifdef MOUSEDBG
     ofVec2f relMouse;
     bool isEventing=false;
-    
+    float lastMousePress=0;
 #endif
     ofVec2f scrS;
     ofVboMesh gradientMesh;

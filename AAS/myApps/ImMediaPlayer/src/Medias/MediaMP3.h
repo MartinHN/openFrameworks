@@ -18,12 +18,15 @@ class MediaMP3 :public  Media{
     
 public:
     MediaMP3(){};
-    ~MediaMP3(){};
+    ~MediaMP3(){player.unloadSound();};
     
   
-    virtual void load(string filePath){};
+    virtual void load(string filePath){player.loadSound(filePath);};
     virtual void draw(){};
     virtual void resize(int x, int y){};
+    
+    
+    ofSoundPlayer player;
 };
 
 

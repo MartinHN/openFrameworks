@@ -21,9 +21,6 @@
 #include "GloveOSC.h"
 
 
-
-
-
 class GloveInteract  {
   
 

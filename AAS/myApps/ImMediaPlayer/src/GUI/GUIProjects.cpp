@@ -31,9 +31,12 @@ void GUIProjects::init(){
     
     
     backButton = new ofxUIImageButton(r.width,100,false,"UI/backButton.png","backButton");
-
+    backButton->setVisible(true);
     
-    projectsList = new ofxUIDropDownList("List",vector<string>(),400,r.x,r.y);
+    projectsListScrollCanvas = new ofxUIScrollableCanvas(r.x,r.y,r.width,r.height);
+    projectsListScrollCanvas->setName("ScrollList");
+    projectsListScrollCanvas->setColorFill(ofColor(255,0,0,0));
+    projectsList = new ofxUIDropDownList("List",vector<string>());
     projectsList->setAutoClose(false);
     projectsList->open();
     ((ofxUIToggle*)projectsList)->setVisible(false);
@@ -41,11 +44,13 @@ void GUIProjects::init(){
     projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
     projectsCanvas->setName("Projects");
     
+//    projectsListScrollCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->addWidgetDown(backButton);
     projectsCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->DisableCallbacks();
+    projectsListScrollCanvas->DisableCallbacks();
     projectsCanvas->enableTouchEventCallbacks();
     setCurrentDirectory( "/Users/mhermant/Desktop/TestImMedia");
     
@@ -53,6 +58,7 @@ void GUIProjects::init(){
     
     ofAddListener(drawSyphonEvent, this, &GUIProjects::draw,OF_EVENT_ORDER_BEFORE_APP);
     ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
+    
     
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
@@ -64,7 +70,10 @@ void GUIProjects::init(){
 
 void GUIProjects::startWatch(string s){
     
-    if(watch.isRunning())watch.stop();
+    if(watch.isRunning())
+    {
+        watch.stop();
+    };
     projectsList->clearToggles();
 
     watch.start(currentDirectory.path()+"/"+s, 1000);
@@ -110,8 +119,9 @@ bool GUIProjects::isProject(ofFile f){
 }
 
 void GUIProjects::draw(ofEventArgs & a){
+
     projectsCanvas->draw();
-    
+//    projectsListScrollCanvas->draw();    
 }
 
 
@@ -135,12 +145,9 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
             else if(parent->getName()=="List"){
                 string curpath = currentDirectory.path()+"/"+a.widget->getName();
                 ofFile f(curpath);
-                if(isProject(f)){
-                    MediaPool::instance()->loadMedias(f.path());
-                }
-                else{
+
                     setCurrentDirectory(curpath);
-                }
+                
             }
         }
         

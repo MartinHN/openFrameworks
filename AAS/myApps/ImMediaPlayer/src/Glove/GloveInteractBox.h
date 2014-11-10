@@ -30,10 +30,11 @@ public:
     
     static bool isCollision;
     
-    static GloveInteractBox * dragged;
+    static GloveInteractBox * dragged,*lastDragged;
     static GloveInteractBox * zoomed;
     static GloveInteractBox* selected;
-    
+    static ofColor hoverColor;
+    static ofColor selectedColor;
     
     // box state
     
@@ -44,7 +45,6 @@ public:
     ofRectangle targetBox;
     ofVec2f targetMagnet;
     float alphaTarget = 0.2;
-    ofColor backColor;
     ofParameter<int> drawLayer = 0;
     float format = 1;
     bool isDraggable=true;
@@ -65,14 +65,12 @@ public:
     
     
     static vector<GloveInteractBox* > allElements;
-    void makeValid(ofRectangle & newR);
+    
     
     
     
     // triggered functions
     //overriden in inherited class
-    
-    
     
     virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
@@ -111,7 +109,8 @@ protected:
     // automatic draw hover and selected masks
     void drawFrontMask();
     void smooth();
-    void resolveCollision(ofRectangle & newR);
+    void makeValid(ofRectangle & newR);
+    void resolveCollision(ofRectangle newR);
     void updateDrag(ofVec2f & c);
     void setDrawLayer(int & l);
     

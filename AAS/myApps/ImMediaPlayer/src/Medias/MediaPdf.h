@@ -27,6 +27,8 @@ public:
     virtual void draw();
     virtual void resize(int x, int y);
     void offset(ofVec2f t);
+    
+    ofRectangle lastbox;
 };
 
 

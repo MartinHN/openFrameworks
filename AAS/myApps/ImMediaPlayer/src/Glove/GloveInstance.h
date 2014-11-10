@@ -5,7 +5,7 @@
 //  Created by Tinmar on 28/10/2014.
 //
 //
-// Class for handling glove connection with server and sending events in oF
+// Class representing a glove instance
 
 
 
@@ -59,6 +59,11 @@ public:
     vector<bool>  touchs;
     vector<float>  flex;
     ofVec2f cursor2D;
+    
+    
+    ofVec3f orientationVel;
+    ofVec3f relativeOrientationVel;
+    ofVec2f cursor2DVel;
     
     
     void setOrientation(ofVec3f o);

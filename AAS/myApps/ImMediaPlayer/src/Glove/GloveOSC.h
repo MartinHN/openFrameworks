@@ -5,7 +5,7 @@
 //  Created by Tinmar on 28/10/2014.
 //
 //
-// Class for handling glove connection with server and sending events in oF
+// Class for handling glove connections with server and sending events in oF
 
 
 
@@ -17,14 +17,8 @@
 
 #include "ofxOsc.h"
 #include "ofMain.h"
-
 #include "Config.h"
-
 #include "GloveInstance.h"
-
-
-
-//class GloveInstance;
 
 
 

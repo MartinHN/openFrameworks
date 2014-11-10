@@ -25,7 +25,6 @@ ofEvent<ofVec2f > GloveInstance::cursor2DEvent;
 GloveInstance::GloveInstance(string _gloveID):gloveID(_gloveID){
     
     touchs = vector<bool>(NUMTOUCH,false);
-    
     flex = vector<float>(NUMFLEX,0);
     
     cursorImg =  ofImage();
@@ -59,11 +58,13 @@ void GloveInstance::draw(ofEventArgs & a){
 
 
 void GloveInstance::setOrientation(ofVec3f _orientation){
+    orientationVel = _orientation - orientation;
     orientation = _orientation;
     ofNotifyEvent(orientationEvent,orientation ,this);
 }
 
 void GloveInstance::setRelativeOrientation(ofVec3f _r){
+    relativeOrientationVel = _r - relativeOrientation;
     relativeOrientation = _r;
     ofNotifyEvent(relativeOrientationEvent, relativeOrientation,this);
 }
@@ -83,6 +84,7 @@ void GloveInstance::setFlex(int n,float f){
 }
 
 void GloveInstance::setCursor2D(ofVec2f c){
+    cursor2DVel = c-cursor2D;
     cursor2D = c;
     ofNotifyEvent(cursor2DEvent, cursor2D,this);
     

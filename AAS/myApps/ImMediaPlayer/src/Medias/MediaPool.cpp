@@ -68,7 +68,8 @@ bool MediaPool::loadMedias(string path){
         pos+= ofVec2f(rr.x,rr.y);
         tmp.setFromCenter(pos.x,pos.y,step.x*.8,step.y*.8);
         (*it)->box = tmp;
-        (*it)->resize(step.x/2, step.y/2);
+        (*it)->targetBox = tmp;
+        (*it)->resize(tmp.width,tmp.height);
         idxx++;
     }
     

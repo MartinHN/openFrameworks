@@ -927,7 +927,8 @@ void ofGLRenderer::drawRectangle(float x, float y, float z,float w, float h){
 		rectPoints[2].set(x+w/2.0f, y+h/2.0f, z);
 		rectPoints[3].set(x-w/2.0f, y+h/2.0f, z);
 	}
-
+    
+    
 	// use smoothness, if requested:
 	if (bSmoothHinted && fillFlag == OF_OUTLINE) startSmoothing();
 

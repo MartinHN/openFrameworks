@@ -12,43 +12,29 @@ void ofApp::setup(){
 
     // video
     ofEnableAlphaBlending();
-    ofSetFrameRate(70);
+    ofEnableSmoothing();
+    ofEnableAntiAliasing();
+
+    ofSetFrameRate(60);
     
     outTexture.allocate(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
     
     
     // keep it ordered
-    
-    
-    
+  
     //Screens
     Screens::instance();
-    
-    
-    
-    
+ 
     // GUI Init
     projects.init();
-
-    
-    
-    
-    
+   
     // Syphon
     syphonOut.setName(APPNAME);
-    
-    
-    
-    
-    
-    
-    // Background
     ofSetBackgroundAuto(true);
-    
-    back.loadImage("mire.png");
-    
+    ofSetBackgroundColor(0);
+#ifdef MOUSEDBG
     GloveOSC::gloves.push_back(new GloveInstance("mouse"));
-    
+#endif
     
 //    ofSetWindowShape(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
     windowResized(ofGetWindowWidth(), ofGetWindowHeight());
@@ -75,9 +61,6 @@ void ofApp::draw(){
     ofSetColor(0);
     ofVec2f res (Screens::instance()->resolution.x,Screens::instance()->resolution.y);
     ofRect(0,0,Screens::instance()->resolution.x,Screens::instance()->resolution.y);
-    //    back.width = res.x;
-    //    back.height = res.y;
-    //    back.draw(0,0);
     drawBackground(ofColor::gray, ofColor::black, OF_GRADIENT_BAR);
     ofSetColor(255);
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
@@ -88,7 +71,7 @@ void ofApp::draw(){
     syphonOut.publishTexture(&outTexture.getTextureReference());
 #endif
     
-    ofSetColor(255);
+    ofSetColor(255,255,255,255);
     outTexture.draw(0,0,scrS.x,scrS.y);
 }
 
@@ -168,18 +151,13 @@ void ofApp::mouseMoved( int x, int y ){
 void ofApp::mouseDragged(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
     curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
-
-
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
     curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
-
     curGlove->setTouch(GLOVE_CLICK, GLOVE_DOWN);
-    
     lastMousePress = ofGetElapsedTimef();
 }
 
@@ -187,11 +165,8 @@ void ofApp::mousePressed(int x, int y, int button){
 void ofApp::mouseReleased(int x, int y, int button){
 
     GloveInstance * curGlove = glove.getGlove("mouse");
-    
     curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
-    
     curGlove->setTouch(GLOVE_CLICK, GLOVE_UP);
-
     if(ofGetElapsedTimef()-lastMousePress>.15){
         curGlove->setTouch(GLOVE_CLICK,GLOVE_LONGPRESS);
     }

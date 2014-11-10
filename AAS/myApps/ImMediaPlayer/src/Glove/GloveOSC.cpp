@@ -21,13 +21,10 @@ ofxOscSender GloveOSC::toServer;
 
 
 GloveOSC::GloveOSC(){
+    
     reciever.setup(LOCALPORT);
-    
-    
     toServer.setup(SERVERIP, SERVERPORT);
     lastACK = ofGetElapsedTimef();
-    
-    
     
 }
 
@@ -37,11 +34,11 @@ GloveOSC::~GloveOSC(){
     for(  vector<GloveInstance*>::iterator it =gloves.begin() ; it!= gloves.end();++it){
         delete *it;
     }
-    
 }
 
 
 void GloveOSC::update(ofEventArgs & a){
+    
     registerOSC();
     parseMessage();
     
@@ -100,33 +97,26 @@ void GloveOSC::parseMessage(){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     ofVec3f orientation(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3));
                     curGlove->setOrientation ( orientation);
-                    
                 }
             }
             else if(addr == "/relative"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->setRelativeOrientation (ofVec3f(m.getArgAsFloat(1),m.getArgAsFloat(2),m.getArgAsFloat(3)));
-                    
-                    
                 }
             }
             else if(addr == "/touch"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->setTouch((TouchType)m.getArgAsInt32(1),(TouchAction)m.getArgAsInt32(2));
-
                 }
             }
             else if(addr == "/flex"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->setFlex(m.getArgAsInt32(1), m.getArgAsFloat(2));
-
                 }
             }
             else if(addr == "/cursor2D"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
                     curGlove->setCursor2D ( ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2))*Screens::instance()->resolution);
-                   
-
                 }
             }
             return;

@@ -583,9 +583,9 @@ void ofxUICanvas::draw() {
     glDisable(GL_LIGHTING);
 
     glEnable(GL_BLEND);
-#ifndef OFX_UI_TARGET_TOUCH
+//#ifndef OFX_UI_TARGET_TOUCH
     glBlendEquation(GL_FUNC_ADD);
-#endif
+//#endif
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     ofxUISetRectMode(OFX_UI_RECTMODE_CORNER);

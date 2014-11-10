@@ -21,6 +21,8 @@
 
 #include "Screens.h"
 
+#include "ofxXmlSettings.h"
+
 class MediaPool{
     
 public:
@@ -38,6 +40,9 @@ public:
     bool loadMedias(string path);
     void unloadAll();
     
+    
+    
+    ofParameterGroup settings;
     
 private:
     static MediaPool * insti;

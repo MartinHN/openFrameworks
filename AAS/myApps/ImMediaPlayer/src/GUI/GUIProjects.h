@@ -37,8 +37,12 @@ class GUIProjects : public GloveInteractBox{
     ofxMtlWatchFolder watch;
     static ofFile currentDirectory;
     
+    ofxUIScrollableCanvas * projectsListScrollCanvas;
     ofxUIDropDownList* projectsList;
+    
     ofxUIImageButton* backButton;
+    
+    
     ofxUISuperCanvas* projectsCanvas;
     
     void init();

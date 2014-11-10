@@ -195,4 +195,5 @@ private:
 	set<int> textureLocationsEnabled;
 
 	int alphaMaskTextureTarget;
+
 };

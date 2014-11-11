@@ -30,8 +30,8 @@ void GUIProjects::init(){
     ofRectangle  r =Screens::instance()->walls[0]->rectScreen();
     
     
-    backButton = new ofxUIImageButton(r.width,100,false,"UI/backButton.png","backButton");
-    backButton->setVisible(true);
+    backButton = new ofxUIImageButton(r.width-40,100,false,"UI/backButton.png","backButton");
+    
     
     projectsListScrollCanvas = new ofxUIScrollableCanvas(r.x,r.y,r.width,r.height);
     projectsListScrollCanvas->setName("ScrollList");
@@ -43,14 +43,17 @@ void GUIProjects::init(){
     
     projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
     projectsCanvas->setName("Projects");
+    projectsCanvas->getCanvasTitle()->setVisible(false);
     
-//    projectsListScrollCanvas->addWidgetDown(projectsList);
+    //    projectsListScrollCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->addWidgetDown(backButton);
     projectsCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->DisableCallbacks();
     projectsListScrollCanvas->DisableCallbacks();
+    
+    
     projectsCanvas->enableTouchEventCallbacks();
     setCurrentDirectory( "/Users/mhermant/Desktop/TestImMedia");
     
@@ -70,14 +73,14 @@ void GUIProjects::init(){
 
 void GUIProjects::startWatch(string s){
     
-    if(watch.isRunning())
+    //    if(watch.isRunning())
     {
         watch.stop();
     };
     projectsList->clearToggles();
-
+    
     watch.start(currentDirectory.path()+"/"+s, 1000);
-
+    
 }
 
 void GUIProjects::registerListeners() {
@@ -87,14 +90,17 @@ void GUIProjects::registerListeners() {
 
 
 void GUIProjects::setCurrentDirectory(string path){
+    cout << "path : " <<  path << endl;
     if (path!= ""){
-    ofFile f(path);
+        ofFile f(path);
         if(isProject(f)){
             MediaPool::instance()->loadMedias(path);
         }
-        else if(f.isDirectory()){
+        else if(f.isDirectory() && !ofDirectory::isDirectoryEmpty(path)){
+            
             currentDirectory = ofFile(path);
             startWatch("");
+            
         }
     }
     
@@ -103,25 +109,25 @@ void GUIProjects::setCurrentDirectory(string path){
 bool GUIProjects::isProject(ofFile f){
     
     if(f.isDirectory()){
-    ofDirectory d(f.path());
-    d.listDir();
-    vector<ofFile> files = d.getFiles();
-    
-    // if there is one media, it's a project
-    for(int i = 0 ; i < files.size() ; i++){
-        if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()){
-            return true;
-        }
+        ofDirectory d(f.path());
+        d.listDir();
+        vector<ofFile> files = d.getFiles();
         
-    }
+        // if there is one media, it's a project
+        for(int i = 0 ; i < files.size() ; i++){
+            if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()){
+                return true;
+            }
+            
+        }
     }
     return false;
 }
 
 void GUIProjects::draw(ofEventArgs & a){
-
+    
     projectsCanvas->draw();
-//    projectsListScrollCanvas->draw();    
+    //    projectsListScrollCanvas->draw();
 }
 
 
@@ -136,17 +142,23 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
     ofxUIWidget* canvas = a.widget->getCanvasParent();
     if(canvas!=NULL){
         ofxUIWidget* parent = a.widget->getParent();
-
+        
         
         if(canvas->getName()=="Projects"){
             if (a.widget->getName()=="backButton"){
+                vector<string> pathF = ofSplitString(currentDirectory.path(),"/");
+                if(pathF.size()<=1)return;
+                pathF.resize(pathF.size()-1);
+                if(pathF.size()<=1)return;
+                string curpath = ofJoinString(pathF,"/");
+                curpath="/"+curpathd;
+                setCurrentDirectory(curpath);
                 
             }
             else if(parent->getName()=="List"){
                 string curpath = currentDirectory.path()+"/"+a.widget->getName();
-                ofFile f(curpath);
-
-                    setCurrentDirectory(curpath);
+                
+                setCurrentDirectory(curpath);
                 
             }
         }

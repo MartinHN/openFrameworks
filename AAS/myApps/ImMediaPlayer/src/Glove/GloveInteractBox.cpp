@@ -142,10 +142,8 @@ void GloveInteractBox::updateDrag(ofVec2f & v){
     
     if(dragged==this){
         
-        ofRectangle newR (box);
-        ofVec2f cen =v-dragOffset ;
-        float alpha =1;
-        newR.setFromCenter(alpha*cen+v*(1-alpha), box.width, box.height);
+        ofRectangle newR;
+        newR.setFromCenter(v-dragOffset, box.width, box.height);
         makeValid(newR);
         targetBox.set(newR);
         

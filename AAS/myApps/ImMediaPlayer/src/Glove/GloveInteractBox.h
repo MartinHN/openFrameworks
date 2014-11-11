@@ -36,6 +36,9 @@ public:
     static ofColor hoverColor;
     static ofColor selectedColor;
     
+    
+    static vector<GloveInteractBox* > allElements;
+    
     // box state
     
     string name;
@@ -64,7 +67,7 @@ public:
     
     
     
-    static vector<GloveInteractBox* > allElements;
+    
     
     
     

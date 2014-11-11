@@ -176,25 +176,17 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         newR.setFromCenter(box.getCenter(), newR.width,MIN_BOX_HEIGHT);
     }
     
-    
-
-    
     // check that box is inside full screen
     if(!fullScreen.inside(newR)){
         ofVec2f center;
-        center.x = ofClamp(newR.getCenter().x,fullScreen.getMinX() + box.width/2.0,fullScreen.getMaxX()-box.width/2.0);
-        center.y = ofClamp(newR.getCenter().y,fullScreen.getMinY() + box.height/2.0,fullScreen.getMaxY()-box.height/2.0);
+        center.x = ofClamp(newR.getCenter().x,fullScreen.getMinX(),fullScreen.getMaxX());
+        center.y = ofClamp(newR.getCenter().y,fullScreen.getMinY(),fullScreen.getMaxY());
         newR.setFromCenter(center,box.width,box.height);
         
     }
     
     // keep format
     newR.setFromCenter(newR.getCenter(),newR.width , newR.width*1.0/format);
-
-    
-    
-    
-    
     
 }
 void GloveInteractBox::smooth(){
@@ -220,7 +212,7 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
     // check 2d collision
     
     ofVec2f _targetMagnet;
-    if(isCollision){
+    if(isCollision && isCollider){
         bool isColliding = false;
         
         

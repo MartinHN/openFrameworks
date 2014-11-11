@@ -136,7 +136,7 @@ void ofApp::mouseMoved( int x, int y ){
     // avoid conflict when using mouse and glove at the same time
     if(!glove.isConnectedToServer){
 
-        curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
+        curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
 
         if(ofGetKeyPressed('z')){
             curGlove->setRelativeOrientation (ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/4.0));
@@ -150,13 +150,13 @@ void ofApp::mouseMoved( int x, int y ){
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
+    curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
+    curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
     curGlove->setTouch(GLOVE_CLICK, GLOVE_DOWN);
     lastMousePress = ofGetElapsedTimef();
 }
@@ -165,7 +165,7 @@ void ofApp::mousePressed(int x, int y, int button){
 void ofApp::mouseReleased(int x, int y, int button){
 
     GloveInstance * curGlove = glove.getGlove("mouse");
-    curGlove->setCursor2D(ofVec2f(x,y)*Screens::instance()->resolution/scrS);
+    curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
     curGlove->setTouch(GLOVE_CLICK, GLOVE_UP);
     if(ofGetElapsedTimef()-lastMousePress>.15){
         curGlove->setTouch(GLOVE_CLICK,GLOVE_LONGPRESS);

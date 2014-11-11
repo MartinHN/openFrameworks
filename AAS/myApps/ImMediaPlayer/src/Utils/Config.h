@@ -24,7 +24,7 @@ typedef enum{PDF,IMAGE,VIDEO} MediaType;
 
 
 #define ANCHOR_WIDTH 300
-#define ANCHOR_HEIGHT 200
+
 
 
 //Glove

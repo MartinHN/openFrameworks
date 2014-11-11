@@ -18,6 +18,7 @@
 		6474CBF719BCE019003C94E2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF119BCE00B003C94E2 /* CoreMedia.framework */; };
 		6474CBF819BCE019003C94E2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF219BCE00B003C94E2 /* QuartzCore.framework */; };
 		67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
+		6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */; };
 		6F70B4D31A0B833F00C7B3EF /* draw_affine.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46B1A0B833F00C7B3EF /* draw_affine.c */; };
 		6F70B4D41A0B833F00C7B3EF /* draw_blend.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46C1A0B833F00C7B3EF /* draw_blend.c */; };
 		6F70B4D51A0B833F00C7B3EF /* draw_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46D1A0B833F00C7B3EF /* draw_device.c */; };
@@ -249,6 +250,8 @@
 		6474CBF219BCE00B003C94E2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetaScreen.cpp; sourceTree = "<group>"; };
+		6F44D95B1A12810C008A4FC8 /* MetaScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaScreen.h; sourceTree = "<group>"; };
 		6F70B4551A0B833F00C7B3EF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6F70B4681A0B833F00C7B3EF /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		6F70B46B1A0B833F00C7B3EF /* draw_affine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_affine.c; sourceTree = "<group>"; };
@@ -623,6 +626,17 @@
 				6F7FF0111A11109200B7C2B5 /* GloveOSC.h */,
 			);
 			name = Glove;
+			sourceTree = "<group>";
+		};
+		6F44D9591A127DCD008A4FC8 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				6F7FF02C1A1110D300B7C2B5 /* Screens.cpp */,
+				6F7FF02D1A1110D300B7C2B5 /* Screens.h */,
+				6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */,
+				6F44D95B1A12810C008A4FC8 /* MetaScreen.h */,
+			);
+			name = Screens;
 			sourceTree = "<group>";
 		};
 		6F70B4541A0B833F00C7B3EF /* ofxPDF */ = {
@@ -1054,6 +1068,7 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				6F44D9591A127DCD008A4FC8 /* Screens */,
 				6F3A7D471A0BC7480084DFDA /* Glove */,
 				F26C673B19FFF9DE0039F116 /* GUI */,
 				F26C673119FFE7CC0039F116 /* Utils */,
@@ -1204,8 +1219,6 @@
 		F26C673119FFE7CC0039F116 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				6F7FF02C1A1110D300B7C2B5 /* Screens.cpp */,
-				6F7FF02D1A1110D300B7C2B5 /* Screens.h */,
 				6F7FF0091A11101B00B7C2B5 /* Config.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				F26C671419FD47500039F116 /* Watcher.cpp */,
@@ -1451,6 +1464,7 @@
 				6F7A7F7C1A0D1120000F3125 /* ofxUIWaveform.cpp in Sources */,
 				6F7FF0311A11155D00B7C2B5 /* ProjectHandler.cpp in Sources */,
 				6F70B4DD1A0B833F00C7B3EF /* base_context.c in Sources */,
+				6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */,
 				6F70B5491A0B849100C7B3EF /* ofxSyphonClient.mm in Sources */,
 				6F70B51E1A0B833F00C7B3EF /* pdf_store.c in Sources */,
 				6F70B5201A0B833F00C7B3EF /* pdf_type3.c in Sources */,

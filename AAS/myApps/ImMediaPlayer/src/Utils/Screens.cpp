@@ -69,8 +69,10 @@ Screens::Screens(){
     
     
     ofRectangle screenR = ofRectangle(0,0,resolution.x,resolution.y);
+    // reCenter fullscreen anchor to the middle of center wall,  as left and right wall have not the same size...
     float anchXOffset;
     anchXOffset = walls[1]->getCenter().x - screenR.getCenter().x;
+    
     full = new MetaScreen(screenR,screensAnchorUp,"fullScreen",ofVec2f(anchXOffset,0));
     
     

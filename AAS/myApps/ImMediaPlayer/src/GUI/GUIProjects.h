@@ -56,7 +56,7 @@ class GUIProjects : public GloveInteractBox{
     void projectsRemoved(string& filename);
     
     void GUIevent(ofxUIEventArgs & a);
-    void setCurrentDirectory(string path);
+    void setCurrentDirectory(string  path);
     static bool isProject(ofFile d);
     
     

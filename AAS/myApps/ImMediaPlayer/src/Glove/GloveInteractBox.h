@@ -45,6 +45,7 @@ public:
     
     bool isCollider = false;
     ofRectangle box;
+    ofRectangle drawBox;
     ofRectangle targetBox;
     ofVec2f targetMagnet;
     float alphaTarget = 0.2;
@@ -87,6 +88,7 @@ public:
     virtual void update(){};
 
     
+    void updateDrawBox();
     
     static ofRectangle getFreeSpace();
     
@@ -99,18 +101,13 @@ protected:
     
     // common intern handling methods
     
-    virtual void update(ofEventArgs & e){
-        smooth();
-        this->update();
-    }
-    virtual void draw(ofEventArgs & e){
-        this->draw();
-        drawFrontMask();
-    };
+    virtual void update(ofEventArgs & e);
+    virtual void draw(ofEventArgs & e);
     
     
     // automatic draw hover and selected masks
     void drawFrontMask();
+    
     void smooth();
     void makeValid(ofRectangle & newR);
     void resolveCollision(ofRectangle newR);

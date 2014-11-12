@@ -151,7 +151,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                 pathF.resize(pathF.size()-1);
                 if(pathF.size()<=1)return;
                 string curpath = ofJoinString(pathF,"/");
-                curpath="/"+curpathd;
+                curpath="/"+curpath;
                 setCurrentDirectory(curpath);
                 
             }

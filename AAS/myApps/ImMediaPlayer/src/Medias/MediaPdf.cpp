@@ -16,18 +16,13 @@ void MediaPdf::load(string fp){
 
 void MediaPdf::draw(){
     ofSetColor(255);
-    ofRect(box);
+    ofRect(drawBox);
    
     pdf.draw();
-    if(box != lastbox){
-        
-        int aaa = 0;
-        lastbox = box;
-    }
 }
 
 void MediaPdf::resize(int x, int y){
-    pdf.resize(box.width, box.height);
+    pdf.resize(drawBox.width, drawBox.height);
 }
 
 void MediaPdf::offset(ofVec2f t){

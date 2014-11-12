@@ -61,14 +61,16 @@ bool MediaPool::loadMedias(string path){
     int nstepy = nstepx;//rr.width*/
     ofVec2f step(rr.width*1.0/nstepx,rr.height*1.0/nstepy);
     int idxx = 0;
-    ofRectangle tmp;
+    ofRectangle tmp,originRect;
     for(vector<Media*>::iterator it=medias.begin() ; it!=medias.end() ; ++it){
         ofVec2f pos( ((int)idxx%nstepx)+0.51,((int)idxx/nstepx)+0.51);
         pos*=step;
         pos+= ofVec2f(rr.x,rr.y);
         tmp.setFromCenter(pos.x,pos.y,step.x*.8,step.y*.8);
-        (*it)->box = tmp;
+        originRect.setFromCenter(pos.x,pos.y,step.x*.2,step.y*.2);
+        (*it)->box = originRect;
         (*it)->targetBox = tmp;
+        (*it)->updateDrawBox();
         (*it)->resize(tmp.width,tmp.height);
         idxx++;
     }

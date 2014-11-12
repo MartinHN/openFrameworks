@@ -8,6 +8,8 @@
 
 #include "GUIGloveWrapper.h"
 
+#include "ofxTweener.h"
+
 class ofApp : public ofBaseApp{
 
 	public:

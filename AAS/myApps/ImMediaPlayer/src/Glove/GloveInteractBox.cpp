@@ -32,6 +32,7 @@ GloveInteractBox::GloveInteractBox():GloveInteract(){
     ofAddListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer);
     drawLayer.addListener(this, &GloveInteractBox::setDrawLayer);
     box.set(1+ofRandom(1000),1+ofRandom(1000),400,400);
+    drawBox= box;
     allElements.push_back(this);
 }
 
@@ -155,10 +156,11 @@ void GloveInteractBox::updateZoom(float & z){
     
     if(zoomed==this ){
         ofRectangle newR;
-        newR.setFromCenter(box.getCenter(),box.width*z,box.width* z*1.0/format);
+        newR.setFromCenter(box.getCenter(),box.width*z,box.height* z);
         
         makeValid(newR);
         targetBox.set(newR);
+         
         
     }
 }
@@ -166,7 +168,7 @@ void GloveInteractBox::updateZoom(float & z){
 void GloveInteractBox::makeValid(ofRectangle & newR){
     ofRectangle fullScreen = (*Screens::instance()->full);
     
-    // lock to minimal size (format is checked at the end)
+    // lock to minimal size
     if(newR.width<MIN_BOX_WIDTH){
         newR.setFromCenter(box.getCenter(), MIN_BOX_WIDTH, newR.height);
     }
@@ -183,8 +185,8 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         
     }
     
-    // keep format
-    newR.setFromCenter(newR.getCenter(),newR.width , newR.width*1.0/format);
+
+    updateDrawBox();
     
 }
 void GloveInteractBox::smooth(){
@@ -196,8 +198,18 @@ void GloveInteractBox::smooth(){
                                 ofLerp(box.getCenter().y,   targetBox.getCenter().y+targetMagnet.y,   alphaTarget),
                                 ofLerp(box.width,           targetBox.width,                            alphaTarget),
                                 ofLerp(box.height,          targetBox.height,                           alphaTarget));
-        this->resize(box.width,box.height);
         
+        
+        // avoid infinitesimal changes
+        if(abs(targetBox.x+targetMagnet.x - box.x)<.1 &&
+           abs(targetBox.y+targetMagnet.y - box.y)<.1 &&
+           abs(targetBox.width - box.width)<.05 &&
+           abs(targetBox.height - box.height)<.05){
+            box.setFromCenter(targetBox.getCenter() + targetMagnet, targetBox.width, targetBox.height);
+            
+        }
+        
+        updateDrawBox();
     }
 
    
@@ -209,12 +221,13 @@ void GloveInteractBox::smooth(){
 void GloveInteractBox::resolveCollision(ofRectangle  newR){
     // check 2d collision
     
-    ofVec2f _targetMagnet;
+    
     if(isCollision && isCollider){
         bool isColliding = false;
         
         
         if(!dragged && lastDragged == this){
+            ofVec2f _targetMagnet;
             _targetMagnet.set(0);
             // vector representing the sum of overlapping of boxes
             ofVec2f delta(0);
@@ -241,6 +254,7 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
                     _targetMagnet= delta ;
                     isColliding = true;
                     
+                   
                     
                     
                 }
@@ -261,6 +275,17 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
     
 }
 
+void GloveInteractBox::updateDrawBox(){
+
+    if(format>1){
+        drawBox.setFromCenter(box.getCenter(), box.width, box.width*1.0/format);
+    }
+    else{
+        drawBox.setFromCenter(box.getCenter(), box.height*format, box.height);
+    }
+    this->resize(drawBox.width,drawBox.height);
+}
+
 void GloveInteractBox::setDrawLayer(int &l){
     ofRemoveListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer.getLast());
     ofAddListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer);
@@ -268,5 +293,21 @@ void GloveInteractBox::setDrawLayer(int &l){
     
 }
 
+
+void GloveInteractBox::draw(ofEventArgs & e){
+    ofPushStyle();
+    ofSetColor(0);
+    ofRect(box);
+    ofSetColor(255);
+    this->draw();
+    drawFrontMask();
+    ofPopStyle();
+};
+
+
+void GloveInteractBox::update(ofEventArgs & e){
+    smooth();
+    this->update();
+}
 
 

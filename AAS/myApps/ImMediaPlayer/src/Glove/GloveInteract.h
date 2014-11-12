@@ -53,15 +53,16 @@ public:
     
     
     // overriden in sub class
-    virtual void touch( TouchType num, TouchAction s){};
+    virtual void touch( TouchButton num, TouchAction s){};
     virtual void relativeMoved( ofVec3f v){};
     virtual void cursor2DMoved( ofVec2f v ){};
     
     virtual void update(){};
     
     
-
-
+    void removeGloveListeners(int priority);
+    void addListeners(int & priority);
+    ofParameter<int> gloveEventsPriority;
 };
 
 

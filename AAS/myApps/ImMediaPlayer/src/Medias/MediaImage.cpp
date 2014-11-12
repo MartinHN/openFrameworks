@@ -13,18 +13,16 @@ void MediaImage::load(string filePath){
     
     image.loadImage(filePath);
     format = image.width*1.0/image.height;
+    isLoaded = true;
 }
 
-void MediaImage::draw(){
+void MediaImage::drawMedia(){
     
     image.draw(drawBox.x, drawBox.y,drawBox.width,drawBox.height);
 
 }
 
 
-void MediaImage::resize(int x, int y){
-
-}
 
 
 

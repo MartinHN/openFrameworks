@@ -55,14 +55,21 @@ bool MediaPool::loadMedias(string path){
     
     Screens * ss = Screens::instance();
     ofRectangle rr = ss->walls[1]->rectScreen();
+    makeGrid(medias,rr);
+    
+    return true;
+}
+
+void MediaPool::makeGrid(vector<Media*> _medias,ofRectangle rr){
+    
     float ratio = rr.width/rr.height;
     
-    int nstepx = sqrt(mediasf.size())+1;
+    int nstepx = sqrt(_medias.size())+1;
     int nstepy = nstepx;//rr.width*/
     ofVec2f step(rr.width*1.0/nstepx,rr.height*1.0/nstepy);
     int idxx = 0;
     ofRectangle tmp,originRect;
-    for(vector<Media*>::iterator it=medias.begin() ; it!=medias.end() ; ++it){
+    for(vector<Media*>::iterator it=_medias.begin() ; it!=_medias.end() ; ++it){
         ofVec2f pos( ((int)idxx%nstepx)+0.51,((int)idxx/nstepx)+0.51);
         pos*=step;
         pos+= ofVec2f(rr.x,rr.y);
@@ -71,23 +78,23 @@ bool MediaPool::loadMedias(string path){
         (*it)->box = originRect;
         (*it)->targetBox = tmp;
         (*it)->updateDrawBox();
-        (*it)->resize(tmp.width,tmp.height);
+        
         idxx++;
     }
     
-    return true;
 }
 
 Media * MediaPool::createMedia(string filePath){
     ofFile file(filePath);
     string ext = file.getExtension();
     Media * m = NULL;
-    
+    int foundIdx=-1;
+
     
     if(ext == "avi" || ext == "mp4" || ext == "mov"){
         m = (Media*) new MediaVideo();
     }
-    else if(ext == "jpeg" || ext == "jpg" || ext == "png"){
+    else if(ext == "jpeg" || ext == "jpg" || ext == "png" || ext == "gif"){
         m = (Media*) new MediaImage();
     }
     
@@ -98,16 +105,23 @@ Media * MediaPool::createMedia(string filePath){
     else if(ext == "mp3" || ext == "wav"){
         m = (Media*) new MediaMP3();
     }
+    
+    else if((foundIdx = file.getFileName().find_last_of("_presentation") )!= string::npos && foundIdx == file.getFileName().length() - 13){
+        m = (Media*) new MediaPresentation();
+    }
+    
     if(m==NULL)return NULL;
     
-    file.close();
+    
     
     m->name = file.getBaseName();
     m->path = filePath;
     m->load(filePath);
     
-    
+    file.close();
     return m;
 };
+
+
 
 

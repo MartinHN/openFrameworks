@@ -146,6 +146,7 @@ private:
 
 		Value(ParameterType v)
 		:value(v)
+        ,prevValue(v)
 		,bInNotify(false)
 		,serializable(true)
 		,parent(NULL){};
@@ -153,14 +154,16 @@ private:
 		Value(string name, ParameterType v)
 		:name(name)
 		,value(v)
-		,bInNotify(false)
+		,prevValue(v)
+        ,bInNotify(false)
 		,serializable(true)
 		,parent(NULL){};
 
 		Value(string name, ParameterType v, ParameterType min, ParameterType max)
 		:name(name)
 		,value(v)
-		,min(min)
+		,prevValue(v)
+        ,min(min)
 		,max(max)
 		,bInNotify(false)
 		,serializable(true)

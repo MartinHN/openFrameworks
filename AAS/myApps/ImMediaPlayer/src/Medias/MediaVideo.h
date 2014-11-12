@@ -28,12 +28,12 @@ public:
     
     
     virtual void load(string filePath);
-    virtual void draw();
-    virtual void resize(int x, int y);
+    virtual void drawMedia();
     virtual void update();
+    virtual void boxMoved();
+    virtual void boxResized();
     
-    
-    virtual void touch(TouchType t,TouchAction a);
+    virtual void touch(TouchButton t,TouchAction a);
     
     void setTime(float pct);
     
@@ -44,7 +44,9 @@ public:
     ofImage stopImage;
     float alphaStop;
     
+    ofRectangle logoRect;
+    
 private:
-    bool loaded = false;
+    
 };
 #endif /* defined(__ImMedia__MediaVideo__) */

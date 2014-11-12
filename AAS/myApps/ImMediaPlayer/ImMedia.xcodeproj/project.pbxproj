@@ -18,6 +18,7 @@
 		6474CBF719BCE019003C94E2 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF119BCE00B003C94E2 /* CoreMedia.framework */; };
 		6474CBF819BCE019003C94E2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6474CBF219BCE00B003C94E2 /* QuartzCore.framework */; };
 		67FE4C7B15C2F0478C8126C2 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3B361208CD4107E479F04E7B /* NetworkingUtils.cpp */; };
+		6F3085F71A137CD8006E8172 /* MediaPresentation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F3085F51A137CD8006E8172 /* MediaPresentation.cpp */; };
 		6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */; };
 		6F46B90A1A135EF200E8E154 /* ofxTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9041A135EF200E8E154 /* ofxTransitions.cpp */; };
 		6F46B90B1A135EF200E8E154 /* ofxTweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9061A135EF200E8E154 /* ofxTweener.cpp */; };
@@ -252,6 +253,8 @@
 		6474CBF219BCE00B003C94E2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		65EEFA3DA3526E9CDD9C21F9 /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxOscBundle.cpp; path = ../../../addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		6B65E6930994CC4B2D2B8B33 /* OscPacketListener.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = OscPacketListener.h; path = ../../../addons/ofxOsc/libs/oscpack/src/osc/OscPacketListener.h; sourceTree = SOURCE_ROOT; };
+		6F3085F51A137CD8006E8172 /* MediaPresentation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediaPresentation.cpp; sourceTree = "<group>"; };
+		6F3085F61A137CD8006E8172 /* MediaPresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaPresentation.h; sourceTree = "<group>"; };
 		6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MetaScreen.cpp; sourceTree = "<group>"; };
 		6F44D95B1A12810C008A4FC8 /* MetaScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaScreen.h; sourceTree = "<group>"; };
 		6F46B9021A135EF200E8E154 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -1241,6 +1244,8 @@
 				6F7FF0231A1110C500B7C2B5 /* MediaPool.h */,
 				6F7FF0241A1110C500B7C2B5 /* MediaVideo.cpp */,
 				6F7FF0251A1110C500B7C2B5 /* MediaVideo.h */,
+				6F3085F51A137CD8006E8172 /* MediaPresentation.cpp */,
+				6F3085F61A137CD8006E8172 /* MediaPresentation.h */,
 			);
 			name = Medias;
 			sourceTree = "<group>";
@@ -1374,6 +1379,7 @@
 				6F70B5251A0B833F00C7B3EF /* pdf_xref_aux.c in Sources */,
 				6F70B4DF1A0B833F00C7B3EF /* base_geometry.c in Sources */,
 				6F70B4F41A0B833F00C7B3EF /* filt_lzwd.c in Sources */,
+				6F3085F71A137CD8006E8172 /* MediaPresentation.cpp in Sources */,
 				6F70B4F01A0B833F00C7B3EF /* doc_outline.c in Sources */,
 				F26C672B19FFE2400039F116 /* tinyxmlparser.cpp in Sources */,
 				6F70B5061A0B833F00C7B3EF /* stm_read.c in Sources */,

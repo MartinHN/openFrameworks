@@ -50,7 +50,7 @@ void MetaScreen::update(ofEventArgs &a){
     
     else{
         if(fullScreened!=NULL && isHovering==true){
-            fullScreened->drawLayer = -1;
+            fullScreened->drawLayer = defaultLayer;
             fullScreened->targetBox = *this;
             isHovering = false;
         }

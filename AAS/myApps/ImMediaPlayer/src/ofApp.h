@@ -10,6 +10,9 @@
 
 #include "ofxTweener.h"
 
+
+
+
 class ofApp : public ofBaseApp{
 
 	public:
@@ -50,6 +53,7 @@ class ofApp : public ofBaseApp{
     ofVec2f relMouse;
     bool isEventing=false;
     float lastMousePress=0;
+        map<char,bool> keys;
 #endif
     ofVec2f scrS;
     ofVboMesh gradientMesh;
@@ -57,4 +61,5 @@ class ofApp : public ofBaseApp{
     
     ofImage back;
    
+
 };

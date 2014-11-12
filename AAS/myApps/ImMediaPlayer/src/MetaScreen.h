@@ -41,6 +41,7 @@ class MetaScreen : public ofRectangle{
     ofRectangle rectScreen(){
         return *((ofRectangle*)this);
     }
+    int defaultLayer;
     
     
 };

@@ -24,7 +24,7 @@ public:
     GUIGloveWrapper(){};
     ~GUIGloveWrapper(){};
     
-    virtual void touch( TouchType num, TouchAction s){
+    virtual void touch( TouchButton num, TouchAction s){
         ofTouchEventArgs a;
         int  idTouch = 0 ;
         for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
@@ -33,12 +33,12 @@ public:
         a.id = idTouch;
         a.set(curGlove->cursor2D);
         
-        if(num==GLOVE_CLICK){
-            if(s == GLOVE_DOWN){
+        if(num==GLOVE_BUTTON_CLICK){
+            if(s == GLOVE_ACTION_DOWN){
                 a.type = ofTouchEventArgs::down;
                 ofNotifyEvent(ofEvents().touchDown, a );
             }
-            else if(s == GLOVE_UP){
+            else if(s == GLOVE_ACTION_UP){
                 a.type = ofTouchEventArgs::up;
                 ofNotifyEvent(ofEvents().touchUp, a);
             }

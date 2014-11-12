@@ -23,7 +23,7 @@
 
 class touchEventArgs : public ofEventArgs{
 public:
-    TouchType touchId;
+    TouchButton touchId;
     TouchAction state;
 };
 
@@ -68,7 +68,7 @@ public:
     
     void setOrientation(ofVec3f o);
     void setRelativeOrientation(ofVec3f o);
-    void setTouch(TouchType t,TouchAction a);
+    void setTouch(TouchButton t,TouchAction a);
     void setFlex(int n,float f);
     void setCursor2D(ofVec2f c);
 

@@ -14,13 +14,15 @@ extern ofEvent<ofEventArgs> drawSyphonEvent;
 
 GloveInteractBox * GloveInteractBox::dragged=NULL;
 GloveInteractBox * GloveInteractBox::lastDragged=NULL;
-GloveInteractBox * GloveInteractBox::zoomed=NULL;
+//GloveInteractBox * GloveInteractBox::zoomed=NULL;
 GloveInteractBox * GloveInteractBox::selected=NULL;
 
 ofColor GloveInteractBox::hoverColor(100,100,100,30);
 ofColor GloveInteractBox::selectedColor(255,0,0,100);
 
 bool GloveInteractBox::isCollision=true;
+
+int GloveInteractBox::frontDragLayer=0;
 
 vector<GloveInteractBox*> GloveInteractBox::allElements;
 
@@ -33,7 +35,13 @@ GloveInteractBox::GloveInteractBox():GloveInteract(){
     drawLayer.addListener(this, &GloveInteractBox::setDrawLayer);
     box.set(1+ofRandom(1000),1+ofRandom(1000),400,400);
     drawBox= box;
+    drawLayer = allElements.size();
     allElements.push_back(this);
+    isSelected = false;
+    isHovered = false;
+    
+    targetMagnet.set(0);
+    
 }
 
 
@@ -67,40 +75,76 @@ void GloveInteractBox::relativeMoved(ofVec3f  pos){
     
 }
 
-void GloveInteractBox::touch(TouchType touchId,TouchAction state){
+void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
     
-    if(state == GLOVE_UP){
+    if(state == GLOVE_ACTION_UP){
         if(dragged!=NULL){
             lastDragged = dragged;
-         dragged->drawLayer = 0;
+            //            dragged->drawLayer = dragged->drawLayer.getLast();
         }
         dragged=NULL;
-        zoomed == NULL;
+        //        zoomed == NULL;
         
     }
     
+    // intern handling function
+    // prefer using GLOVE_ACTION_DOWN for intern state update and GLOVE_ACTION_xxxPRESS for callbacks
+    
     if(isHovered){
-        if(touchId == GLOVE_CLICK  ){
-            this->clicked(state);
-            selected = this;
+        cout << "hovered = " << name << endl;
+        if( state == GLOVE_ACTION_DOWN && touchId == GLOVE_BUTTON_CLICK ){
+            
+            
+            if(selected!=NULL && drawLayer>selected->drawLayer){
+                selected->isSelected = false;
+                selected->sendBack();
+                selected = NULL;
+            }
+            if(selected == NULL){//
+                selected = this;
+                selected->isSelected = true;
+                selected->sendForeground();
+                
+            }
+            
+            
         }
-        else if(isDraggable && touchId == GLOVE_DRAG){
-            if(state == GLOVE_DOWN && (dragged == NULL )){//|| (curGlove->cursor2D-box.getCenter()).lengthSquared()< (curGlove->cursor2D-dragged->box.getCenter()).lengthSquared())){
+        else if( isDraggable && touchId == GLOVE_BUTTON_DRAG && state == GLOVE_ACTION_DOWN){
+            
+            
+            //            if( amIFirstLayer(curGlove->cursor2D) ){
+            if(dragged == NULL){
+                
                 dragged = this;
-                dragged->drawLayer = 1;
+                dragged->sendForeground();
+                // underlying evets will be produced if box actually move see boxMoved() function called in updateBox()
                 targetBox = box;
                 targetMagnet.set(0);
                 dragOffset = curGlove->cursor2D-box.getCenter();
             }
             
-        }
-        else if(isZoomable && touchId == GLOVE_ZOOM){
-            if(state == GLOVE_DOWN ){
-                zoomed = selected;
-            }
             
         }
+        //        else if(isZoomable && touchId == GLOVE_BUTTON_ZOOM){
+        //            if(state == GLOVE_ACTION_DOWN ){
+        //                                zoomed = selected;
+        //            }
+        
+        
+        
+        
+        // callbacks
+        if(state == GLOVE_ACTION_SHORTPRESS){
+            this->clicked(touchId);
+        }
     }
+    else if(state == GLOVE_ACTION_DOWN && touchId == GLOVE_BUTTON_CLICK && selected==this){
+        cout << "unselect = " << name << endl;
+        this->isSelected = false;
+        selected = NULL;
+    }
+    
+    
     
     
     
@@ -108,11 +152,39 @@ void GloveInteractBox::touch(TouchType touchId,TouchAction state){
 }
 
 
+void GloveInteractBox::sendForeground(){
+    vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
+    if(drawLayer != vec.size()){
+        
+        for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
+            if((*it)->drawLayer>drawLayer) (*it)->drawLayer = (*it)->drawLayer  - 1;
+        }
+        
+        drawLayer = vec.size();
+    }
+}
 
+void GloveInteractBox::sendBackground(){
+    if(drawLayer != 0){
+        vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
+        for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
+            (*it)->drawLayer = (*it)->drawLayer  +1;
+        }
+        drawLayer = 0;
+    }
+}
+
+void GloveInteractBox::sendBack(){
+    vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
+    for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
+        if((*it)->drawLayer==drawLayer-1) (*it)->drawLayer = (*it)->drawLayer  +1;
+    }
+    drawLayer = drawLayer-1;
+}
 
 void GloveInteractBox::drawFrontMask(){
     ofPushStyle();
-
+    
     
     ofFill();
     if(isHovered){
@@ -130,6 +202,15 @@ void GloveInteractBox::drawFrontMask(){
         ofRect(box.getMaxX()-lineW,box.getMinY()+lineW,lineW,box.height-2*lineW);
         ofRect(box.getMinX(),box.getMaxY()-lineW,box.width,lineW);
         ofRect(box.getMinX(),box.getMinY()+lineW,lineW,box.height-2*lineW);
+    }
+    
+    if(this == dragged){
+        ofSetColor(255,0,0);
+        ofNoFill();
+        ofSetLineWidth(box.width/400.0);
+        ofCircle(box.getCenter(), box.width/40.0);
+        ofLine(box.getCenter() - ofVec2f(box.width/30.0,0), box.getCenter() + ofVec2f(box.width/30.0,0));
+        ofLine(box.getCenter() - ofVec2f(0,box.width/30.0), box.getCenter() + ofVec2f(0,box.width/30.0));
     }
     
     
@@ -154,13 +235,18 @@ void GloveInteractBox::updateDrag(ofVec2f & v){
 
 void GloveInteractBox::updateZoom(float & z){
     
-    if(zoomed==this ){
+    if(selected==this ){
         ofRectangle newR;
-        newR.setFromCenter(box.getCenter(),box.width*z,box.height* z);
+        ofVec2f reformatZoom(0);
+        if(z<1){
+            reformatZoom.x = MAX(box.width*z-drawBox.width,0);
+            reformatZoom.y = MAX(box.height*z-drawBox.height,0);
+        }
+        newR.setFromCenter(box.getCenter(),box.width*z - reformatZoom.x,box.height* z - reformatZoom.y);
         
         makeValid(newR);
         targetBox.set(newR);
-         
+        
         
     }
 }
@@ -176,8 +262,8 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         newR.setFromCenter(box.getCenter(), newR.width,MIN_BOX_HEIGHT);
     }
     
-    // check that box is inside full screen
-    if(!fullScreen.inside(newR)){
+    // check that box center is inside full screen
+    if(!fullScreen.inside(newR.getCenter())){
         ofVec2f center;
         center.x = ofClamp(newR.getCenter().x,fullScreen.getMinX(),fullScreen.getMaxX());
         center.y = ofClamp(newR.getCenter().y,fullScreen.getMinY(),fullScreen.getMaxY());
@@ -185,19 +271,25 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         
     }
     
-
+    
     updateDrawBox();
     
 }
-void GloveInteractBox::smooth(){
+void GloveInteractBox::updateBox(){
     
     if(targetBox+targetMagnet!=box){
-
-        resolveCollision(targetBox);
+        
+        //        resolveCollision(targetBox);
+        bool isMoving = (targetBox.x+targetMagnet.x != box.x || targetBox.y+targetMagnet.y != box.y);
+        
+        bool isResizing = (targetBox.width != box.width || targetBox.height != box.height);
+        
+        
+        
         box.setFromCenter(      ofLerp(box.getCenter().x,   targetBox.getCenter().x +targetMagnet.x,   alphaTarget),
-                                ofLerp(box.getCenter().y,   targetBox.getCenter().y+targetMagnet.y,   alphaTarget),
-                                ofLerp(box.width,           targetBox.width,                            alphaTarget),
-                                ofLerp(box.height,          targetBox.height,                           alphaTarget));
+                          ofLerp(box.getCenter().y,   targetBox.getCenter().y+targetMagnet.y,   alphaTarget),
+                          ofLerp(box.width,           targetBox.width,                            alphaTarget),
+                          ofLerp(box.height,          targetBox.height,                           alphaTarget));
         
         
         // avoid infinitesimal changes
@@ -209,10 +301,16 @@ void GloveInteractBox::smooth(){
             
         }
         
+        
         updateDrawBox();
+        
+        // Callbacks
+        
+        if(isResizing)this->boxResized();
+        if(isMoving)this->boxMoved();
     }
-
-   
+    
+    
 }
 
 
@@ -235,9 +333,9 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
             insideBox.setFromCenter(box.getCenter(),box.width-2, box.height-2);
             for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it!=allElements.end() ; ++it){
                 if((*it)->isCollider && *it!=this && (*it)->box.intersects(insideBox) ){
-
+                    
                     ofVec2f distance = newR.getCenter() - (*it)->box.getCenter();
-                   
+                    
                     float xoverlap = ((newR.width + (*it)->box.width)/2.0  - abs(distance.x));
                     if(xoverlap>0){
                         delta.x += (distance.x>0?1:-1)*xoverlap;
@@ -254,7 +352,7 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
                     _targetMagnet= delta ;
                     isColliding = true;
                     
-                   
+                    
                     
                     
                 }
@@ -267,7 +365,7 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
                 
             }
             
-
+            
         }
     }
     
@@ -276,26 +374,32 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
 }
 
 void GloveInteractBox::updateDrawBox(){
-
-    if(format>1){
-        drawBox.setFromCenter(box.getCenter(), box.width, box.width*1.0/format);
-    }
-    else{
-        drawBox.setFromCenter(box.getCenter(), box.height*format, box.height);
-    }
-    this->resize(drawBox.width,drawBox.height);
+    
+    drawBox.scaleTo(box,OF_SCALEMODE_FIT);
+    
 }
 
 void GloveInteractBox::setDrawLayer(int &l){
     ofRemoveListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer.getLast());
     ofAddListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer);
+    gloveEventsPriority = -drawLayer.get();
     
+}
+
+bool GloveInteractBox::amIFirstLayer(ofVec2f & p){
+    vector<GloveInteractBox*> res;
+    for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it != allElements.end() ; ++it){
+        if((*it)!=this &&(*it)->isHovered && this->drawLayer<(*it)->drawLayer)return false;
+    }
     
+    return true;
 }
 
 
 void GloveInteractBox::draw(ofEventArgs & e){
     ofPushStyle();
+    ofSetColor(ofColor::black, 100);
+    ofRect(box+ofVec2f(-5,5));
     ofSetColor(0);
     ofRect(box);
     ofSetColor(255);
@@ -306,8 +410,17 @@ void GloveInteractBox::draw(ofEventArgs & e){
 
 
 void GloveInteractBox::update(ofEventArgs & e){
-    smooth();
+    updateBox();
     this->update();
 }
+
+
+
+
+
+bool GloveInteractBox::layerCompare(GloveInteractBox & lhs, GloveInteractBox & rhs){
+    return lhs.drawLayer < rhs.drawLayer;
+}
+
 
 

@@ -13,28 +13,40 @@ GloveInstance * GloveInteract::curGlove = NULL;
 
 
 GloveInteract::GloveInteract(){
-    
-    
-    ofAddListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-    ofAddListener(GloveInstance::touchEvent,this,&GloveInteract::touch);
-    ofAddListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
+    gloveEventsPriority = 0;
+    gloveEventsPriority = 0;
+    gloveEventsPriority.addListener(this, &GloveInteract::addListeners);
+    gloveEventsPriority = 0;
 
-    ofAddListener(ofEvents().update, this, &GloveInteract::update);
     
+}
+
+void GloveInteract::addListeners(int & priority){
+    removeGloveListeners(gloveEventsPriority.getLast());
+    
+    ofAddListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved,OF_EVENT_ORDER_APP + gloveEventsPriority);
+    ofAddListener(GloveInstance::touchEvent,this,&GloveInteract::touch,OF_EVENT_ORDER_APP + gloveEventsPriority);
+    ofAddListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved,OF_EVENT_ORDER_APP + gloveEventsPriority);
+    
+    ofAddListener(ofEvents().update, this, &GloveInteract::update);
 }
 
 
 
 GloveInteract::~GloveInteract(){
-    
-    ofRemoveListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved);
-    ofRemoveListener(GloveInstance::touchEvent,this,&GloveInteract::touch);
-    ofRemoveListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved);
+    removeGloveListeners(gloveEventsPriority);
 
-    ofRemoveListener(ofEvents().update, this, &GloveInteract::update);
     
 }
 
+
+void GloveInteract::removeGloveListeners(int priority){
+    ofRemoveListener( GloveInstance::cursor2DEvent,this,&GloveInteract::cursor2DMoved,OF_EVENT_ORDER_APP + priority);
+    ofRemoveListener(GloveInstance::touchEvent,this,&GloveInteract::touch,OF_EVENT_ORDER_APP + priority);
+    ofRemoveListener(GloveInstance::relativeOrientationEvent,this,&GloveInteract::relativeMoved,OF_EVENT_ORDER_APP + priority);
+    
+    ofRemoveListener(ofEvents().update, this, &GloveInteract::update);
+}
 
 
 

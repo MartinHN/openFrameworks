@@ -69,11 +69,11 @@ void GloveInstance::setRelativeOrientation(ofVec3f _r){
     ofNotifyEvent(relativeOrientationEvent, relativeOrientation,this);
 }
 
-void GloveInstance::setTouch(TouchType tid,TouchAction state){
-    if(state == GLOVE_DOWN)touchs[tid] = true;
+void GloveInstance::setTouch(TouchButton tid,TouchAction state){
+    if(state == GLOVE_ACTION_DOWN)touchs[tid] = true;
     else touchs[tid] = false;
     touchEventArgs a;
-    a.touchId = (TouchType)tid;
+    a.touchId = (TouchButton)tid;
     a.state = state;
     ofNotifyEvent(touchEvent,a,this);
 }

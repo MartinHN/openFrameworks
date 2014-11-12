@@ -24,11 +24,10 @@ public:
     ofxPDF pdf;
   
     virtual void load(string filePath);
-    virtual void draw();
-    virtual void resize(int x, int y);
+    virtual void drawMedia();
+    virtual void boxResized();
     void offset(ofVec2f t);
-    
-    ofRectangle lastbox;
+
 };
 
 

@@ -39,47 +39,48 @@ public:
     
     static vector<GloveInteractBox* > allElements;
     
-    // box state
-    
+    // box characteristics
     string name;
     
     bool isCollider = false;
-    ofRectangle box;
-    ofRectangle drawBox;
-    ofRectangle targetBox;
-    ofVec2f targetMagnet;
+
+    
     float alphaTarget = 0.2;
     ofParameter<int> drawLayer = 0;
     float format = 1;
     bool isDraggable=true;
     bool isZoomable = true;
-    void updateZoom(float & c);
     bool isSelectable = true;
     
     
     
     
-    // from GloveInteract used to trigger box functions
+    // box state
     
-    virtual void touch( TouchType num, TouchAction s);
+    bool isHovered;
+    bool isSelected;
+    ofRectangle box;
+    ofRectangle drawBox;
+    ofRectangle targetBox;
+    
+    
+    
+    // from GloveInteract used to trigger box functions
+
+    
+    virtual void touch( TouchButton num, TouchAction s);
     virtual void relativeMoved( ofVec3f v);
     virtual void cursor2DMoved( ofVec2f v );
-    
-    
-    
-    
-    
-    
-    
-    
+
     
     // triggered functions
     //overriden in inherited class
     
     virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
-    virtual void clicked(TouchAction & state){};
-    virtual void resize(int x,int y){};
+    virtual void clicked(TouchButton & button){};
+    virtual void boxResized(){};
+    virtual void boxMoved(){};
     
     virtual void exited(){};
     virtual void entered(){};
@@ -95,8 +96,12 @@ public:
     
     
 protected:
-    bool isHovered;
+    
+    static int frontDragLayer;
+    
     ofVec2f dragOffset;
+    ofVec2f targetMagnet;
+    
     
     
     // common intern handling methods
@@ -108,12 +113,29 @@ protected:
     // automatic draw hover and selected masks
     void drawFrontMask();
     
-    void smooth();
+    void updateBox();
     void makeValid(ofRectangle & newR);
     void resolveCollision(ofRectangle newR);
     void updateDrag(ofVec2f & c);
+    void updateZoom(float & c);
     void setDrawLayer(int & l);
     
+    
+    // layerize drawing events AND touch events so that foreground objects are notified before others
+    // each Layer contain one component so that drawing order is representing exact (inverse) order of events reception
+    void sendForeground();
+    void sendBackground();
+    void sendBack();
+    
+    
+    // hack to see in the future when sequentially triggering event...
+//    bool amIFirstLayer(ofVec2f & p);
+    
+    
+    static bool layerCompare(GloveInteractBox & lhs, GloveInteractBox & rhs);
+    
+    
+
     
 };
 

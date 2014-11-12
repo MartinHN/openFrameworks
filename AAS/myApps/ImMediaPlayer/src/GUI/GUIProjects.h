@@ -45,6 +45,8 @@ class GUIProjects : public GloveInteractBox{
     
     ofxUISuperCanvas* projectsCanvas;
     
+    bool isProjectOpened=false;
+    
     void init();
     void registerListeners();
     
@@ -61,7 +63,9 @@ class GUIProjects : public GloveInteractBox{
     
     
     
-    // specific glove action from Glove Interact
+protected:
+    // as we change the content of dropdownlist of project on its own GUIEvents, we have to do it asynchronously to let all current events (toggles) notifying before changing them
+    string asyncPath = "";
 
     
     

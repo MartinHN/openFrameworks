@@ -18,6 +18,7 @@
 #include "MediaImage.h"
 #include "MediaMP3.h"
 #include "MediaPdf.h"
+#include "MediaPresentation.h"
 
 #include "Screens.h"
 
@@ -36,10 +37,11 @@ public:
     vector<Media*> medias;
     
     
-    Media* createMedia(string filePath);
+    static Media* createMedia(string filePath);
     bool loadMedias(string path);
     void unloadAll();
-    
+    void makeGrid(vector<Media*> _medias,ofRectangle rr);
+
     
     
     ofParameterGroup settings;

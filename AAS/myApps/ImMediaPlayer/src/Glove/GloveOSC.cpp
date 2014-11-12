@@ -106,7 +106,7 @@ void GloveOSC::parseMessage(){
             }
             else if(addr == "/touch"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->setTouch((TouchType)m.getArgAsInt32(1),(TouchAction)m.getArgAsInt32(2));
+                    curGlove->setTouch((TouchButton)m.getArgAsInt32(1),(TouchAction)m.getArgAsInt32(2));
                 }
             }
             else if(addr == "/flex"){

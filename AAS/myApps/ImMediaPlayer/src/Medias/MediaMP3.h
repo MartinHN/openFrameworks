@@ -22,8 +22,8 @@ public:
     
   
     virtual void load(string filePath){player.loadSound(filePath);};
-    virtual void draw(){};
-    virtual void resize(int x, int y){};
+    virtual void drawMedia(){};
+
     
     
     ofSoundPlayer player;

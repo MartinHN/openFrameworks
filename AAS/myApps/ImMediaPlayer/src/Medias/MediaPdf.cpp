@@ -12,16 +12,16 @@
 void MediaPdf::load(string fp){
     pdf.load(fp);
     format = pdf.getWidth()*1.0/pdf.getHeight();
+    isLoaded = true;
 }
 
-void MediaPdf::draw(){
+void MediaPdf::drawMedia(){
     ofSetColor(255);
     ofRect(drawBox);
-   
     pdf.draw();
 }
 
-void MediaPdf::resize(int x, int y){
+void MediaPdf::boxResized(){
     pdf.resize(drawBox.width, drawBox.height);
 }
 

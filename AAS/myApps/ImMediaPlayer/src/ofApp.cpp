@@ -34,6 +34,7 @@ void ofApp::setup(){
     ofSetBackgroundColor(0);
 #ifdef MOUSEDBG
     GloveOSC::gloves.push_back(new GloveInstance("mouse"));
+    
 #endif
     
 //    ofSetWindowShape(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
@@ -79,17 +80,17 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     touchEventArgs ev;
-    // avoid feedback loop when emulating glove events with mouse as glove events are already wrapped to mouse events ->GUIgloveWrapper
-    if(!isEventing){
-        isEventing=true;
+    // avoid keyrepeat
+    if(!keys[key]){
+   
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            curGlove->setTouch(GLOVE_ZOOM, GLOVE_DOWN);
+            curGlove->setTouch(GLOVE_BUTTON_ZOOM, GLOVE_ACTION_DOWN);
             break;
             
         case 'd':
-            curGlove->setTouch(GLOVE_DRAG, GLOVE_DOWN);
+            curGlove->setTouch(GLOVE_BUTTON_DRAG, GLOVE_ACTION_DOWN);
             break;
             
         case 'l':
@@ -99,23 +100,25 @@ void ofApp::keyPressed(int key){
             
             
     }
-        isEventing=false;
+        
+        
     }
     relMouse = ofVec2f(mouseX,mouseY);
+    keys[key] = true;
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
     touchEventArgs ev;
-
+    
         GloveInstance * curGlove = glove.getGlove("mouse");
     switch(key){
         case 'z':
-            curGlove->setTouch(GLOVE_ZOOM, GLOVE_UP);
+            curGlove->setTouch(GLOVE_BUTTON_ZOOM, GLOVE_ACTION_UP);
             break;
             
         case 'd':
-            curGlove->setTouch(GLOVE_DRAG, GLOVE_UP);
+            curGlove->setTouch(GLOVE_BUTTON_DRAG, GLOVE_ACTION_UP);
             break;
             
         case 'l':
@@ -126,6 +129,9 @@ void ofApp::keyReleased(int key){
             
             
     }
+    
+    
+    keys[key] = false;
 
 }
 
@@ -157,7 +163,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
     GloveInstance * curGlove = glove.getGlove("mouse");
     curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
-    curGlove->setTouch(GLOVE_CLICK, GLOVE_DOWN);
+    curGlove->setTouch(GLOVE_BUTTON_CLICK, GLOVE_ACTION_DOWN);
     lastMousePress = ofGetElapsedTimef();
 }
 
@@ -166,12 +172,12 @@ void ofApp::mouseReleased(int x, int y, int button){
 
     GloveInstance * curGlove = glove.getGlove("mouse");
     curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
-    curGlove->setTouch(GLOVE_CLICK, GLOVE_UP);
+    curGlove->setTouch(GLOVE_BUTTON_CLICK, GLOVE_ACTION_UP);
     if(ofGetElapsedTimef()-lastMousePress>.15){
-        curGlove->setTouch(GLOVE_CLICK,GLOVE_LONGPRESS);
+        curGlove->setTouch(GLOVE_BUTTON_CLICK,GLOVE_ACTION_LONGPRESS);
     }
     else{
-        curGlove->setTouch(GLOVE_CLICK,GLOVE_SHORTPRESS);
+        curGlove->setTouch(GLOVE_BUTTON_CLICK,GLOVE_ACTION_SHORTPRESS);
     }
     
     

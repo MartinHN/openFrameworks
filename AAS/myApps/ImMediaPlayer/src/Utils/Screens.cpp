@@ -29,22 +29,25 @@ Screens::Screens(){
     sizex = TOTALRES_X*0.3568/2.0;
     curR =ofRectangle(0,0,sizex,sizey);
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     
     i++;
     curR =ofRectangle(cux,0,sizex,sizey);
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
-    
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     curR =ofRectangle(cux,0,sizex,sizey);
     
     i++;
     sizex = TOTALRES_X*0.3120/2.0;
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     curR =ofRectangle(cux,0,sizex,sizey);
     i++;
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     curR =ofRectangle(cux,0,sizex,sizey);
     
@@ -52,11 +55,13 @@ Screens::Screens(){
     i++;
     sizex = TOTALRES_X*0.3310/2.0;
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     curR =ofRectangle(cux,0,sizex,sizey);
     
     i++;
     screens[i] =new MetaScreen( curR, screensAnchorUp,"screenAnchor"+ofToString(i));
+    screens[i]->defaultLayer = -1;
     cux+=sizex;
     
     resolution.set(cux,sizey);
@@ -65,6 +70,7 @@ Screens::Screens(){
     for(int ii = 0 ; ii < 3 ; ii++){
         
         walls[ii] = new MetaScreen(getWall(ii),!screensAnchorUp,"wscreenAnchor"+ofToString(ii));
+        walls[ii]->defaultLayer = -2;
     }
     
     
@@ -74,7 +80,7 @@ Screens::Screens(){
     anchXOffset = walls[1]->getCenter().x - screenR.getCenter().x;
     
     full = new MetaScreen(screenR,screensAnchorUp,"fullScreen",ofVec2f(anchXOffset,0));
-    
+    full->defaultLayer = -3;
     
 }
 

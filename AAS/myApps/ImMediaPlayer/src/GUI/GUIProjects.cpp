@@ -19,7 +19,10 @@ ofFile GUIProjects::currentDirectory;
 
 GUIProjects::GUIProjects(){
     
-    
+    isDraggable=false;
+    drawLayer=0;
+    isSelectable=false;
+    isZoomable=false;
 }
 
 void GUIProjects::init(){
@@ -27,14 +30,14 @@ void GUIProjects::init(){
     
     
     
-    ofRectangle  r =Screens::instance()->walls[0]->rectScreen();
+    ofRectangle  r =Screens::instance()->screens[0]->rectScreen();
     
     
     backButton = new ofxUIImageButton(r.width-40,100,false,"UI/backButton.png","backButton");
     
     
-    projectsListScrollCanvas = new ofxUIScrollableCanvas(r.x,r.y,r.width,r.height);
-    projectsListScrollCanvas->setName("ScrollList");
+    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,r.width-40,r.height-200);
+    projectsListScrollCanvas->setName("Projects");
     projectsListScrollCanvas->setColorFill(ofColor(255,0,0,0));
     projectsList = new ofxUIDropDownList("List",vector<string>());
     projectsList->setAutoClose(false);
@@ -45,23 +48,25 @@ void GUIProjects::init(){
     projectsCanvas->setName("Projects");
     projectsCanvas->getCanvasTitle()->setVisible(false);
     
-    //    projectsListScrollCanvas->addWidgetDown(projectsList);
+    projectsListScrollCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->addWidgetDown(backButton);
-    projectsCanvas->addWidgetDown(projectsList);
-    
-    projectsCanvas->DisableCallbacks();
-    projectsListScrollCanvas->DisableCallbacks();
+    projectsCanvas->addWidgetDown(projectsListScrollCanvas);
     
     
-    projectsCanvas->enableTouchEventCallbacks();
+    
+    
+    projectsCanvas->disableAppDrawCallback();
+    projectsListScrollCanvas->disableAppDrawCallback();
+    
+    
     setCurrentDirectory( "/Users/mhermant/Desktop/TestImMedia");
     
     
     
-    ofAddListener(drawSyphonEvent, this, &GUIProjects::draw,OF_EVENT_ORDER_BEFORE_APP);
+//    ofAddListener(drawSyphonEvent, this, &GUIProjects::draw,OF_EVENT_ORDER_BEFORE_APP);
     ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
-    
+    ofAddListener(projectsListScrollCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
@@ -73,13 +78,11 @@ void GUIProjects::init(){
 
 void GUIProjects::startWatch(string s){
     
-    //    if(watch.isRunning())
-    {
-        watch.stop();
-    };
+
+
     projectsList->clearToggles();
     
-    watch.start(currentDirectory.path()+"/"+s, 1000);
+    watch.start(currentDirectory.path()+"/"+s, 1000,500);
     
 }
 
@@ -93,14 +96,14 @@ void GUIProjects::setCurrentDirectory(string path){
     cout << "path : " <<  path << endl;
     if (path!= ""){
         ofFile f(path);
-        if(isProject(f)){
-            MediaPool::instance()->loadMedias(path);
-        }
-        else if(f.isDirectory() && !ofDirectory::isDirectoryEmpty(path)){
-            
-            currentDirectory = ofFile(path);
-            startWatch("");
-            
+        
+        if(f.isDirectory() && !ofDirectory::isDirectoryEmpty(path)){
+            if((isProjectOpened=isProject(f))){
+                MediaPool::instance()->loadMedias(path);
+            }
+
+        currentDirectory = ofFile(path);
+        startWatch("");
         }
     }
     
@@ -112,16 +115,27 @@ bool GUIProjects::isProject(ofFile f){
         ofDirectory d(f.path());
         d.listDir();
         vector<ofFile> files = d.getFiles();
-        
-        // if there is one media, it's a project
+        int foundIdx = 0;
+
+        // if there is all of it's elements are medias, it's a project
         for(int i = 0 ; i < files.size() ; i++){
+            string curFName = files[i].getFileName();
             if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()){
-                return true;
+                
+            }
+            else if(files[i].isDirectory() && ((foundIdx = curFName.find("_presentation"))!=string::npos ) && foundIdx == curFName.length()-13 ){
+                
+                
+            }
+            else{
+                return false;
             }
             
         }
+        return true;//files.size()>0?true:false;
     }
     return false;
+    
 }
 
 void GUIProjects::draw(ofEventArgs & a){
@@ -132,7 +146,11 @@ void GUIProjects::draw(ofEventArgs & a){
 
 
 void GUIProjects::update(ofEventArgs & a){
-    
+    if(asyncPath!=""){
+        setCurrentDirectory(asyncPath);
+        
+        asyncPath = "";
+    }
     
     
 }
@@ -152,13 +170,30 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                 if(pathF.size()<=1)return;
                 string curpath = ofJoinString(pathF,"/");
                 curpath="/"+curpath;
-                setCurrentDirectory(curpath);
+                asyncPath = curpath;
+
                 
             }
+            // an element has been triggerd in project list
             else if(parent->getName()=="List"){
-                string curpath = currentDirectory.path()+"/"+a.widget->getName();
+                if(isProjectOpened){
+                    string curName = a.widget->getName();
+                    vector<Media*> el = MediaPool::instance()->medias;
+                    for(vector<Media*>::iterator it = el.begin() ; it!= el.end() ; ++it){
+                        cout << (*it)->name << endl;
+                        if((*it)->name==curName){
+                            selected->isSelected = false;
+                            selected = *it;
+                            selected->isSelected = true;
+                            break;
+                        }
+                    }
+                    
+                }
+                else{
+                asyncPath = currentDirectory.path()+"/"+a.widget->getName();
+                }
                 
-                setCurrentDirectory(curpath);
                 
             }
         }
@@ -174,8 +209,8 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
 
 void GUIProjects::projectsAdded(string &filename){
     ofFile file(currentDirectory.path()+"/"+filename);
-    if(file.isDirectory()){
-        projectsList->addToggle(filename);
+    if(file.isDirectory() || ofFind(supported_formats,file.getExtension())){
+        projectsList->addToggle(file.getBaseName());
     }
 }
 

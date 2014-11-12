@@ -15,6 +15,7 @@
 
 #include "Media.h"
 
+#include "ofxTweener.h"
 
 
 class MediaVideo: public Media {
@@ -35,9 +36,13 @@ public:
     virtual void touch(TouchType t,TouchAction a);
     
     void setTime(float pct);
-
-
     
+    ofImage playImage;
+    float alphaPlay;
+    ofImage pauseImage;
+    float alphaPause;
+    ofImage stopImage;
+    float alphaStop;
     
 private:
     bool loaded = false;

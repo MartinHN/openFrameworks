@@ -17,7 +17,7 @@ void MediaImage::load(string filePath){
 
 void MediaImage::draw(){
     
-    image.draw(box.x, box.y,box.width,box.height);
+    image.draw(drawBox.x, drawBox.y,drawBox.width,drawBox.height);
 
 }
 

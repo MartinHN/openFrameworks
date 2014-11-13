@@ -45,26 +45,26 @@ void MediaPresentation::loadAt(int & idx){
     // no recursivity thanks to ofParameter..
     curMediaIndex== idx%mediaPaths.size();
     
-    if(curMedia!=NULL){
-        delete curMedia;
+    if(doubleMedia.back!=NULL){
+        delete doubleMedia.back;
     }
     if(curMediaIndex >=0 && curMediaIndex < mediaPaths.size())
-        curMedia =  MediaPool::createMedia(mediaPaths[curMediaIndex]);
-    
+        doubleMedia.back =  MediaPool::createMedia(mediaPaths[curMediaIndex]);
+//    Tweener.addTween(<#float &var#>, <#float to#>, <#float time#>)
 }
 
 void MediaPresentation::drawMedia(){
-    if(curMedia !=NULL){
-        curMedia->draw();
+    if(doubleMedia.front !=NULL){
+        doubleMedia.front->draw();
     }
     
     
     
 }
 
-// smothing is handled by this containter so we set curMediabox directly
+// smothing is handled by this containter so we set Mediabox directly
 void MediaPresentation::boxMoved(){
-    if(curMedia !=NULL){
-        curMedia->box = box;
+    if(doubleMedia.front !=NULL){
+        doubleMedia.front->box = box;
     }
 }

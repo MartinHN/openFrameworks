@@ -26,7 +26,7 @@ public:
    
     virtual void load(string filePath);
     virtual void drawMedia();
-    
+
 
 
 };

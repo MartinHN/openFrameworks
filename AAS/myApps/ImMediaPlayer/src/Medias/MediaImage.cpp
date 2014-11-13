@@ -18,9 +18,11 @@ void MediaImage::load(string filePath){
 
 void MediaImage::drawMedia(){
     
-    image.draw(drawBox.x, drawBox.y,drawBox.width,drawBox.height);
 
+     image.drawSubsection(drawBox.x, drawBox.y,drawBox.width,drawBox.height,normalizedR.x*image.width,normalizedR.y*image.height,normalizedR.width*image.width,normalizedR.height*image.height);
 }
+
+
 
 
 

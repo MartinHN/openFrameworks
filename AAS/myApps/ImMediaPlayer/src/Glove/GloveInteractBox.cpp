@@ -34,7 +34,7 @@ GloveInteractBox::GloveInteractBox():GloveInteract(){
     ofAddListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer);
     drawLayer.addListener(this, &GloveInteractBox::setDrawLayer);
     box.set(1+ofRandom(1000),1+ofRandom(1000),400,400);
-    drawBox= box;
+    
     drawLayer = allElements.size();
     allElements.push_back(this);
     isSelected = false;
@@ -237,13 +237,7 @@ void GloveInteractBox::updateZoom(float & z){
     
     if(selected==this ){
         ofRectangle newR;
-        ofVec2f reformatZoom(0);
-        if(z<1){
-            reformatZoom.x = MAX(box.width*z-drawBox.width,0);
-            reformatZoom.y = MAX(box.height*z-drawBox.height,0);
-        }
-        newR.setFromCenter(box.getCenter(),box.width*z - reformatZoom.x,box.height* z - reformatZoom.y);
-        
+        newR.setFromCenter(box.getCenter(),box.width*z,box.height* z);
         makeValid(newR);
         targetBox.set(newR);
         
@@ -271,8 +265,7 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         
     }
     
-    
-    updateDrawBox();
+
     
 }
 void GloveInteractBox::updateBox(){
@@ -301,8 +294,7 @@ void GloveInteractBox::updateBox(){
             
         }
         
-        
-        updateDrawBox();
+
         
         // Callbacks
         
@@ -373,11 +365,6 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
     
 }
 
-void GloveInteractBox::updateDrawBox(){
-    
-    drawBox.scaleTo(box,OF_SCALEMODE_FIT);
-    
-}
 
 void GloveInteractBox::setDrawLayer(int &l){
     ofRemoveListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer.getLast());
@@ -386,14 +373,14 @@ void GloveInteractBox::setDrawLayer(int &l){
     
 }
 
-bool GloveInteractBox::amIFirstLayer(ofVec2f & p){
-    vector<GloveInteractBox*> res;
-    for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it != allElements.end() ; ++it){
-        if((*it)!=this &&(*it)->isHovered && this->drawLayer<(*it)->drawLayer)return false;
-    }
-    
-    return true;
-}
+//bool GloveInteractBox::amIFirstLayer(ofVec2f & p){
+//    vector<GloveInteractBox*> res;
+//    for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it != allElements.end() ; ++it){
+//        if((*it)!=this &&(*it)->isHovered && this->drawLayer<(*it)->drawLayer)return false;
+//    }
+//    
+//    return true;
+//}
 
 
 void GloveInteractBox::draw(ofEventArgs & e){

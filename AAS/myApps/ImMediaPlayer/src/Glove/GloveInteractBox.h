@@ -60,7 +60,6 @@ public:
     bool isHovered;
     bool isSelected;
     ofRectangle box;
-    ofRectangle drawBox;
     ofRectangle targetBox;
     
     
@@ -89,7 +88,7 @@ public:
     virtual void update(){};
 
     
-    void updateDrawBox();
+
     
     static ofRectangle getFreeSpace();
     

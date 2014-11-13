@@ -64,7 +64,8 @@ void GloveInstance::setOrientation(ofVec3f _orientation){
 }
 
 void GloveInstance::setRelativeOrientation(ofVec3f _r){
-    relativeOrientationVel = _r - relativeOrientation;
+    float alphaVel = 0.3;
+    relativeOrientationVel = (1-alphaVel) * relativeOrientationVel + alphaVel*(_r - relativeOrientation);
     relativeOrientation = _r;
     ofNotifyEvent(relativeOrientationEvent, relativeOrientation,this);
 }

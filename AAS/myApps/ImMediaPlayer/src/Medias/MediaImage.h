@@ -18,7 +18,7 @@ class MediaImage : public Media{
     
     
 public:
-    MediaImage(){};
+    MediaImage(){Media::Media();type = IMAGE;};
     ~MediaImage(){image.clear();};
    
     

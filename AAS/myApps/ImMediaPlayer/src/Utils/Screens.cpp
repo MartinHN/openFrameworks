@@ -89,3 +89,18 @@ Screens::Screens(){
 ofRectangle Screens::getWall(int i){
     return ofRectangle(screens[i*2]->x,screens[i*2]->y,screens[i*2]->width + screens[(i)*2+1]->width,screens[i*2]->height);
 }
+
+
+
+bool Screens::isFullscreened(GloveInteractBox* b){
+    for(int ii = 0 ; ii < walls.size() ; ii++){
+        if(walls[ii]->fullScreened == b)return true;
+    }
+    for(int ii = 0 ; ii < screens.size() ; ii++){
+        if(screens[ii]->fullScreened == b)return true;
+    }
+    
+    if(full->fullScreened == b)return true;
+    
+    return false;
+}

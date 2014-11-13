@@ -17,7 +17,7 @@ class MediaPdf:public  Media {
     
     
 public:
-    MediaPdf(){};
+    MediaPdf(){Media::Media();type = PDF;};
     ~MediaPdf(){pdf.close();};
   
     
@@ -25,7 +25,7 @@ public:
   
     virtual void load(string filePath);
     virtual void drawMedia();
-    virtual void boxResized();
+    virtual void boxResized(bool stable);
     void offset(ofVec2f t);
 
 };

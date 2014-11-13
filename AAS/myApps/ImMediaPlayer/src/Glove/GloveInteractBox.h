@@ -43,7 +43,7 @@ public:
     string name;
     
     bool isCollider = false;
-
+    
     
     float alphaTarget = 0.2;
     ofParameter<int> drawLayer = 0;
@@ -51,7 +51,8 @@ public:
     bool isDraggable=true;
     bool isZoomable = true;
     bool isSelectable = true;
-    
+    bool isHoverable = true;
+    bool drawBaseFeedBack = true;
     
     
     
@@ -61,16 +62,16 @@ public:
     bool isSelected;
     ofRectangle box;
     ofRectangle targetBox;
-    
+    bool isStable;
     
     
     // from GloveInteract used to trigger box functions
-
+    
     
     virtual void touch( TouchButton num, TouchAction s);
     virtual void relativeMoved( ofVec3f v);
     virtual void cursor2DMoved( ofVec2f v );
-
+    
     
     // triggered functions
     //overriden in inherited class
@@ -78,35 +79,37 @@ public:
     virtual bool isHit(ofVec2f & p){return box.inside(p);}
     virtual void hover(ofVec2f & p){};
     virtual void clicked(TouchButton & button){};
-    virtual void boxResized(){};
-    virtual void boxMoved(){};
+    virtual void boxResized(bool stable){};
+    virtual void boxMoved(bool stable){};
     
     virtual void exited(){};
     virtual void entered(){};
     
     virtual void draw(){};
     virtual void update(){};
-
     
-
+    
+    
     
     static ofRectangle getFreeSpace();
-    
-    
-    
-protected:
-    
-    static int frontDragLayer;
-    
-    ofVec2f dragOffset;
-    ofVec2f targetMagnet;
-    
     
     
     // common intern handling methods
     
     virtual void update(ofEventArgs & e);
     virtual void draw(ofEventArgs & e);
+    
+protected:
+    
+
+    
+    ofVec2f dragOffset;
+    ofVec2f targetMagnet;
+    
+    
+    
+    
+    
     
     
     // automatic draw hover and selected masks
@@ -125,16 +128,17 @@ protected:
     void sendForeground();
     void sendBackground();
     void sendBack();
+    void sendToLayer(int l);
     
     
     // hack to see in the future when sequentially triggering event...
-//    bool amIFirstLayer(ofVec2f & p);
+    //    bool amIFirstLayer(ofVec2f & p);
     
     
     static bool layerCompare(GloveInteractBox & lhs, GloveInteractBox & rhs);
     
     
-
+    
     
 };
 

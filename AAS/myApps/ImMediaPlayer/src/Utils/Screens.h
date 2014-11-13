@@ -32,6 +32,8 @@ public:
     static Screens* instance(){if(inst==NULL)inst = new Screens();
                                 return inst;}
     
+    bool isFullscreened(GloveInteractBox* b);
+    
     private :
     static Screens * inst;
     ofRectangle getWall(int i);

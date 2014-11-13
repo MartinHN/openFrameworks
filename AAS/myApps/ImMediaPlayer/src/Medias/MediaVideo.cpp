@@ -15,14 +15,14 @@ void MediaVideo::load(string filePath){
     
     
     playImage.loadImage("Medias/playLogo.png");
+    
     alphaPlay = 0;
     stopImage.loadImage("Medias/stopLogo.png");
     alphaStop =0;
     pauseImage.loadImage("Medias/pauseLogo.png");
     alphaPause = 0;
+    logoRect.set(0,0,1,1);
 
-    
-    
     
 }
 
@@ -45,17 +45,19 @@ void MediaVideo::update(){
 void MediaVideo::drawMedia(){
     if(isLoaded){
 //        player.draw(drawBox.x,drawBox.y,drawBox.width,drawBox.height);
+        ofVec2f ratio = ofVec2f(player.width/drawBox.width,player.height/drawBox.height);
+        player.getTextureReference().drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
         
-        player.getTextureReference().drawSubsection(drawBox.x, drawBox.y,drawBox.width,drawBox.height,normalizedR.x*player.width,normalizedR.y*player.height,normalizedR.width*player.width,normalizedR.height*player.height);
         
+        ratio = ofVec2f(playImage.width/drawBox.width,playImage.height/drawBox.height);
         ofSetColor(255,alphaPlay);
-        playImage.draw(logoRect);
+        playImage.drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
         
         ofSetColor(255,alphaPause);
-        pauseImage.draw(logoRect);
+        pauseImage.drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
         
         ofSetColor(255,alphaStop);
-        stopImage.draw(logoRect);
+        stopImage.drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
     }
     
 }
@@ -63,15 +65,13 @@ void MediaVideo::drawMedia(){
 
 
 
-void MediaVideo::boxMoved(){
-    Media::boxMoved();
-    logoRect.set(box.getCenter(),playImage.width,playImage.height);
+void MediaVideo::boxMoved(bool stable){
+    Media::boxMoved(stable);
     logoRect.scaleTo(box, OF_SCALEMODE_FIT);
 }
 
-void MediaVideo::boxResized(){
-    Media::boxResized();
-    logoRect.set(box.getCenter(),playImage.width,playImage.height);
+void MediaVideo::boxResized(bool stable){
+    Media::boxResized( stable);
     logoRect.scaleTo(box, OF_SCALEMODE_FIT);
 }
 

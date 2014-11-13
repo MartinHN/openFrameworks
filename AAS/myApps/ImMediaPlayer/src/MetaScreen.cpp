@@ -63,6 +63,7 @@ void MetaScreen::update(ofEventArgs &a){
 
 void MetaScreen::draw(ofEventArgs &a){
     ofPushStyle();
+    ofPushMatrix();
     
     image.draw(fullScreenAnchor.getCenter());
     if(isHovering){
@@ -76,7 +77,7 @@ void MetaScreen::draw(ofEventArgs &a){
         ofRect(getMinX(),getMinY()+lineW,lineW,height-2*lineW);
     }
     
-    
+    ofPopMatrix();
     ofPopStyle();
     
 }

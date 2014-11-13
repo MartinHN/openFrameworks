@@ -14,12 +14,13 @@ void MediaImage::load(string filePath){
     image.loadImage(filePath);
     format = image.width*1.0/image.height;
     isLoaded = true;
+    updateDrawBox();
 }
 
 void MediaImage::drawMedia(){
-    
 
-     image.drawSubsection(drawBox.x, drawBox.y,drawBox.width,drawBox.height,normalizedR.x*image.width,normalizedR.y*image.height,normalizedR.width*image.width,normalizedR.height*image.height);
+    ofVec2f ratio = ofVec2f(image.width/drawBox.width,image.height/drawBox.height);
+    image.getTextureReference().drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
 }
 
 

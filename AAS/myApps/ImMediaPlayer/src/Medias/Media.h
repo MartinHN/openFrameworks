@@ -14,6 +14,7 @@
 
 #include "GloveInteractBox.h"
 
+#include "ofxTweener.h"
 
 
 
@@ -35,18 +36,17 @@ class Media : public GloveInteractBox{
     string path;
     bool isLoaded=false;
     
-    
-    ofRectangle drawBox;
+
     
     // for advanced drawing (translation and scale masked by current box)
-    ofRectangle normalizedR;
     ofVec2f normalizedOffset;
+    
     
     virtual void load(string filePath){};
     
     
-    virtual void boxResized();
-    virtual void boxMoved();
+    virtual void boxResized(bool stable);
+    virtual void boxMoved(bool stable);
     void draw();
     
     
@@ -65,6 +65,13 @@ class Media : public GloveInteractBox{
     static string loadingImagePath;
     ofRectangle loadingRect;
     
+protected :
+    
+    //world position of drawing (parents box argument reffers to interactive zone, the drawing zone can be changed)
+    ofRectangle drawBox;
+    
+    // world coordinate of clipped rectangle between drawBox and box 
+    ofRectangle subSection;
     
 };
 

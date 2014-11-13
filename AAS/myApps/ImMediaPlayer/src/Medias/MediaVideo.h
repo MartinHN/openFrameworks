@@ -15,14 +15,14 @@
 
 #include "Media.h"
 
-#include "ofxTweener.h"
+//#include "ofxTweener.h"
 
 
 class MediaVideo: public Media {
     
 public:
-    MediaVideo(){};
-    ~MediaVideo(){player.close();};
+    MediaVideo(){Media::Media();type = VIDEO;};
+    ~MediaVideo(){playImage.clear();pauseImage.clear();stopImage.clear();player.close();};
     
     ofVideoPlayer player;
     
@@ -30,8 +30,8 @@ public:
     virtual void load(string filePath);
     virtual void drawMedia();
     virtual void update();
-    virtual void boxMoved();
-    virtual void boxResized();
+    virtual void boxMoved(bool stable);
+    virtual void boxResized(bool stable);
     
     virtual void touch(TouchButton t,TouchAction a);
     

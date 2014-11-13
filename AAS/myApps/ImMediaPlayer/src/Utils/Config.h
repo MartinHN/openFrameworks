@@ -12,7 +12,7 @@
 //projects
 
 
-typedef enum{PDF,IMAGE,VIDEO} MediaType;
+typedef enum{PDF,IMAGE,VIDEO,SOUND,PRESENTATION} MediaType;
 
 #define MIN_BOX_WIDTH 200
 #define MIN_BOX_HEIGHT 200
@@ -61,3 +61,7 @@ static int dumb_for_formats = (supported_formats.push_back("avi"),
 #endif
 
 #endif
+
+
+// GUI
+

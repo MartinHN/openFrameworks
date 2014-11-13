@@ -17,7 +17,7 @@ class MediaMP3 :public  Media{
     
     
 public:
-    MediaMP3(){};
+    MediaMP3(){Media::Media();type = SOUND;};
     ~MediaMP3(){player.unloadSound();};
     
   

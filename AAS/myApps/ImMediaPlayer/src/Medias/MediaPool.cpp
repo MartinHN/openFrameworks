@@ -106,9 +106,10 @@ Media * MediaPool::createMedia(string filePath){
         m = (Media*) new MediaMP3();
     }
     
-    else if((foundIdx = file.getFileName().find_last_of("_presentation") )!= string::npos && foundIdx == file.getFileName().length() - 13){
+    else if((foundIdx = file.getFileName().find_last_of("_presentation") )!= string::npos && foundIdx == file.getFileName().length() - 1){
         m = (Media*) new MediaPresentation();
     }
+
     
     if(m==NULL)return NULL;
     

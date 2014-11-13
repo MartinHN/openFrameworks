@@ -9,7 +9,7 @@
 #include "GUIProjects.h"
 #include "Screens.h"
 
-extern ofEvent<ofEventArgs> drawSyphonEvent;
+
 
 
 ofFile GUIProjects::currentDirectory;
@@ -18,11 +18,12 @@ ofFile GUIProjects::currentDirectory;
 
 
 GUIProjects::GUIProjects(){
-    
+    GloveInteractBox::GloveInteractBox();
     isDraggable=false;
     drawLayer=0;
     isSelectable=false;
     isZoomable=false;
+
 }
 
 void GUIProjects::init(){
@@ -31,12 +32,14 @@ void GUIProjects::init(){
     
     
     ofRectangle  r =Screens::instance()->screens[0]->rectScreen();
+    box = r;
+    targetBox = box;
+    fullSizeRect = r;
+    
+    backButton = new ofxUIImageButton(fullSizeRect.width-40,100,false,"UI/backButton.png","backButton");
     
     
-    backButton = new ofxUIImageButton(r.width-40,100,false,"UI/backButton.png","backButton");
-    
-    
-    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,r.width-40,r.height-200);
+    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,fullSizeRect.width-40,fullSizeRect.height-200);
     projectsListScrollCanvas->setName("Projects");
     projectsListScrollCanvas->setColorFill(ofColor(255,0,0,0));
     projectsList = new ofxUIDropDownList("List",vector<string>());
@@ -44,7 +47,7 @@ void GUIProjects::init(){
     projectsList->open();
     ((ofxUIToggle*)projectsList)->setVisible(false);
     
-    projectsCanvas = new ofxUISuperCanvas("Projects",r.x,r.y,r.width,r.height);
+    projectsCanvas = new ofxUISuperCanvas("Projects",fullSizeRect.x,fullSizeRect.y,fullSizeRect.width,fullSizeRect.height);
     projectsCanvas->setName("Projects");
     projectsCanvas->getCanvasTitle()->setVisible(false);
     
@@ -64,7 +67,7 @@ void GUIProjects::init(){
     
     
     
-//    ofAddListener(drawSyphonEvent, this, &GUIProjects::draw,OF_EVENT_ORDER_BEFORE_APP);
+    
     ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     ofAddListener(projectsListScrollCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     
@@ -78,8 +81,8 @@ void GUIProjects::init(){
 
 void GUIProjects::startWatch(string s){
     
-
-
+    
+    
     projectsList->clearToggles();
     
     watch.start(currentDirectory.path()+"/"+s, 1000,500);
@@ -91,6 +94,18 @@ void GUIProjects::registerListeners() {
     
 }
 
+void GUIProjects::entered(){
+    Tweener.addTween(targetBox.width,fullSizeRect.width,1);
+}
+void GUIProjects::exited(){
+    Tweener.addTween(targetBox.width,100,1);
+}
+
+void GUIProjects::boxResized(bool stable){
+    
+    projectsCanvas->setWidth( box.width);
+    
+}
 
 void GUIProjects::setCurrentDirectory(string path){
     cout << "path : " <<  path << endl;
@@ -101,9 +116,9 @@ void GUIProjects::setCurrentDirectory(string path){
             if((isProjectOpened=isProject(f))){
                 MediaPool::instance()->loadMedias(path);
             }
-
-        currentDirectory = ofFile(path);
-        startWatch("");
+            
+            currentDirectory = ofFile(path);
+            startWatch("");
         }
     }
     
@@ -116,14 +131,16 @@ bool GUIProjects::isProject(ofFile f){
         d.listDir();
         vector<ofFile> files = d.getFiles();
         int foundIdx = 0;
-
+        
         // if there is all of it's elements are medias, it's a project
         for(int i = 0 ; i < files.size() ; i++){
             string curFName = files[i].getFileName();
+            // its a media
             if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()){
                 
             }
-            else if(files[i].isDirectory() && ((foundIdx = curFName.find("_presentation"))!=string::npos ) && foundIdx == curFName.length()-13 ){
+            // it's a presentation
+            else if(files[i].isDirectory() && ((foundIdx = curFName.find_last_of("_presentation"))!=string::npos ) && foundIdx == curFName.length()-1 ){
                 
                 
             }
@@ -139,13 +156,16 @@ bool GUIProjects::isProject(ofFile f){
 }
 
 void GUIProjects::draw(ofEventArgs & a){
-    
+
     projectsCanvas->draw();
-    //    projectsListScrollCanvas->draw();
+
+
+    
 }
 
 
 void GUIProjects::update(ofEventArgs & a){
+    GloveInteractBox::update(a);
     if(asyncPath!=""){
         setCurrentDirectory(asyncPath);
         
@@ -164,6 +184,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
         
         if(canvas->getName()=="Projects"){
             if (a.widget->getName()=="backButton"){
+                if(!a.getButton()->getValue()){
                 vector<string> pathF = ofSplitString(currentDirectory.path(),"/");
                 if(pathF.size()<=1)return;
                 pathF.resize(pathF.size()-1);
@@ -171,12 +192,17 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                 string curpath = ofJoinString(pathF,"/");
                 curpath="/"+curpath;
                 asyncPath = curpath;
-
+                }
                 
             }
+            
             // an element has been triggerd in project list
             else if(parent->getName()=="List"){
+                
                 if(isProjectOpened){
+                    
+                    
+                    // select in playground too
                     string curName = a.widget->getName();
                     vector<Media*> el = MediaPool::instance()->medias;
                     for(vector<Media*>::iterator it = el.begin() ; it!= el.end() ; ++it){
@@ -190,8 +216,10 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                     }
                     
                 }
+                
+                // open
                 else{
-                asyncPath = currentDirectory.path()+"/"+a.widget->getName();
+                    asyncPath = currentDirectory.path()+"/"+a.widget->getName();
                 }
                 
                 

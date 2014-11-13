@@ -21,7 +21,7 @@ void MediaPdf::drawMedia(){
     pdf.draw();
 }
 
-void MediaPdf::boxResized(){
+void MediaPdf::boxResized(bool stable){
     pdf.resize(drawBox.width, drawBox.height);
 }
 

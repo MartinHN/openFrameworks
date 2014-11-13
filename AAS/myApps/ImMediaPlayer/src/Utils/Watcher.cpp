@@ -22,7 +22,7 @@ void Watcher::setup(){
 
 //    watch.isRecursive = true;
     
-    watch.start(folderPath, 2000);
+    watch.start(folderPath, 1000);
     
     
     ofAddListener(watch.fileAdded, this, &Watcher::watchFolderFileAdded);

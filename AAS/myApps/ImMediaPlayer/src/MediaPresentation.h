@@ -24,7 +24,23 @@ public:
     
     vector<string> mediaPaths;
     ofParameter<int> curMediaIndex=0;
-    Media* curMedia;
+   
+    typedef struct DoubleMedia{
+      
+        Media* front;
+        Media* back;
+        
+        
+        
+        void swap(){
+            Media* tmp = front;
+            front = back;
+            back = tmp;
+        }
+        
+    }DoubleMedia;
+    
+    DoubleMedia doubleMedia;
     
     
     virtual void load(string path);

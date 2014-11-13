@@ -44,8 +44,9 @@ void MediaVideo::update(){
 
 void MediaVideo::drawMedia(){
     if(isLoaded){
-        player.draw(drawBox.x,drawBox.y,drawBox.width,drawBox.height);
+//        player.draw(drawBox.x,drawBox.y,drawBox.width,drawBox.height);
         
+        player.getTextureReference().drawSubsection(drawBox.x, drawBox.y,drawBox.width,drawBox.height,normalizedR.x*player.width,normalizedR.y*player.height,normalizedR.width*player.width,normalizedR.height*player.height);
         
         ofSetColor(255,alphaPlay);
         playImage.draw(logoRect);
@@ -60,12 +61,16 @@ void MediaVideo::drawMedia(){
 }
 
 
+
+
 void MediaVideo::boxMoved(){
+    Media::boxMoved();
     logoRect.set(box.getCenter(),playImage.width,playImage.height);
     logoRect.scaleTo(box, OF_SCALEMODE_FIT);
 }
 
 void MediaVideo::boxResized(){
+    Media::boxResized();
     logoRect.set(box.getCenter(),playImage.width,playImage.height);
     logoRect.scaleTo(box, OF_SCALEMODE_FIT);
 }
@@ -75,6 +80,7 @@ void MediaVideo::boxResized(){
 
 void MediaVideo::setTime(float pct){
     player.setPosition(pct);
+
 }
 
 

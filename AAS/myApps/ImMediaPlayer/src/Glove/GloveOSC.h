@@ -44,7 +44,7 @@ public:
     bool isConnectedToServer;
     void registerOSC();
     void unregisterOSC();
-    
+    bool isGlove(string gloveID);
 
     
     

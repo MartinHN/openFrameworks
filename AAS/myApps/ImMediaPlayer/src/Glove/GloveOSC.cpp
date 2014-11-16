@@ -25,7 +25,9 @@ GloveOSC::GloveOSC(){
     reciever.setup(LOCALPORT);
     toServer.setup(SERVERIP, SERVERPORT);
     lastACK = ofGetElapsedTimef();
-    
+    ofAddListener(ofEvents().update,this,&GloveOSC::update);
+    ofAddListener(drawSyphonEvent,this,&GloveOSC::draw);
+    isConnectedToServer = false;
 }
 
 
@@ -46,7 +48,8 @@ void GloveOSC::update(ofEventArgs & a){
 
 
 void GloveOSC::draw(ofEventArgs & a){
-    
+    ofSetColor(isConnectedToServer?255:0,!isConnectedToServer?255:0,0);
+    ofEllipse(20,20,20,20);
 }
 
 
@@ -87,7 +90,10 @@ void GloveOSC::parseMessage(){
                 isConnectedToServer = false;
             }
             else if(addr == "/connected"){
+                isConnectedToServer= true;
+                if(!isGlove(m.getArgAsString(0))){
                 gloves.push_back(new GloveInstance(m.getArgAsString(0)));
+                }
                 
             }
             else if(addr == "/disconnected"){
@@ -116,7 +122,7 @@ void GloveOSC::parseMessage(){
             }
             else if(addr == "/cursor2D"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->setCursor2D ( ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2))*Screens::instance()->resolution);
+                    curGlove->setCursor2D ( ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2)));
                 }
             }
             return;
@@ -147,6 +153,17 @@ void GloveOSC::deleteGlove(string gloveID){
     
 }
 
+bool GloveOSC::isGlove(string gloveID){
+    for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
+        if((*it)->gloveID==gloveID){
+            return true;
+
+
+        }
+        
+    }
+    return false;
+}
 
 void GloveOSC::unregisterOSC(){
     ofxOscMessage m;

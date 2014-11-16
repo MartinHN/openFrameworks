@@ -85,8 +85,9 @@ void GloveInstance::setFlex(int n,float f){
 }
 
 void GloveInstance::setCursor2D(ofVec2f c){
-    cursor2DVel = c-cursor2D;
+
     ofRectangle full = *Screens::instance()->full;
+    cursor2DVel = c*ofVec2f(full.x,full.y)-cursor2D;
     cursor2D.x = c.x*full.width;
     cursor2D.y = c.y*full.height;
     ofNotifyEvent(cursor2DEvent, cursor2D,this);

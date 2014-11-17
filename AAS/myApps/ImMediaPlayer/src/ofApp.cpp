@@ -66,6 +66,7 @@ void ofApp::draw(){
     ofSetColor(255);
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
     
+    ofDrawBitmapString(ofGetFrameRate(), 100,100);
     
 #ifdef SYPHON
     outTexture.end();

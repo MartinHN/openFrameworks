@@ -30,9 +30,11 @@ typedef enum{PDF,IMAGE,VIDEO,SOUND,PRESENTATION} MediaType;
 //Glove
 #define SERVERPORT 25000
 
-#define SERVERIP "10.0.1.3"
-#define LOCALPORT 25101
-#define LOCALIP "10.0.1.2"
+//#define SERVERIP "10.0.1.3"
+#define SERVERIP "127.0.0.1"
+#define LOCALPORT 25107
+//#define LOCALIP "10.0.1.2"
+#define LOCALIP "127.0.0.1"
 #define APPNAME "ImMedia"
 #define NUMTOUCH 4
 #define NUMFLEX 4

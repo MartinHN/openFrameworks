@@ -23,6 +23,7 @@ ofEasyCam::ofEasyCam(){
 	bDoRotate = false;
 	bApplyInertia =false;
 	bDoTranslate = false;
+	bDoScrollZoom = false;
 	bInsideArcball = true;
 	bEnableMouseMiddleButton = true;
 	bAutoDistance = true;
@@ -50,8 +51,9 @@ void ofEasyCam::update(ofEventArgs & args){
 		
 		if (bDoRotate) {
 			updateRotation();
-		}else if (bDoTranslate) {
+		}else if (bDoTranslate || bDoScrollZoom) {
 			updateTranslation(); 
+			bDoScrollZoom = false;
 		}
 	}	
 }
@@ -153,6 +155,7 @@ void ofEasyCam::enableMouseInput(){
 		ofAddListener(ofEvents().mouseDragged , this, &ofEasyCam::mouseDragged);
 		ofAddListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
 		ofAddListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
+		ofAddListener(ofEvents().mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
     bApplyInertia = false;
 	bDoTranslate = false;
@@ -168,6 +171,7 @@ void ofEasyCam::disableMouseInput(){
 		ofRemoveListener(ofEvents().mouseDragged, this, &ofEasyCam::mouseDragged);
 		ofRemoveListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
 		ofRemoveListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
+		ofRemoveListener(ofEvents().mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
 }
 //----------------------------------------
@@ -270,6 +274,13 @@ void ofEasyCam::mouseDragged(ofMouseEventArgs & mouse){
 	mouseVel = mouse  - lastMouse;
 
 	updateMouse(mouse);
+}
+
+void ofEasyCam::mouseScrolled(ofMouseEventArgs & mouse){
+	prevPosition = ofCamera::getGlobalPosition();
+	prevAxisZ = getZAxis();
+	moveZ = mouse.y * 30 * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;
+	bDoScrollZoom = true;
 }
 
 

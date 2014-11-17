@@ -24,7 +24,7 @@ GloveOSC::GloveOSC(){
     
     reciever.setup(LOCALPORT);
     toServer.setup(SERVERIP, SERVERPORT);
-    lastACK = ofGetElapsedTimef();
+    lastACK = 0;
     ofAddListener(ofEvents().update,this,&GloveOSC::update);
     ofAddListener(drawSyphonEvent,this,&GloveOSC::draw);
     isConnectedToServer = false;
@@ -54,7 +54,7 @@ void GloveOSC::draw(ofEventArgs & a){
 
 
 void GloveOSC::registerOSC(){
-    if(!isConnectedToServer && ofGetElapsedTimef()-lastACK>1){
+    if(!isConnectedToServer && (ofGetElapsedTimef()-lastACK)>1){
         ofxOscMessage regMsg;
         regMsg.setAddress("/register");
         regMsg.addStringArg(APPNAME);
@@ -64,6 +64,8 @@ void GloveOSC::registerOSC(){
         toServer.sendMessage(regMsg);
         
         
+        lastACK = ofGetElapsedTimef();
+        
     }
     
 }
@@ -71,7 +73,10 @@ void GloveOSC::registerOSC(){
 
 
 void GloveOSC::parseMessage(){
+ 
+    
     while(reciever.hasWaitingMessages()){
+        
         ofxOscMessage m;
         reciever.getNextMessage(&m);
         
@@ -90,7 +95,7 @@ void GloveOSC::parseMessage(){
                 isConnectedToServer = false;
             }
             else if(addr == "/connected"){
-                isConnectedToServer= true;
+                
                 if(!isGlove(m.getArgAsString(0))){
                 gloves.push_back(new GloveInstance(m.getArgAsString(0)));
                 }
@@ -122,13 +127,15 @@ void GloveOSC::parseMessage(){
             }
             else if(addr == "/cursor2D"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
+                    
                     curGlove->setCursor2D ( ofVec2f(m.getArgAsFloat(1),m.getArgAsFloat(2)));
                 }
             }
-            return;
+            
             
         }
     }
+    
 }
 
 

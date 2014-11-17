@@ -39,8 +39,12 @@ ofxOscReceiver::ofxOscReceiver()
 	listen_socket = NULL;
 }
 
-void ofxOscReceiver::setup( int listen_port )
+void ofxOscReceiver::setup( int listen_port, bool allowReuse )
 {
+    if( UdpSocket::GetUdpBufferSize() == 0 ){
+        UdpSocket::SetUdpBufferSize(65535);
+    }
+    
 	// if we're already running, shutdown before running again
 	if ( listen_socket )
 		shutdown();
@@ -54,7 +58,7 @@ void ofxOscReceiver::setup( int listen_port )
 	
 	// create socket
 	socketHasShutdown = false;
-	listen_socket = new UdpListeningReceiveSocket( IpEndpointName( IpEndpointName::ANY_ADDRESS, listen_port ), this );
+	listen_socket = new UdpListeningReceiveSocket( IpEndpointName( IpEndpointName::ANY_ADDRESS, listen_port ), this, allowReuse );
 
 	// start thread
 	#ifdef TARGET_WIN32
@@ -159,7 +163,7 @@ void ofxOscReceiver::ProcessMessage( const osc::ReceivedMessage &m, const IpEndp
 			ofMessage->addStringArg( arg->AsStringUnchecked() );
 		else if ( arg->IsBlob() ){
             const char * dataPtr;
-            unsigned long len = 0;
+            osc::osc_bundle_element_size_t len = 0;
             arg->AsBlobUnchecked((const void*&)dataPtr, len);
             ofBuffer buffer(dataPtr, len);
 			ofMessage->addBlobArg( buffer );
@@ -237,9 +241,11 @@ bool ofxOscReceiver::getParameter(ofAbstractParameter & parameter){
 	if ( messages.size() == 0 ) return false;
 	while(hasWaitingMessages()){
 		ofAbstractParameter * p = &parameter;
-		getNextMessage(&msg);
-		vector<string> address = ofSplitString(msg.getAddress(),"/",true);
-		for(int i=0;i<address.size();i++){
+        
+        getNextMessage(&msg);
+        vector<string> address = ofSplitString(msg.getAddress(),"/",true);
+                
+        for(unsigned int i=0;i<address.size();i++){
             
 //            cout<<p->getName()<<endl;
 			if(address[i]==p->getName()){

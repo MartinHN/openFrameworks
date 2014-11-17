@@ -25,9 +25,12 @@ ofxAndroid/ofAndroidLib/gen
 !ofxEmscripten
 
 
-!ofxPdf
+!ofxPDF
 !ofxMtlWatchFolder
 !ofxUI
+!ofxTweener
+!ofxUI
+!ofxSyphon
 
 # don't ignore the .gitignore file
 !.gitignore

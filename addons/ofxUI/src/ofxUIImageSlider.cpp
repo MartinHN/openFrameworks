@@ -115,30 +115,30 @@ void ofxUIImageSlider::init(float x, float y, float w, float h, float _min, floa
     }
     
     track = new ofImage();         //back
-    track->loadImage(coreURL+"track"+extension);
+    track->load(coreURL+"track"+extension);
     
     trackleft = new ofImage();         //back
-    trackleft->loadImage(coreURL+"trackleft"+extension);
+    trackleft->load(coreURL+"trackleft"+extension);
     tlaspect = (float)trackleft->getWidth()/(float)trackleft->getHeight();
     
     trackright = new ofImage();         //back
-    trackright->loadImage(coreURL+"trackright"+extension);
+    trackright->load(coreURL+"trackright"+extension);
     traspect = (float)trackright->getWidth()/(float)trackright->getHeight();
     
     progress = new ofImage();      //fill
-    progress->loadImage(coreURL+"progress"+extension);
+    progress->load(coreURL+"progress"+extension);
     
     progressright = new ofImage();      //fill
-    progressright->loadImage(coreURL+"progressright"+extension);
+    progressright->load(coreURL+"progressright"+extension);
     
     progressleft = new ofImage();      //fill
-    progressleft->loadImage(coreURL+"progressleft"+extension);
+    progressleft->load(coreURL+"progressleft"+extension);
     
     handle = new ofImage();        //handle
-    handle->loadImage(coreURL+"handle"+extension);
+    handle->load(coreURL+"handle"+extension);
     
     handleDown = new ofImage();    //handleOver State
-    handleDown->loadImage(coreURL+"handledown"+extension);
+    handleDown->load(coreURL+"handledown"+extension);
     
     handleHalfWidth = handle->getWidth()*.5;
     handleHalfHeight = handle->getHeight()*.5;

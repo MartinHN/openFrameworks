@@ -26,7 +26,8 @@ void ofApp::setup(){
     Screens::instance();
  
     // GUI Init
-    projects.init();
+    guiProjects.init();
+    guiConfig.init();
    
     // Syphon
     syphonOut.setName(APPNAME);
@@ -61,7 +62,7 @@ void ofApp::draw(){
 #endif
     ofSetColor(0);
     ofVec2f res (Screens::instance()->resolution.x,Screens::instance()->resolution.y);
-    ofRect(0,0,Screens::instance()->resolution.x,Screens::instance()->resolution.y);
+    ofDrawRectangle(0,0,Screens::instance()->resolution.x,Screens::instance()->resolution.y);
     drawBackground(ofColor::gray, ofColor::black, OF_GRADIENT_BAR);
     ofSetColor(255);
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
@@ -70,7 +71,7 @@ void ofApp::draw(){
     
 #ifdef SYPHON
     outTexture.end();
-    syphonOut.publishTexture(&outTexture.getTextureReference());
+    syphonOut.publishTexture(&outTexture.getTexture());
 #endif
     
     ofSetColor(255,255,255,255);
@@ -95,7 +96,7 @@ void ofApp::keyPressed(int key){
             break;
             
         case 'l':
-            projects.setCurrentDirectory(ofSystemLoadDialog("Load Project",true).filePath);
+            guiProjects.setCurrentDirectory(ofSystemLoadDialog("Load Project",true).filePath);
         default:
             break;
             
@@ -123,7 +124,7 @@ void ofApp::keyReleased(int key){
             break;
             
         case 'l':
-            projects.setCurrentDirectory(ofSystemLoadDialog("Load Projects",true).filePath);
+            guiProjects.setCurrentDirectory(ofSystemLoadDialog("Load guiProjects",true).filePath);
             break;
         default:
             break;
@@ -140,15 +141,15 @@ void ofApp::keyReleased(int key){
 void ofApp::mouseMoved( int x, int y ){
     GloveInstance * curGlove = glove.getGlove("mouse");
 
-    // avoid conflict when using mouse and glove at the same time
-    if(!glove.isConnectedToServer){
+
+
 
         curGlove->setCursor2D(ofVec2f(x,y)*1.0/scrS);
 
         if(ofGetKeyPressed('z')){
             curGlove->setRelativeOrientation (ofVec3f(0,0,(ofGetMouseY()-relMouse.y)/4.0));
         }
-    }
+    
     
     
     

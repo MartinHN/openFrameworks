@@ -16,6 +16,7 @@ ofxTweener::ofxTweener(){
     ofAddListener(ofEvents().update,this, &ofxTweener::update);
 }
 
+
 void ofxTweener::addTween(float &var, float to, float time, ofEvent<float> * ev,bool cC){
 	addTween(var,to,time, &ofxTransitions::easeOutExpo ,0,0,false, ev,cC);
 }
@@ -29,7 +30,10 @@ void ofxTweener::addTween(float &var, float to, float time, float (ofxTransition
 void ofxTweener::addTween(float &var, float to, float time, float (ofxTransitions::*ease) (float,float,float,float), float delay, float bezierPoint, ofEvent<float> * ev,bool cC){
 	addTween(var,to,time,ease,delay, bezierPoint, true, ev,cC);
 }
-	
+
+
+
+
 void ofxTweener::addTween(float &var, float to, float time, float (ofxTransitions::*ease) (float,float,float,float), float delay, float bezierPoint, bool useBezier,ofEvent<float> * ev,bool cC){
 	float from = var;
 	float _delay = delay;
@@ -105,6 +109,7 @@ void ofxTweener::update(ofEventArgs &data){
 			//smaller than 0 would be delayed
 			if(tweens[i]._useBezier) tweens[i]._var[0] = bezier(tweens[i]._from, tweens[i]._to ,(a.*tweens[i]._easeFunction )(float(tweens[i]._timestamp.elapsed()), 0, 1, float(tweens[i]._duration)), tweens[i]._by);
 			else tweens[i]._var[0] = (a.*tweens[i]._easeFunction )(float(tweens[i]._timestamp.elapsed()), tweens[i]._from, tweens[i]._to - tweens[i]._from, float(tweens[i]._duration));
+           
             // added continuous callBack : martinHN
             if(tweens[i].contCall){
                 map<float *,ofEvent<float> * >::iterator it = callbacks.find(tweens[i]._var);
@@ -114,18 +119,96 @@ void ofxTweener::update(ofEventArgs &data){
             }
 		}
 	}
+    
+    updateParams();
 }
 
+
+void ofxTweener::updateParams(){
+    
+    for(int i = tweensP.size() -1; i >= 0; --i){
+		if(float(tweensP[i]._timestamp.elapsed()) >= float(tweensP[i]._duration)){
+			//tween is done
+            
+			bool found = false;
+			if(!_override){
+				//if not found anymore, place on exact place
+				for(int j = 0; j < tweens.size(); ++j){
+					if(tweensP[j]._var->getGroupHierarchyNames() == tweensP[i]._var->getGroupHierarchyNames()) {
+						found = true;
+						break;
+					}
+				}
+			}
+			if(!found) *tweensP[i]._var = tweensP[i]._to;
+            
+
+            tweensP.erase(tweensP.begin() + i);
+			
+		}
+		else if(float(tweensP[i]._timestamp.elapsed()) > 0){
+			//smaller than 0 would be delayed
+            ofAbstractParameter * parameter = tweensP[i]._var;
+            if(parameter->type()==typeid(ofParameter<int>).name()){
+                tweensP[i]._var->cast<int>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<int>(), tweensP[i]._to.cast<int>() - tweensP[i]._from.cast<int>(), float(tweensP[i]._duration));
+              
+            }else if(parameter->type()==typeid(ofParameter<float>).name()){
+            tweensP[i]._var->cast<float>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<float>(), tweensP[i]._to.cast<float>() - tweensP[i]._from.cast<float>(), float(tweensP[i]._duration));
+                
+            }else if(parameter->type()==typeid(ofParameter<ofVec2f>).name()){
+                ofVec2f tmp;
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec2f>()->x, tweensP[i]._to.cast<ofVec2f>()->x - tweensP[i]._from.cast<ofVec2f>()->x, float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec2f>()->y, tweensP[i]._to.cast<ofVec2f>()->y - tweensP[i]._from.cast<ofVec2f>()->y, float(tweensP[i]._duration));
+                
+                tweensP[i]._var->cast<ofVec2f>() = tmp;
+            
+            }else if(parameter->type()==typeid(ofParameter<ofVec3f>).name()){
+                ofVec3f tmp;
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->x, tweensP[i]._to.cast<ofVec3f>()->x - tweensP[i]._from.cast<ofVec3f>()->x, float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->y, tweensP[i]._to.cast<ofVec3f>()->y - tweensP[i]._from.cast<ofVec3f>()->y, float(tweensP[i]._duration));
+                tmp.z = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->z, tweensP[i]._to.cast<ofVec3f>()->z - tweensP[i]._from.cast<ofVec3f>()->z, float(tweensP[i]._duration));
+                tweensP[i]._var->cast<ofVec3f>() = tmp;
+            }
+            else if(parameter->type()==typeid(ofParameter<ofRectangle>).name()){
+                ofRectangle tmp;
+                float tst;
+                cout << (&tweensP[i]._from)->type() << endl;
+                tst = (&tweensP[i]._from)->cast<ofRectangle>()->x;
+                cout << (&tweensP[i]._to)->type() << endl;
+                tst =(&tweensP[i]._from)->cast<ofRectangle>()->x;
+                cout <<tst << endl;
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), (&tweensP[i]._from)->cast<ofRectangle>()->x, (&tweensP[i]._to)->cast<ofRectangle>()->x - (&tweensP[i]._from)->cast<ofRectangle>()->x, float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), (&tweensP[i]._from)->cast<ofRectangle>()->y, (&tweensP[i]._to)->cast<ofRectangle>()->y - (&tweensP[i]._from)->cast<ofRectangle>()->y, float(tweensP[i]._duration));
+                tmp.width = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofRectangle>()->width, tweensP[i]._to.cast<ofRectangle>()->width - tweensP[i]._from.cast<ofRectangle>()->width, float(tweensP[i]._duration));
+                tmp.height = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofRectangle>()->height, tweensP[i]._to.cast<ofRectangle>()->height - tweensP[i]._from.cast<ofRectangle>()->height, float(tweensP[i]._duration));
+                
+                
+                tweensP[i]._var->cast<ofRectangle>() = tmp;
+                
+                
+            }
+			 
+            
+
+		}
+	}
+    
+
+
+        
+    
+}
 
 void ofxTweener::removeTween(float &var){
 	for(int i = 0; i < tweens.size(); i++){
 		if(tweens[i]._var == &var) {
 			// tween found, erase it
-			tweens.erase(tweens.begin() + i); 
+			tweens.erase(tweens.begin() + i);
 			return;
 		}
 	}
 }
+
 
 float ofxTweener::bezier(float b, float e, float t, float p){
 	return b + t*(2*(1-t)*(p-b) + t*(e - b));
@@ -133,6 +216,7 @@ float ofxTweener::bezier(float b, float e, float t, float p){
 
 void ofxTweener::removeAllTweens(){
 	tweens.clear();
+    tweensP.clear();
 }
 void ofxTweener::setMode(int mode){
 	_override = (mode == TWEENMODE_OVERRIDE);

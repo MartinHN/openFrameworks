@@ -274,11 +274,11 @@ void ofxUIWidget::touchDown(float x, float y, int id) {
 
 void ofxUIWidget::touchMoved(float x, float y, int id) {
     if(touchId == id) {
-        this->mouseDragged(x, y, 0);
+        this->mouseDragged(x, y,0);
     }
-    else{
-        this->mouseMoved(x, y);
-    }
+//    else{
+//        this->mouseMoved(x, y);
+//    }
 }
 
 void ofxUIWidget::touchUp(float x, float y, int id) {

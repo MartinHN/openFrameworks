@@ -17,11 +17,11 @@
 #include "ofxTweener.h"
 
 
+#include "Savable.h"
 
 
 
-
-class Media : public GloveInteractBox{
+class Media : public GloveInteractBox,public Savable{
     
     
     public :
@@ -57,14 +57,19 @@ class Media : public GloveInteractBox{
     // overide this in media class
     virtual void drawMedia(){};
 
+    //Savable
+    virtual void populateSettings();
     
-    
+
     
     // gif when loading
     static ofImage loadingImage;
     static string loadingImagePath;
     ofRectangle loadingRect;
     
+    
+    
+    static string escape(string name);
 protected :
     
     //world position of drawing (parents box argument reffers to interactive zone, the drawing zone can be changed)

@@ -24,6 +24,11 @@ GUIProjects::GUIProjects(){
     isSelectable=false;
     isZoomable=false;
 
+
+}
+
+GUIProjects::~GUIProjects(){
+    delete projectsCanvas;
 }
 
 void GUIProjects::init(){
@@ -32,17 +37,21 @@ void GUIProjects::init(){
     
     
     ofRectangle  r =Screens::instance()->screens[0]->rectScreen();
-    box = r;
+    box = r+ofVec2f(-1,0);
     targetBox = box;
     fullSizeRect = r;
     
-    backButton = new ofxUIImageButton(fullSizeRect.width-40,100,false,"UI/backButton.png","backButton");
     
+    // projectPanel instanciations
+    backButton = new ofxUIImageButton(fullSizeRect.width-40,100,false,"UI/backButton.png","backButton");
     
     projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,fullSizeRect.width-40,fullSizeRect.height-200);
     projectsListScrollCanvas->setName("Projects");
     projectsListScrollCanvas->setColorFill(ofColor(255,0,0,0));
+    projectsListScrollCanvas->setColorFillHighlight(ofColor(255,0,0,0));
     projectsList = new ofxUIDropDownList("List",vector<string>());
+    projectsList->setColorFill(ofColor(255,0,0,0));
+    projectsList->setColorFillHighlight(ofColor(255,0,0,0));
     projectsList->setAutoClose(false);
     projectsList->open();
     ((ofxUIToggle*)projectsList)->setVisible(false);
@@ -51,26 +60,28 @@ void GUIProjects::init(){
     projectsCanvas->setName("Projects");
     projectsCanvas->getCanvasTitle()->setVisible(false);
     
+    
+    // layout
     projectsListScrollCanvas->addWidgetDown(projectsList);
     
     projectsCanvas->addWidgetDown(backButton);
     projectsCanvas->addWidgetDown(projectsListScrollCanvas);
-    
-    
-    
-    
+
+    // events
     projectsCanvas->disableAppDrawCallback();
     projectsListScrollCanvas->disableAppDrawCallback();
-    
-    
-    setCurrentDirectory( "/Users/mhermant/Desktop/TestImMedia");
-    
-    
-    
-    
     ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     ofAddListener(projectsListScrollCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     
+    
+
+    
+    
+    
+    
+    // file watcher
+
+    setCurrentDirectory( "/Users/mhermant/Desktop/TestImMedia");
     ofAddListener(watch.fileAdded, this, &GUIProjects::projectsAdded);
     ofAddListener(watch.fileRemoved, this, &GUIProjects::projectsRemoved);
     
@@ -95,10 +106,12 @@ void GUIProjects::registerListeners() {
 }
 
 void GUIProjects::entered(){
-    Tweener.addTween(targetBox.width,fullSizeRect.width,1);
+    Tweener.addTween(&targetBox,fullSizeRect,1);
 }
 void GUIProjects::exited(){
-    Tweener.addTween(targetBox.width,100,1);
+    ofRectangle tmpTarget(fullSizeRect);
+    tmpTarget.width=100;
+   Tweener.addTween(&targetBox,tmpTarget,1);
 }
 
 void GUIProjects::boxResized(bool stable){
@@ -136,7 +149,7 @@ bool GUIProjects::isProject(ofFile f){
         for(int i = 0 ; i < files.size() ; i++){
             string curFName = files[i].getFileName();
             // its a media
-            if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()){
+            if(find(supported_formats.begin(),supported_formats.end(),files[i].getExtension())!=supported_formats.end()|| files[i].getExtension() == "xml"){
                 
             }
             // it's a presentation
@@ -199,18 +212,18 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
             // an element has been triggerd in project list
             else if(parent->getName()=="List"){
                 
-                if(isProjectOpened){
+                if(isProjectOpened ){
                     
                     
                     // select in playground too
                     string curName = a.widget->getName();
                     vector<Media*> el = MediaPool::instance()->medias;
                     for(vector<Media*>::iterator it = el.begin() ; it!= el.end() ; ++it){
-                        cout << (*it)->name << endl;
+                        
                         if((*it)->name==curName){
-                            selected->isSelected = false;
-                            selected = *it;
-                            selected->isSelected = true;
+                            if(selected[curGlove]!=NULL)selected[curGlove]->isSelected = false;
+                            selected[curGlove] = *it;
+                            selected[curGlove]->isSelected = true;
                             break;
                         }
                     }
@@ -237,7 +250,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
 
 void GUIProjects::projectsAdded(string &filename){
     ofFile file(currentDirectory.path()+"/"+filename);
-    if(file.isDirectory() || ofFind(supported_formats,file.getExtension())){
+    if(file.isDirectory() || find(supported_formats.begin(),supported_formats.end(),file.getExtension())!=supported_formats.end()){
         projectsList->addToggle(file.getBaseName());
     }
 }

@@ -23,7 +23,7 @@ static ofPath& get_current_path(fz_device *dev)
 static ofPath& create_path(fz_device *dev)
 {
 	fz_ofpath_device *ddev = (fz_ofpath_device*)dev->user;
-	ddev->paths->push_back(ofPtr<ofPath>(new ofPath));
+	ddev->paths->push_back(shared_ptr<ofPath>(new ofPath));
 	return *ddev->paths->back();
 }
 

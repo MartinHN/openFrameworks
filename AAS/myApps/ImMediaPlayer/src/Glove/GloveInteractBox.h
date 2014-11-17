@@ -30,9 +30,10 @@ public:
     
     static bool isCollision;
     
-    static GloveInteractBox * dragged,*lastDragged;
-    static GloveInteractBox * zoomed;
-    static GloveInteractBox* selected;
+    static map<GloveInstance*,GloveInteractBox*>  dragged,lastDragged;
+//    static map<GloveInstance*,GloveInteractBox*>  zoomed;
+    static map<GloveInstance*,GloveInteractBox*>  selected;
+    static map<GloveInstance*,GloveInteractBox*> hovered;
     static ofColor hoverColor;
     static ofColor selectedColor;
     
@@ -60,8 +61,9 @@ public:
     
     bool isHovered;
     bool isSelected;
+    bool isDragged;
     ofRectangle box;
-    ofRectangle targetBox;
+    ofParameter<ofRectangle> targetBox;
     bool isStable;
     
     

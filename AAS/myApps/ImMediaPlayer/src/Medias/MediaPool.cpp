@@ -11,6 +11,7 @@
 
 #include "MediaPool.h"
 
+#include "Savable.h"
 
 
 
@@ -22,6 +23,8 @@
 
 
 MediaPool* MediaPool::insti;
+
+string MediaPool::projectPath;
 
 void MediaPool::unloadAll(){
     bool last = false;
@@ -36,6 +39,7 @@ void MediaPool::unloadAll(){
 
 bool MediaPool::loadMedias(string path){
     unloadAll();
+     projectPath = "";
     ofDirectory dir(path);
     dir.listDir();
     vector<ofFile> mediasf = dir.getFiles();
@@ -55,8 +59,15 @@ bool MediaPool::loadMedias(string path){
     
     Screens * ss = Screens::instance();
     ofRectangle rr = ss->walls[1]->rectScreen();
-    makeGrid(medias,rr);
     
+    projectPath = path;
+    ofFile settingsFile(path+"/settings.xml",ofFile::ReadOnly);
+    if(settingsFile.exists()){
+        Savable::load(settingsFile.path());
+    }
+    else{
+        makeGrid(medias,rr);
+    }
     return true;
 }
 

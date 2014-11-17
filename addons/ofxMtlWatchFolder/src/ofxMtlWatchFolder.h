@@ -38,6 +38,8 @@ public:
     
     void threadedFunction();
     
+
+    
     ofEvent<string> fileAdded;
     ofEvent<string> fileRemoved;
     

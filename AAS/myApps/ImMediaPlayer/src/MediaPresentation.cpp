@@ -51,7 +51,7 @@ void MediaPresentation::load(string folderPath){
 
 void MediaPresentation::touch(TouchButton num, TouchAction s){
     GloveInteractBox::touch(num, s);
-    if(isHovered){
+    if(hovered[curGlove]){
     if(num == GLOVE_BUTTON_CLICK && s == GLOVE_ACTION_SHORTPRESS){
         curMediaIndex++;
         startTransition();

@@ -96,7 +96,12 @@ void ofXml::deserialize(ofAbstractParameter & parameter){
 				parameter.cast<bool>() = getBoolValue(name);
 			}else if(parameter.type()==typeid(ofParameter<string>).name()){
 				parameter.cast<string>() = getValue(name);
-			}else{
+			}
+			else if(parameter.type()==typeid(ofParameter<ofRectangle>).name()){
+				parameter.cast<ofRectangle>()= getValue<ofRectangle>(name);
+			}
+			
+			else{
 				parameter.fromString(getValue(name));
 			}
 		}

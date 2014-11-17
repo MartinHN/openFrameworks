@@ -14,6 +14,8 @@
 		6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */; };
 		6F46B90A1A135EF200E8E154 /* ofxTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9041A135EF200E8E154 /* ofxTransitions.cpp */; };
 		6F46B90B1A135EF200E8E154 /* ofxTweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9061A135EF200E8E154 /* ofxTweener.cpp */; };
+		6F4C206E1A1A0BE500307E48 /* Savable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4C206D1A1A0BE500307E48 /* Savable.cpp */; };
+		6F4C20711A1A168B00307E48 /* GUIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4C206F1A1A168B00307E48 /* GUIConfig.cpp */; };
 		6F513C901A19FBC900BF5A61 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C691A19FBC900BF5A61 /* IpEndpointName.cpp */; };
 		6F513C911A19FBC900BF5A61 /* NetworkingUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C6E1A19FBC900BF5A61 /* NetworkingUtils.cpp */; };
 		6F513C921A19FBC900BF5A61 /* UdpSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C6F1A19FBC900BF5A61 /* UdpSocket.cpp */; };
@@ -245,6 +247,9 @@
 		6F46B9051A135EF200E8E154 /* ofxTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTransitions.h; sourceTree = "<group>"; };
 		6F46B9061A135EF200E8E154 /* ofxTweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTweener.cpp; sourceTree = "<group>"; };
 		6F46B9071A135EF200E8E154 /* ofxTweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTweener.h; sourceTree = "<group>"; };
+		6F4C206D1A1A0BE500307E48 /* Savable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Savable.cpp; path = Utils/Savable.cpp; sourceTree = "<group>"; };
+		6F4C206F1A1A168B00307E48 /* GUIConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIConfig.cpp; sourceTree = "<group>"; };
+		6F4C20701A1A168B00307E48 /* GUIConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIConfig.h; sourceTree = "<group>"; };
 		6F513C641A19FBC900BF5A61 /* addon_config.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = addon_config.mk; sourceTree = "<group>"; };
 		6F513C691A19FBC900BF5A61 /* IpEndpointName.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IpEndpointName.cpp; sourceTree = "<group>"; };
 		6F513C6A1A19FBC900BF5A61 /* IpEndpointName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpEndpointName.h; sourceTree = "<group>"; };
@@ -279,6 +284,7 @@
 		6F513C8D1A19FBC900BF5A61 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		6F513C8E1A19FBC900BF5A61 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		6F513C8F1A19FBC900BF5A61 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		6F513CA11A1A078700BF5A61 /* Savable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Savable.h; path = Utils/Savable.h; sourceTree = "<group>"; };
 		6F70B4551A0B833F00C7B3EF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6F70B4681A0B833F00C7B3EF /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		6F70B46B1A0B833F00C7B3EF /* draw_affine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_affine.c; sourceTree = "<group>"; };
@@ -1263,6 +1269,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				F26C671419FD47500039F116 /* Watcher.cpp */,
 				F26C671519FD47500039F116 /* Watcher.h */,
+				6F513CA11A1A078700BF5A61 /* Savable.h */,
+				6F4C206D1A1A0BE500307E48 /* Savable.cpp */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -1273,6 +1281,8 @@
 				6F7FF0171A1110AB00B7C2B5 /* GUIProjects.cpp */,
 				6F7FF0181A1110AB00B7C2B5 /* GUIProjects.h */,
 				6F7FF0161A11109F00B7C2B5 /* GUIGloveWrapper.h */,
+				6F4C206F1A1A168B00307E48 /* GUIConfig.cpp */,
+				6F4C20701A1A168B00307E48 /* GUIConfig.h */,
 			);
 			name = GUI;
 			sourceTree = "<group>";
@@ -1379,6 +1389,7 @@
 				6F70B5191A0B833F00C7B3EF /* pdf_page.c in Sources */,
 				6F70B5111A0B833F00C7B3EF /* pdf_function.c in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
+				6F4C206E1A1A0BE500307E48 /* Savable.cpp in Sources */,
 				6F70B4E61A0B833F00C7B3EF /* crypt_arc4.c in Sources */,
 				6F7A7F601A0D1120000F3125 /* ofxUIImageButton.cpp in Sources */,
 				6F7FF0151A11109200B7C2B5 /* GloveOSC.cpp in Sources */,
@@ -1476,6 +1487,7 @@
 				6F70B4DB1A0B833F00C7B3EF /* draw_scale.c in Sources */,
 				6F70B50B1A0B833F00C7B3EF /* pdf_cmap_table.c in Sources */,
 				6F7FF0291A1110C600B7C2B5 /* MediaPdf.cpp in Sources */,
+				6F4C20711A1A168B00307E48 /* GUIConfig.cpp in Sources */,
 				6F70B4EC1A0B833F00C7B3EF /* dev_text.c in Sources */,
 				6F70B5001A0B833F00C7B3EF /* res_pixmap.c in Sources */,
 				6F70B5151A0B833F00C7B3EF /* pdf_metrics.c in Sources */,

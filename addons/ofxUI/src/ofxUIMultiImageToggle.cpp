@@ -94,10 +94,10 @@ void ofxUIMultiImageToggle::init(float x, float y, float w, float h, bool *_valu
         extension = _pathURL.substr(found);
     }
     
-    back = new ofImage();   back->loadImage(_pathURL);
-    down = new ofImage();   down->loadImage(coreURL+"down"+extension);
-    over = new ofImage();   over->loadImage(coreURL+"over"+extension);
-    on = new ofImage();     on->loadImage(coreURL+"on"+extension);
+    back = new ofImage();   back->load(_pathURL);
+    down = new ofImage();   down->load(coreURL+"down"+extension);
+    over = new ofImage();   over->load(coreURL+"over"+extension);
+    on = new ofImage();     on->load(coreURL+"on"+extension);
 }
 
 void ofxUIMultiImageToggle::drawBack()                     //NORMAL

@@ -28,7 +28,7 @@ GloveInstance::GloveInstance(string _gloveID):gloveID(_gloveID){
     flex = vector<float>(NUMFLEX,0);
     
     cursorImg =  ofImage();
-    cursorImg.loadImage(ofToDataPath("UI/cursor1.png"));
+    cursorImg.load(ofToDataPath("UI/cursor1.png"));
     cursorImg.resize(40,40);
     cursorImg.setAnchorPercent(0,0);
     ofAddListener(ofEvents().update, this, &GloveInstance::update);

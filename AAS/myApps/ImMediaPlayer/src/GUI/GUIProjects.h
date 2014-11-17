@@ -33,7 +33,7 @@ class GUIProjects : public GloveInteractBox{
     public :
     
     GUIProjects();
-    ~GUIProjects(){};
+    ~GUIProjects();
     ofxMtlWatchFolder watch;
     static ofFile currentDirectory;
     
@@ -44,6 +44,7 @@ class GUIProjects : public GloveInteractBox{
     
     
     ofxUISuperCanvas* projectsCanvas;
+
     
     bool isProjectOpened=false;
     

@@ -15,7 +15,7 @@ ofImage Media::loadingImage;
 string Media::loadingImagePath = "Medias/loading.gif";
 
 Media::Media(){
-    
+    Savable::Savable();
     drawBox= box;
     subSection.set(0,0,1,1);
     normalizedOffset.set(0,0);
@@ -34,7 +34,7 @@ void Media::draw(){
     }
     else {
         if(!loadingImage.isAllocated()){
-            loadingImage.loadImage(loadingImagePath);
+            loadingImage.load(loadingImagePath);
             
         }
         
@@ -77,12 +77,12 @@ void Media::updateDrawBox(){
 void Media::checkBoxFormat(){
     ofVec2f reformatZoom(0);
     // if were stable
-    if(targetBox.width == box.width && targetBox.height == box.height){
-        reformatZoom.x = MAX(targetBox.width-drawBox.width,0);
-        reformatZoom.y = MAX(targetBox.height-drawBox.height,0);
+    if(targetBox->width == box.width && targetBox->height == box.height){
+        reformatZoom.x = MAX(targetBox->width-drawBox.width,0);
+        reformatZoom.y = MAX(targetBox->height-drawBox.height,0);
         ofRectangle newR;
 
-        newR.setFromCenter(targetBox.getCenter(),targetBox.width-reformatZoom.x,targetBox.height-reformatZoom.y);
+        newR.setFromCenter(targetBox->getCenter(),targetBox->width-reformatZoom.x,targetBox->height-reformatZoom.y);
         
         makeValid(newR);
 //    drawBox.scaleTo(targetBox);
@@ -93,5 +93,15 @@ void Media::checkBoxFormat(){
     }
 
 }
+
+void Media::populateSettings(){
+    settings->clear();
+    settings->setName(name);
+    targetBox.setName("box");
+    settings->add(targetBox);
+    
+    
+}
+
 
 

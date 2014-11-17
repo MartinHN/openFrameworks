@@ -60,17 +60,17 @@ void ofxUI2DGraph::drawBack()
         
         for(int x = 0; x <= rect->getWidth(); x+=inc)
         {
-            ofLine(x, 0, x, rect->getHeight());   //y
+            ofDrawLine(x, 0, x, rect->getHeight());   //y
         }
         
         for(int y = 0; y <= rect->getHeight(); y+=inc)
         {
-            ofLine(0, y, rect->getWidth(), y);   //x
+            ofDrawLine(0, y, rect->getWidth(), y);   //x
         }
         
         ofSetLineWidth(2);
-        ofLine(rect->getHalfWidth(), 0, rect->getHalfWidth(), rect->getHeight());
-        ofLine(0, rect->getHalfHeight(), rect->getWidth(), rect->getHalfHeight());
+        ofDrawLine(rect->getHalfWidth(), 0, rect->getHalfWidth(), rect->getHeight());
+        ofDrawLine(0, rect->getHalfHeight(), rect->getWidth(), rect->getHalfHeight());
         ofPopMatrix();
         ofNoFill();
         rect->draw();

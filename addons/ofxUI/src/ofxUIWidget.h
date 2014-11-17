@@ -223,6 +223,7 @@ protected:
     bool bKeyHit;
     map<int, bool> keyBindings;
 #ifdef OFX_UI_TARGET_TOUCH       
-    int touchId;     
+    int touchId;
+    int touchDownId;
 #endif
 };

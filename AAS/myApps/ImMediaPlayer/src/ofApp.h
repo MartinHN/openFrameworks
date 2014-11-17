@@ -5,6 +5,7 @@
 #include "ofxSyphon.h"
 #include "Screens.h"
 #include "GUIProjects.h"
+#include "GUIConfig.h"
 
 #include "GUIGloveWrapper.h"
 
@@ -43,7 +44,8 @@ class ofApp : public ofBaseApp{
     // keep it ordered !!!
     ofEventArgs drawSyphon;
     GloveOSC glove;
-    GUIProjects projects;
+    GUIProjects guiProjects;
+    GUIConfig guiConfig;
     
     GUIGloveWrapper gloveWrapper;
 

@@ -22,15 +22,14 @@
 
 #include "Screens.h"
 
-#include "ofxXmlSettings.h"
 
-class MediaPool{
+class MediaPool {
     
 public:
     
     MediaPool(){};
     ~MediaPool(){};
-    
+    static string projectPath;
     
     static MediaPool * instance(){if(insti==NULL){insti = new MediaPool();}return insti;};
 

@@ -16,7 +16,7 @@ MetaScreen::MetaScreen(ofRectangle r,bool anchorUp,const string & _name ,ofVec2f
     fullScreened=NULL;
     isHovering =false;
     
-    image.loadImage("UI/fullScreenAnchor.png");
+    image.load("UI/fullScreenAnchor.png");
     image.resize(ANCHOR_WIDTH,ANCHOR_WIDTH*image.height*1.0/image.width);
     image.setAnchorPercent(.5,.5);
     if(anchorUp)image.mirror(true, false);
@@ -36,11 +36,11 @@ MetaScreen::~MetaScreen(){
 
 
 void MetaScreen::update(ofEventArgs &a){
-    
-    if(GloveInteractBox::dragged!=NULL){
-    if(fullScreenAnchor.inside(GloveInteractBox::dragged->box.getCenter())){
+    for(map<GloveInstance*,GloveInteractBox*>::iterator it = GloveInteractBox::dragged.begin() ; it!= GloveInteractBox::dragged.end();++it){
+    if(it->second!=NULL){
+    if(fullScreenAnchor.inside(it->second->box.getCenter())){
             isHovering = true;
-            fullScreened =GloveInteractBox::dragged;
+            fullScreened =it->second;
     }
     else{
         isHovering = false;
@@ -56,7 +56,7 @@ void MetaScreen::update(ofEventArgs &a){
         }
     }
     
-    
+    }
 }
 
 
@@ -68,13 +68,13 @@ void MetaScreen::draw(ofEventArgs &a){
     image.draw(fullScreenAnchor.getCenter());
     if(isHovering){
         ofSetColor(ofColor::white, 30);
-        ofRect(*this);
+        ofDrawRectangle(*this);
         float lineW = 10;
         ofSetColor(ofColor::red);
-        ofRect(getMinX(),getMinY(),width,lineW);
-        ofRect(getMaxX()-lineW,getMinY()+lineW,lineW,height-2*lineW);
-        ofRect(getMinX(),getMaxY()-lineW,width,lineW);
-        ofRect(getMinX(),getMinY()+lineW,lineW,height-2*lineW);
+        ofDrawRectangle(getMinX(),getMinY(),width,lineW);
+        ofDrawRectangle(getMaxX()-lineW,getMinY()+lineW,lineW,height-2*lineW);
+        ofDrawRectangle(getMinX(),getMaxY()-lineW,width,lineW);
+        ofDrawRectangle(getMinX(),getMinY()+lineW,lineW,height-2*lineW);
     }
     
     ofPopMatrix();

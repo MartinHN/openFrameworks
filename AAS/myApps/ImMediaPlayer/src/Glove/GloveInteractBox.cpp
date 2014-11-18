@@ -148,7 +148,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
                 if(selected[curGlove] == NULL){//
                     selected[curGlove] = this;
                     isSelected = true;
-                    sendForeground();
+                    if(drawLayer>5)sendForeground();
                     
                 }
                 

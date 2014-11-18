@@ -54,12 +54,12 @@ void Media::update(){
 
 void Media::boxResized(bool stable){
     updateDrawBox();
-    if(stable && !Screens::instance()->isFullscreened(this))checkBoxFormat();
+    if(stable && drawLayer>5)checkBoxFormat();
 };
 
 void Media::boxMoved(bool stable){
     updateDrawBox();
-    if(stable && !Screens::instance()->isFullscreened(this))checkBoxFormat();
+    if(stable && drawLayer>5)checkBoxFormat();
 };
 
 
@@ -98,9 +98,13 @@ void Media::checkBoxFormat(){
 void Media::populateSettings(){
     settings->clear();
     settings->setName(name);
+    
+    //
     targetBox.setName("box");
     settings->add(targetBox);
     
+    drawLayer.setName("layer");
+    settings->add(drawLayer);
     
 }
 

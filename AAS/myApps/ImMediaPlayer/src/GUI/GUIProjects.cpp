@@ -24,6 +24,12 @@ GUIProjects::GUIProjects(){
     isSelectable=false;
     isZoomable=false;
     drawBaseFeedBack = false;
+    
+    //
+
+    vector<GloveInteractBox*>::iterator it = find(allElements.begin(),allElements.end(),this);
+    if(it!=allElements.end())allElements.erase(it);
+    drawLayer = 100;
 
 
 }

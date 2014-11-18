@@ -13,9 +13,9 @@ MediaPresentation::MediaPresentation(){
     Media::Media();
     GloveInteractBox::GloveInteractBox();
     curMediaIndex.addListener(this, &MediaPresentation::loadAt);
+
     
-    
-    ofAddListener(crossfadeEv,this,&MediaPresentation::updateTransition);
+    crossfade.addListener(this,&MediaPresentation::updateTransition);
     curMedia.front = NULL;
     curMedia.back = NULL;
     type = PRESENTATION;
@@ -49,18 +49,15 @@ void MediaPresentation::load(string folderPath){
 }
 
 
-void MediaPresentation::touch(TouchButton num, TouchAction s){
-    GloveInteractBox::touch(num, s);
-    if(hovered[curGlove]){
-    if(num == GLOVE_BUTTON_CLICK && s == GLOVE_ACTION_SHORTPRESS){
+void MediaPresentation::clicked(TouchButton & num){
+
+    if(num == GLOVE_BUTTON_CLICK){
         curMediaIndex++;
         startTransition();
     }
-    }
     
-    if(crossfade ==0){
-        //        curMedia.front->touch(num, s);
-    }
+    
+
     
     
     
@@ -71,7 +68,7 @@ void MediaPresentation::loadAt(int & idx){
     curMediaIndex= idx%mediaPaths.size();
     
     // if tween not ended
-    if(crossfade>0){
+    if(crossfade!=0){
         curMedia.swap();
     }
     if(curMedia.back!=NULL){
@@ -79,8 +76,10 @@ void MediaPresentation::loadAt(int & idx){
     }
     
     curMedia.back =  MediaPool::createMedia(mediaPaths[curMediaIndex]);
-    curMedia.back->box = box;
-    curMedia.back->targetBox = box;
+    ofRectangle tmpR(0,0,1,1);
+    tmpR.scaleTo(box);
+    curMedia.back->box = tmpR;
+    curMedia.back->targetBox = tmpR;
     curMedia.back->normalizedOffset.set(1,0);
     curMedia.back->updateDrawBox();
     
@@ -88,7 +87,7 @@ void MediaPresentation::loadAt(int & idx){
     curMedia.back->isSelectable = false;
     curMedia.back->isCollider = false;
     curMedia.back->drawBaseFeedBack = false;
-    curMedia.back->isHoverable = false;
+
 
     ofRemoveListener(drawSyphonEvent, (GloveInteractBox*)curMedia.back, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+curMedia.back->drawLayer);
     
@@ -96,38 +95,45 @@ void MediaPresentation::loadAt(int & idx){
 
 void MediaPresentation::startTransition(){
     crossfade = 1;
-    Tweener.addTween(crossfade, 0.0f, transitionTime,&crossfadeEv,true);
+    Tweener.addTween(&crossfade, 0.0f, transitionTime);
 }
 
 void MediaPresentation::drawMedia(){
+
     if(curMedia.back !=NULL){
+        ofPushStyle();
         curMedia.back->drawMedia();
+        ofPopStyle();
     }
     if(curMedia.front !=NULL){
+        ofPushStyle();
         curMedia.front->drawMedia();
+        ofPopStyle();
     }
-    
+
     
     
 }
 
 // smothing is handled by this containter so we set Mediabox directly
-void MediaPresentation::boxMoved(bool stable){
+void MediaPresentation::boxChanged(bool stable){
     if(curMedia.front !=NULL){
         curMedia.front->box = box;
         curMedia.front->targetBox = box;
+        curMedia.front->updateDrawBox();
         curMedia.front->boxMoved(stable);
     }
     if(curMedia.back !=NULL){
         curMedia.back->box = box;
         curMedia.back->targetBox = box;
+        curMedia.back->updateDrawBox();
         curMedia.back->boxMoved(stable);
     }
 }
 
-void MediaPresentation::updateTransition(const void * ended,float & a){
-    //hack in ofxTweener for knowing last event
-    if(ended == NULL){
+void MediaPresentation::updateTransition(float & a){
+    
+    if(a==0){
         curMedia.swap();
         delete curMedia.back;
         curMedia.back = NULL;

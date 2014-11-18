@@ -37,14 +37,13 @@ GloveInteractBox::GloveInteractBox():GloveInteract(){
     drawLayer.addListener(this, &GloveInteractBox::setDrawLayer);
     ofRectangle tmpR(1+ofRandom(1000),1+ofRandom(1000),400,400);
     box = tmpR;
-    
+    targetBox = tmpR;
     drawLayer = allElements.size();
     allElements.push_back(this);
     isSelected = false;
     isDragged=false;
     isHovered=false;
     
-    targetMagnet.set(0);
     
 }
 
@@ -69,12 +68,21 @@ GloveInteractBox::~GloveInteractBox(){
 void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
     
     // is the current glove hovering
-    bool _isHovered = isHoverable && this->isHit(pos);
+    bool _isHovered =  this->isHit(pos);
     
     // send change Events for each glove (watch isHovered if you want to be sure that no glove are hovering)
-    if(_isHovered && !(hovered[curGlove]==this)){this->entered();
-        hovered[curGlove]=this;}
-    else if(!_isHovered && (hovered[curGlove]==this)){this->exited();hovered[curGlove]=NULL;}
+    if(_isHovered && !(hovered[curGlove]==this)){
+        this->entered();
+        
+        hovered[curGlove]=this;
+        
+    }
+    else if(!_isHovered && (hovered[curGlove]==this)){
+        this->exited();
+        
+        hovered[curGlove]=NULL;
+        
+    }
     
     
     // check for every glove to stay hovered until the last
@@ -88,7 +96,7 @@ void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
     }
     
     // if the current glove hovers, send call hover function
-    if(hovered[curGlove]){
+    if(hovered[curGlove]==this){
         ofVec2f newPos=pos-ofVec2f(box.x,box.y);
         this->hover(newPos);
     }
@@ -117,36 +125,43 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
         //        zoomed == NULL;
         
     }
+    if(state == GLOVE_ACTION_SHORTPRESS){
+        
+        int EEE=00;
+    }
     
     
     // intern handling function
     // prefer using GLOVE_ACTION_DOWN for intern state update and GLOVE_ACTION_xxxPRESS for callbacks
     
-    if(hovered[curGlove]==this){
-        // for sending clicked events after selection
+    if( isHovered ){
         
         
         
-        
-        // select it
-        if( touchId == GLOVE_BUTTON_CLICK && state == GLOVE_ACTION_DOWN ){
-            wasSelected = selected[curGlove]==this;
-            // activate if no one selected
-            if(selected[curGlove] == NULL){//
-                selected[curGlove] = this;
-                isSelected = true;
-                sendForeground();
+        if( state == GLOVE_ACTION_DOWN){
+            
+            // select it
+            
+            if( isSelectable && touchId == GLOVE_BUTTON_CLICK  ){
+                wasSelected = selected[curGlove]==this;
+                // activate if no one selected
+                if(selected[curGlove] == NULL){//
+                    selected[curGlove] = this;
+                    isSelected = true;
+                    sendForeground();
+                    
+                }
+                
+                // prefer frontmost layer ( should be useless with eventing system synced on draw layers)
+                else if(selected[curGlove]!=NULL && drawLayer>selected[curGlove]->drawLayer){
+                    selected[curGlove]->isSelected = false;
+                    selected[curGlove]->sendBack();
+                    selected[curGlove] = NULL;
+                    cout << "eventing system corrupted" << endl;
+                }
+                
                 
             }
-            
-            // prefer frontmost layer ( should be useless with eventing system synced on draw layers)
-            else if(selected[curGlove]!=NULL && drawLayer>selected[curGlove]->drawLayer){
-                selected[curGlove]->isSelected = false;
-                selected[curGlove]->sendBack();
-                selected[curGlove] = NULL;
-                cout << "eventing system corrupted" << endl;
-            }
-            
             
             // drag it
             if(touchId == GLOVE_BUTTON_DRAG && isDraggable ){
@@ -158,7 +173,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
                     dragged[curGlove]->sendForeground();
                     // underlying evets will be produced if box actually move see boxMoved() function called in updateBox()
                     targetBox = box;
-                    targetMagnet.set(0);
+                    
                     dragOffset = curGlove->cursor2D-box.getCenter();
                     isDragged=true;
                 }
@@ -174,15 +189,13 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
         }
         
         
-        
-        
         // callbacks
-        if(wasSelected &&  state == GLOVE_ACTION_SHORTPRESS){
+        if( wasSelected &&  state == GLOVE_ACTION_SHORTPRESS){
             this->clicked(touchId);
         }
+        
+        
     }
-    
-    
     // not hovered
     
     // un-select last
@@ -342,20 +355,20 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
     
 }
 void GloveInteractBox::updateBox(){
-    ofRectangle tmpR = targetBox;
-    if(tmpR+targetMagnet!=box){
+    
+    if(targetBox.get()!=box){
         
         //        resolveCollision(targetBox);
         
         isStable = false;
-        bool isMoving = (targetBox->getCenter().x+targetMagnet.x != box.getCenter().x || targetBox->getCenter().y+targetMagnet.y != box.getCenter().y);
+        bool isMoving = (targetBox->getCenter().x != box.getCenter().x || targetBox->getCenter().y != box.getCenter().y);
         
         bool isResizing = (targetBox->width != box.width || targetBox->height != box.height);
         
         
         
-        box.setFromCenter(      ofLerp(box.getCenter().x,   targetBox->getCenter().x +targetMagnet.x,   alphaTarget),
-                          ofLerp(box.getCenter().y,   targetBox->getCenter().y+targetMagnet.y,   alphaTarget),
+        box.setFromCenter(      ofLerp(box.getCenter().x,   targetBox->getCenter().x,   alphaTarget),
+                          ofLerp(box.getCenter().y,   targetBox->getCenter().y,   alphaTarget),
                           ofLerp(box.width,           targetBox->width,                            alphaTarget),
                           ofLerp(box.height,          targetBox->height,                           alphaTarget));
         
@@ -363,11 +376,11 @@ void GloveInteractBox::updateBox(){
         
         
         // avoid infinitesimal changes
-        if(abs(targetBox->x+targetMagnet.x - box.x)<.1 &&
-           abs(targetBox->y+targetMagnet.y - box.y)<.1 &&
+        if(abs(targetBox->x - box.x)<.1 &&
+           abs(targetBox->y - box.y)<.1 &&
            abs(targetBox->width - box.width)<.05 &&
            abs(targetBox->height - box.height)<.05){
-            box.setFromCenter(targetBox->getCenter() + targetMagnet, targetBox->width, targetBox->height);
+            box.setFromCenter(targetBox->getCenter(), targetBox->width, targetBox->height);
             
         }
         
@@ -435,7 +448,7 @@ void GloveInteractBox::resolveCollision(ofRectangle  newR){
                 
             }
             if(isColliding){
-                targetMagnet =_targetMagnet;
+                //                targetMagnet =_targetMagnet;
             }
             else{
                 

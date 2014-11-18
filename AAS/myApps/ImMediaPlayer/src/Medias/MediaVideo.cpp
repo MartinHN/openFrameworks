@@ -22,6 +22,7 @@ void MediaVideo::load(string filePath){
     pauseImage.load("Medias/pauseLogo.png");
     alphaPause = 0;
     logoRect.set(0,0,1,1);
+    
 
     
 }
@@ -46,8 +47,9 @@ void MediaVideo::drawMedia(){
     if(isLoaded){
 //        player.draw(drawBox.x,drawBox.y,drawBox.width,drawBox.height);
         ofVec2f ratio = ofVec2f(player.width/drawBox.width,player.height/drawBox.height);
+        if(subSection.width>0 && subSection.height>0){
         player.getTexture().drawSubsection(subSection.x, subSection.y,subSection.width, subSection.height,(subSection.x - drawBox.x)*ratio.x,(subSection.y - drawBox.y)*ratio.y,subSection.width*ratio.x,subSection.height*ratio.y);
-        
+        }
         
         ratio = ofVec2f(playImage.width/drawBox.width,playImage.height/drawBox.height);
         ofSetColor(255,alphaPlay);

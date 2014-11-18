@@ -78,6 +78,8 @@ protected :
     // world coordinate of clipped rectangle between drawBox and box 
     ofRectangle subSection;
     
+    // original format of loaded media
+    float format = 1;
 };
 
 

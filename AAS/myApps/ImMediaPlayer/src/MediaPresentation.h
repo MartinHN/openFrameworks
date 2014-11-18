@@ -45,19 +45,19 @@ public:
     
     DoubleMediaBuffer curMedia;
     
-    float transitionTime = 2;
+    float transitionTime = .8;
     
     virtual void load(string path);
     virtual void drawMedia();
-    virtual void boxMoved(bool stable);
-    virtual void touch(TouchButton num, TouchAction s);
+    virtual void boxChanged(bool stable);
+    virtual void clicked(TouchButton & num);
     void loadAt(int & idx);
     
     void startTransition();
-    void updateTransition(const void * ended,float & a);
+    void updateTransition(float & a);
     
-    float crossfade;
-    ofEvent<float> crossfadeEv;
+    ofParameter<float> crossfade;
+
     
 };
 

@@ -32,7 +32,7 @@ void ofxMtlWatchFolder::start(const string& path, unsigned checkInterval, unsign
     if (isThreadRunning()) {
         stopThread();
         
-//        waitForThread();
+        waitForThread();
     }
     
     _watchPath = path;

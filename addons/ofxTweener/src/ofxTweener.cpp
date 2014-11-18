@@ -150,7 +150,7 @@ void ofxTweener::updateParams(){
 			//smaller than 0 would be delayed
             ofAbstractParameter * parameter = tweensP[i]._var;
             if(parameter->type()==typeid(ofParameter<int>).name()){
-                tweensP[i]._var->cast<int>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
+                tweensP[i]._var->cast<int>() = (int)(a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
               
             }else if(parameter->type()==typeid(ofParameter<float>).name()){
                 tweensP[i]._var->cast<float>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
@@ -198,7 +198,7 @@ void ofxTweener::updateParams(){
 void ofxTweener::setParam(ofAbstractParameter* parameter, vector<float> f){
     
     if(parameter->type()==typeid(ofParameter<int>).name()){
-        parameter->cast<int>() = f[0];
+        parameter->cast<int>() = (int)f[0];
         
     }else if(parameter->type()==typeid(ofParameter<float>).name()){
        parameter->cast<float>() = f[0];
@@ -259,6 +259,8 @@ void ofxTweener::removeTween(float &var){
 		}
 	}
 }
+
+
 
 
 float ofxTweener::bezier(float b, float e, float t, float p){

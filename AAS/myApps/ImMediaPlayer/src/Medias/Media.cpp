@@ -15,6 +15,7 @@ ofImage Media::loadingImage;
 string Media::loadingImagePath = "Medias/loading.gif";
 
 Media::Media(){
+    GloveInteractBox::GloveInteractBox();
     Savable::Savable();
     drawBox= box;
     subSection.set(0,0,1,1);

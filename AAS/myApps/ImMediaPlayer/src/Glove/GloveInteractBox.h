@@ -48,11 +48,11 @@ public:
     
     float alphaTarget = 0.2;
     ofParameter<int> drawLayer = 0;
-    float format = 1;
+    
     bool isDraggable=true;
     bool isZoomable = true;
     bool isSelectable = true;
-    bool isHoverable = true;
+   
     bool drawBaseFeedBack = true;
     
     
@@ -111,7 +111,7 @@ protected:
 
     
     ofVec2f dragOffset;
-    ofVec2f targetMagnet;
+
     
     
     

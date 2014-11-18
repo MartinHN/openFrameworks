@@ -53,6 +53,7 @@ public:
     
     
 	void removeTween(float &var);
+
 	void setTimeScale(float scale);
 	void update(ofEventArgs &data);
     void updateParams();
@@ -63,7 +64,7 @@ public:
     
     
     template<typename T>
-    void addTween(ofParameter<T>* var, T to, float time, float (ofxTransitions::*ease) (float,float,float,float)=&ofxTransitions::easeInOutElastic, float delay=0);
+    void addTween(ofParameter<T>* var, T to, float time, float (ofxTransitions::*ease) (float,float,float,float)=&ofxTransitions::easeInOutExpo, float delay=0);
     
     template<typename T>
     void removeTween(ofParameter<T> var);

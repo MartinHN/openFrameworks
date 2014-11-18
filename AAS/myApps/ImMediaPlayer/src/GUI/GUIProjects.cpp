@@ -23,7 +23,7 @@ GUIProjects::GUIProjects(){
     drawLayer=0;
     isSelectable=false;
     isZoomable=false;
-    isHoverable = false;
+    drawBaseFeedBack = false;
 
 
 }
@@ -46,7 +46,7 @@ void GUIProjects::init(){
     // projectPanel instanciations
     backButton = new ofxUIImageButton(fullSizeRect.width-40,100,false,"UI/backButton.png","backButton");
     
-    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,fullSizeRect.width-40,fullSizeRect.height-50);
+    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,200,fullSizeRect.width-40,fullSizeRect.height-50);
     projectsListScrollCanvas->setName("Projects");
     
 
@@ -138,6 +138,7 @@ void GUIProjects::setCurrentDirectory(string path){
         
         if(f.isDirectory() && !ofDirectory::isDirectoryEmpty(path)){
             if((isProjectOpened=isProject(f))){
+                projectsListScrollCanvas->setPosition(projectsListScrollCanvas->getSRect()->x,projectsListScrollCanvas->getSRect()->y);
                 MediaPool::instance()->loadMedias(path);
             }
             
@@ -204,8 +205,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
     ofxUIWidget* canvas = a.widget->getCanvasParent();
     if(canvas!=NULL){
         ofxUIWidget* parent = a.widget->getParent();
-        
-         cout << a.widget->getName() << endl;
+
         
         
         if(canvas->getName()=="Projects"){

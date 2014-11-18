@@ -48,8 +48,10 @@ void GloveOSC::update(ofEventArgs & a){
 
 
 void GloveOSC::draw(ofEventArgs & a){
-    ofSetColor(isConnectedToServer?255:0,!isConnectedToServer?255:0,0);
-    ofEllipse(20,20,20,20);
+    ofPushStyle();
+    ofSetColor(!isConnectedToServer?255:0,isConnectedToServer?255:0,0);
+    ofDrawEllipse(20,20,20,20);
+    ofPopStyle();
 }
 
 

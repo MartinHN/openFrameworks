@@ -363,11 +363,13 @@ void GloveInteractBox::updateBox(){
         
         if(isResizing)this->boxResized(false);
         if(isMoving)this->boxMoved(false);
+        if(isResizing || isMoving) this->boxChanged(false);
     }
     else if(!isStable){
     isStable = true;
         this->boxResized(true);
         this->boxMoved(true);
+        this->boxChanged(true);
     }
     
     

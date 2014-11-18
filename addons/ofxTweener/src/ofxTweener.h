@@ -30,7 +30,7 @@ class TweenParam {
 public:
 	typedef float(ofxTransitions::* easeFunction)(float,float,float,float);
 	ofAbstractParameter* _var;
-    ofAbstractParameter _from, _to;
+    vector<float> _from, _to;
     float _duration;
 	easeFunction _easeFunction;
 	Poco::Timestamp _timestamp;
@@ -82,6 +82,8 @@ private:
 	vector<Tween>		tweens;
     std::map<float *,ofEvent<float> *>   callbacks;
     
+    vector<float> getVectorFromParam(ofAbstractParameter* p);
+    void setParam(ofAbstractParameter* parameter, vector<float> f);
 };
 
 
@@ -89,8 +91,8 @@ private:
 template<typename T>
 void ofxTweener::addTween(ofParameter<T>* var, T to, float time, float (ofxTransitions::*ease) (float,float,float,float), float delay){
     
-    T from = *var;
-    T too = T(to);
+    vector<float> from = getVectorFromParam(var);
+    ofParameter<T> too = ofParameter<T>(to);
     
     float _delay = delay;
     Poco::Timestamp latest = 0;
@@ -99,9 +101,9 @@ void ofxTweener::addTween(ofParameter<T>* var, T to, float time, float (ofxTrans
 		if( tweensP[i]._var->getGroupHierarchyNames() == var->getGroupHierarchyNames()) {
 			// object already tweening, just kill the old one
 			if(_override){
-                tweensP[i]._from = ofParameter<T>(from);
+                tweensP[i]._from = getVectorFromParam(var);
                 tweensP[i]._easeFunction = ease;
-                tweensP[i]._to = ofParameter<T>(too);
+                tweensP[i]._to = getVectorFromParam(&too);
 				tweensP[i]._easeFunction = ease;
 				tweensP[i]._timestamp = Poco::Timestamp() + ((delay / _scale) * 1000000.0f) ;
 				tweensP[i]._duration = (time / _scale) * 1000000.0f;
@@ -112,7 +114,7 @@ void ofxTweener::addTween(ofParameter<T>* var, T to, float time, float (ofxTrans
 				if((tweensP[i]._timestamp + tweensP[i]._duration) > latest){
 					latest = (tweensP[i]._timestamp + tweens[i]._duration);
 					delay = _delay + ((tweensP[i]._duration - tweensP[i]._timestamp.elapsed())/1000000.0f);
-					from = tweensP[i]._to.cast<T>();
+					from = getVectorFromParam(&too);
 				}
 			}
 		}
@@ -120,10 +122,10 @@ void ofxTweener::addTween(ofParameter<T>* var, T to, float time, float (ofxTrans
     
     TweenParam p;
     
-    p._from = ofParameter<T>(from);
+    p._from = getVectorFromParam(var);
     p._var = var;
     p._easeFunction = ease;
-    p._to = ofParameter<T>(too);
+    p._to = getVectorFromParam(&too);
     
     p._timestamp = Poco::Timestamp() + ((delay / _scale) * 1000000.0f) ;
 	p._duration = (time / _scale) * 1000000.0f;
@@ -131,6 +133,7 @@ void ofxTweener::addTween(ofParameter<T>* var, T to, float time, float (ofxTrans
     tweensP.push_back(p);
     
 }
+
 
 
 template<typename T>

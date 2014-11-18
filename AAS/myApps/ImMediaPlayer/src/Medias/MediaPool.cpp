@@ -61,12 +61,13 @@ bool MediaPool::loadMedias(string path){
     ofRectangle rr = ss->walls[1]->rectScreen();
     
     projectPath = path;
+    makeGrid(medias,rr);
     ofFile settingsFile(path+"/settings.xml",ofFile::ReadOnly);
     if(settingsFile.exists()){
         Savable::load(settingsFile.path());
     }
     else{
-        makeGrid(medias,rr);
+        
     }
     return true;
 }

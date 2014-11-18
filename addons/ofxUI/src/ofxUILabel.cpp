@@ -113,6 +113,9 @@ void ofxUILabel::drawFill()
         ofxUISetColor(color_fill);
         font->drawString(label, floor(rect->getX())+xOffset, floor(rect->getY()+rect->getHeight())+yOffset);
     }
+    else{
+        int aaa=0;
+    }
 }
 
 void ofxUILabel::drawFillHighlight()

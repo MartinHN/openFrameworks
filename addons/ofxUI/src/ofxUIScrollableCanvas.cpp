@@ -254,8 +254,9 @@ void ofxUIScrollableCanvas::update()
         acc.limit(50);
         vel +=acc;
         vel.limit(100);
+        
         if(scrollX && fabs(vel.x) > 1.0) rect->x += floor(vel.x);
-        if(scrollY && fabs(vel.y) > 1.0) rect->y += floor(vel.y);
+        if(scrollY && fabs(vel.y) > 1.0){rect->y += floor(vel.y);}
         
         vel *=damping;
         acc.set(0);
@@ -273,6 +274,7 @@ void ofxUIScrollableCanvas::drawBack()
     {
         ofxUIFill();
         ofxUISetColor(color_back);
+        
         sRect->draw();
     }
 }
@@ -363,7 +365,7 @@ void ofxUIScrollableCanvas::draw()
     
     for(vector<ofxUIWidget *>::reverse_iterator it = widgets.rbegin(); it != widgets.rend(); ++it)
     {
-        if((*it)->isVisible() && (*it)->getRect()->rInside(*sRect))
+        if((*it)->isVisible() && (*it)->getRect()->rIntersects(*sRect))
         {
             (*it)->draw();
         }

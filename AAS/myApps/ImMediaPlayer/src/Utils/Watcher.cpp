@@ -30,6 +30,13 @@ void Watcher::setup(){
 }
 
 
+void Watcher::changePath(string path){
+    if(watch.lock()){
+        
+    }
+    
+}
+
 
 
 void Watcher::watchFolderFileAdded(string & s){

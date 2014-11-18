@@ -212,6 +212,9 @@ void ofxUIWidget::drawBack() {
         ofxUISetColor(color_back);
         rect->draw();
     }
+    else{
+        int aaaa=0;
+    }
 }
 
 void ofxUIWidget::drawOutline() {

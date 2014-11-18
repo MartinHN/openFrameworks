@@ -130,6 +130,10 @@ void ofxUIDropDownList::addToggle(string toggleName)
     if(parent != NULL)
     {
         parent->addWidget(ltoggle);
+        ofxUICanvas* c = (ofxUICanvas*)getCanvasParent();
+        if(c!=NULL){
+            c->setHeight(yt);
+        }
         
     }
     ltoggle->setParent(this);

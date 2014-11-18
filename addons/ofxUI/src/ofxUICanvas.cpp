@@ -602,7 +602,7 @@ void ofxUICanvas::draw() {
     vector<ofxUIWidget *>::reverse_iterator it = widgets.rbegin();
     vector<ofxUIWidget *>::reverse_iterator eit = widgets.rend();
     for(; it != eit; ++it) {
-        if((*it)->isVisible() && ((*it)->getRect()->rInside(*rect) || (*it)->isModal())) {
+        if((*it)->isVisible() && ((*it)->getRect()->rIntersects(*rect) || (*it)->isModal())) {
             (*it)->draw();
         }
     }

@@ -45,13 +45,13 @@ void GUIProjects::init(){
     // projectPanel instanciations
     backButton = new ofxUIImageButton(fullSizeRect.width-40,100,false,"UI/backButton.png","backButton");
     
-    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,fullSizeRect.width-40,fullSizeRect.height-200);
+    projectsListScrollCanvas = new ofxUIScrollableCanvas(0,110,fullSizeRect.width-40,fullSizeRect.height-50);
     projectsListScrollCanvas->setName("Projects");
-    projectsListScrollCanvas->setColorFill(ofColor(255,0,0,0));
-    projectsListScrollCanvas->setColorFillHighlight(ofColor(255,0,0,0));
+    
+
     projectsList = new ofxUIDropDownList("List",vector<string>());
-    projectsList->setColorFill(ofColor(255,0,0,0));
-    projectsList->setColorFillHighlight(ofColor(255,0,0,0));
+
+
     projectsList->setAutoClose(false);
     projectsList->open();
     ((ofxUIToggle*)projectsList)->setVisible(false);
@@ -59,24 +59,33 @@ void GUIProjects::init(){
     projectsCanvas = new ofxUISuperCanvas("Projects",fullSizeRect.x,fullSizeRect.y,fullSizeRect.width,fullSizeRect.height);
     projectsCanvas->setName("Projects");
     projectsCanvas->getCanvasTitle()->setVisible(false);
-    
+    projectsCanvas->setColorBack(ofColor(0,0,0,100));
     
     // layout
-    projectsListScrollCanvas->addWidgetDown(projectsList);
+
+    
     
     projectsCanvas->addWidgetDown(backButton);
     projectsCanvas->addWidgetDown(projectsListScrollCanvas);
+    
+    projectsListScrollCanvas->addWidgetDown(projectsList);
+    
 
     // events
     projectsCanvas->disableAppDrawCallback();
     projectsListScrollCanvas->disableAppDrawCallback();
     ofAddListener(projectsCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
     ofAddListener(projectsListScrollCanvas->newGUIEvent,this,&GUIProjects::GUIevent);
-    
-    
 
     
     
+    
+    // fix internal bug of scrollCanvas
+    projectsListScrollCanvas->getSRect()->setParent(projectsCanvas->getRect());
+    
+    // color Mods
+    projectsListScrollCanvas->setColorBack(ofColor(0,0,0,0));
+    backButton->setColorBack(ofColor::grey);
     
     
     // file watcher
@@ -110,13 +119,14 @@ void GUIProjects::entered(){
 }
 void GUIProjects::exited(){
     ofRectangle tmpTarget(fullSizeRect);
-    tmpTarget.width=100;
+    tmpTarget.translateX(-tmpTarget.width+100);
    Tweener.addTween(&targetBox,tmpTarget,1);
 }
 
-void GUIProjects::boxResized(bool stable){
+void GUIProjects::boxMoved(bool stable){
     
-    projectsCanvas->setWidth( box.width);
+    projectsCanvas->setPosition(box.x,box.y);
+
     
 }
 

@@ -27,7 +27,7 @@ public:
     void watchFolderFileRemoved(string& filename);
     
     static vector<ofFile> files;
-    
+    void changePath(string path);
     
     private :
     static string folderPath ;

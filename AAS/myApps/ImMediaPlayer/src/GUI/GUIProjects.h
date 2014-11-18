@@ -53,7 +53,7 @@ class GUIProjects : public GloveInteractBox{
     
     virtual void draw(ofEventArgs & a);
     virtual void update(ofEventArgs & a);
-    virtual void boxResized(bool stable);
+    virtual void boxMoved(bool stable);
     void entered();
     void exited();
     void startWatch(string s="");

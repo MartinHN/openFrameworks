@@ -83,6 +83,7 @@ public:
     virtual void clicked(TouchButton & button){};
     virtual void boxResized(bool stable){};
     virtual void boxMoved(bool stable){};
+    virtual void boxChanged(bool stable){};
     
     virtual void exited(){};
     virtual void entered(){};

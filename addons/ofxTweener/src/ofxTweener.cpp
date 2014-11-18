@@ -140,7 +140,7 @@ void ofxTweener::updateParams(){
 					}
 				}
 			}
-			if(!found) *tweensP[i]._var = tweensP[i]._to;
+			if(!found) setParam(tweensP[i]._var ,tweensP[i]._to);
             
 
             tweensP.erase(tweensP.begin() + i);
@@ -150,37 +150,33 @@ void ofxTweener::updateParams(){
 			//smaller than 0 would be delayed
             ofAbstractParameter * parameter = tweensP[i]._var;
             if(parameter->type()==typeid(ofParameter<int>).name()){
-                tweensP[i]._var->cast<int>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<int>(), tweensP[i]._to.cast<int>() - tweensP[i]._from.cast<int>(), float(tweensP[i]._duration));
+                tweensP[i]._var->cast<int>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
               
             }else if(parameter->type()==typeid(ofParameter<float>).name()){
-            tweensP[i]._var->cast<float>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<float>(), tweensP[i]._to.cast<float>() - tweensP[i]._from.cast<float>(), float(tweensP[i]._duration));
+                tweensP[i]._var->cast<float>() = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
+
                 
             }else if(parameter->type()==typeid(ofParameter<ofVec2f>).name()){
                 ofVec2f tmp;
-                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec2f>()->x, tweensP[i]._to.cast<ofVec2f>()->x - tweensP[i]._from.cast<ofVec2f>()->x, float(tweensP[i]._duration));
-                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec2f>()->y, tweensP[i]._to.cast<ofVec2f>()->y - tweensP[i]._from.cast<ofVec2f>()->y, float(tweensP[i]._duration));
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[1], tweensP[i]._to[1] - tweensP[i]._from[1], float(tweensP[i]._duration));
                 
                 tweensP[i]._var->cast<ofVec2f>() = tmp;
             
             }else if(parameter->type()==typeid(ofParameter<ofVec3f>).name()){
                 ofVec3f tmp;
-                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->x, tweensP[i]._to.cast<ofVec3f>()->x - tweensP[i]._from.cast<ofVec3f>()->x, float(tweensP[i]._duration));
-                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->y, tweensP[i]._to.cast<ofVec3f>()->y - tweensP[i]._from.cast<ofVec3f>()->y, float(tweensP[i]._duration));
-                tmp.z = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofVec3f>()->z, tweensP[i]._to.cast<ofVec3f>()->z - tweensP[i]._from.cast<ofVec3f>()->z, float(tweensP[i]._duration));
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[1], tweensP[i]._to[1] - tweensP[i]._from[1], float(tweensP[i]._duration));
+                tmp.z = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[2], tweensP[i]._to[2] - tweensP[i]._from[2], float(tweensP[i]._duration));
                 tweensP[i]._var->cast<ofVec3f>() = tmp;
             }
             else if(parameter->type()==typeid(ofParameter<ofRectangle>).name()){
                 ofRectangle tmp;
-                float tst;
-                cout << (&tweensP[i]._from)->type() << endl;
-                tst = (&tweensP[i]._from)->cast<ofRectangle>()->x;
-                cout << (&tweensP[i]._to)->type() << endl;
-                tst =(&tweensP[i]._from)->cast<ofRectangle>()->x;
-                cout <<tst << endl;
-                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), (&tweensP[i]._from)->cast<ofRectangle>()->x, (&tweensP[i]._to)->cast<ofRectangle>()->x - (&tweensP[i]._from)->cast<ofRectangle>()->x, float(tweensP[i]._duration));
-                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), (&tweensP[i]._from)->cast<ofRectangle>()->y, (&tweensP[i]._to)->cast<ofRectangle>()->y - (&tweensP[i]._from)->cast<ofRectangle>()->y, float(tweensP[i]._duration));
-                tmp.width = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofRectangle>()->width, tweensP[i]._to.cast<ofRectangle>()->width - tweensP[i]._from.cast<ofRectangle>()->width, float(tweensP[i]._duration));
-                tmp.height = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from.cast<ofRectangle>()->height, tweensP[i]._to.cast<ofRectangle>()->height - tweensP[i]._from.cast<ofRectangle>()->height, float(tweensP[i]._duration));
+          
+                tmp.x = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[0], tweensP[i]._to[0] - tweensP[i]._from[0], float(tweensP[i]._duration));
+                tmp.y = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[1], tweensP[i]._to[1] - tweensP[i]._from[1], float(tweensP[i]._duration));
+                tmp.width = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[2], tweensP[i]._to[2] - tweensP[i]._from[2], float(tweensP[i]._duration));
+                tmp.height = (a.*tweensP[i]._easeFunction )(float(tweensP[i]._timestamp.elapsed()), tweensP[i]._from[3], tweensP[i]._to[3] - tweensP[i]._from[3], float(tweensP[i]._duration));
                 
                 
                 tweensP[i]._var->cast<ofRectangle>() = tmp;
@@ -198,6 +194,61 @@ void ofxTweener::updateParams(){
         
     
 }
+
+void ofxTweener::setParam(ofAbstractParameter* parameter, vector<float> f){
+    
+    if(parameter->type()==typeid(ofParameter<int>).name()){
+        parameter->cast<int>() = f[0];
+        
+    }else if(parameter->type()==typeid(ofParameter<float>).name()){
+       parameter->cast<float>() = f[0];
+        
+    }else if(parameter->type()==typeid(ofParameter<ofVec2f>).name()){
+        ofVec2f tmpV(f[0],f[1]);
+
+        parameter->cast<ofVec2f>()= tmpV;
+        
+    }else if(parameter->type()==typeid(ofParameter<ofVec3f>).name()){
+        ofVec3f tmpV(f[0],f[1],f[2]);
+        parameter->cast<ofVec3f>() = tmpV;
+    }
+    else if(parameter->type()==typeid(ofParameter<ofRectangle>).name()){
+        ofRectangle tmpR(f[0],f[1],f[2],f[3]) ;
+        parameter->cast<ofRectangle>() = tmpR;
+       
+    }
+
+}
+
+
+vector<float> ofxTweener::getVectorFromParam(ofAbstractParameter* parameter){
+    vector<float> res;
+    if(parameter->type()==typeid(ofParameter<int>).name()){
+        res.push_back(parameter->cast<int>());
+        
+    }else if(parameter->type()==typeid(ofParameter<float>).name()){
+        res.push_back(parameter->cast<float>());
+        
+    }else if(parameter->type()==typeid(ofParameter<ofVec2f>).name()){
+        res.push_back(parameter->cast<ofVec2f>()->x);
+        res.push_back(parameter->cast<ofVec2f>()->y);
+        
+    }else if(parameter->type()==typeid(ofParameter<ofVec3f>).name()){
+        res.push_back(parameter->cast<ofVec3f>()->x);
+        res.push_back(parameter->cast<ofVec3f>()->y);
+        res.push_back(parameter->cast<ofVec3f>()->z);
+    }
+    else if(parameter->type()==typeid(ofParameter<ofRectangle>).name()){
+        res.push_back(parameter->cast<ofRectangle>()->x);
+        res.push_back(parameter->cast<ofRectangle>()->y);
+        res.push_back(parameter->cast<ofRectangle>()->width);
+        res.push_back(parameter->cast<ofRectangle>()->height);
+        
+    }
+    
+    return res;
+}
+
 
 void ofxTweener::removeTween(float &var){
 	for(int i = 0; i < tweens.size(); i++){

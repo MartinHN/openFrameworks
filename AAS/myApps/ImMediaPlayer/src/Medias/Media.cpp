@@ -47,7 +47,7 @@ void Media::draw(){
 
 void Media::update(){
     if(!loadingImage.isAllocated()){
-        loadingImage.loadImage(loadingImagePath);
+        loadingImage.load(loadingImagePath);
     }
 }
 

@@ -71,6 +71,7 @@ public:
     void mouseReleased(int x, int y, int button);
     ofxUIRectangle *getSRect();
     virtual bool isHit(int x, int y);
+    bool getIsScrolling();
 
 protected:
     ofxUIRectangle *sRect;

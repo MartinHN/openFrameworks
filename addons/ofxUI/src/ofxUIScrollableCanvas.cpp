@@ -374,6 +374,9 @@ void ofxUIScrollableCanvas::draw()
     ofxUIPopStyle();
 }
 
+ bool ofxUIScrollableCanvas::getIsScrolling(){
+     return isScrolling;
+}
 void ofxUIScrollableCanvas::setPosition(int x, int y)
 {
     sRect->x = x;

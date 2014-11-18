@@ -28,12 +28,12 @@ public:
         ofTouchEventArgs a;
         int  idTouch = 0 ;
         for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
-            if(GloveOSC::gloves[i] == curGlove)idTouch = i;
+            if(GloveOSC::gloves[i] == curGlove)idTouch = i*12 + num;
         };
         a.id = idTouch;
         a.set(curGlove->cursor2D);
         
-        if(num==GLOVE_BUTTON_CLICK){
+        if(num==GLOVE_BUTTON_CLICK || num == GLOVE_BUTTON_DRAG){
             if(s == GLOVE_ACTION_DOWN){
                 a.type = ofTouchEventArgs::down;
                 ofNotifyEvent(ofEvents().touchDown, a );

@@ -274,14 +274,27 @@ void ofxUIWidget::touchDown(float x, float y, int id) {
         }
     }
 }
+int ofxUIWidget::getTouchID(){
+    return touchId;
+};
 
 void ofxUIWidget::touchMoved(float x, float y, int id) {
     if(touchId == id) {
         this->mouseDragged(x, y,0);
     }
-//    else{
-//        this->mouseMoved(x, y);
-//    }
+    hoverIds[id]=rect->inside(x, y);
+    bool hoveredT = false;
+    for(map<int,bool>::iterator it = hoverIds.begin() ; it!=hoverIds.end(); ++it){
+        hoveredT|=it->second;
+    }
+    if(hoveredT){
+        state = OFX_UI_STATE_OVER;
+    }
+    else
+    {
+        state = OFX_UI_STATE_NORMAL;
+    }
+    stateChange();
 }
 
 void ofxUIWidget::touchUp(float x, float y, int id) {

@@ -61,6 +61,7 @@ public:
     void touchUp(float x, float y, int id);
     void touchCancelled(float x, float y, int id);
     void touchDoubleTap(float x, float y, int id) {}
+    int getTouchID();
 #endif
 
 	virtual void mouseMoved(int x, int y ) {}
@@ -224,6 +225,6 @@ protected:
     map<int, bool> keyBindings;
 #ifdef OFX_UI_TARGET_TOUCH       
     int touchId;
-    int touchDownId;
+    map <int,bool> hoverIds;
 #endif
 };

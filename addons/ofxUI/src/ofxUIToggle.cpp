@@ -82,7 +82,7 @@ void ofxUIToggle::mouseDragged(int x, int y, int button)
 
 void ofxUIToggle::mousePressed(int x, int y, int button)
 {
-    if(rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
+    if( rect->inside(x, y) || (label->isVisible() && label->getPaddingRect()->inside(x, y)))
     {
         hit = true;
         state = OFX_UI_STATE_DOWN;

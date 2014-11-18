@@ -54,7 +54,7 @@ GloveInteractBox::~GloveInteractBox(){
     
     ofRemoveListener(drawSyphonEvent, this, &GloveInteractBox::draw,OF_EVENT_ORDER_BEFORE_APP+drawLayer);
     for(map<GloveInstance*,GloveInteractBox*>::iterator it = selected.begin() ; it!= selected.end();++it){
-    if(it->second == this)selected[it->first] = NULL;
+        if(it->second == this)selected[it->first] = NULL;
     }
     for(map<GloveInstance*,GloveInteractBox*>::iterator it = dragged.begin() ; it!= dragged.end();++it){
         if(it->second == this)dragged[it->first] = NULL;
@@ -73,7 +73,7 @@ void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
     
     // send change Events for each glove (watch isHovered if you want to be sure that no glove are hovering)
     if(_isHovered && !(hovered[curGlove]==this)){this->entered();
-    hovered[curGlove]=this;}
+        hovered[curGlove]=this;}
     else if(!_isHovered && (hovered[curGlove]==this)){this->exited();hovered[curGlove]=NULL;}
     
     
@@ -86,7 +86,7 @@ void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
         }
         
     }
-
+    
     // if the current glove hovers, send call hover function
     if(hovered[curGlove]){
         ofVec2f newPos=pos-ofVec2f(box.x,box.y);
@@ -108,7 +108,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
     if(state == GLOVE_ACTION_UP){
         if(dragged[curGlove]!=NULL){
             lastDragged[curGlove] = dragged[curGlove];
-
+            
         }
         if(dragged[curGlove]==this){
             isDragged=false;
@@ -118,14 +118,19 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
         
     }
     
+    
     // intern handling function
     // prefer using GLOVE_ACTION_DOWN for intern state update and GLOVE_ACTION_xxxPRESS for callbacks
     
-    if(hovered[curGlove]){
-
-        if( state == GLOVE_ACTION_DOWN && touchId == GLOVE_BUTTON_CLICK ){
-            
-
+    if(hovered[curGlove]==this){
+        // for sending clicked events after selection
+        
+        
+        
+        
+        // select it
+        if( touchId == GLOVE_BUTTON_CLICK && state == GLOVE_ACTION_DOWN ){
+            wasSelected = selected[curGlove]==this;
             // activate if no one selected
             if(selected[curGlove] == NULL){//
                 selected[curGlove] = this;
@@ -143,39 +148,48 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
             }
             
             
-        }
-        else if( isDraggable && touchId == GLOVE_BUTTON_DRAG && state == GLOVE_ACTION_DOWN){
-            
-
-            if(dragged[curGlove] == NULL){
+            // drag it
+            if(touchId == GLOVE_BUTTON_DRAG && isDraggable ){
                 
-                dragged[curGlove] = this;
-                dragged[curGlove]->sendForeground();
-                // underlying evets will be produced if box actually move see boxMoved() function called in updateBox()
-                targetBox = box;
-                targetMagnet.set(0);
-                dragOffset = curGlove->cursor2D-box.getCenter();
-                isDragged=true;
+                
+                if(dragged[curGlove] == NULL){
+                    
+                    dragged[curGlove] = this;
+                    dragged[curGlove]->sendForeground();
+                    // underlying evets will be produced if box actually move see boxMoved() function called in updateBox()
+                    targetBox = box;
+                    targetMagnet.set(0);
+                    dragOffset = curGlove->cursor2D-box.getCenter();
+                    isDragged=true;
+                }
+                
+                
             }
+            //        else if(isZoomable && touchId == GLOVE_BUTTON_ZOOM){
+            //            if(state == GLOVE_ACTION_DOWN ){
+            //                                zoomed = selected;
+            //            }
             
             
         }
-        //        else if(isZoomable && touchId == GLOVE_BUTTON_ZOOM){
-        //            if(state == GLOVE_ACTION_DOWN ){
-        //                                zoomed = selected;
-        //            }
         
         
         
         
         // callbacks
-        if(state == GLOVE_ACTION_SHORTPRESS){
+        if(wasSelected &&  state == GLOVE_ACTION_SHORTPRESS){
             this->clicked(touchId);
         }
     }
+    
+    
+    // not hovered
+    
+    // un-select last
     else if(state == GLOVE_ACTION_DOWN && touchId == GLOVE_BUTTON_CLICK && selected[curGlove]==this){
         cout << "unselect = " << name << endl;
         isSelected = false;
+        wasSelected = false;
         selected[curGlove] = NULL;
     }
     
@@ -220,9 +234,9 @@ void GloveInteractBox::sendBack(){
 void GloveInteractBox::sendToLayer(int l){
     vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
     if(l> drawLayer){
-    for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-        if((*it)->drawLayer<=l && (*it)->drawLayer>=drawLayer ) (*it)->drawLayer = (*it)->drawLayer  -1;
-    }
+        for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
+            if((*it)->drawLayer<=l && (*it)->drawLayer>=drawLayer ) (*it)->drawLayer = (*it)->drawLayer  -1;
+        }
     }
     else{
         for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
@@ -237,19 +251,19 @@ void GloveInteractBox::drawFrontMask(){
     
     
     ofFill();
-
+    
     if(isHovered){
         ofRectangle frame;
         ofSetColor(hoverColor);
         frame.setFromCenter(box.getCenter(), box.width, box.height);
         ofDrawRectangle(frame);
-       
+        
     }
     
     
     
     
-
+    
     if(isSelected){
         
         
@@ -260,11 +274,11 @@ void GloveInteractBox::drawFrontMask(){
         ofDrawRectangle(box.getMinX(),box.getMaxY()-lineW,box.width,lineW);
         ofDrawRectangle(box.getMinX(),box.getMinY()+lineW,lineW,box.height-2*lineW);
     }
-
     
     
-
-        if(isDragged){
+    
+    
+    if(isDragged){
         ofSetColor(255,0,0);
         ofNoFill();
         ofSetLineWidth(box.width/400.0);
@@ -324,7 +338,7 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         
     }
     
-
+    
     
 }
 void GloveInteractBox::updateBox(){
@@ -338,12 +352,12 @@ void GloveInteractBox::updateBox(){
         
         bool isResizing = (targetBox->width != box.width || targetBox->height != box.height);
         
-      
+        
         
         box.setFromCenter(      ofLerp(box.getCenter().x,   targetBox->getCenter().x +targetMagnet.x,   alphaTarget),
-                                         ofLerp(box.getCenter().y,   targetBox->getCenter().y+targetMagnet.y,   alphaTarget),
-                                         ofLerp(box.width,           targetBox->width,                            alphaTarget),
-                                         ofLerp(box.height,          targetBox->height,                           alphaTarget));
+                          ofLerp(box.getCenter().y,   targetBox->getCenter().y+targetMagnet.y,   alphaTarget),
+                          ofLerp(box.width,           targetBox->width,                            alphaTarget),
+                          ofLerp(box.height,          targetBox->height,                           alphaTarget));
         
         
         
@@ -357,7 +371,7 @@ void GloveInteractBox::updateBox(){
             
         }
         
-
+        
         
         // Callbacks
         
@@ -366,7 +380,7 @@ void GloveInteractBox::updateBox(){
         if(isResizing || isMoving) this->boxChanged(false);
     }
     else if(!isStable){
-    isStable = true;
+        isStable = true;
         this->boxResized(true);
         this->boxMoved(true);
         this->boxChanged(true);
@@ -448,7 +462,7 @@ void GloveInteractBox::setDrawLayer(int &l){
 //    for(vector<GloveInteractBox*>::iterator it = allElements.begin() ; it != allElements.end() ; ++it){
 //        if((*it)!=this &&(*it)->isHovered && this->drawLayer<(*it)->drawLayer)return false;
 //    }
-//    
+//
 //    return true;
 //}
 
@@ -465,7 +479,7 @@ void GloveInteractBox::draw(ofEventArgs & e){
     ofSetColor(255);
     this->draw();
     if(drawBaseFeedBack){
-    drawFrontMask();
+        drawFrontMask();
     }
     ofPopStyle();
 };

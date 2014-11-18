@@ -23,6 +23,7 @@ GUIProjects::GUIProjects(){
     drawLayer=0;
     isSelectable=false;
     isZoomable=false;
+    isHoverable = false;
 
 
 }
@@ -49,7 +50,7 @@ void GUIProjects::init(){
     projectsListScrollCanvas->setName("Projects");
     
 
-    projectsList = new ofxUIDropDownList("List",vector<string>());
+    projectsList = new ofxUIDropDownList("List",vector<string>(),fullSizeRect.width-40,0,0,OFX_UI_FONT_LARGE);
 
 
     projectsList->setAutoClose(false);
@@ -204,6 +205,8 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
     if(canvas!=NULL){
         ofxUIWidget* parent = a.widget->getParent();
         
+         cout << a.widget->getName() << endl;
+        
         
         if(canvas->getName()=="Projects"){
             if (a.widget->getName()=="backButton"){
@@ -220,9 +223,10 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
             }
             
             // an element has been triggerd in project list
+           
             else if(parent->getName()=="List"){
                 
-                if(isProjectOpened ){
+                if(isProjectOpened && a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
                     
                     
                     // select in playground too
@@ -241,7 +245,8 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                 }
                 
                 // open
-                else{
+                else if(a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
+                    
                     asyncPath = currentDirectory.path()+"/"+a.widget->getName();
                 }
                 

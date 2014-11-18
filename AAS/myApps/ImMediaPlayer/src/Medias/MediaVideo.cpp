@@ -87,7 +87,7 @@ void MediaVideo::setTime(float pct){
 
 void MediaVideo::touch(TouchButton t,TouchAction a){
     GloveInteractBox::touch(t, a);
-    if(t == GLOVE_BUTTON_CLICK && isSelected){
+    if(t == GLOVE_BUTTON_CLICK && wasSelected && isSelected){
         if(a==GLOVE_ACTION_SHORTPRESS){
             if(!player.isPlaying()){
                 player.play();

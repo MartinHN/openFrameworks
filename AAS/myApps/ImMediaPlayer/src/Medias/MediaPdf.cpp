@@ -17,7 +17,7 @@ void MediaPdf::load(string fp){
 
 void MediaPdf::drawMedia(){
     ofSetColor(255);
-    ofRect(drawBox);
+    ofDrawRectangle(drawBox);
     pdf.draw();
 }
 

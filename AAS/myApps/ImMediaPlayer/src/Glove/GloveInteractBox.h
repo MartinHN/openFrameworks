@@ -64,13 +64,17 @@ public:
     bool isDragged;
     ofRectangle box;
     ofParameter<ofRectangle> targetBox;
+    // not moving anymore (last move event sent)
     bool isStable;
+    // was selected before this click (allow different reaction for same button after selection, playing Video for example)
+    bool wasSelected;
+    
     
     
     // from GloveInteract used to trigger box functions
     
     
-    virtual void touch( TouchButton num, TouchAction s);
+    virtual void touch(TouchButton num, TouchAction s);
     virtual void relativeMoved( ofVec3f v);
     virtual void cursor2DMoved( ofVec2f v );
     

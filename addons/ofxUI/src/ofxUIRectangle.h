@@ -38,16 +38,16 @@ public:
     void set(float px, float py, float w, float h);
     
     void setX(float px);
-    float getX(bool recursive = true);
+    float getX(bool recursive = true) const;
 
     void setY(float py);
-    float getY(bool recursive = true);
+    float getY(bool recursive = true) const;
     
 	void setHeight(float _height);
-    float getWidth();
+    float getWidth() const;
     
 	void setWidth(float _width);
-	float getHeight();
+	float getHeight() const;
     
     float getMinX() const;
     float getMaxX() const;
@@ -69,11 +69,11 @@ public:
     float getHalfWidth();
 	float getHalfHeight();
     
-    float getRelativeMinX();
-    float getRelativeMinY();
+    float getRelativeMinX() const;
+    float getRelativeMinY() const;
     
-    float getRelativeMaxX();
-    float getRelativeMaxY();
+    float getRelativeMaxX() const;
+    float getRelativeMaxY() const;
     
     bool rIntersects(const ofxUIRectangle& rect);
     bool rInside(const ofxUIRectangle& rect);

@@ -53,6 +53,10 @@ void GUIConfig::init(){
     canvas->addWidgetDown(saveButton);
     
     
+    // colors
+    
+    saveButton->setColorBack(ofColor::grey);
+    
     // events
     
     canvas->disableAppDrawCallback();

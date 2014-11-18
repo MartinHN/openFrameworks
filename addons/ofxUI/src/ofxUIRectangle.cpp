@@ -185,7 +185,7 @@ void ofxUIRectangle::draw()
     }
 }
 
-float ofxUIRectangle::getX(bool recursive)
+float ofxUIRectangle::getX(bool recursive) const
 {
     if(parent != NULL && recursive)
     {
@@ -197,7 +197,7 @@ float ofxUIRectangle::getX(bool recursive)
     }
 }
 
-float ofxUIRectangle::getY(bool recursive)
+float ofxUIRectangle::getY(bool recursive) const
 {
     if(parent != NULL && recursive)
     {
@@ -209,12 +209,12 @@ float ofxUIRectangle::getY(bool recursive)
     }
 }
 
-float ofxUIRectangle::getWidth()
+float ofxUIRectangle::getWidth() const
 {
     return width;
 }
 
-float ofxUIRectangle::getHeight()
+float ofxUIRectangle::getHeight() const
 {
     return height;
 }
@@ -229,34 +229,36 @@ float ofxUIRectangle::getHalfHeight()
     return halfheight;
 }
 
-float ofxUIRectangle::getRelativeMinX()
+float ofxUIRectangle::getRelativeMinX() const
 {
     return MIN(getX(), getX() + getWidth());    // - width
 }
 
-float ofxUIRectangle::getRelativeMinY()
+float ofxUIRectangle::getRelativeMinY() const
 {
     return MIN(getY(), getY() + getHeight());   // - height
 }
 
-float ofxUIRectangle::getRelativeMaxX()
+float ofxUIRectangle::getRelativeMaxX() const
 {
     return MAX(getX(), getX() + getWidth());    // - width
 }
 
-float ofxUIRectangle::getRelativeMaxY()
+float ofxUIRectangle::getRelativeMaxY() const
 {
     return MAX(getY(), getY() + getHeight());   // - height
 }
 
 bool ofxUIRectangle::rIntersects(const ofxUIRectangle& rect)
 {
-    return (getRelativeMinX() < rect.getMaxX() && getRelativeMaxX() > rect.getMinX() &&
-            getRelativeMinY() < rect.getMaxY() && getRelativeMaxY() > rect.getMinY());
+    return (getRelativeMinX() < rect.getRelativeMaxX() && getRelativeMaxX() > rect.getRelativeMinX() &&
+            getRelativeMinY() < rect.getRelativeMaxY() && getRelativeMaxY() > rect.getRelativeMinY());
 }
 
 bool ofxUIRectangle::rInside(const ofxUIRectangle& rect)
 {
-    return (getRelativeMinX() > rect.getMinX() && getRelativeMaxX() < rect.getMaxX() &&
-            getRelativeMinY() > rect.getMinY() && getRelativeMaxY() < rect.getMaxY());
+
+    
+    return (getRelativeMinX() > rect.getRelativeMinX() && getRelativeMaxX() < rect.getRelativeMaxX() &&
+            getRelativeMinY() > rect.getRelativeMinY() && getRelativeMaxY() < rect.getRelativeMaxY());
 }

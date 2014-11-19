@@ -27,7 +27,7 @@ GUIConfig::~GUIConfig(){
 
 
 void GUIConfig::init(){
-    ofRectangle  r =Screens::instance()->screens[5]->rectScreen();
+    ofRectangle  r =screens.screens[screens.screens.size()-1]->rectScreen();
     box = r;
     targetBox = box;
 

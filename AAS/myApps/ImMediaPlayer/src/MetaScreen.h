@@ -24,7 +24,7 @@ class MetaScreen : public ofRectangle{
     ~MetaScreen();
     MetaScreen(ofRectangle r,bool anchorUp = false,const string & _name = "defaultName",ofVec2f offset = ofVec2f(0));
     
-    
+    void init();
     
     ofRectangle fullScreenAnchor;
     ofImage image;
@@ -32,7 +32,7 @@ class MetaScreen : public ofRectangle{
     
     GloveInteractBox* fullScreened;
     
-    bool isHovering;
+    map< GloveInstance*,bool> isHovering;
     
     void update(ofEventArgs & a);
     void draw(ofEventArgs & a);
@@ -42,6 +42,10 @@ class MetaScreen : public ofRectangle{
         return *((ofRectangle*)this);
     }
     int defaultLayer;
+    
+private:
+    bool _anchorUp;
+    ofVec2f _anchorOffset;
     
     
 };

@@ -106,6 +106,14 @@ public:
     virtual void update(ofEventArgs & e);
     virtual void draw(ofEventArgs & e);
     
+    
+    // layerize drawing events AND touch events so that foreground objects are notified before others
+    // each Layer contain one component so that drawing order is representing exact (inverse) order of events reception
+    void sendForeground();
+    void sendBackground();
+    void sendBack();
+    void sendToLayer(int l);
+    
 protected:
     
 
@@ -130,12 +138,7 @@ protected:
     void setDrawLayer(int & l);
     
     
-    // layerize drawing events AND touch events so that foreground objects are notified before others
-    // each Layer contain one component so that drawing order is representing exact (inverse) order of events reception
-    void sendForeground();
-    void sendBackground();
-    void sendBack();
-    void sendToLayer(int l);
+
     
     
     // hack to see in the future when sequentially triggering event...

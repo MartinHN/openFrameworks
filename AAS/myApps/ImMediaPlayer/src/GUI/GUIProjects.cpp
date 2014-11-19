@@ -43,7 +43,7 @@ void GUIProjects::init(){
     
     
     
-    ofRectangle  r =Screens::instance()->screens[0]->rectScreen();
+    ofRectangle  r =screens.screens[0]->rectScreen();
     box = r+ofVec2f(-1,0);
     targetBox = box;
     fullSizeRect = r;
@@ -216,7 +216,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
         
         if(canvas->getName()=="Projects"){
             if (a.widget->getName()=="backButton"){
-                if(!a.getButton()->getValue()){
+                if(!a.getButton()->getValue() && a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
                 vector<string> pathF = ofSplitString(currentDirectory.path(),"/");
                 if(pathF.size()<=1)return;
                 pathF.resize(pathF.size()-1);

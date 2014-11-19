@@ -17,13 +17,11 @@ void ofApp::setup(){
 
     ofSetFrameRate(60);
     
-    outTexture.allocate(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
+    outTexture.allocate(screens.resolution.x, screens.resolution.y);
     
     
     // keep it ordered
   
-    //Screens
-    Screens::instance();
  
     // GUI Init
     guiProjects.init();
@@ -38,7 +36,7 @@ void ofApp::setup(){
     
 #endif
     
-//    ofSetWindowShape(Screens::instance()->resolution.x, Screens::instance()->resolution.y);
+//    ofSetWindowShape(screens.resolution.x, screens.resolution.y);
     windowResized(ofGetWindowWidth(), ofGetWindowHeight());
     
     
@@ -61,8 +59,8 @@ void ofApp::draw(){
     outTexture.begin();
 #endif
     ofSetColor(0);
-    ofVec2f res (Screens::instance()->resolution.x,Screens::instance()->resolution.y);
-    ofDrawRectangle(0,0,Screens::instance()->resolution.x,Screens::instance()->resolution.y);
+    ofVec2f res (screens.resolution.x,screens.resolution.y);
+    ofDrawRectangle(0,0,screens.resolution.x,screens.resolution.y);
     drawBackground(ofColor::gray, ofColor::black, OF_GRADIENT_BAR);
     ofSetColor(255);
     ofNotifyEvent(drawSyphonEvent,drawSyphon,this);
@@ -210,7 +208,7 @@ void ofApp::exit(){
 void ofApp::drawBackground(ofColor start, ofColor end, ofGradientMode mode){
     
     
-    float w = Screens::instance()->resolution.x, h = Screens::instance()->resolution.y;
+    float w = screens.resolution.x, h = screens.resolution.y;
     
     
     

@@ -57,7 +57,7 @@ bool MediaPool::loadMedias(string path){
         return false;
     }
     
-    Screens * ss = Screens::instance();
+    Screens * ss = &screens;
     ofRectangle rr = ss->walls[1]->rectScreen();
     
     projectPath = path;

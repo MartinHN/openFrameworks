@@ -10,7 +10,7 @@
 
 
 
-Screens * Screens::inst=NULL;
+//Screens * Screens::inst=NULL;
 
 
 Screens::Screens(){
@@ -66,6 +66,7 @@ Screens::Screens(){
     
     resolution.set(cux,sizey);
     
+    
     walls.resize(3);
     for(int ii = 0 ; ii < 3 ; ii++){
         
@@ -82,6 +83,8 @@ Screens::Screens(){
     full = new MetaScreen(screenR,screensAnchorUp,"fullScreen",ofVec2f(anchXOffset,0));
     full->defaultLayer = -3;
     
+    
+    totalScreens = screens.size()+walls.size()+1;
 }
 
 
@@ -91,16 +94,18 @@ ofRectangle Screens::getWall(int i){
 }
 
 
+Screens screens;
 
-bool Screens::isFullscreened(GloveInteractBox* b){
-    for(int ii = 0 ; ii < walls.size() ; ii++){
-        if(walls[ii]->fullScreened == b)return true;
-    }
-    for(int ii = 0 ; ii < screens.size() ; ii++){
-        if(screens[ii]->fullScreened == b)return true;
-    }
-    
-    if(full->fullScreened == b)return true;
-    
-    return false;
-}
+//
+//bool Screens::isFullscreened(GloveInteractBox* b){
+//    for(int ii = 0 ; ii < walls.size() ; ii++){
+//        if(walls[ii]->fullScreened == b)return true;
+//    }
+//    for(int ii = 0 ; ii < screens.size() ; ii++){
+//        if(screens[ii]->fullScreened == b)return true;
+//    }
+//    
+//    if(full->fullScreened == b)return true;
+//    
+//    return false;
+//}

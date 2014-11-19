@@ -14,7 +14,6 @@ extern ofEvent<ofEventArgs> drawSyphonEvent;
 
 map<GloveInstance*,GloveInteractBox*>  GloveInteractBox::dragged;
 map<GloveInstance*,GloveInteractBox*>  GloveInteractBox::lastDragged;
-//GloveInteractBox * GloveInteractBox::zoomed=NULL;
 map<GloveInstance*,GloveInteractBox*>  GloveInteractBox::selected;
 map<GloveInstance*,GloveInteractBox*>  GloveInteractBox::hovered;
 
@@ -38,7 +37,8 @@ GloveInteractBox::GloveInteractBox():GloveInteract(){
     ofRectangle tmpR(1+ofRandom(1000),1+ofRandom(1000),400,400);
     box = tmpR;
     targetBox = tmpR;
-    drawLayer = allElements.size();
+    //start layer on top of fullScreens layers
+    drawLayer = screens.totalScreens+allElements.size();
     allElements.push_back(this);
     isSelected = false;
     isDragged=false;
@@ -106,9 +106,10 @@ void GloveInteractBox::cursor2DMoved(ofVec2f  pos){
 }
 
 void GloveInteractBox::relativeMoved(ofVec3f  pos){
+    if(curGlove->touchs[GLOVE_BUTTON_ZOOM]){
     float ofZoom = 1.0+ZOOM_FACTOR*pos.z;
     updateZoom(ofZoom);
-    
+    }
 }
 
 void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
@@ -148,7 +149,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
                 if(selected[curGlove] == NULL){//
                     selected[curGlove] = this;
                     isSelected = true;
-                    if(drawLayer>5)sendForeground();
+                    if(drawLayer>=screens.totalScreens)sendForeground();
                     
                 }
                 
@@ -170,7 +171,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
                 if(dragged[curGlove] == NULL){
                     
                     dragged[curGlove] = this;
-                    dragged[curGlove]->sendForeground();
+                    if(drawLayer>=screens.totalScreens)dragged[curGlove]->sendForeground();
                     // underlying evets will be produced if box actually move see boxMoved() function called in updateBox()
                     targetBox = box;
                     
@@ -215,45 +216,31 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
 
 
 void GloveInteractBox::sendForeground(){
-    vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
-    if(drawLayer != vec.size()){
-        
-        for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-            if((*it)->drawLayer>=drawLayer ) (*it)->drawLayer = (*it)->drawLayer  - 1;
-        }
-        
-        drawLayer = vec.size();
-    }
+
+    sendToLayer(GloveInteractBox::allElements.size());
+
 }
 
 void GloveInteractBox::sendBackground(){
-    if(drawLayer != 0){
-        vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
-        for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-            if((*it)->drawLayer<=drawLayer )(*it)->drawLayer = (*it)->drawLayer  +1;
-        }
-        drawLayer = 0;
-    }
+sendToLayer(screens.totalScreens);
+    
 }
 
 void GloveInteractBox::sendBack(){
-    vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
-    for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-        if((*it)->drawLayer==drawLayer-1) (*it)->drawLayer = (*it)->drawLayer  +1;
-    }
-    drawLayer = drawLayer-1;
+   sendToLayer(drawLayer-1);
 }
 
 void GloveInteractBox::sendToLayer(int l){
     vector<GloveInteractBox*> vec = GloveInteractBox::allElements;
     if(l> drawLayer){
         for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-            if((*it)->drawLayer<=l && (*it)->drawLayer>=drawLayer ) (*it)->drawLayer = (*it)->drawLayer  -1;
+            if((*it)->drawLayer<=l && (*it)->drawLayer>=drawLayer && (*it)->drawLayer>=screens.totalScreens) (*it)->drawLayer = (*it)->drawLayer  -1;
         }
     }
     else{
         for(vector<GloveInteractBox*>::iterator it = vec.begin() ; it!= vec.end() ; it ++){
-            if((*it)->drawLayer<=drawLayer && (*it)->drawLayer>=l ) (*it)->drawLayer = (*it)->drawLayer  +1;
+            cout << (*it)->drawLayer << endl;
+            if((*it)->drawLayer<=drawLayer && (*it)->drawLayer>=l && (*it)->drawLayer>=screens.totalScreens ) (*it)->drawLayer = (*it)->drawLayer  +1;
         }
     }
     drawLayer = l;
@@ -332,7 +319,7 @@ void GloveInteractBox::updateZoom(float & z){
 }
 
 void GloveInteractBox::makeValid(ofRectangle & newR){
-    ofRectangle fullScreen = (*Screens::instance()->full);
+    ofRectangle fullScreen = (*screens.full);
     
     // lock to minimal size
     if(newR.width<MIN_BOX_WIDTH){
@@ -342,11 +329,19 @@ void GloveInteractBox::makeValid(ofRectangle & newR){
         newR.setFromCenter(box.getCenter(), newR.width,MIN_BOX_HEIGHT);
     }
     
-    // check that box center is inside full screen
+    // lock to maximal size
+    if(newR.width>fullScreen.width){
+        newR.setFromCenter(box.getCenter(), fullScreen.width, newR.height);
+    }
+    if(newR.height>fullScreen.height){
+        newR.setFromCenter(box.getCenter(), newR.width,fullScreen.height);
+    }
+    
+    // check that box center is inside full screen, one pixel offset for easing every rectangle inside function that are strict : rectangles are often related to image so we have a true drawing
     if(!fullScreen.inside(newR.getCenter())){
         ofVec2f center;
-        center.x = ofClamp(newR.getCenter().x,fullScreen.getMinX(),fullScreen.getMaxX());
-        center.y = ofClamp(newR.getCenter().y,fullScreen.getMinY(),fullScreen.getMaxY());
+        center.x = ofClamp(newR.getCenter().x,fullScreen.getMinX()+1,fullScreen.getMaxX()-1);
+        center.y = ofClamp(newR.getCenter().y,fullScreen.getMinY()+1,fullScreen.getMaxY()-1);
         newR.setFromCenter(center,box.width,box.height);
         
     }

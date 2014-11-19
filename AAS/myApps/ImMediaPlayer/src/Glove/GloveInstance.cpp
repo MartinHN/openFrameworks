@@ -87,7 +87,7 @@ void GloveInstance::setFlex(int n,float f){
 void GloveInstance::setCursor2D(ofVec2f c){
 // freeze cursor during clicks
 
-    ofRectangle full = *Screens::instance()->full;
+    ofRectangle full = *screens.full;
     cursor2DVel = c*ofVec2f(full.x,full.y)-cursor2D;
     cursor2D.x = c.x*full.width;
     cursor2D.y = c.y*full.height;

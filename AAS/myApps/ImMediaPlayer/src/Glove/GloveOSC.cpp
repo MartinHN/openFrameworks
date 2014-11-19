@@ -28,6 +28,7 @@ GloveOSC::GloveOSC(){
     ofAddListener(ofEvents().update,this,&GloveOSC::update);
     ofAddListener(drawSyphonEvent,this,&GloveOSC::draw);
     isConnectedToServer = false;
+    isConnectedToServer.addListener(this, &GloveOSC::setConnected);
 }
 
 
@@ -40,9 +41,10 @@ GloveOSC::~GloveOSC(){
 
 
 void GloveOSC::update(ofEventArgs & a){
-    
+
     registerOSC();
     parseMessage();
+
     
 }
 
@@ -56,7 +58,7 @@ void GloveOSC::draw(ofEventArgs & a){
 
 
 void GloveOSC::registerOSC(){
-    if(!isConnectedToServer && (ofGetElapsedTimef()-lastACK)>1){
+    if( (ofGetElapsedTimef()-lastACK)>2){
         ofxOscMessage regMsg;
         regMsg.setAddress("/register");
         regMsg.addStringArg(APPNAME);
@@ -68,6 +70,10 @@ void GloveOSC::registerOSC(){
         
         lastACK = ofGetElapsedTimef();
         
+    }
+    
+    if(ofGetElapsedTimef()-lastPingTime>4){
+        isConnectedToServer=false;
     }
     
 }
@@ -92,9 +98,12 @@ void GloveOSC::parseMessage(){
             // Glove Registration ACK
             if(addr == "/registered"){
                 isConnectedToServer= true;
+                
             }
             else if(addr == "/unregistered"){
                 isConnectedToServer = false;
+                
+                
             }
             else if(addr == "/connected"){
                 
@@ -162,6 +171,17 @@ void GloveOSC::deleteGlove(string gloveID){
     
 }
 
+
+void GloveOSC::deleteAll(){
+    for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
+        if((*it)->gloveID!="mouse"){
+            delete *it;
+            gloves.erase(it++);
+            if(gloves.size()==0)break;
+        }
+    }
+}
+
 bool GloveOSC::isGlove(string gloveID){
     for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
         if((*it)->gloveID==gloveID){
@@ -180,6 +200,17 @@ void GloveOSC::unregisterOSC(){
     m.addStringArg(APPNAME);
     toServer.sendMessage(m);
 }
+
+
+void GloveOSC::setConnected(bool &b){
+    if(b){
+        lastPingTime = ofGetElapsedTimef();
+    }
+    else {
+        deleteAll();
+    }
+}
+
 
 
 

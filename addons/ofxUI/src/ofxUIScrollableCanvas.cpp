@@ -420,7 +420,7 @@ void ofxUIScrollableCanvas::touchDown(float x, float y, int id)
         }
     }
     
-    if(sRect->inside(x, y) && id == 0)
+    if(sRect->inside(x, y) )//&& id == 0)
     {
         hit = true;
         isScrolling = false;

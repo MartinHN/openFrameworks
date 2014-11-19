@@ -29,14 +29,18 @@ public:
    
     ofVec2f resolution;
 
-    static Screens* instance(){if(inst==NULL)inst = new Screens();
-                                return inst;}
+//    static Screens* instance(){if(inst==NULL)inst = new Screens();
+//                                return inst;}
     
-    bool isFullscreened(GloveInteractBox* b);
+//    bool isFullscreened(GloveInteractBox* b);
+    
+    int totalScreens;
     
     private :
     static Screens * inst;
     ofRectangle getWall(int i);
 };
+
+extern Screens screens;
 
 #endif /* defined(__ImMedia__Screens__) */

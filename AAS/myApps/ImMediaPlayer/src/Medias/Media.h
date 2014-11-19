@@ -44,6 +44,7 @@ class Media : public GloveInteractBox,public Savable{
     
     virtual void load(string filePath){};
     
+    virtual bool isHit(ofVec2f & p){return drawBox.inside(p);};
     
     virtual void boxResized(bool stable);
     virtual void boxMoved(bool stable);

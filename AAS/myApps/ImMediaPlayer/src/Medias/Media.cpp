@@ -54,12 +54,14 @@ void Media::update(){
 
 void Media::boxResized(bool stable){
     updateDrawBox();
-    if(stable && drawLayer>5)checkBoxFormat();
+    // don't reformat fullscreen
+    if(stable && drawLayer>=screens.totalScreens)checkBoxFormat();
 };
 
 void Media::boxMoved(bool stable){
     updateDrawBox();
-    if(stable && drawLayer>5)checkBoxFormat();
+        // don't reformat fullscreen
+    if(stable && drawLayer>=screens.totalScreens)checkBoxFormat();
 };
 
 

@@ -29,7 +29,7 @@ public:
     static vector<GloveInstance*> gloves;
     static GloveInstance * getGlove(string gloveID);
     static void deleteGlove(string gloveID);
-    
+    static void deleteAll();
     
     GloveOSC();
     ~GloveOSC();
@@ -41,7 +41,7 @@ public:
     
     
     
-    bool isConnectedToServer;
+    ofParameter<bool> isConnectedToServer;
     void registerOSC();
     void unregisterOSC();
     bool isGlove(string gloveID);
@@ -51,8 +51,11 @@ public:
 private:
     static ofxOscReceiver reciever;
     void parseMessage();
+    float lastPingTime;
     static ofxOscSender toServer;
     float lastACK;
+    
+    void setConnected(bool & b);
     
 };
 

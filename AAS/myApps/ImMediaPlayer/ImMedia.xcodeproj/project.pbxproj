@@ -14,6 +14,7 @@
 		6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F44D95A1A12810C008A4FC8 /* MetaScreen.cpp */; };
 		6F46B90A1A135EF200E8E154 /* ofxTransitions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9041A135EF200E8E154 /* ofxTransitions.cpp */; };
 		6F46B90B1A135EF200E8E154 /* ofxTweener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46B9061A135EF200E8E154 /* ofxTweener.cpp */; };
+		6F46F7511A1D48FD008AD5F7 /* ofxPDF2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F46F74F1A1D474F008AD5F7 /* ofxPDF2.cpp */; };
 		6F4C206E1A1A0BE500307E48 /* Savable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4C206D1A1A0BE500307E48 /* Savable.cpp */; };
 		6F4C20711A1A168B00307E48 /* GUIConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F4C206F1A1A168B00307E48 /* GUIConfig.cpp */; };
 		6F513C901A19FBC900BF5A61 /* IpEndpointName.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C691A19FBC900BF5A61 /* IpEndpointName.cpp */; };
@@ -28,91 +29,6 @@
 		6F513C9B1A19FBC900BF5A61 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C891A19FBC900BF5A61 /* ofxOscParameterSync.cpp */; };
 		6F513C9C1A19FBC900BF5A61 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C8B1A19FBC900BF5A61 /* ofxOscReceiver.cpp */; };
 		6F513C9D1A19FBC900BF5A61 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F513C8E1A19FBC900BF5A61 /* ofxOscSender.cpp */; };
-		6F70B4D31A0B833F00C7B3EF /* draw_affine.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46B1A0B833F00C7B3EF /* draw_affine.c */; };
-		6F70B4D41A0B833F00C7B3EF /* draw_blend.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46C1A0B833F00C7B3EF /* draw_blend.c */; };
-		6F70B4D51A0B833F00C7B3EF /* draw_device.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46D1A0B833F00C7B3EF /* draw_device.c */; };
-		6F70B4D61A0B833F00C7B3EF /* draw_edge.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46E1A0B833F00C7B3EF /* draw_edge.c */; };
-		6F70B4D71A0B833F00C7B3EF /* draw_glyph.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B46F1A0B833F00C7B3EF /* draw_glyph.c */; };
-		6F70B4D81A0B833F00C7B3EF /* draw_mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4701A0B833F00C7B3EF /* draw_mesh.c */; };
-		6F70B4D91A0B833F00C7B3EF /* draw_paint.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4711A0B833F00C7B3EF /* draw_paint.c */; };
-		6F70B4DA1A0B833F00C7B3EF /* draw_path.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4721A0B833F00C7B3EF /* draw_path.c */; };
-		6F70B4DB1A0B833F00C7B3EF /* draw_scale.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4731A0B833F00C7B3EF /* draw_scale.c */; };
-		6F70B4DC1A0B833F00C7B3EF /* draw_unpack.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4741A0B833F00C7B3EF /* draw_unpack.c */; };
-		6F70B4DD1A0B833F00C7B3EF /* base_context.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4761A0B833F00C7B3EF /* base_context.c */; };
-		6F70B4DE1A0B833F00C7B3EF /* base_error.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4771A0B833F00C7B3EF /* base_error.c */; };
-		6F70B4DF1A0B833F00C7B3EF /* base_geometry.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4781A0B833F00C7B3EF /* base_geometry.c */; };
-		6F70B4E01A0B833F00C7B3EF /* base_getopt.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4791A0B833F00C7B3EF /* base_getopt.c */; };
-		6F70B4E11A0B833F00C7B3EF /* base_hash.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47A1A0B833F00C7B3EF /* base_hash.c */; };
-		6F70B4E21A0B833F00C7B3EF /* base_memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47B1A0B833F00C7B3EF /* base_memory.c */; };
-		6F70B4E31A0B833F00C7B3EF /* base_string.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47C1A0B833F00C7B3EF /* base_string.c */; };
-		6F70B4E41A0B833F00C7B3EF /* base_time.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47D1A0B833F00C7B3EF /* base_time.c */; };
-		6F70B4E51A0B833F00C7B3EF /* crypt_aes.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47E1A0B833F00C7B3EF /* crypt_aes.c */; };
-		6F70B4E61A0B833F00C7B3EF /* crypt_arc4.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B47F1A0B833F00C7B3EF /* crypt_arc4.c */; };
-		6F70B4E71A0B833F00C7B3EF /* crypt_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4801A0B833F00C7B3EF /* crypt_md5.c */; };
-		6F70B4E81A0B833F00C7B3EF /* crypt_sha2.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4811A0B833F00C7B3EF /* crypt_sha2.c */; };
-		6F70B4E91A0B833F00C7B3EF /* dev_bbox.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4821A0B833F00C7B3EF /* dev_bbox.c */; };
-		6F70B4EA1A0B833F00C7B3EF /* dev_list.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4831A0B833F00C7B3EF /* dev_list.c */; };
-		6F70B4EB1A0B833F00C7B3EF /* dev_null.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4841A0B833F00C7B3EF /* dev_null.c */; };
-		6F70B4EC1A0B833F00C7B3EF /* dev_text.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4851A0B833F00C7B3EF /* dev_text.c */; };
-		6F70B4ED1A0B833F00C7B3EF /* dev_trace.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4861A0B833F00C7B3EF /* dev_trace.c */; };
-		6F70B4EE1A0B833F00C7B3EF /* doc_document.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4871A0B833F00C7B3EF /* doc_document.c */; };
-		6F70B4EF1A0B833F00C7B3EF /* doc_link.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4881A0B833F00C7B3EF /* doc_link.c */; };
-		6F70B4F01A0B833F00C7B3EF /* doc_outline.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4891A0B833F00C7B3EF /* doc_outline.c */; };
-		6F70B4F11A0B833F00C7B3EF /* filt_basic.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B48A1A0B833F00C7B3EF /* filt_basic.c */; };
-		6F70B4F21A0B833F00C7B3EF /* filt_faxd.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B48B1A0B833F00C7B3EF /* filt_faxd.c */; };
-		6F70B4F31A0B833F00C7B3EF /* filt_flate.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B48C1A0B833F00C7B3EF /* filt_flate.c */; };
-		6F70B4F41A0B833F00C7B3EF /* filt_lzwd.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B48D1A0B833F00C7B3EF /* filt_lzwd.c */; };
-		6F70B4F51A0B833F00C7B3EF /* filt_predict.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B48E1A0B833F00C7B3EF /* filt_predict.c */; };
-		6F70B4F61A0B833F00C7B3EF /* image_md5.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4911A0B833F00C7B3EF /* image_md5.c */; };
-		6F70B4F71A0B833F00C7B3EF /* image_png.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4921A0B833F00C7B3EF /* image_png.c */; };
-		6F70B4F81A0B833F00C7B3EF /* image_save.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4931A0B833F00C7B3EF /* image_save.c */; };
-		6F70B4F91A0B833F00C7B3EF /* image_tiff.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4941A0B833F00C7B3EF /* image_tiff.c */; };
-		6F70B4FA1A0B833F00C7B3EF /* memento.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4951A0B833F00C7B3EF /* memento.c */; };
-		6F70B4FB1A0B833F00C7B3EF /* res_bitmap.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4971A0B833F00C7B3EF /* res_bitmap.c */; };
-		6F70B4FC1A0B833F00C7B3EF /* res_colorspace.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4981A0B833F00C7B3EF /* res_colorspace.c */; };
-		6F70B4FD1A0B833F00C7B3EF /* res_font.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4991A0B833F00C7B3EF /* res_font.c */; };
-		6F70B4FE1A0B833F00C7B3EF /* res_halftone.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49A1A0B833F00C7B3EF /* res_halftone.c */; };
-		6F70B4FF1A0B833F00C7B3EF /* res_path.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49B1A0B833F00C7B3EF /* res_path.c */; };
-		6F70B5001A0B833F00C7B3EF /* res_pixmap.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49C1A0B833F00C7B3EF /* res_pixmap.c */; };
-		6F70B5011A0B833F00C7B3EF /* res_shade.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49D1A0B833F00C7B3EF /* res_shade.c */; };
-		6F70B5021A0B833F00C7B3EF /* res_store.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49E1A0B833F00C7B3EF /* res_store.c */; };
-		6F70B5031A0B833F00C7B3EF /* res_text.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B49F1A0B833F00C7B3EF /* res_text.c */; };
-		6F70B5041A0B833F00C7B3EF /* stm_buffer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4A01A0B833F00C7B3EF /* stm_buffer.c */; };
-		6F70B5051A0B833F00C7B3EF /* stm_open.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4A11A0B833F00C7B3EF /* stm_open.c */; };
-		6F70B5061A0B833F00C7B3EF /* stm_read.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4A21A0B833F00C7B3EF /* stm_read.c */; };
-		6F70B5071A0B833F00C7B3EF /* pdf_annot.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4AE1A0B833F00C7B3EF /* pdf_annot.c */; };
-		6F70B5081A0B833F00C7B3EF /* pdf_cmap.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4AF1A0B833F00C7B3EF /* pdf_cmap.c */; };
-		6F70B5091A0B833F00C7B3EF /* pdf_cmap_load.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B01A0B833F00C7B3EF /* pdf_cmap_load.c */; };
-		6F70B50A1A0B833F00C7B3EF /* pdf_cmap_parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B11A0B833F00C7B3EF /* pdf_cmap_parse.c */; };
-		6F70B50B1A0B833F00C7B3EF /* pdf_cmap_table.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B21A0B833F00C7B3EF /* pdf_cmap_table.c */; };
-		6F70B50C1A0B833F00C7B3EF /* pdf_colorspace.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B31A0B833F00C7B3EF /* pdf_colorspace.c */; };
-		6F70B50D1A0B833F00C7B3EF /* pdf_crypt.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B41A0B833F00C7B3EF /* pdf_crypt.c */; };
-		6F70B50E1A0B833F00C7B3EF /* pdf_encoding.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B51A0B833F00C7B3EF /* pdf_encoding.c */; };
-		6F70B50F1A0B833F00C7B3EF /* pdf_font.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B61A0B833F00C7B3EF /* pdf_font.c */; };
-		6F70B5101A0B833F00C7B3EF /* pdf_fontfile.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B71A0B833F00C7B3EF /* pdf_fontfile.c */; };
-		6F70B5111A0B833F00C7B3EF /* pdf_function.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B81A0B833F00C7B3EF /* pdf_function.c */; };
-		6F70B5121A0B833F00C7B3EF /* pdf_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4B91A0B833F00C7B3EF /* pdf_image.c */; };
-		6F70B5131A0B833F00C7B3EF /* pdf_interpret.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BA1A0B833F00C7B3EF /* pdf_interpret.c */; };
-		6F70B5141A0B833F00C7B3EF /* pdf_lex.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BB1A0B833F00C7B3EF /* pdf_lex.c */; };
-		6F70B5151A0B833F00C7B3EF /* pdf_metrics.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BC1A0B833F00C7B3EF /* pdf_metrics.c */; };
-		6F70B5161A0B833F00C7B3EF /* pdf_nametree.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BD1A0B833F00C7B3EF /* pdf_nametree.c */; };
-		6F70B5171A0B833F00C7B3EF /* pdf_object.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BE1A0B833F00C7B3EF /* pdf_object.c */; };
-		6F70B5181A0B833F00C7B3EF /* pdf_outline.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4BF1A0B833F00C7B3EF /* pdf_outline.c */; };
-		6F70B5191A0B833F00C7B3EF /* pdf_page.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C01A0B833F00C7B3EF /* pdf_page.c */; };
-		6F70B51A1A0B833F00C7B3EF /* pdf_parse.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C11A0B833F00C7B3EF /* pdf_parse.c */; };
-		6F70B51B1A0B833F00C7B3EF /* pdf_pattern.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C21A0B833F00C7B3EF /* pdf_pattern.c */; };
-		6F70B51C1A0B833F00C7B3EF /* pdf_repair.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C31A0B833F00C7B3EF /* pdf_repair.c */; };
-		6F70B51D1A0B833F00C7B3EF /* pdf_shade.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C41A0B833F00C7B3EF /* pdf_shade.c */; };
-		6F70B51E1A0B833F00C7B3EF /* pdf_store.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C51A0B833F00C7B3EF /* pdf_store.c */; };
-		6F70B51F1A0B833F00C7B3EF /* pdf_stream.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C61A0B833F00C7B3EF /* pdf_stream.c */; };
-		6F70B5201A0B833F00C7B3EF /* pdf_type3.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C71A0B833F00C7B3EF /* pdf_type3.c */; };
-		6F70B5211A0B833F00C7B3EF /* pdf_unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C81A0B833F00C7B3EF /* pdf_unicode.c */; };
-		6F70B5221A0B833F00C7B3EF /* pdf_write.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4C91A0B833F00C7B3EF /* pdf_write.c */; };
-		6F70B5231A0B833F00C7B3EF /* pdf_xobject.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4CA1A0B833F00C7B3EF /* pdf_xobject.c */; };
-		6F70B5241A0B833F00C7B3EF /* pdf_xref.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4CB1A0B833F00C7B3EF /* pdf_xref.c */; };
-		6F70B5251A0B833F00C7B3EF /* pdf_xref_aux.c in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4CC1A0B833F00C7B3EF /* pdf_xref_aux.c */; };
-		6F70B5261A0B833F00C7B3EF /* dev_ofpath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4CE1A0B833F00C7B3EF /* dev_ofpath.cpp */; };
-		6F70B5271A0B833F00C7B3EF /* ofxPDF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B4CF1A0B833F00C7B3EF /* ofxPDF.cpp */; };
 		6F70B5481A0B849100C7B3EF /* ofxMtlWatchFolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6F70B5401A0B83EB00C7B3EF /* ofxMtlWatchFolder.cpp */; };
 		6F70B5491A0B849100C7B3EF /* ofxSyphonClient.mm in Sources */ = {isa = PBXBuildFile; fileRef = F256085319FD30AB00191994 /* ofxSyphonClient.mm */; };
 		6F70B54A1A0B849100C7B3EF /* ofxSyphonServer.mm in Sources */ = {isa = PBXBuildFile; fileRef = F256085519FD30AB00191994 /* ofxSyphonServer.mm */; };
@@ -247,6 +163,16 @@
 		6F46B9051A135EF200E8E154 /* ofxTransitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTransitions.h; sourceTree = "<group>"; };
 		6F46B9061A135EF200E8E154 /* ofxTweener.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxTweener.cpp; sourceTree = "<group>"; };
 		6F46B9071A135EF200E8E154 /* ofxTweener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxTweener.h; sourceTree = "<group>"; };
+		6F46F74F1A1D474F008AD5F7 /* ofxPDF2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPDF2.cpp; sourceTree = "<group>"; };
+		6F46F7501A1D474F008AD5F7 /* ofxPDF2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxPDF2.h; sourceTree = "<group>"; };
+		6F46F7531A1D4B3D008AD5F7 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcurl.a; sourceTree = "<group>"; };
+		6F46F7541A1D4B3D008AD5F7 /* libfreetype.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreetype.a; sourceTree = "<group>"; };
+		6F46F7551A1D4B3D008AD5F7 /* libjbig2dec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjbig2dec.a; sourceTree = "<group>"; };
+		6F46F7561A1D4B3D008AD5F7 /* libjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjpeg.a; sourceTree = "<group>"; };
+		6F46F7571A1D4B3D008AD5F7 /* libmujs.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmujs.a; sourceTree = "<group>"; };
+		6F46F7581A1D4B3D008AD5F7 /* libmupdf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libmupdf.a; sourceTree = "<group>"; };
+		6F46F7591A1D4B3D008AD5F7 /* libopenjpeg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libopenjpeg.a; sourceTree = "<group>"; };
+		6F46F75A1A1D4B3D008AD5F7 /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libz.a; sourceTree = "<group>"; };
 		6F4C206D1A1A0BE500307E48 /* Savable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Savable.cpp; path = Utils/Savable.cpp; sourceTree = "<group>"; };
 		6F4C206F1A1A168B00307E48 /* GUIConfig.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIConfig.cpp; sourceTree = "<group>"; };
 		6F4C20701A1A168B00307E48 /* GUIConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIConfig.h; sourceTree = "<group>"; };
@@ -285,106 +211,6 @@
 		6F513C8E1A19FBC900BF5A61 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		6F513C8F1A19FBC900BF5A61 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
 		6F513CA11A1A078700BF5A61 /* Savable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Savable.h; path = Utils/Savable.h; sourceTree = "<group>"; };
-		6F70B4551A0B833F00C7B3EF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		6F70B4681A0B833F00C7B3EF /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		6F70B46B1A0B833F00C7B3EF /* draw_affine.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_affine.c; sourceTree = "<group>"; };
-		6F70B46C1A0B833F00C7B3EF /* draw_blend.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_blend.c; sourceTree = "<group>"; };
-		6F70B46D1A0B833F00C7B3EF /* draw_device.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_device.c; sourceTree = "<group>"; };
-		6F70B46E1A0B833F00C7B3EF /* draw_edge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_edge.c; sourceTree = "<group>"; };
-		6F70B46F1A0B833F00C7B3EF /* draw_glyph.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_glyph.c; sourceTree = "<group>"; };
-		6F70B4701A0B833F00C7B3EF /* draw_mesh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_mesh.c; sourceTree = "<group>"; };
-		6F70B4711A0B833F00C7B3EF /* draw_paint.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_paint.c; sourceTree = "<group>"; };
-		6F70B4721A0B833F00C7B3EF /* draw_path.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_path.c; sourceTree = "<group>"; };
-		6F70B4731A0B833F00C7B3EF /* draw_scale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_scale.c; sourceTree = "<group>"; };
-		6F70B4741A0B833F00C7B3EF /* draw_unpack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = draw_unpack.c; sourceTree = "<group>"; };
-		6F70B4761A0B833F00C7B3EF /* base_context.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_context.c; sourceTree = "<group>"; };
-		6F70B4771A0B833F00C7B3EF /* base_error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_error.c; sourceTree = "<group>"; };
-		6F70B4781A0B833F00C7B3EF /* base_geometry.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_geometry.c; sourceTree = "<group>"; };
-		6F70B4791A0B833F00C7B3EF /* base_getopt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_getopt.c; sourceTree = "<group>"; };
-		6F70B47A1A0B833F00C7B3EF /* base_hash.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_hash.c; sourceTree = "<group>"; };
-		6F70B47B1A0B833F00C7B3EF /* base_memory.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_memory.c; sourceTree = "<group>"; };
-		6F70B47C1A0B833F00C7B3EF /* base_string.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_string.c; sourceTree = "<group>"; };
-		6F70B47D1A0B833F00C7B3EF /* base_time.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base_time.c; sourceTree = "<group>"; };
-		6F70B47E1A0B833F00C7B3EF /* crypt_aes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt_aes.c; sourceTree = "<group>"; };
-		6F70B47F1A0B833F00C7B3EF /* crypt_arc4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt_arc4.c; sourceTree = "<group>"; };
-		6F70B4801A0B833F00C7B3EF /* crypt_md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt_md5.c; sourceTree = "<group>"; };
-		6F70B4811A0B833F00C7B3EF /* crypt_sha2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = crypt_sha2.c; sourceTree = "<group>"; };
-		6F70B4821A0B833F00C7B3EF /* dev_bbox.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev_bbox.c; sourceTree = "<group>"; };
-		6F70B4831A0B833F00C7B3EF /* dev_list.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev_list.c; sourceTree = "<group>"; };
-		6F70B4841A0B833F00C7B3EF /* dev_null.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev_null.c; sourceTree = "<group>"; };
-		6F70B4851A0B833F00C7B3EF /* dev_text.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev_text.c; sourceTree = "<group>"; };
-		6F70B4861A0B833F00C7B3EF /* dev_trace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dev_trace.c; sourceTree = "<group>"; };
-		6F70B4871A0B833F00C7B3EF /* doc_document.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = doc_document.c; sourceTree = "<group>"; };
-		6F70B4881A0B833F00C7B3EF /* doc_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = doc_link.c; sourceTree = "<group>"; };
-		6F70B4891A0B833F00C7B3EF /* doc_outline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = doc_outline.c; sourceTree = "<group>"; };
-		6F70B48A1A0B833F00C7B3EF /* filt_basic.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filt_basic.c; sourceTree = "<group>"; };
-		6F70B48B1A0B833F00C7B3EF /* filt_faxd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filt_faxd.c; sourceTree = "<group>"; };
-		6F70B48C1A0B833F00C7B3EF /* filt_flate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filt_flate.c; sourceTree = "<group>"; };
-		6F70B48D1A0B833F00C7B3EF /* filt_lzwd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filt_lzwd.c; sourceTree = "<group>"; };
-		6F70B48E1A0B833F00C7B3EF /* filt_predict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = filt_predict.c; sourceTree = "<group>"; };
-		6F70B48F1A0B833F00C7B3EF /* fitz-internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "fitz-internal.h"; sourceTree = "<group>"; };
-		6F70B4901A0B833F00C7B3EF /* fitz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fitz.h; sourceTree = "<group>"; };
-		6F70B4911A0B833F00C7B3EF /* image_md5.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image_md5.c; sourceTree = "<group>"; };
-		6F70B4921A0B833F00C7B3EF /* image_png.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image_png.c; sourceTree = "<group>"; };
-		6F70B4931A0B833F00C7B3EF /* image_save.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image_save.c; sourceTree = "<group>"; };
-		6F70B4941A0B833F00C7B3EF /* image_tiff.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = image_tiff.c; sourceTree = "<group>"; };
-		6F70B4951A0B833F00C7B3EF /* memento.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = memento.c; sourceTree = "<group>"; };
-		6F70B4961A0B833F00C7B3EF /* memento.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memento.h; sourceTree = "<group>"; };
-		6F70B4971A0B833F00C7B3EF /* res_bitmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_bitmap.c; sourceTree = "<group>"; };
-		6F70B4981A0B833F00C7B3EF /* res_colorspace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_colorspace.c; sourceTree = "<group>"; };
-		6F70B4991A0B833F00C7B3EF /* res_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_font.c; sourceTree = "<group>"; };
-		6F70B49A1A0B833F00C7B3EF /* res_halftone.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_halftone.c; sourceTree = "<group>"; };
-		6F70B49B1A0B833F00C7B3EF /* res_path.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_path.c; sourceTree = "<group>"; };
-		6F70B49C1A0B833F00C7B3EF /* res_pixmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_pixmap.c; sourceTree = "<group>"; };
-		6F70B49D1A0B833F00C7B3EF /* res_shade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_shade.c; sourceTree = "<group>"; };
-		6F70B49E1A0B833F00C7B3EF /* res_store.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_store.c; sourceTree = "<group>"; };
-		6F70B49F1A0B833F00C7B3EF /* res_text.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = res_text.c; sourceTree = "<group>"; };
-		6F70B4A01A0B833F00C7B3EF /* stm_buffer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stm_buffer.c; sourceTree = "<group>"; };
-		6F70B4A11A0B833F00C7B3EF /* stm_open.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stm_open.c; sourceTree = "<group>"; };
-		6F70B4A21A0B833F00C7B3EF /* stm_read.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stm_read.c; sourceTree = "<group>"; };
-		6F70B4A41A0B833F00C7B3EF /* cmap_cns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmap_cns.h; sourceTree = "<group>"; };
-		6F70B4A51A0B833F00C7B3EF /* cmap_gb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmap_gb.h; sourceTree = "<group>"; };
-		6F70B4A61A0B833F00C7B3EF /* cmap_japan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmap_japan.h; sourceTree = "<group>"; };
-		6F70B4A71A0B833F00C7B3EF /* cmap_korea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cmap_korea.h; sourceTree = "<group>"; };
-		6F70B4A81A0B833F00C7B3EF /* font_base14.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = font_base14.h; sourceTree = "<group>"; };
-		6F70B4AA1A0B833F00C7B3EF /* data_encodings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_encodings.h; sourceTree = "<group>"; };
-		6F70B4AB1A0B833F00C7B3EF /* data_glyphlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_glyphlist.h; sourceTree = "<group>"; };
-		6F70B4AC1A0B833F00C7B3EF /* mupdf-internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "mupdf-internal.h"; sourceTree = "<group>"; };
-		6F70B4AD1A0B833F00C7B3EF /* mupdf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mupdf.h; sourceTree = "<group>"; };
-		6F70B4AE1A0B833F00C7B3EF /* pdf_annot.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_annot.c; sourceTree = "<group>"; };
-		6F70B4AF1A0B833F00C7B3EF /* pdf_cmap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_cmap.c; sourceTree = "<group>"; };
-		6F70B4B01A0B833F00C7B3EF /* pdf_cmap_load.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_cmap_load.c; sourceTree = "<group>"; };
-		6F70B4B11A0B833F00C7B3EF /* pdf_cmap_parse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_cmap_parse.c; sourceTree = "<group>"; };
-		6F70B4B21A0B833F00C7B3EF /* pdf_cmap_table.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_cmap_table.c; sourceTree = "<group>"; };
-		6F70B4B31A0B833F00C7B3EF /* pdf_colorspace.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_colorspace.c; sourceTree = "<group>"; };
-		6F70B4B41A0B833F00C7B3EF /* pdf_crypt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_crypt.c; sourceTree = "<group>"; };
-		6F70B4B51A0B833F00C7B3EF /* pdf_encoding.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_encoding.c; sourceTree = "<group>"; };
-		6F70B4B61A0B833F00C7B3EF /* pdf_font.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_font.c; sourceTree = "<group>"; };
-		6F70B4B71A0B833F00C7B3EF /* pdf_fontfile.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_fontfile.c; sourceTree = "<group>"; };
-		6F70B4B81A0B833F00C7B3EF /* pdf_function.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_function.c; sourceTree = "<group>"; };
-		6F70B4B91A0B833F00C7B3EF /* pdf_image.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_image.c; sourceTree = "<group>"; };
-		6F70B4BA1A0B833F00C7B3EF /* pdf_interpret.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_interpret.c; sourceTree = "<group>"; };
-		6F70B4BB1A0B833F00C7B3EF /* pdf_lex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_lex.c; sourceTree = "<group>"; };
-		6F70B4BC1A0B833F00C7B3EF /* pdf_metrics.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_metrics.c; sourceTree = "<group>"; };
-		6F70B4BD1A0B833F00C7B3EF /* pdf_nametree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_nametree.c; sourceTree = "<group>"; };
-		6F70B4BE1A0B833F00C7B3EF /* pdf_object.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_object.c; sourceTree = "<group>"; };
-		6F70B4BF1A0B833F00C7B3EF /* pdf_outline.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_outline.c; sourceTree = "<group>"; };
-		6F70B4C01A0B833F00C7B3EF /* pdf_page.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_page.c; sourceTree = "<group>"; };
-		6F70B4C11A0B833F00C7B3EF /* pdf_parse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_parse.c; sourceTree = "<group>"; };
-		6F70B4C21A0B833F00C7B3EF /* pdf_pattern.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_pattern.c; sourceTree = "<group>"; };
-		6F70B4C31A0B833F00C7B3EF /* pdf_repair.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_repair.c; sourceTree = "<group>"; };
-		6F70B4C41A0B833F00C7B3EF /* pdf_shade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_shade.c; sourceTree = "<group>"; };
-		6F70B4C51A0B833F00C7B3EF /* pdf_store.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_store.c; sourceTree = "<group>"; };
-		6F70B4C61A0B833F00C7B3EF /* pdf_stream.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_stream.c; sourceTree = "<group>"; };
-		6F70B4C71A0B833F00C7B3EF /* pdf_type3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_type3.c; sourceTree = "<group>"; };
-		6F70B4C81A0B833F00C7B3EF /* pdf_unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_unicode.c; sourceTree = "<group>"; };
-		6F70B4C91A0B833F00C7B3EF /* pdf_write.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_write.c; sourceTree = "<group>"; };
-		6F70B4CA1A0B833F00C7B3EF /* pdf_xobject.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_xobject.c; sourceTree = "<group>"; };
-		6F70B4CB1A0B833F00C7B3EF /* pdf_xref.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_xref.c; sourceTree = "<group>"; };
-		6F70B4CC1A0B833F00C7B3EF /* pdf_xref_aux.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = pdf_xref_aux.c; sourceTree = "<group>"; };
-		6F70B4CE1A0B833F00C7B3EF /* dev_ofpath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = dev_ofpath.cpp; sourceTree = "<group>"; };
-		6F70B4CF1A0B833F00C7B3EF /* ofxPDF.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPDF.cpp; sourceTree = "<group>"; };
-		6F70B4D01A0B833F00C7B3EF /* ofxPDF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPDF.h; sourceTree = "<group>"; };
 		6F70B52D1A0B83EB00C7B3EF /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		6F70B53E1A0B83EB00C7B3EF /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		6F70B5401A0B83EB00C7B3EF /* ofxMtlWatchFolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMtlWatchFolder.cpp; sourceTree = "<group>"; };
@@ -638,6 +464,41 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		6F46F6FD1A1D474F008AD5F7 /* ofxPDF2 */ = {
+			isa = PBXGroup;
+			children = (
+				6F46F7521A1D4B3D008AD5F7 /* libs */,
+				6F46F74E1A1D474F008AD5F7 /* src */,
+			);
+			name = ofxPDF2;
+			path = ../../../addons/ofxPDF2;
+			sourceTree = "<group>";
+		};
+		6F46F74E1A1D474F008AD5F7 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				6F46F74F1A1D474F008AD5F7 /* ofxPDF2.cpp */,
+				6F46F7501A1D474F008AD5F7 /* ofxPDF2.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		6F46F7521A1D4B3D008AD5F7 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				6F46F7531A1D4B3D008AD5F7 /* libcurl.a */,
+				6F46F7541A1D4B3D008AD5F7 /* libfreetype.a */,
+				6F46F7551A1D4B3D008AD5F7 /* libjbig2dec.a */,
+				6F46F7561A1D4B3D008AD5F7 /* libjpeg.a */,
+				6F46F7571A1D4B3D008AD5F7 /* libmujs.a */,
+				6F46F7581A1D4B3D008AD5F7 /* libmupdf.a */,
+				6F46F7591A1D4B3D008AD5F7 /* libopenjpeg.a */,
+				6F46F75A1A1D4B3D008AD5F7 /* libz.a */,
+			);
+			name = libs;
+			path = includes/libs;
+			sourceTree = "<group>";
+		};
 		6F513C631A19FBC900BF5A61 /* ofxOsc */ = {
 			isa = PBXGroup;
 			children = (
@@ -732,178 +593,6 @@
 				6F513C8D1A19FBC900BF5A61 /* ofxOscReceiver.h */,
 				6F513C8E1A19FBC900BF5A61 /* ofxOscSender.cpp */,
 				6F513C8F1A19FBC900BF5A61 /* ofxOscSender.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		6F70B4541A0B833F00C7B3EF /* ofxPDF */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4551A0B833F00C7B3EF /* .gitignore */,
-				6F70B4661A0B833F00C7B3EF /* libs */,
-				6F70B4CD1A0B833F00C7B3EF /* src */,
-			);
-			name = ofxPDF;
-			path = ../../../addons/ofxPDF;
-			sourceTree = "<group>";
-		};
-		6F70B4661A0B833F00C7B3EF /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4671A0B833F00C7B3EF /* mupdf */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		6F70B4671A0B833F00C7B3EF /* mupdf */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4681A0B833F00C7B3EF /* COPYING */,
-				6F70B4691A0B833F00C7B3EF /* lib */,
-			);
-			path = mupdf;
-			sourceTree = "<group>";
-		};
-		6F70B4691A0B833F00C7B3EF /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B46A1A0B833F00C7B3EF /* draw */,
-				6F70B4751A0B833F00C7B3EF /* fitz */,
-				6F70B4A31A0B833F00C7B3EF /* generated */,
-				6F70B4A91A0B833F00C7B3EF /* pdf */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		6F70B46A1A0B833F00C7B3EF /* draw */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B46B1A0B833F00C7B3EF /* draw_affine.c */,
-				6F70B46C1A0B833F00C7B3EF /* draw_blend.c */,
-				6F70B46D1A0B833F00C7B3EF /* draw_device.c */,
-				6F70B46E1A0B833F00C7B3EF /* draw_edge.c */,
-				6F70B46F1A0B833F00C7B3EF /* draw_glyph.c */,
-				6F70B4701A0B833F00C7B3EF /* draw_mesh.c */,
-				6F70B4711A0B833F00C7B3EF /* draw_paint.c */,
-				6F70B4721A0B833F00C7B3EF /* draw_path.c */,
-				6F70B4731A0B833F00C7B3EF /* draw_scale.c */,
-				6F70B4741A0B833F00C7B3EF /* draw_unpack.c */,
-			);
-			path = draw;
-			sourceTree = "<group>";
-		};
-		6F70B4751A0B833F00C7B3EF /* fitz */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4761A0B833F00C7B3EF /* base_context.c */,
-				6F70B4771A0B833F00C7B3EF /* base_error.c */,
-				6F70B4781A0B833F00C7B3EF /* base_geometry.c */,
-				6F70B4791A0B833F00C7B3EF /* base_getopt.c */,
-				6F70B47A1A0B833F00C7B3EF /* base_hash.c */,
-				6F70B47B1A0B833F00C7B3EF /* base_memory.c */,
-				6F70B47C1A0B833F00C7B3EF /* base_string.c */,
-				6F70B47D1A0B833F00C7B3EF /* base_time.c */,
-				6F70B47E1A0B833F00C7B3EF /* crypt_aes.c */,
-				6F70B47F1A0B833F00C7B3EF /* crypt_arc4.c */,
-				6F70B4801A0B833F00C7B3EF /* crypt_md5.c */,
-				6F70B4811A0B833F00C7B3EF /* crypt_sha2.c */,
-				6F70B4821A0B833F00C7B3EF /* dev_bbox.c */,
-				6F70B4831A0B833F00C7B3EF /* dev_list.c */,
-				6F70B4841A0B833F00C7B3EF /* dev_null.c */,
-				6F70B4851A0B833F00C7B3EF /* dev_text.c */,
-				6F70B4861A0B833F00C7B3EF /* dev_trace.c */,
-				6F70B4871A0B833F00C7B3EF /* doc_document.c */,
-				6F70B4881A0B833F00C7B3EF /* doc_link.c */,
-				6F70B4891A0B833F00C7B3EF /* doc_outline.c */,
-				6F70B48A1A0B833F00C7B3EF /* filt_basic.c */,
-				6F70B48B1A0B833F00C7B3EF /* filt_faxd.c */,
-				6F70B48C1A0B833F00C7B3EF /* filt_flate.c */,
-				6F70B48D1A0B833F00C7B3EF /* filt_lzwd.c */,
-				6F70B48E1A0B833F00C7B3EF /* filt_predict.c */,
-				6F70B48F1A0B833F00C7B3EF /* fitz-internal.h */,
-				6F70B4901A0B833F00C7B3EF /* fitz.h */,
-				6F70B4911A0B833F00C7B3EF /* image_md5.c */,
-				6F70B4921A0B833F00C7B3EF /* image_png.c */,
-				6F70B4931A0B833F00C7B3EF /* image_save.c */,
-				6F70B4941A0B833F00C7B3EF /* image_tiff.c */,
-				6F70B4951A0B833F00C7B3EF /* memento.c */,
-				6F70B4961A0B833F00C7B3EF /* memento.h */,
-				6F70B4971A0B833F00C7B3EF /* res_bitmap.c */,
-				6F70B4981A0B833F00C7B3EF /* res_colorspace.c */,
-				6F70B4991A0B833F00C7B3EF /* res_font.c */,
-				6F70B49A1A0B833F00C7B3EF /* res_halftone.c */,
-				6F70B49B1A0B833F00C7B3EF /* res_path.c */,
-				6F70B49C1A0B833F00C7B3EF /* res_pixmap.c */,
-				6F70B49D1A0B833F00C7B3EF /* res_shade.c */,
-				6F70B49E1A0B833F00C7B3EF /* res_store.c */,
-				6F70B49F1A0B833F00C7B3EF /* res_text.c */,
-				6F70B4A01A0B833F00C7B3EF /* stm_buffer.c */,
-				6F70B4A11A0B833F00C7B3EF /* stm_open.c */,
-				6F70B4A21A0B833F00C7B3EF /* stm_read.c */,
-			);
-			path = fitz;
-			sourceTree = "<group>";
-		};
-		6F70B4A31A0B833F00C7B3EF /* generated */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4A41A0B833F00C7B3EF /* cmap_cns.h */,
-				6F70B4A51A0B833F00C7B3EF /* cmap_gb.h */,
-				6F70B4A61A0B833F00C7B3EF /* cmap_japan.h */,
-				6F70B4A71A0B833F00C7B3EF /* cmap_korea.h */,
-				6F70B4A81A0B833F00C7B3EF /* font_base14.h */,
-			);
-			path = generated;
-			sourceTree = "<group>";
-		};
-		6F70B4A91A0B833F00C7B3EF /* pdf */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4AA1A0B833F00C7B3EF /* data_encodings.h */,
-				6F70B4AB1A0B833F00C7B3EF /* data_glyphlist.h */,
-				6F70B4AC1A0B833F00C7B3EF /* mupdf-internal.h */,
-				6F70B4AD1A0B833F00C7B3EF /* mupdf.h */,
-				6F70B4AE1A0B833F00C7B3EF /* pdf_annot.c */,
-				6F70B4AF1A0B833F00C7B3EF /* pdf_cmap.c */,
-				6F70B4B01A0B833F00C7B3EF /* pdf_cmap_load.c */,
-				6F70B4B11A0B833F00C7B3EF /* pdf_cmap_parse.c */,
-				6F70B4B21A0B833F00C7B3EF /* pdf_cmap_table.c */,
-				6F70B4B31A0B833F00C7B3EF /* pdf_colorspace.c */,
-				6F70B4B41A0B833F00C7B3EF /* pdf_crypt.c */,
-				6F70B4B51A0B833F00C7B3EF /* pdf_encoding.c */,
-				6F70B4B61A0B833F00C7B3EF /* pdf_font.c */,
-				6F70B4B71A0B833F00C7B3EF /* pdf_fontfile.c */,
-				6F70B4B81A0B833F00C7B3EF /* pdf_function.c */,
-				6F70B4B91A0B833F00C7B3EF /* pdf_image.c */,
-				6F70B4BA1A0B833F00C7B3EF /* pdf_interpret.c */,
-				6F70B4BB1A0B833F00C7B3EF /* pdf_lex.c */,
-				6F70B4BC1A0B833F00C7B3EF /* pdf_metrics.c */,
-				6F70B4BD1A0B833F00C7B3EF /* pdf_nametree.c */,
-				6F70B4BE1A0B833F00C7B3EF /* pdf_object.c */,
-				6F70B4BF1A0B833F00C7B3EF /* pdf_outline.c */,
-				6F70B4C01A0B833F00C7B3EF /* pdf_page.c */,
-				6F70B4C11A0B833F00C7B3EF /* pdf_parse.c */,
-				6F70B4C21A0B833F00C7B3EF /* pdf_pattern.c */,
-				6F70B4C31A0B833F00C7B3EF /* pdf_repair.c */,
-				6F70B4C41A0B833F00C7B3EF /* pdf_shade.c */,
-				6F70B4C51A0B833F00C7B3EF /* pdf_store.c */,
-				6F70B4C61A0B833F00C7B3EF /* pdf_stream.c */,
-				6F70B4C71A0B833F00C7B3EF /* pdf_type3.c */,
-				6F70B4C81A0B833F00C7B3EF /* pdf_unicode.c */,
-				6F70B4C91A0B833F00C7B3EF /* pdf_write.c */,
-				6F70B4CA1A0B833F00C7B3EF /* pdf_xobject.c */,
-				6F70B4CB1A0B833F00C7B3EF /* pdf_xref.c */,
-				6F70B4CC1A0B833F00C7B3EF /* pdf_xref_aux.c */,
-			);
-			path = pdf;
-			sourceTree = "<group>";
-		};
-		6F70B4CD1A0B833F00C7B3EF /* src */ = {
-			isa = PBXGroup;
-			children = (
-				6F70B4CE1A0B833F00C7B3EF /* dev_ofpath.cpp */,
-				6F70B4CF1A0B833F00C7B3EF /* ofxPDF.cpp */,
-				6F70B4D01A0B833F00C7B3EF /* ofxPDF.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -1044,11 +733,11 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				6F46F6FD1A1D474F008AD5F7 /* ofxPDF2 */,
 				6F513C631A19FBC900BF5A61 /* ofxOsc */,
 				6F46B8F21A135EF200E8E154 /* ofxTweener */,
 				6F7A7CBE1A0D111D000F3125 /* ofxUI */,
 				6F70B52C1A0B83EB00C7B3EF /* ofxMtlWatchFolder */,
-				6F70B4541A0B833F00C7B3EF /* ofxPDF */,
 				F26C672019FFE2400039F116 /* ofxXmlSettings */,
 				F256081719FD30AB00191994 /* ofxSyphon */,
 			);
@@ -1375,146 +1064,73 @@
 			buildActionMask = 2147483647;
 			files = (
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				6F70B4EA1A0B833F00C7B3EF /* dev_list.c in Sources */,
 				6F7A7F7D1A0D1120000F3125 /* ofxUIWidget.cpp in Sources */,
-				6F70B5251A0B833F00C7B3EF /* pdf_xref_aux.c in Sources */,
-				6F70B4DF1A0B833F00C7B3EF /* base_geometry.c in Sources */,
-				6F70B4F41A0B833F00C7B3EF /* filt_lzwd.c in Sources */,
 				6F513C921A19FBC900BF5A61 /* UdpSocket.cpp in Sources */,
 				6F3085F71A137CD8006E8172 /* MediaPresentation.cpp in Sources */,
-				6F70B4F01A0B833F00C7B3EF /* doc_outline.c in Sources */,
 				F26C672B19FFE2400039F116 /* tinyxmlparser.cpp in Sources */,
-				6F70B5061A0B833F00C7B3EF /* stm_read.c in Sources */,
 				6F513C901A19FBC900BF5A61 /* IpEndpointName.cpp in Sources */,
-				6F70B5191A0B833F00C7B3EF /* pdf_page.c in Sources */,
-				6F70B5111A0B833F00C7B3EF /* pdf_function.c in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				6F4C206E1A1A0BE500307E48 /* Savable.cpp in Sources */,
-				6F70B4E61A0B833F00C7B3EF /* crypt_arc4.c in Sources */,
 				6F7A7F601A0D1120000F3125 /* ofxUIImageButton.cpp in Sources */,
 				6F7FF0151A11109200B7C2B5 /* GloveOSC.cpp in Sources */,
-				6F70B5241A0B833F00C7B3EF /* pdf_xref.c in Sources */,
 				6F46B90B1A135EF200E8E154 /* ofxTweener.cpp in Sources */,
 				6F7A7F5C1A0D1120000F3125 /* ofxUIEventArgs.cpp in Sources */,
 				6F7FF0281A1110C600B7C2B5 /* MediaMP3.cpp in Sources */,
-				6F70B4F21A0B833F00C7B3EF /* filt_faxd.c in Sources */,
 				6F7A7F661A0D1120000F3125 /* ofxUILabelToggle.cpp in Sources */,
-				6F70B4DC1A0B833F00C7B3EF /* draw_unpack.c in Sources */,
-				6F70B4F31A0B833F00C7B3EF /* filt_flate.c in Sources */,
+				6F46F7511A1D48FD008AD5F7 /* ofxPDF2.cpp in Sources */,
 				6F7A7F721A0D1120000F3125 /* ofxUISortableList.cpp in Sources */,
-				6F70B4F11A0B833F00C7B3EF /* filt_basic.c in Sources */,
-				6F70B50E1A0B833F00C7B3EF /* pdf_encoding.c in Sources */,
 				6F7A7F691A0D1120000F3125 /* ofxUIMultiImageButton.cpp in Sources */,
-				6F70B4E41A0B833F00C7B3EF /* base_time.c in Sources */,
-				6F70B4EF1A0B833F00C7B3EF /* doc_link.c in Sources */,
-				6F70B4F91A0B833F00C7B3EF /* image_tiff.c in Sources */,
-				6F70B51F1A0B833F00C7B3EF /* pdf_stream.c in Sources */,
-				6F70B5081A0B833F00C7B3EF /* pdf_cmap.c in Sources */,
-				6F70B5101A0B833F00C7B3EF /* pdf_fontfile.c in Sources */,
-				6F70B5131A0B833F00C7B3EF /* pdf_interpret.c in Sources */,
-				6F70B4EB1A0B833F00C7B3EF /* dev_null.c in Sources */,
-				6F70B4FC1A0B833F00C7B3EF /* res_colorspace.c in Sources */,
-				6F70B5171A0B833F00C7B3EF /* pdf_object.c in Sources */,
 				6F513C9C1A19FBC900BF5A61 /* ofxOscReceiver.cpp in Sources */,
 				F26C672C19FFE2400039F116 /* ofxXmlSettings.cpp in Sources */,
-				6F70B4E11A0B833F00C7B3EF /* base_hash.c in Sources */,
 				6F7A7F781A0D1120000F3125 /* ofxUITextInput.cpp in Sources */,
 				6F7A7F6F1A0D1120000F3125 /* ofxUIRotarySlider.cpp in Sources */,
 				6F513C981A19FBC900BF5A61 /* OscTypes.cpp in Sources */,
-				6F70B4F51A0B833F00C7B3EF /* filt_predict.c in Sources */,
-				6F70B51C1A0B833F00C7B3EF /* pdf_repair.c in Sources */,
 				6F7FF0131A11109200B7C2B5 /* GloveInteract.cpp in Sources */,
 				6F7A7F671A0D1120000F3125 /* ofxUIMinimalSlider.cpp in Sources */,
 				6F7A7F751A0D1120000F3125 /* ofxUISuperCanvas.cpp in Sources */,
-				6F70B4D61A0B833F00C7B3EF /* draw_edge.c in Sources */,
 				F26C672A19FFE2400039F116 /* tinyxmlerror.cpp in Sources */,
-				6F70B5071A0B833F00C7B3EF /* pdf_annot.c in Sources */,
 				6F7A7F6A1A0D1120000F3125 /* ofxUIMultiImageToggle.cpp in Sources */,
 				6F7A7F641A0D1120000F3125 /* ofxUILabel.cpp in Sources */,
 				6F7FF0191A1110AB00B7C2B5 /* GUIProjects.cpp in Sources */,
 				F26C671619FD47500039F116 /* Watcher.cpp in Sources */,
-				6F70B51D1A0B833F00C7B3EF /* pdf_shade.c in Sources */,
-				6F70B5041A0B833F00C7B3EF /* stm_buffer.c in Sources */,
 				6F7A7F5A1A0D1120000F3125 /* ofxUIDragableLabelButton.cpp in Sources */,
-				6F70B4ED1A0B833F00C7B3EF /* dev_trace.c in Sources */,
-				6F70B4F71A0B833F00C7B3EF /* image_png.c in Sources */,
 				6F70B5481A0B849100C7B3EF /* ofxMtlWatchFolder.cpp in Sources */,
 				6F513C911A19FBC900BF5A61 /* NetworkingUtils.cpp in Sources */,
-				6F70B4FA1A0B833F00C7B3EF /* memento.c in Sources */,
-				6F70B4E21A0B833F00C7B3EF /* base_memory.c in Sources */,
-				6F70B5021A0B833F00C7B3EF /* res_store.c in Sources */,
 				6F7A7F571A0D1120000F3125 /* ofxUIButton.cpp in Sources */,
-				6F70B4E81A0B833F00C7B3EF /* crypt_sha2.c in Sources */,
 				6F513C991A19FBC900BF5A61 /* ofxOscBundle.cpp in Sources */,
-				6F70B4D81A0B833F00C7B3EF /* draw_mesh.c in Sources */,
-				6F70B4DA1A0B833F00C7B3EF /* draw_path.c in Sources */,
 				6F7A7F731A0D1120000F3125 /* ofxUISpacer.cpp in Sources */,
-				6F70B4E01A0B833F00C7B3EF /* base_getopt.c in Sources */,
-				6F70B50D1A0B833F00C7B3EF /* pdf_crypt.c in Sources */,
 				6F7A7F711A0D1120000F3125 /* ofxUISlider.cpp in Sources */,
 				F26C672919FFE2400039F116 /* tinyxml.cpp in Sources */,
 				6F7FF0271A1110C600B7C2B5 /* MediaImage.cpp in Sources */,
 				6F513C9A1A19FBC900BF5A61 /* ofxOscMessage.cpp in Sources */,
-				6F70B5261A0B833F00C7B3EF /* dev_ofpath.cpp in Sources */,
 				6F7A7F561A0D1120000F3125 /* ofxUIBiLabelSlider.cpp in Sources */,
-				6F70B4FB1A0B833F00C7B3EF /* res_bitmap.c in Sources */,
 				6F7A7F591A0D1120000F3125 /* ofxUICircleSlider.cpp in Sources */,
-				6F70B5011A0B833F00C7B3EF /* res_shade.c in Sources */,
-				6F70B4EE1A0B833F00C7B3EF /* doc_document.c in Sources */,
-				6F70B4D31A0B833F00C7B3EF /* draw_affine.c in Sources */,
 				6F513C9B1A19FBC900BF5A61 /* ofxOscParameterSync.cpp in Sources */,
 				F256086219FD30AB00191994 /* SyphonNameboundClient.m in Sources */,
-				6F70B5271A0B833F00C7B3EF /* ofxPDF.cpp in Sources */,
 				6F7A7F551A0D1120000F3125 /* ofxUIBaseDraws.cpp in Sources */,
 				6F7A7F6C1A0D1120000F3125 /* ofxUIRadio.cpp in Sources */,
 				6F7A7F621A0D1120000F3125 /* ofxUIImageSlider.cpp in Sources */,
-				6F70B5211A0B833F00C7B3EF /* pdf_unicode.c in Sources */,
-				6F70B5051A0B833F00C7B3EF /* stm_open.c in Sources */,
-				6F70B5231A0B833F00C7B3EF /* pdf_xobject.c in Sources */,
 				6F7FF0121A11109200B7C2B5 /* GloveInstance.cpp in Sources */,
-				6F70B4E51A0B833F00C7B3EF /* crypt_aes.c in Sources */,
 				6F7A7F701A0D1120000F3125 /* ofxUIScrollableCanvas.cpp in Sources */,
 				6F7A7F681A0D1120000F3125 /* ofxUIMovingGraph.cpp in Sources */,
 				6F7A7F611A0D1120000F3125 /* ofxUIImageSampler.cpp in Sources */,
 				6F70B54B1A0B849100C7B3EF /* ofxSyphonServerDirectory.mm in Sources */,
 				6F513C951A19FBC900BF5A61 /* OscOutboundPacketStream.cpp in Sources */,
 				6F7FF02B1A1110C600B7C2B5 /* MediaVideo.cpp in Sources */,
-				6F70B5031A0B833F00C7B3EF /* res_text.c in Sources */,
 				6F7A7F741A0D1120000F3125 /* ofxUISpectrum.cpp in Sources */,
 				6F7A7F761A0D1120000F3125 /* ofxUITabBar.cpp in Sources */,
-				6F70B5181A0B833F00C7B3EF /* pdf_outline.c in Sources */,
-				6F70B50C1A0B833F00C7B3EF /* pdf_colorspace.c in Sources */,
-				6F70B4DB1A0B833F00C7B3EF /* draw_scale.c in Sources */,
-				6F70B50B1A0B833F00C7B3EF /* pdf_cmap_table.c in Sources */,
 				6F7FF0291A1110C600B7C2B5 /* MediaPdf.cpp in Sources */,
 				6F4C20711A1A168B00307E48 /* GUIConfig.cpp in Sources */,
-				6F70B4EC1A0B833F00C7B3EF /* dev_text.c in Sources */,
-				6F70B5001A0B833F00C7B3EF /* res_pixmap.c in Sources */,
-				6F70B5151A0B833F00C7B3EF /* pdf_metrics.c in Sources */,
-				6F70B4DE1A0B833F00C7B3EF /* base_error.c in Sources */,
-				6F70B4FF1A0B833F00C7B3EF /* res_path.c in Sources */,
-				6F70B4E91A0B833F00C7B3EF /* dev_bbox.c in Sources */,
 				6F7A7F7B1A0D1120000F3125 /* ofxUIValuePlotter.cpp in Sources */,
-				6F70B4F81A0B833F00C7B3EF /* image_save.c in Sources */,
 				6F7A7F771A0D1120000F3125 /* ofxUITextArea.cpp in Sources */,
 				6F7FF0141A11109200B7C2B5 /* GloveInteractBox.cpp in Sources */,
-				6F70B4E31A0B833F00C7B3EF /* base_string.c in Sources */,
 				6F7A7F7C1A0D1120000F3125 /* ofxUIWaveform.cpp in Sources */,
 				6F7FF0311A11155D00B7C2B5 /* ProjectHandler.cpp in Sources */,
-				6F70B4DD1A0B833F00C7B3EF /* base_context.c in Sources */,
 				6F44D95C1A12810C008A4FC8 /* MetaScreen.cpp in Sources */,
 				6F70B5491A0B849100C7B3EF /* ofxSyphonClient.mm in Sources */,
-				6F70B51E1A0B833F00C7B3EF /* pdf_store.c in Sources */,
-				6F70B5201A0B833F00C7B3EF /* pdf_type3.c in Sources */,
 				6F7FF0261A1110C500B7C2B5 /* Media.cpp in Sources */,
-				6F70B5221A0B833F00C7B3EF /* pdf_write.c in Sources */,
-				6F70B5091A0B833F00C7B3EF /* pdf_cmap_load.c in Sources */,
 				6F70B54A1A0B849100C7B3EF /* ofxSyphonServer.mm in Sources */,
-				6F70B4FE1A0B833F00C7B3EF /* res_halftone.c in Sources */,
 				6F7A7F651A0D1120000F3125 /* ofxUILabelButton.cpp in Sources */,
-				6F70B5161A0B833F00C7B3EF /* pdf_nametree.c in Sources */,
-				6F70B4D51A0B833F00C7B3EF /* draw_device.c in Sources */,
-				6F70B4D71A0B833F00C7B3EF /* draw_glyph.c in Sources */,
 				6F7A7F5F1A0D1120000F3125 /* ofxUIImage.cpp in Sources */,
 				6F513C961A19FBC900BF5A61 /* OscPrintReceivedElements.cpp in Sources */,
 				6F7A7F631A0D1120000F3125 /* ofxUIImageToggle.cpp in Sources */,
@@ -1522,30 +1138,19 @@
 				6F7A7F541A0D1120000F3125 /* ofxUI2DPad.cpp in Sources */,
 				6F7A7F6D1A0D1120000F3125 /* ofxUIRangeSlider.cpp in Sources */,
 				6F7A7F6B1A0D1120000F3125 /* ofxUINumberDialer.cpp in Sources */,
-				6F70B51B1A0B833F00C7B3EF /* pdf_pattern.c in Sources */,
 				6F7A7F7A1A0D1120000F3125 /* ofxUIToggleMatrix.cpp in Sources */,
-				6F70B4E71A0B833F00C7B3EF /* crypt_md5.c in Sources */,
-				6F70B4D41A0B833F00C7B3EF /* draw_blend.c in Sources */,
 				6F7A7F5E1A0D1120000F3125 /* ofxUIFPSSlider.cpp in Sources */,
 				6F7A7F581A0D1120000F3125 /* ofxUICanvas.cpp in Sources */,
-				6F70B51A1A0B833F00C7B3EF /* pdf_parse.c in Sources */,
 				6F46B90A1A135EF200E8E154 /* ofxTransitions.cpp in Sources */,
 				6F7A7F791A0D1120000F3125 /* ofxUIToggle.cpp in Sources */,
-				6F70B5121A0B833F00C7B3EF /* pdf_image.c in Sources */,
-				6F70B4F61A0B833F00C7B3EF /* image_md5.c in Sources */,
 				6F7A7F6E1A0D1120000F3125 /* ofxUIRectangle.cpp in Sources */,
 				6F7A7F531A0D1120000F3125 /* ofxUI2DGraph.cpp in Sources */,
 				6F7FF02A1A1110C600B7C2B5 /* MediaPool.cpp in Sources */,
 				6F7A7F5B1A0D1120000F3125 /* ofxUIDropDownList.cpp in Sources */,
-				6F70B4D91A0B833F00C7B3EF /* draw_paint.c in Sources */,
 				6F513C9D1A19FBC900BF5A61 /* ofxOscSender.cpp in Sources */,
-				6F70B50A1A0B833F00C7B3EF /* pdf_cmap_parse.c in Sources */,
 				6F7FF02E1A1110D300B7C2B5 /* Screens.cpp in Sources */,
-				6F70B5141A0B833F00C7B3EF /* pdf_lex.c in Sources */,
 				6F7A7F5D1A0D1120000F3125 /* ofxUIFPS.cpp in Sources */,
-				6F70B4FD1A0B833F00C7B3EF /* res_font.c in Sources */,
 				6F7A7F7E1A0D1120000F3125 /* ofxUIWidgetWithLabel.cpp in Sources */,
-				6F70B50F1A0B833F00C7B3EF /* pdf_font.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1602,6 +1207,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
+				LIBRARY_SEARCH_PATHS = ../../../addons/ofxPDF2/includes/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CPLUSPLUSFLAGS = (
@@ -1657,6 +1263,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
 				);
+				LIBRARY_SEARCH_PATHS = ../../../addons/ofxPDF2/includes/libs;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				OTHER_CPLUSPLUSFLAGS = (
 					"-D__MACOSX_CORE__",
@@ -1704,6 +1311,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
+					../../../addons/ofxPDF2/includes,
 				);
 				ICON = "$(ICON_NAME_DEBUG)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
@@ -1751,6 +1359,7 @@
 					../../../addons/ofxOsc/libs/oscpack/src/ip/win32,
 					../../../addons/ofxOsc/libs/oscpack/src/osc,
 					../../../addons/ofxOsc/src,
+					../../../addons/ofxPDF2/includes,
 				);
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";

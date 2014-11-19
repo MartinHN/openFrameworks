@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include "Media.h"
-#include "ofxPDF.h"
+#include "ofxPDF2.h"
 
 class MediaPdf:public  Media {
     
@@ -21,7 +21,7 @@ public:
     ~MediaPdf(){pdf.close();};
   
     
-    ofxPDF pdf;
+    ofxPDF2 pdf;
   
     virtual void load(string filePath);
     virtual void drawMedia();

@@ -11,7 +11,7 @@
 
 void MediaPdf::load(string fp){
     pdf.load(fp);
-    format = pdf.getWidth()*1.0/pdf.getHeight();
+    format = pdf.width*1.0/pdf.height;
     isLoaded = true;
 }
 

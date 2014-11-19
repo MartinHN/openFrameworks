@@ -31,6 +31,8 @@ ofxAndroid/ofAndroidLib/gen
 !ofxTweener
 !ofxUI
 !ofxSyphon
+!ofxPDF2
+
 
 # don't ignore the .gitignore file
 !.gitignore

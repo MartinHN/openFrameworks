@@ -65,6 +65,7 @@ public:
     void touchMoved(float x, float y, int id);
     void touchUp(float x, float y, int id);
     void touchCancelled(float x, float y, int id);
+        int scrollId;
 #endif
     void mouseDragged(int x, int y, int button);
     void mousePressed(int x, int y, int button);

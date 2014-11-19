@@ -26,6 +26,7 @@ public:
     virtual void load(string filePath);
     virtual void drawMedia();
     virtual void boxResized(bool stable);
+
     void offset(ofVec2f t);
 
 };

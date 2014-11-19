@@ -50,12 +50,12 @@ void MediaPresentation::load(string folderPath){
 
 
 void MediaPresentation::clicked(TouchButton & num){
-
+    if(wasSelected){
     if(num == GLOVE_BUTTON_CLICK){
         curMediaIndex++;
         startTransition();
     }
-    
+    }
     
 
     

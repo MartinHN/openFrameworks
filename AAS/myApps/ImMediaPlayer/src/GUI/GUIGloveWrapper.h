@@ -28,7 +28,7 @@ public:
         ofTouchEventArgs a;
         int  idTouch = 0 ;
         for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
-            if(GloveOSC::gloves[i] == curGlove)idTouch = i*12 + num;
+            if(GloveOSC::gloves[i] == curGlove)idTouch = i*13 +  num;
         };
         a.id = idTouch;
         a.set(curGlove->cursor2D);
@@ -50,9 +50,21 @@ public:
     };
     virtual void cursor2DMoved(ofVec2f v){
         ofTouchEventArgs a;
-        int  idTouch = 0 ;
+        int  idTouch = -1 ;
         for(int i = 0 ; i < GloveOSC::gloves.size() ; i ++){
-            if(GloveOSC::gloves[i] == curGlove)idTouch = i;
+            if(GloveOSC::gloves[i] == curGlove){
+                int tid = 0;
+                for(int j = 0 ; j<curGlove->touchs.size() ; j++){
+                    if(curGlove->touchs[j]){
+                     tid = j;
+                    }
+                }
+                idTouch=i*13+tid;
+                if(tid>0){
+                    int ttt=0;
+                }
+                break;
+            }
         };
         a.id = idTouch;
         a.set(v);

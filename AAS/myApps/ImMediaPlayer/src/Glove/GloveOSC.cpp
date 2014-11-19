@@ -41,10 +41,10 @@ GloveOSC::~GloveOSC(){
 
 
 void GloveOSC::update(ofEventArgs & a){
-
+    
     registerOSC();
     parseMessage();
-
+    
     
 }
 
@@ -81,7 +81,7 @@ void GloveOSC::registerOSC(){
 
 
 void GloveOSC::parseMessage(){
- 
+    
     
     while(reciever.hasWaitingMessages()){
         
@@ -108,7 +108,7 @@ void GloveOSC::parseMessage(){
             else if(addr == "/connected"){
                 
                 if(!isGlove(m.getArgAsString(0))){
-                gloves.push_back(new GloveInstance(m.getArgAsString(0)));
+                    gloves.push_back(new GloveInstance(m.getArgAsString(0)));
                 }
                 
             }
@@ -128,7 +128,7 @@ void GloveOSC::parseMessage(){
             }
             else if(addr == "/touch"){
                 if((curGlove = getGlove(m.getArgAsString(0)))){
-                    curGlove->setTouch((TouchButton)m.getArgAsInt32(1),(TouchAction)m.getArgAsInt32(2));
+                    curGlove->setTouch((TouchButton)(m.getArgAsInt32(1)+1),(TouchAction)m.getArgAsInt32(2));
                 }
             }
             else if(addr == "/flex"){
@@ -173,44 +173,46 @@ void GloveOSC::deleteGlove(string gloveID){
 
 
 void GloveOSC::deleteAll(){
+    
     for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
         if((*it)->gloveID!="mouse"){
+            bool isLast = (*it==gloves.back());
             delete *it;
-            gloves.erase(it++);
-            if(gloves.size()==0)break;
+            gloves.erase(it++);            
+            if(isLast)break;
         }
     }
 }
 
-bool GloveOSC::isGlove(string gloveID){
-    for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
-        if((*it)->gloveID==gloveID){
-            return true;
-
-
+    bool GloveOSC::isGlove(string gloveID){
+        for(vector<GloveInstance*>::iterator it = gloves.begin();it!=gloves.end();++it){
+            if((*it)->gloveID==gloveID){
+                return true;
+                
+                
+            }
+            
         }
-        
+        return false;
     }
-    return false;
-}
-
-void GloveOSC::unregisterOSC(){
-    ofxOscMessage m;
-    m.setAddress("/unregister");
-    m.addStringArg(APPNAME);
-    toServer.sendMessage(m);
-}
-
-
-void GloveOSC::setConnected(bool &b){
-    if(b){
-        lastPingTime = ofGetElapsedTimef();
+    
+    void GloveOSC::unregisterOSC(){
+        ofxOscMessage m;
+        m.setAddress("/unregister");
+        m.addStringArg(APPNAME);
+        toServer.sendMessage(m);
     }
-    else {
-        deleteAll();
+    
+    
+    void GloveOSC::setConnected(bool &b){
+        if(b){
+            lastPingTime = ofGetElapsedTimef();
+        }
+        else {
+            deleteAll();
+        }
     }
-}
-
-
-
-
+    
+    
+    
+    

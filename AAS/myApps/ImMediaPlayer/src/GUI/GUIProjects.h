@@ -56,6 +56,7 @@ class GUIProjects : public GloveInteractBox{
     virtual void boxMoved(bool stable);
     void entered();
     void exited();
+    void clicked(TouchButton & t);
     void startWatch(string s="");
     void projectsAdded(string& filename);
     void projectsRemoved(string& filename);
@@ -66,10 +67,12 @@ class GUIProjects : public GloveInteractBox{
     
     ofRectangle fullSizeRect;
     
+    void goUpFolder();
     
 protected:
     // as we change the content of dropdownlist of project on its own GUIEvents, we have to do it asynchronously to let all current events (toggles) notifying before changing them
     string asyncPath = "";
+    
 
 private:
 

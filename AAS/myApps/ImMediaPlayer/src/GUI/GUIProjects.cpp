@@ -54,7 +54,7 @@ void GUIProjects::init(){
     
     projectsListScrollCanvas = new ofxUIScrollableCanvas(0,200,fullSizeRect.width-40,fullSizeRect.height-50);
     projectsListScrollCanvas->setName("Projects");
-    
+    projectsListScrollCanvas->scrollId = GLOVE_BUTTON_DRAG;
 
     projectsList = new ofxUIDropDownList("List",vector<string>(),fullSizeRect.width-40,0,0,OFX_UI_FONT_LARGE);
 
@@ -104,6 +104,12 @@ void GUIProjects::init(){
     
 }
 
+
+void GUIProjects::clicked(TouchButton & t){
+    if(t==GLOVE_BUTTON_BACK){
+        goUpFolder();
+    }
+}
 
 
 void GUIProjects::startWatch(string s){
@@ -216,14 +222,8 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
         
         if(canvas->getName()=="Projects"){
             if (a.widget->getName()=="backButton"){
-                if(!a.getButton()->getValue() && a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
-                vector<string> pathF = ofSplitString(currentDirectory.path(),"/");
-                if(pathF.size()<=1)return;
-                pathF.resize(pathF.size()-1);
-                if(pathF.size()<=1)return;
-                string curpath = ofJoinString(pathF,"/");
-                curpath="/"+curpath;
-                asyncPath = curpath;
+                if(!a.getButton()->getValue() && a.widget->getTouchID()%13 ==  GLOVE_BUTTON_CLICK){
+                    goUpFolder();
                 }
                 
             }
@@ -232,7 +232,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
            
             else if(parent->getName()=="List"){
                 
-                if(isProjectOpened && a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
+                if(isProjectOpened && a.widget->getTouchID()%13 == GLOVE_BUTTON_CLICK){
                     
                     
                     // select in playground too
@@ -251,7 +251,7 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
                 }
                 
                 // open
-                else if(a.widget->getTouchID()%12 == GLOVE_BUTTON_CLICK){
+                else if(a.widget->getTouchID()%13 == GLOVE_BUTTON_CLICK){
                     
                     asyncPath = currentDirectory.path()+"/"+a.widget->getName();
                 }
@@ -268,6 +268,18 @@ void GUIProjects::GUIevent(ofxUIEventArgs & a){
 }
 
 
+void GUIProjects::goUpFolder(){
+    
+
+
+vector<string> pathF = ofSplitString(currentDirectory.path(),"/");
+if(pathF.size()<=1)return;
+pathF.resize(pathF.size()-1);
+if(pathF.size()<=1)return;
+string curpath = ofJoinString(pathF,"/");
+curpath="/"+curpath;
+asyncPath = curpath;
+}
 
 void GUIProjects::projectsAdded(string &filename){
     ofFile file(currentDirectory.path()+"/"+filename);

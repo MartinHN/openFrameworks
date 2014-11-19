@@ -420,11 +420,12 @@ void ofxUIScrollableCanvas::touchDown(float x, float y, int id)
         }
     }
     
-    if(sRect->inside(x, y) )//&& id == 0)
+    if(sRect->inside(x, y) && id%13 == scrollId)//&& id == 0)
     {
         hit = true;
         isScrolling = false;
         vel.set(0);
+        touchId=id;
     }
 }
 
@@ -435,9 +436,9 @@ void ofxUIScrollableCanvas::touchMoved(float x, float y, int id)
         if((*it)->isVisible())	(*it)->touchMoved(x, y, id);
     }
     
-    if(hit && id == 0)
+    if(hit )
     {
-        if(!hitWidget)
+        if(!hitWidget && id == touchId)
         {
             if(isScrolling != true)
             {
@@ -471,6 +472,7 @@ void ofxUIScrollableCanvas::touchUp(float x, float y, int id)
         isScrolling = false;
         pos = ofPoint(x, y);
     }
+    if(id ==touchId)touchId=-1;
 }
 
 void ofxUIScrollableCanvas::touchCancelled(float x, float y, int id)

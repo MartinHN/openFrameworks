@@ -24,7 +24,7 @@ ofEvent<ofVec2f > GloveInstance::cursor2DEvent;
 
 GloveInstance::GloveInstance(string _gloveID):gloveID(_gloveID){
     
-    touchs = vector<bool>(NUMTOUCH,false);
+    touchs = vector<bool>(NUMTOUCH+1,false);
     flex = vector<float>(NUMFLEX,0);
     
     cursorImg =  ofImage();

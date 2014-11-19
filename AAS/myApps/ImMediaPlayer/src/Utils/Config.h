@@ -42,7 +42,9 @@ typedef enum{PDF,IMAGE,VIDEO,SOUND,PRESENTATION} MediaType;
 
 // glove touch Mapping
 typedef enum{
-            GLOVE_BUTTON_IDX_BASE=0     ,GLOVE_BUTTON_CLICK,
+    // none is used in touch events of oF
+            GLOVE_BUTTON_NONE=0,
+            GLOVE_BUTTON_IDX_BASE       ,GLOVE_BUTTON_CLICK,
             GLOVE_BUTTON_ZOOM           ,GLOVE_BUTTON_DRAG,
             GLOVE_BUTTON_ANU_BASE       ,GLOVE_BUTTON_MJR_BASE,
             GLOVE_BUTTON_BACK           ,GLOVE_BUTTON_AUR_TOP}

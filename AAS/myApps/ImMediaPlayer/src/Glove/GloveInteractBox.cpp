@@ -126,10 +126,6 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
         //        zoomed == NULL;
         
     }
-    if(state == GLOVE_ACTION_SHORTPRESS){
-        
-        int EEE=00;
-    }
     
     
     // intern handling function
@@ -191,7 +187,7 @@ void GloveInteractBox::touch(TouchButton touchId,TouchAction state){
         
         
         // callbacks
-        if( wasSelected &&  state == GLOVE_ACTION_SHORTPRESS){
+        if(   state == GLOVE_ACTION_SHORTPRESS){
             this->clicked(touchId);
         }
         

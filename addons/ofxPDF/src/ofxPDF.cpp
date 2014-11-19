@@ -17,7 +17,7 @@ void ofxPDF::loadPDF(string path, int pagenumber)
 	close();
 	
 	path = ofToDataPath(path);
-
+    cout << path << endl;
 	fz_context *ctx = fz_new_context(NULL, NULL, FZ_STORE_UNLIMITED);
 	fz_document *doc = fz_open_document(ctx, (char*)path.c_str());
 	

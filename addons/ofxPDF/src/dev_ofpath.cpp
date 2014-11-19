@@ -146,7 +146,7 @@ static void
 ofpath_fill_text(fz_device *dev, fz_text *text, fz_matrix ctm,
 				 fz_colorspace *colorspace, float *color, float alpha)
 {
-	NOT_IMPL();
+	cout << &text->items[0] << endl;
 }
 
 static void

@@ -212,9 +212,6 @@ void ofxUIWidget::drawBack() {
         ofxUISetColor(color_back);
         rect->draw();
     }
-    else{
-        int aaaa=0;
-    }
 }
 
 void ofxUIWidget::drawOutline() {
@@ -279,10 +276,12 @@ int ofxUIWidget::getTouchID(){
 };
 
 void ofxUIWidget::touchMoved(float x, float y, int id) {
-    if(touchId == id) {
+    if(touchId!=-1 && touchId == id) {
         this->mouseDragged(x, y,0);
     }
-    hoverIds[id]=rect->inside(x, y);
+    
+    if(touchId==-1 ){
+        hoverIds[id]=rect->inside(x, y);
     bool hoveredT = false;
     for(map<int,bool>::iterator it = hoverIds.begin() ; it!=hoverIds.end(); ++it){
         hoveredT|=it->second;
@@ -293,6 +292,7 @@ void ofxUIWidget::touchMoved(float x, float y, int id) {
     else
     {
         state = OFX_UI_STATE_NORMAL;
+    }
     }
     stateChange();
 }

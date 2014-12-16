@@ -4,10 +4,10 @@
 
 // when an ofEasyCam is moving due to momentum, this keeps it
 // from moving forever by assuming small values are zero.
-float minDifference = 0.1e-5f;
+static float minDifference = 0.1e-5f;
 
 // this is the default on windows os
-unsigned long doubleclickTime = 200;
+static unsigned long doubleclickTime = 200;
 
 //----------------------------------------
 ofEasyCam::ofEasyCam(){
@@ -23,8 +23,8 @@ ofEasyCam::ofEasyCam(){
 	bDoRotate = false;
 	bApplyInertia =false;
 	bDoTranslate = false;
+	bDoScrollZoom = false;
 	bInsideArcball = true;
-	bValidClick = false;
 	bEnableMouseMiddleButton = true;
 	bAutoDistance = true;
 	doTranslationKey = 'm';
@@ -46,14 +46,14 @@ void ofEasyCam::update(ofEventArgs & args){
     if(bMouseInputEnabled){
 	
 		rotationFactor = sensitivityRot * 180 / min(viewport.width, viewport.height);
-		if (bMouseInputEnabled) {
-			updateMouse();
-		}
+
+		if(ofGetMousePressed()) prevMouse = ofVec2f(ofGetMouseX(),ofGetMouseY());
 		
 		if (bDoRotate) {
 			updateRotation();
-		}else if (bDoTranslate) {
+		}else if (bDoTranslate || bDoScrollZoom) {
 			updateTranslation(); 
+			bDoScrollZoom = false;
 		}
 	}	
 }
@@ -81,6 +81,10 @@ void ofEasyCam::reset(){
 	moveX = 0;
 	moveY = 0;
 	moveZ = 0;
+
+	bApplyInertia = false;
+	bDoTranslate = false;
+	bDoRotate = false;
 }
 //----------------------------------------
 void ofEasyCam::setTarget(const ofVec3f& targetPoint){
@@ -142,7 +146,11 @@ void ofEasyCam::enableMouseInput(){
 	if(!bMouseInputEnabled){
 		bMouseInputEnabled = true;
 	//	ofRegisterMouseEvents(this);
-		ofAddListener(ofEvents().update , this, &ofEasyCam::update, OF_EVENT_ORDER_BEFORE_APP);
+		ofAddListener(ofEvents().update, this, &ofEasyCam::update);
+		ofAddListener(ofEvents().mouseDragged , this, &ofEasyCam::mouseDragged);
+		ofAddListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
+		ofAddListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
+		ofAddListener(ofEvents().mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
 }
 //----------------------------------------
@@ -150,7 +158,11 @@ void ofEasyCam::disableMouseInput(){
 	if(bMouseInputEnabled){
 		bMouseInputEnabled = false;
 		//ofUnregisterMouseEvents(this);
-		ofRemoveListener(ofEvents().update, this, &ofEasyCam::update, OF_EVENT_ORDER_BEFORE_APP);
+		ofRemoveListener(ofEvents().update, this, &ofEasyCam::update);
+		ofRemoveListener(ofEvents().mouseDragged, this, &ofEasyCam::mouseDragged);
+		ofRemoveListener(ofEvents().mousePressed, this, &ofEasyCam::mousePressed);
+		ofRemoveListener(ofEvents().mouseReleased, this, &ofEasyCam::mouseReleased);
+		ofRemoveListener(ofEvents().mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
 }
 //----------------------------------------
@@ -179,8 +191,10 @@ void ofEasyCam::updateTranslation(){
 			bApplyInertia = false;
 			bDoTranslate = false;
 		}
+		move((getXAxis() * moveX) + (getYAxis() * moveY) + (getZAxis() * moveZ));
+	}else{
+		setPosition(prevPosition + ofVec3f(prevAxisX * moveX) + (prevAxisY * moveY) + (prevAxisZ * moveZ));
 	}
-	move((getXAxis() * moveX) + (getYAxis() * moveY) + (getZAxis() * moveZ));
 }	
 //----------------------------------------
 void ofEasyCam::updateRotation(){
@@ -193,78 +207,98 @@ void ofEasyCam::updateRotation(){
 			bApplyInertia = false;
 			bDoRotate = false;
 		}
+		curRot = ofQuaternion(xRot, getXAxis(), yRot, getYAxis(), zRot, getZAxis());
+		setPosition((getGlobalPosition()-target.getGlobalPosition())*curRot +target.getGlobalPosition());
+		rotate(curRot);
+	}else{
+		curRot = ofQuaternion(xRot, prevAxisX, yRot, prevAxisY, zRot, prevAxisZ);
+		setPosition((prevPosition-target.getGlobalPosition())*curRot +target.getGlobalPosition());
+		setOrientation(prevOrientation * curRot);
 	}
-	curRot = ofQuaternion(xRot, ofCamera::getXAxis(), yRot, ofCamera::getYAxis(), zRot, ofCamera::getZAxis());
-	setPosition((ofCamera::getGlobalPosition()-target.getGlobalPosition())*curRot +target.getGlobalPosition());
-	rotate(curRot);
 }
-//----------------------------------------
-void ofEasyCam::updateMouse(){
-	mouse = ofVec2f(ofGetMouseX(), ofGetMouseY());
-	if(viewport.inside(mouse.x, mouse.y) && !bValidClick && ofGetMousePressed()){	
-		unsigned long curTap = ofGetElapsedTimeMillis();
-		if(lastTap != 0 && curTap - lastTap < doubleclickTime){
-			reset();
-		}
-                
-		if ((bEnableMouseMiddleButton && ofGetMousePressed(OF_MOUSE_BUTTON_MIDDLE)) || ofGetKeyPressed(doTranslationKey)  || ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)){
+
+void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
+	if(viewport.inside(mouse.x, mouse.y)){
+		lastMouse = mouse;
+		prevMouse = mouse;
+		prevAxisX = getXAxis();
+		prevAxisY = getYAxis();
+		prevAxisZ = getZAxis();
+		prevPosition = ofCamera::getGlobalPosition();
+		prevOrientation = ofCamera::getGlobalOrientation();
+
+		if ((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || ofGetKeyPressed(doTranslationKey)  || mouse.button == OF_MOUSE_BUTTON_RIGHT){
 			bDoTranslate = true;
 			bDoRotate = false;
-			bApplyInertia = false;
-		}else if (ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)) {
+		}else if (mouse.button == OF_MOUSE_BUTTON_LEFT) {
 			bDoTranslate = false;
 			bDoRotate = true;
-			bApplyInertia = false;
 			if(ofVec2f(mouse.x - viewport.x - (viewport.width/2), mouse.y - viewport.y - (viewport.height/2)).length() < min(viewport.width/2, viewport.height/2)){
 				bInsideArcball = true;
 			}else {
 				bInsideArcball = false;
 			}
 		}
-		lastTap = curTap;
-		//lastMouse = ofVec2f(ofGetPreviousMouseX(),ofGetPreviousMouseY()); //this was causing the camera to have a tiny "random" rotation when clicked.
-		lastMouse = mouse;
-		bValidClick = true;
 		bApplyInertia = false;
 	}
-	
-	if (bValidClick) {
-		if (!ofGetMousePressed()) {
-			bApplyInertia = true;
-			bValidClick = false;
-		}else {
-			int vFlip;
-			if(isVFlipped()){
-				vFlip = -1;
-			}else{
-				vFlip =  1;
-			}
+}
 
-			mouseVel = mouse  - lastMouse;
-			
-			if (bDoTranslate) {
-				moveX = 0;
-				moveY = 0;
-				moveZ = 0;
-				if (ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)) {
-					moveZ = mouseVel.y * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;				
-				}else {
-					moveX = -mouseVel.x * sensitivityXY * (getDistance() + FLT_EPSILON)/viewport.width;
-					moveY = vFlip * mouseVel.y * sensitivityXY * (getDistance() + FLT_EPSILON)/viewport.height;
-				}
-			}else {
-				xRot = 0;
-				yRot = 0;
-				zRot = 0;
-				if (bInsideArcball) {
-					xRot = vFlip * -mouseVel.y * rotationFactor;
-					yRot = -mouseVel.x * rotationFactor;
-				}else {
-					ofVec2f center(viewport.width/2, viewport.height/2);
-					zRot = - vFlip * ofVec2f(mouse.x - viewport.x - center.x, mouse.y - viewport.y - center.y).angle(lastMouse - ofVec2f(viewport.x, viewport.y) - center);
-				}
-			}
-			lastMouse = mouse;
+void ofEasyCam::mouseReleased(ofMouseEventArgs & mouse){
+	unsigned long curTap = ofGetElapsedTimeMillis();
+	if(lastTap != 0 && curTap - lastTap < doubleclickTime){
+		reset();
+		return;
+	}
+	lastTap = curTap;
+	bApplyInertia = true;
+	mouseVel = mouse  - prevMouse;
+
+	updateMouse(mouse);
+	ofVec2f center(viewport.width/2, viewport.height/2);
+	zRot = - vFlip * ofVec2f(mouse.x - viewport.x - center.x, mouse.y - viewport.y - center.y).angle(prevMouse - ofVec2f(viewport.x, viewport.y) - center);
+}
+
+void ofEasyCam::mouseDragged(ofMouseEventArgs & mouse){
+	mouseVel = mouse  - lastMouse;
+
+	updateMouse(mouse);
+}
+
+void ofEasyCam::mouseScrolled(ofMouseEventArgs & mouse){
+	prevPosition = ofCamera::getGlobalPosition();
+	prevAxisZ = getZAxis();
+	moveZ = mouse.y * 30 * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;
+	bDoScrollZoom = true;
+}
+
+
+void ofEasyCam::updateMouse(const ofMouseEventArgs & mouse){
+	int vFlip;
+	if(isVFlipped()){
+		vFlip = -1;
+	}else{
+		vFlip =  1;
+	}
+	if (bDoTranslate) {
+		moveX = 0;
+		moveY = 0;
+		moveZ = 0;
+		if (mouse.button == OF_MOUSE_BUTTON_RIGHT) {
+			moveZ = mouseVel.y * sensitivityZ * (getDistance() + FLT_EPSILON)/ viewport.height;
+		}else {
+			moveX = -mouseVel.x * sensitivityXY * (getDistance() + FLT_EPSILON)/viewport.width;
+			moveY = vFlip * mouseVel.y * sensitivityXY * (getDistance() + FLT_EPSILON)/viewport.height;
+		}
+	}else {
+		xRot = 0;
+		yRot = 0;
+		zRot = 0;
+		if (bInsideArcball) {
+			xRot = vFlip * -mouseVel.y * rotationFactor;
+			yRot = -mouseVel.x * rotationFactor;
+		}else {
+			ofVec2f center(viewport.width/2, viewport.height/2);
+			zRot = - vFlip * ofVec2f(mouse.x - viewport.x - center.x, mouse.y - viewport.y - center.y).angle(lastMouse - ofVec2f(viewport.x, viewport.y) - center);
 		}
 	}
 }

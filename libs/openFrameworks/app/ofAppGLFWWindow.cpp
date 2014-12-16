@@ -15,6 +15,7 @@
 	#else
 		#define GLFW_EXPOSE_NATIVE_EGL
 	#endif
+	#include <X11/extensions/Xrandr.h>
 	#include "GLFW/glfw3native.h"
 	#include <X11/Xatom.h>
 #elif defined(TARGET_OSX)
@@ -33,12 +34,11 @@
 
 ofBaseApp *	ofAppGLFWWindow::ofAppPtr;
 ofAppGLFWWindow	* ofAppGLFWWindow::instance;
-GLFWwindow* ofAppGLFWWindow::windowP = NULL;
 
 void ofGLReadyCallback();
 
 //-------------------------------------------------------
-ofAppGLFWWindow::ofAppGLFWWindow():ofAppBaseGLWindow(){
+ofAppGLFWWindow::ofAppGLFWWindow(){
 	bEnableSetupScreen	= true;
 	buttonInUse			= 0;
 	buttonPressed		= false;
@@ -75,9 +75,15 @@ ofAppGLFWWindow::ofAppGLFWWindow():ofAppBaseGLWindow(){
     //default to 4 times antialiasing. 
     setNumSamples(4);
 	iconSet = false;
+	windowP = NULL;
 
 	glfwSetErrorCallback(error_cb);
+}
 
+ofAppGLFWWindow::~ofAppGLFWWindow(){
+	if(windowP){
+		glfwDestroyWindow(windowP);
+	}
 }
 
 
@@ -120,14 +126,22 @@ void ofAppGLFWWindow::setStencilBits(int stencil){
 
 
 
+#ifdef TARGET_OPENGLES
+//------------------------------------------------------------
+void ofAppGLFWWindow::setGLESVersion(int glesVersion){
+	glVersionMajor = glesVersion;
+	glVersionMinor = 0;
+}
+#else
 //------------------------------------------------------------
 void ofAppGLFWWindow::setOpenGLVersion(int major, int minor){
 	glVersionMajor = major;
 	glVersionMinor = minor;
 }
+#endif
 
 //------------------------------------------------------------
-void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
+void ofAppGLFWWindow::setupOpenGL(int w, int h, ofWindowMode screenMode){
 
 	requestedWidth = w;
 	requestedHeight = h;
@@ -140,7 +154,7 @@ void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
 
 //	ofLogNotice("ofAppGLFWWindow") << "WINDOW MODE IS " << screenMode;
 
-	int requestedMode = screenMode;
+	ofWindowMode requestedMode = screenMode;
 
 	glfwWindowHint(GLFW_RED_BITS, rBits);
 	glfwWindowHint(GLFW_GREEN_BITS, gBits);
@@ -161,12 +175,13 @@ void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
 		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, glVersionMajor);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, glVersionMinor);
-		if((glVersionMajor>=3 && glVersionMinor>=2) || glVersionMajor>=4){
-			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-		}
 		#ifdef TARGET_OPENGLES
-		glfwWindowHint(GLFW_CLIENT_API,GLFW_OPENGL_ES_API);
+			glfwWindowHint(GLFW_CLIENT_API,GLFW_OPENGL_ES_API);
+		#else
+			if((glVersionMajor>=3 && glVersionMinor>=2) || glVersionMajor>=4){
+				glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+				glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			}
 		#endif
 	}
 
@@ -189,10 +204,10 @@ void ofAppGLFWWindow::setupOpenGL(int w, int h, int screenMode){
 				ofPixels iconPixels;
 				#ifdef DEBUG
 					iconPixels.allocate(ofIconDebug.width,ofIconDebug.height,ofIconDebug.bytes_per_pixel);
-					GIMP_IMAGE_RUN_LENGTH_DECODE(iconPixels.getPixels(),ofIconDebug.rle_pixel_data,iconPixels.getWidth()*iconPixels.getHeight(),ofIconDebug.bytes_per_pixel);
+					GIMP_IMAGE_RUN_LENGTH_DECODE(iconPixels.getData(),ofIconDebug.rle_pixel_data,iconPixels.getWidth()*iconPixels.getHeight(),ofIconDebug.bytes_per_pixel);
 				#else
 					iconPixels.allocate(ofIcon.width,ofIcon.height,ofIcon.bytes_per_pixel);
-					GIMP_IMAGE_RUN_LENGTH_DECODE(iconPixels.getPixels(),ofIcon.rle_pixel_data,iconPixels.getWidth()*iconPixels.getHeight(),ofIcon.bytes_per_pixel);
+					GIMP_IMAGE_RUN_LENGTH_DECODE(iconPixels.getData(),ofIcon.rle_pixel_data,iconPixels.getWidth()*iconPixels.getHeight(),ofIcon.bytes_per_pixel);
 				#endif
 				setWindowIcon(iconPixels);
 				glfwShowWindow(windowP);
@@ -293,11 +308,10 @@ void ofAppGLFWWindow::runAppViaInfiniteLoop(ofBaseApp * appPtr){
 
 	ofNotifySetup();
 	while(!glfwWindowShouldClose(windowP)){
+		glfwPollEvents();
 		ofNotifyUpdate();
 		display();
 	}
-    glfwDestroyWindow(windowP);
-    glfwTerminate();
 }
 
 void ofAppGLFWWindow::windowShouldClose(){
@@ -306,40 +320,17 @@ void ofAppGLFWWindow::windowShouldClose(){
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::display(void){
-
-	shared_ptr<ofGLProgrammableRenderer> renderer = ofGetGLProgrammableRenderer();
-	if(renderer){
-		renderer->startRender();
-	}
-
-	// set viewport, clear the screen
-	ofViewport();		// used to be glViewport( 0, 0, width, height );
-	float * bgPtr = ofBgColorPtr();
-	bool bClearAuto = ofbClearBg();
-
-	// to do non auto clear on PC for now - we do something like "single" buffering --
-	// it's not that pretty but it work for the most part
-
-	#ifdef TARGET_WIN32
-	if (bClearAuto == false){
-		glDrawBuffer (GL_FRONT);
-	}
-	#endif
-
-	if ( bClearAuto == true ){
-		ofClear(bgPtr[0]*255,bgPtr[1]*255,bgPtr[2]*255, bgPtr[3]*255);
-	}
-
+	ofGetCurrentRenderer()->startRender();
 	if( bEnableSetupScreen )ofSetupScreen();
 
 	ofNotifyDraw();
 
 	#ifdef TARGET_WIN32
-	if (bClearAuto == false){
+	if (ofGetCurrentRenderer()->getBackgroundAuto() == false){
 		// on a PC resizing a window with this method of accumulation (essentially single buffering)
 		// is BAD, so we clear on resize events.
 		if (nFramesSinceWindowResized < 3){
-			ofClear(bgPtr[0]*255,bgPtr[1]*255,bgPtr[2]*255, bgPtr[3]*255);
+			ofGetCurrentRenderer()->clear();
 		} else {
 			if ( (ofGetFrameNum() < 3 || nFramesSinceWindowResized < 3) && bDoubleBuffered)    glfwSwapBuffers(windowP);
 			else                                                     glFlush();
@@ -352,10 +343,10 @@ void ofAppGLFWWindow::display(void){
 		}
 	}
 	#else
-		if (bClearAuto == false){
+		if (ofGetCurrentRenderer()->getBackgroundAuto() == false){
 			// in accum mode resizing a window is BAD, so we clear on resize events.
 			if (nFramesSinceWindowResized < 3){
-				ofClear(bgPtr[0]*255,bgPtr[1]*255,bgPtr[2]*255, bgPtr[3]*255);
+				ofGetCurrentRenderer()->clear();
 			}
 		}
 		if(bDoubleBuffered){
@@ -365,12 +356,10 @@ void ofAppGLFWWindow::display(void){
 		}
 	#endif
 
-	if(renderer){
-		renderer->finishRender();
-	}
+	ofGetCurrentRenderer()->finishRender();
 
 	nFramesSinceWindowResized++;
-	glfwPollEvents();
+
 
 }
 
@@ -502,7 +491,7 @@ GLFWwindow* ofAppGLFWWindow::getGLFWWindow(){
 }
 
 //------------------------------------------------------------
-int	ofAppGLFWWindow::getWindowMode(){
+ofWindowMode ofAppGLFWWindow::getWindowMode(){
 	return windowMode;
 }
 
@@ -547,7 +536,7 @@ void ofAppGLFWWindow::disableSetupScreen(){
 //------------------------------------------------------------
 void ofAppGLFWWindow::setFullscreen(bool fullscreen){
  
-    int curWindowMode  = windowMode;
+	ofWindowMode curWindowMode = windowMode;
  
   if (fullscreen){
 		windowMode = OF_FULLSCREEN;
@@ -910,7 +899,8 @@ void ofAppGLFWWindow::motion_cb(GLFWwindow* windowP_, double x, double y) {
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::scroll_cb(GLFWwindow* windowP_, double x, double y) {
-	//TODO: implement scroll events
+	rotateMouseXY(ofGetOrientation(), x, y);
+	ofNotifyMouseScrolled(x, y);
 }
 
 //------------------------------------------------------------
@@ -919,7 +909,7 @@ void ofAppGLFWWindow::drop_cb(GLFWwindow* windowP_, int numFiles, const char** d
 	drag.position.set(ofGetMouseX(), ofGetMouseY());
 	drag.files.resize(numFiles);
 	for(int i=0; i<(int)drag.files.size(); i++){
-		drag.files[i] = Poco::URI(dropString[i]).getPath();
+		drag.files[i] = Poco::Path(dropString[i]).toString();
 	}
 	ofNotifyDragEvent(drag);
 }
@@ -1065,6 +1055,22 @@ void ofAppGLFWWindow::setVerticalSync(bool bVerticalSync){
 		glfwSwapInterval( 1);
 	}else{
 		glfwSwapInterval(0);
+	}
+}
+
+//------------------------------------------------------------
+void ofAppGLFWWindow::setClipboardString(const string& text) {
+    glfwSetClipboardString(ofAppGLFWWindow::windowP, text.c_str());
+}
+
+//------------------------------------------------------------
+string ofAppGLFWWindow::getClipboardString() {
+	const char* clipboard = glfwGetClipboardString(ofAppGLFWWindow::windowP);
+
+	if (clipboard) {
+		return clipboard;
+	} else {
+		return "";
 	}
 }
 

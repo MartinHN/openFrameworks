@@ -36,9 +36,9 @@ typedef ofVec2f ofxUIVec2f;
 typedef OFX_UI_FONT_RENDERER ofxUIFont;
 typedef ofColor ofxUIColor;
 
-//#if defined( TARGET_OF_IPHONE ) || defined( TARGET_OF_IOS ) || defined( TARGET_ANDROID )
+#if defined( TARGET_OF_IPHONE ) || defined( TARGET_OF_IOS ) || defined( TARGET_ANDROID )
     #define OFX_UI_TARGET_TOUCH
-//#endif
+#endif
 
 #define OFX_UI_RECTMODE_CORNER OF_RECTMODE_CORNER
 #define OFX_UI_RECTMODE_CENTER OF_RECTMODE_CENTER

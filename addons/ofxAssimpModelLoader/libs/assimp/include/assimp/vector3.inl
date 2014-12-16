@@ -1,9 +1,9 @@
 /*
 ---------------------------------------------------------------------------
-Open Asset Import Library (assimp)
+Open Asset Import Library (ASSIMP)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2012, assimp team
+Copyright (c) 2006-2010, ASSIMP Development Team
 
 All rights reserved.
 
@@ -20,10 +20,10 @@ conditions are met:
   following disclaimer in the documentation and/or other
   materials provided with the distribution.
 
-* Neither the name of the assimp team, nor the names of its
+* Neither the name of the ASSIMP team, nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
-  written permission of the assimp team.
+  written permission of the ASSIMP Development Team.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
@@ -40,22 +40,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 /** @file  aiVector3D.inl
- *  @brief Inline implementation of aiVector3t<TReal> operators
+ *  @brief Inline implementation of aiVector3D operators
  */
 #ifndef AI_VECTOR3D_INL_INC
 #define AI_VECTOR3D_INL_INC
 
+#include "aiVector3D.h"
 #ifdef __cplusplus
-#include "vector3.h"
-
-#include <cmath>
 
 // ------------------------------------------------------------------------------------------------
 /** Transformation of a vector by a 3x3 matrix */
-template <typename TReal>
-inline aiVector3t<TReal> operator * (const aiMatrix3x3t<TReal>& pMatrix, const aiVector3t<TReal>& pVector)
+inline aiVector3D operator * (const aiMatrix3x3& pMatrix, const aiVector3D& pVector)
 {
-	aiVector3t<TReal> res;
+	aiVector3D res;
 	res.x = pMatrix.a1 * pVector.x + pMatrix.a2 * pVector.y + pMatrix.a3 * pVector.z;
 	res.y = pMatrix.b1 * pVector.x + pMatrix.b2 * pVector.y + pMatrix.b3 * pVector.z;
 	res.z = pMatrix.c1 * pVector.x + pMatrix.c2 * pVector.y + pMatrix.c3 * pVector.z;
@@ -64,165 +61,120 @@ inline aiVector3t<TReal> operator * (const aiMatrix3x3t<TReal>& pMatrix, const a
 
 // ------------------------------------------------------------------------------------------------
 /** Transformation of a vector by a 4x4 matrix */
-template <typename TReal>
-inline aiVector3t<TReal> operator * (const aiMatrix4x4t<TReal>& pMatrix, const aiVector3t<TReal>& pVector)
+inline aiVector3D operator * (const aiMatrix4x4& pMatrix, const aiVector3D& pVector)
 {
-	aiVector3t<TReal> res;
+	aiVector3D res;
 	res.x = pMatrix.a1 * pVector.x + pMatrix.a2 * pVector.y + pMatrix.a3 * pVector.z + pMatrix.a4;
 	res.y = pMatrix.b1 * pVector.x + pMatrix.b2 * pVector.y + pMatrix.b3 * pVector.z + pMatrix.b4;
 	res.z = pMatrix.c1 * pVector.x + pMatrix.c2 * pVector.y + pMatrix.c3 * pVector.z + pMatrix.c4;
 	return res;
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-template <typename TOther>
-aiVector3t<TReal>::operator aiVector3t<TOther> () const {
-	return aiVector3t<TOther>(static_cast<TOther>(x),static_cast<TOther>(y),static_cast<TOther>(z));
-}
-// ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE void aiVector3t<TReal>::Set( TReal pX, TReal pY, TReal pZ) { 
+AI_FORCE_INLINE void aiVector3D::Set( float pX, float pY, float pZ) { 
 	x = pX; y = pY; z = pZ; 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE TReal aiVector3t<TReal>::SquareLength() const {
+AI_FORCE_INLINE float aiVector3D::SquareLength() const {
 	return x*x + y*y + z*z; 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE TReal aiVector3t<TReal>::Length() const {
-	return ::sqrt( SquareLength()); 
+AI_FORCE_INLINE float aiVector3D::Length() const {
+	return sqrt( SquareLength()); 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal>& aiVector3t<TReal>::Normalize() { 
+AI_FORCE_INLINE aiVector3D& aiVector3D::Normalize() { 
 	*this /= Length(); return *this;
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE const aiVector3t<TReal>& aiVector3t<TReal>::operator += (const aiVector3t<TReal>& o) {
+AI_FORCE_INLINE const aiVector3D& aiVector3D::operator += (const aiVector3D& o) {
 	x += o.x; y += o.y; z += o.z; return *this; 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE const aiVector3t<TReal>& aiVector3t<TReal>::operator -= (const aiVector3t<TReal>& o) {
+AI_FORCE_INLINE const aiVector3D& aiVector3D::operator -= (const aiVector3D& o) {
 	x -= o.x; y -= o.y; z -= o.z; return *this;
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE const aiVector3t<TReal>& aiVector3t<TReal>::operator *= (TReal f) {
+AI_FORCE_INLINE const aiVector3D& aiVector3D::operator *= (float f) {
 	x *= f; y *= f; z *= f; return *this; 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE const aiVector3t<TReal>& aiVector3t<TReal>::operator /= (TReal f) {
+AI_FORCE_INLINE const aiVector3D& aiVector3D::operator /= (float f) {
 	x /= f; y /= f; z /= f; return *this; 
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal>& aiVector3t<TReal>::operator *= (const aiMatrix3x3t<TReal>& mat){
+AI_FORCE_INLINE aiVector3D& aiVector3D::operator *= (const aiMatrix3x3& mat){
 	return(*this =  mat * (*this));
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal>& aiVector3t<TReal>::operator *= (const aiMatrix4x4t<TReal>& mat){
+AI_FORCE_INLINE aiVector3D& aiVector3D::operator *= (const aiMatrix4x4& mat){
 	return(*this = mat * (*this));
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE TReal aiVector3t<TReal>::operator[](unsigned int i) const {
+AI_FORCE_INLINE float aiVector3D::operator[](unsigned int i) const {
 	return *(&x + i);
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE TReal& aiVector3t<TReal>::operator[](unsigned int i) {
+AI_FORCE_INLINE float& aiVector3D::operator[](unsigned int i) {
 	return *(&x + i);
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE bool aiVector3t<TReal>::operator== (const aiVector3t<TReal>& other) const {
+AI_FORCE_INLINE bool aiVector3D::operator== (const aiVector3D& other) const {
 	return x == other.x && y == other.y && z == other.z;
 }
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE bool aiVector3t<TReal>::operator!= (const aiVector3t<TReal>& other) const {
+AI_FORCE_INLINE bool aiVector3D::operator!= (const aiVector3D& other) const {
 	return x != other.x || y != other.y || z != other.z;
 }
-// ---------------------------------------------------------------------------
-template<typename TReal>
-AI_FORCE_INLINE bool aiVector3t<TReal>::Equal(const aiVector3t<TReal>& other, TReal epsilon) const {
-	return
-		std::abs(x - other.x) <= epsilon &&
-		std::abs(y - other.y) <= epsilon &&
-		std::abs(z - other.z) <= epsilon;
-}
 // ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE bool aiVector3t<TReal>::operator < (const aiVector3t<TReal>& other) const {
-	return x != other.x ? x < other.x : y != other.y ? y < other.y : z < other.z;
-}
-// ------------------------------------------------------------------------------------------------
-template <typename TReal>
-AI_FORCE_INLINE const aiVector3t<TReal> aiVector3t<TReal>::SymMul(const aiVector3t<TReal>& o) {
-	return aiVector3t<TReal>(x*o.x,y*o.y,z*o.z);
+AI_FORCE_INLINE const aiVector3D aiVector3D::SymMul(const aiVector3D& o) {
+	return aiVector3D(x*o.x,y*o.y,z*o.z);
 }
 // ------------------------------------------------------------------------------------------------
 // symmetric addition
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal> operator + (const aiVector3t<TReal>& v1, const aiVector3t<TReal>& v2)	{
-	return aiVector3t<TReal>( v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+AI_FORCE_INLINE aiVector3D operator + (const aiVector3D& v1, const aiVector3D& v2)	{
+	return aiVector3D( v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
 }
 // ------------------------------------------------------------------------------------------------
 // symmetric subtraction
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal> operator - (const aiVector3t<TReal>& v1, const aiVector3t<TReal>& v2)	{
-	return aiVector3t<TReal>( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+AI_FORCE_INLINE aiVector3D operator - (const aiVector3D& v1, const aiVector3D& v2)	{
+	return aiVector3D( v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
 }
 // ------------------------------------------------------------------------------------------------
 // scalar product
-template <typename TReal>
-AI_FORCE_INLINE TReal operator * (const aiVector3t<TReal>& v1, const aiVector3t<TReal>& v2)	{
+AI_FORCE_INLINE float operator * (const aiVector3D& v1, const aiVector3D& v2)	{
 	return v1.x*v2.x + v1.y*v2.y + v1.z*v2.z;
 }
 // ------------------------------------------------------------------------------------------------
 // scalar multiplication
-template <typename TReal>
-AI_FORCE_INLINE aiVector3t<TReal> operator * ( TReal f, const aiVector3t<TReal>& v)	{
-	return aiVector3t<TReal>( f*v.x, f*v.y, f*v.z);
+AI_FORCE_INLINE aiVector3D operator * ( float f, const aiVector3D& v)	{
+	return aiVector3D( f*v.x, f*v.y, f*v.z);
 }
 // ------------------------------------------------------------------------------------------------
 // and the other way around
-template <typename TReal>
-AI_FORCE_INLINE  aiVector3t<TReal> operator * ( const aiVector3t<TReal>& v, TReal f)	{
-	return aiVector3t<TReal>( f*v.x, f*v.y, f*v.z);
+AI_FORCE_INLINE  aiVector3D operator * ( const aiVector3D& v, float f)	{
+	return aiVector3D( f*v.x, f*v.y, f*v.z);
 }
 // ------------------------------------------------------------------------------------------------
 // scalar division
-template <typename TReal>
-AI_FORCE_INLINE  aiVector3t<TReal> operator / ( const aiVector3t<TReal>& v, TReal f)	{
+AI_FORCE_INLINE  aiVector3D operator / ( const aiVector3D& v, float f)	{
 	return v * (1/f);
 }
 // ------------------------------------------------------------------------------------------------
 // vector division
-template <typename TReal>
-AI_FORCE_INLINE  aiVector3t<TReal> operator / ( const aiVector3t<TReal>& v, const aiVector3t<TReal>& v2)	{
-	return aiVector3t<TReal>(v.x / v2.x,v.y / v2.y,v.z / v2.z);
+AI_FORCE_INLINE  aiVector3D operator / ( const aiVector3D& v, const aiVector3D& v2)	{
+	return aiVector3D(v.x / v2.x,v.y / v2.y,v.z / v2.z);
 }
 // ------------------------------------------------------------------------------------------------
 // cross product
-template <typename TReal>
-AI_FORCE_INLINE  aiVector3t<TReal> operator ^ ( const aiVector3t<TReal>& v1, const aiVector3t<TReal>& v2)	{
-	return aiVector3t<TReal>( v1.y*v2.z - v1.z*v2.y, v1.z*v2.x - v1.x*v2.z, v1.x*v2.y - v1.y*v2.x);
+AI_FORCE_INLINE  aiVector3D operator ^ ( const aiVector3D& v1, const aiVector3D& v2)	{
+	return aiVector3D( v1.y*v2.z - v1.z*v2.y, v1.z*v2.x - v1.x*v2.z, v1.x*v2.y - v1.y*v2.x);
 }
 // ------------------------------------------------------------------------------------------------
-// vector negation
-template <typename TReal>
-AI_FORCE_INLINE  aiVector3t<TReal> operator - ( const aiVector3t<TReal>& v)	{
-	return aiVector3t<TReal>( -v.x, -v.y, -v.z);
+// vector inversion
+AI_FORCE_INLINE  aiVector3D operator - ( const aiVector3D& v)	{
+	return aiVector3D( -v.x, -v.y, -v.z);
 }
 
-// ------------------------------------------------------------------------------------------------
 
 #endif // __cplusplus
 #endif // AI_VECTOR3D_INL_INC

@@ -1,9 +1,9 @@
 /*
 ---------------------------------------------------------------------------
-Open Asset Import Library (assimp)
+Open Asset Import Library (ASSIMP)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2012, assimp team
+Copyright (c) 2006-2010, ASSIMP Development Team
 
 All rights reserved.
 
@@ -20,10 +20,10 @@ conditions are met:
   following disclaimer in the documentation and/or other
   materials provided with the distribution.
 
-* Neither the name of the assimp team, nor the names of its
+* Neither the name of the ASSIMP team, nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
-  written permission of the assimp team.
+  written permission of the ASSIMP Development Team.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
@@ -39,7 +39,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ---------------------------------------------------------------------------
 */
 
-/** @file types.h
+/** @file aiTypes.h
  *  Basic data types and primitives, such as vectors or colors. 
  */
 #ifndef AI_TYPES_H_INC
@@ -50,22 +50,19 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <memory.h>
 #include <math.h>
 #include <stddef.h>
-#include <string.h>
-#include <limits.h>
 
 // Our compile configuration
-#include "defs.h"
+#include "aiDefines.h"
 
 // Some types moved to separate header due to size of operators
-#include "vector3.h"
-#include "vector2.h"
-#include "color4.h"
-#include "matrix3x3.h"
-#include "matrix4x4.h"
-#include "quaternion.h"
+#include "aiVector3D.h"
+#include "aiVector2D.h"
+#include "aiColor4D.h"
+#include "aiMatrix3x3.h"
+#include "aiMatrix4x4.h"
+#include "aiQuaternion.h"
 
 #ifdef __cplusplus
-#include <cstring>
 #include <new>		// for std::nothrow_t
 #include <string>	// for aiString::Set(const std::string&)
 
@@ -174,16 +171,6 @@ struct aiColor3D
 	bool operator != (const aiColor3D& other) const
 		{return r != other.r || g != other.g || b != other.b;}
 
-	/** Component-wise comparison */
-	// TODO: add epsilon?
-	bool operator < (const aiColor3D& other) const {
-		return r < other.r || (
-			r == other.r && (g < other.g ||
-				(g == other.g && b < other.b)
-			)
-		);
-	}
-
 	/** Component-wise addition */
 	aiColor3D operator+(const aiColor3D& c) const {
 		return aiColor3D(r+c.r,g+c.g,b+c.b);
@@ -191,7 +178,7 @@ struct aiColor3D
 
 	/** Component-wise subtraction */
 	aiColor3D operator-(const aiColor3D& c) const {
-		return aiColor3D(r-c.r,g-c.g,b-c.b);
+		return aiColor3D(r+c.r,g+c.g,b+c.b);
 	}
 
 	/** Component-wise multiplication */
@@ -232,7 +219,7 @@ struct aiColor3D
  *
  *  The character set of an aiString is explicitly defined to be UTF-8. This Unicode
  *  transformation was chosen in the belief that most strings in 3d files are limited
- *  to ASCII, thus the character set needed to be strictly ASCII compatible.
+ *  to the ASCII characters, thus the character set needed to be ASCII compatible.
  *  
  *  Most text file loaders provide proper Unicode input file handling, special unicode
  *  characters are correctly transcoded to UTF8 and are kept throughout the libraries'
@@ -257,7 +244,7 @@ struct aiString
 	{
 		data[0] = '\0';
 
-#ifdef ASSIMP_BUILD_DEBUG
+#ifdef _DEBUG
 		// Debug build: overwrite the string on its full length with ESC (27)
 		memset(data+1,27,MAXLEN-1);
 #endif
@@ -274,7 +261,7 @@ struct aiString
 	}
 
 	/** Constructor from std::string */
-	explicit aiString(const std::string& pString) : 
+	aiString(const std::string& pString) : 
 		length(pString.length()) 
 	{
 		length = length>=MAXLEN?MAXLEN-1:length;
@@ -288,7 +275,7 @@ struct aiString
 			return;
 		}
 		length = pString.length();
-		memcpy( data, pString.c_str(), length);
+		::memcpy( data, pString.c_str(), length);
 		data[length] = 0;
 	}
 
@@ -299,7 +286,7 @@ struct aiString
 			return;
 		}
 		length = len;
-		memcpy( data, sz, len);
+		::memcpy( data, sz, len);
 		data[len] = 0;
 	}
 
@@ -317,12 +304,12 @@ struct aiString
 
 	/** Comparison operator */
 	bool operator==(const aiString& other) const {
-		return  (length == other.length && 0 == memcmp(data,other.data,length));
+		return  (length == other.length && 0 == strcmp(this->data,other.data));
 	}
 
 	/** Inverse comparison operator */
 	bool operator!=(const aiString& other) const {
-		return  (length != other.length || 0 != memcmp(data,other.data,length));
+		return  (length != other.length || 0 != ::strcmp(this->data,other.data));
 	}
 
 	/** Append a string to the string */
@@ -344,15 +331,10 @@ struct aiString
 		length  = 0;
 		data[0] = '\0';
 
-#ifdef ASSIMP_BUILD_DEBUG
+#ifdef _DEBUG
 		// Debug build: overwrite the string on its full length with ESC (27)
 		memset(data+1,27,MAXLEN-1);
 #endif
-	}
-
-	/** Returns a pointer to the underlying zero-terminated array of characters */
-	const char* C_Str() const {
-		return data;
 	}
 
 #endif // !__cplusplus
@@ -371,7 +353,7 @@ struct aiString
 /**	Standard return type for some library functions.
  * Rarely used, and if, mostly in the C API.
  */
-typedef enum aiReturn
+enum aiReturn
 {
 	/** Indicates that a function was successful */
 	aiReturn_SUCCESS = 0x0,
@@ -388,7 +370,7 @@ typedef enum aiReturn
 	 *  Force 32-bit size enum
 	 */
 	_AI_ENFORCE_ENUM_SIZE = 0x7fffffff 
-} aiReturn;  // !enum aiReturn
+};  // !enum aiReturn
 
 // just for backwards compatibility, don't use these constants anymore
 #define AI_SUCCESS     aiReturn_SUCCESS
@@ -502,11 +484,9 @@ struct aiMemoryInfo
 }
 #endif //!  __cplusplus
 
-// Include implementation files
-#include "vector2.inl"
-#include "vector3.inl"
-#include "color4.inl"
-#include "quaternion.inl"
-#include "matrix3x3.inl"
-#include "matrix4x4.inl"
+// Include implementations
+#include "aiVector3D.inl"
+#include "aiColor4D.inl"
+#include "aiMatrix3x3.inl"
+#include "aiMatrix4x4.inl"
 #endif 

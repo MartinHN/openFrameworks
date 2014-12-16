@@ -1,9 +1,9 @@
 /*
 ---------------------------------------------------------------------------
-Open Asset Import Library (assimp)
+Open Asset Import Library (ASSIMP)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2012, assimp team
+Copyright (c) 2006-2010, ASSIMP Development Team
 
 All rights reserved.
 
@@ -20,10 +20,10 @@ conditions are met:
   following disclaimer in the documentation and/or other
   materials provided with the distribution.
 
-* Neither the name of the assimp team, nor the names of its
+* Neither the name of the ASSIMP team, nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
-  written permission of the assimp team.
+  written permission of the ASSIMP Development Team.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
@@ -44,56 +44,47 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef AI_VECTOR3D_H_INC
 #define AI_VECTOR3D_H_INC
 
-#ifdef __cplusplus
-#   include <cmath>
-#else
-#   include <math.h>
-#endif
+#include <math.h>
 
-#include "./Compiler/pushpack1.h"
+//#ifdef __cplusplus
+//extern "C" {
+//#endif
 
-#ifdef __cplusplus
+//#include "./Compiler/pushpack1.h"
 
-template<typename TReal> class aiMatrix3x3t;
-template<typename TReal> class aiMatrix4x4t;
+struct aiMatrix3x3;
+struct aiMatrix4x4;
 
 // ---------------------------------------------------------------------------
 /** Represents a three-dimensional vector. */
-template <typename TReal>
-class aiVector3t 
+class aiVector3D
 {
 public:
 
-	aiVector3t () : x(), y(), z() {}
-	aiVector3t (TReal _x, TReal _y, TReal _z) : x(_x), y(_y), z(_z) {}
-	explicit aiVector3t (TReal _xyz) : x(_xyz), y(_xyz), z(_xyz) {}
-	aiVector3t (const aiVector3t& o) : x(o.x), y(o.y), z(o.z) {}
+//#ifdef __cplusplus
+	aiVector3D () : x(0.0f), y(0.0f), z(0.0f) {}
+	aiVector3D (float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}
+	aiVector3D (float _xyz) : x(_xyz), y(_xyz), z(_xyz) {}
+	aiVector3D (const aiVector3D& o) : x(o.x), y(o.y), z(o.z) {}
 
-public:
 
 	// combined operators
-	const aiVector3t& operator += (const aiVector3t& o);
-	const aiVector3t& operator -= (const aiVector3t& o);
-	const aiVector3t& operator *= (TReal f);
-	const aiVector3t& operator /= (TReal f);
+	const aiVector3D& operator += (const aiVector3D& o);
+	const aiVector3D& operator -= (const aiVector3D& o);
+	const aiVector3D& operator *= (float f);
+	const aiVector3D& operator /= (float f);
 
 	// transform vector by matrix
-	aiVector3t& operator *= (const aiMatrix3x3t<TReal>& mat);
-	aiVector3t& operator *= (const aiMatrix4x4t<TReal>& mat);
+	aiVector3D& operator *= (const aiMatrix3x3& mat);
+	aiVector3D& operator *= (const aiMatrix4x4& mat);
 
 	// access a single element
-	TReal operator[](unsigned int i) const;
-	TReal& operator[](unsigned int i);
+	float operator[](unsigned int i) const;
+	float& operator[](unsigned int i);
 
 	// comparison
-	bool operator== (const aiVector3t& other) const;
-	bool operator!= (const aiVector3t& other) const;
-	bool operator < (const aiVector3t& other) const;
-
-	bool Equal(const aiVector3t& other, TReal epsilon = 1e-6) const;
-
-	template <typename TOther>
-	operator aiVector3t<TOther> () const;
+	bool operator== (const aiVector3D& other) const;
+	bool operator!= (const aiVector3D& other) const;
 
 public:
 
@@ -101,49 +92,39 @@ public:
 	 *  @param pX X component
 	 *  @param pY Y component
 	 *  @param pZ Z component  */
-	void Set( TReal pX, TReal pY, TReal pZ);
+	void Set( float pX, float pY, float pZ = 0.f);
 
 	/** @brief Get the squared length of the vector
 	 *  @return Square length */
-	TReal SquareLength() const;
+	float SquareLength() const;
 
 
 	/** @brief Get the length of the vector
 	 *  @return length */
-	TReal Length() const;
+	float Length() const;
 
 
 	/** @brief Normalize the vector */
-	aiVector3t& Normalize();
+	aiVector3D& Normalize();
 
 	
 	/** @brief Componentwise multiplication of two vectors
 	 *  
 	 *  Note that vec*vec yields the dot product.
 	 *  @param o Second factor */
-	const aiVector3t SymMul(const aiVector3t& o);
+	const aiVector3D SymMul(const aiVector3D& o);
 
-	TReal x, y, z;	
-} PACK_STRUCT;
+//#endif // __cplusplus
 
+	float x, y, z;	
+} ;//PACK_STRUCT;
 
-typedef aiVector3t<float> aiVector3D;
+//#include "./Compiler/poppack1.h"
 
-#else
-
-struct aiVector3D {
-
-	float x,y,z;
-} PACK_STRUCT;
-
-#endif // __cplusplus
-
-#include "./Compiler/poppack1.h"
-
-#ifdef __cplusplus
+//#ifdef __cplusplus
+//} // end extern "C"
 
 
-
-#endif // __cplusplus
+//#endif // __cplusplus
 
 #endif // AI_VECTOR3D_H_INC

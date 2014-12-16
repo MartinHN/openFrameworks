@@ -1,9 +1,9 @@
 /*
 ---------------------------------------------------------------------------
-Open Asset Import Library (assimp)
+Open Asset Import Library (ASSIMP)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2012, assimp team
+Copyright (c) 2006-2010, ASSIMP Development Team
 
 All rights reserved.
 
@@ -20,10 +20,10 @@ conditions are met:
   following disclaimer in the documentation and/or other
   materials provided with the distribution.
 
-* Neither the name of the assimp team, nor the names of its
+* Neither the name of the ASSIMP team, nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
-  written permission of the assimp team.
+  written permission of the ASSIMP Development Team.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
@@ -74,9 +74,10 @@ ASSIMP_API unsigned int aiGetVersionMajor (void);
 // ---------------------------------------------------------------------------
 /** @brief Returns the repository revision of the Assimp runtime.
  *  @return SVN Repository revision number of the Assimp runtime the 
- *          application was linked/built against.
+ *    application was linked/built against
  */
 ASSIMP_API unsigned int aiGetVersionRevision (void);
+
 
 //! Assimp was compiled as a shared object (Windows: DLL)
 #define ASSIMP_CFLAGS_SHARED  0x1 

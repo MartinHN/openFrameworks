@@ -1,9 +1,9 @@
 /*
 ---------------------------------------------------------------------------
-Open Asset Import Library (assimp)
+Open Asset Import Library (ASSIMP)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2012, assimp team
+Copyright (c) 2006-2010, ASSIMP Development Team
 
 All rights reserved.
 
@@ -20,10 +20,10 @@ conditions are met:
   following disclaimer in the documentation and/or other
   materials provided with the distribution.
 
-* Neither the name of the assimp team, nor the names of its
+* Neither the name of the ASSIMP team, nor the names of its
   contributors may be used to endorse or promote products
   derived from this software without specific prior
-  written permission of the assimp team.
+  written permission of the ASSIMP Development Team.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
@@ -50,14 +50,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #endif
 
 // Public ASSIMP data structures
-#include "types.h"
-#include "config.h"
+#include "aiTypes.h"
+#include "aiConfig.h"
+#include "aiAssert.h"
 
 namespace Assimp	{
 	// =======================================================================
 	// Public interface to Assimp 
 	class Importer;
-	class Exporter; // export.hpp
 	class IOStream;
 	class IOSystem;
 	class ProgressHandler;
@@ -71,20 +71,20 @@ namespace Assimp	{
 	class BaseImporter;
 	class BaseProcess;
 	class SharedPostProcessInfo;
-	class BatchLoader; 
+	class BatchLoader;
 
 	// =======================================================================
 	// Holy stuff, only for members of the high council of the Jedi.
 	class ImporterPimpl;
-	class ExporterPimpl; // export.hpp
 } //! namespace Assimp
 
 #define AI_PROPERTY_WAS_NOT_EXISTING 0xffffffff
 
 struct aiScene;
-
-// importerdesc.h
-struct aiImporterDesc;
+struct aiFileIO;
+extern "C" ASSIMP_API const aiScene* aiImportFileEx( const char*, unsigned int, aiFileIO*);
+extern "C" ASSIMP_API const aiScene* aiImportFileFromMemory( const char*,
+	unsigned int,unsigned int,const char*);
 
 /** @namespace Assimp Assimp's CPP-API and all internal APIs */
 namespace Assimp	{
@@ -114,6 +114,13 @@ namespace Assimp	{
 * threads for loading, each thread should maintain its own Importer instance.
 */
 class ASSIMP_API Importer	{
+
+	// for internal use
+	friend class BaseProcess;
+	friend class BatchLoader;
+	friend const aiScene* ::aiImportFileEx( const char*, unsigned int, aiFileIO*);
+	friend const aiScene* ::aiImportFileFromMemory( const char*,
+		unsigned int,unsigned int,const char*);
 
 public:
 
@@ -213,7 +220,7 @@ public:
 	 * @see SetPropertyInteger()
 	 */
 	void SetPropertyBool(const char* szName, bool value, bool* bWasExisting = NULL)	{
-		SetPropertyInteger(szName,value,bWasExisting);
+		SetPropertyInteger(szName,value);
 	}
 
 	// -------------------------------------------------------------------
@@ -228,13 +235,6 @@ public:
 	 * @see SetPropertyInteger()
 	 */
 	void SetPropertyString(const char* szName, const std::string& sValue, 
-		bool* bWasExisting = NULL);
-
-	// -------------------------------------------------------------------
-	/** Set a matrix configuration property.
-	 * @see SetPropertyInteger()
-	 */
-	void SetPropertyMatrix(const char* szName, const aiMatrix4x4& sValue, 
 		bool* bWasExisting = NULL);
 
 	// -------------------------------------------------------------------
@@ -277,17 +277,8 @@ public:
 	 *  The return value remains valid until the property is modified.
 	 * @see GetPropertyInteger()
 	 */
-	const std::string GetPropertyString(const char* szName,
+	const std::string& GetPropertyString(const char* szName,
 		const std::string& sErrorReturn = "") const;
-
-	// -------------------------------------------------------------------
-	/** Get a matrix configuration property
-	 *
-	 *  The return value remains valid until the property is modified.
-	 * @see GetPropertyInteger()
-	 */
-	const aiMatrix4x4 GetPropertyMatrix(const char* szName,
-		const aiMatrix4x4& sErrorReturn = aiMatrix4x4()) const;
 
 	// -------------------------------------------------------------------
 	/** Supplies a custom IO handler to the importer to use to open and
@@ -425,12 +416,11 @@ public:
 	 *   instance. Use GetOrphanedScene() to take ownership of it.
 	 *
 	 * @note This is a straightforward way to decode models from memory
-	 * buffers, but it doesn't handle model formats that spread their 
+	 * buffers, but it doesn't handle model formats spreading their 
 	 * data across multiple files or even directories. Examples include
-	 * OBJ or MD3, which outsource parts of their material info into
-	 * external scripts. If you need full functionality, provide
-	 * a custom IOSystem to make Assimp find these files and use
-	 * the regular ReadFile() API.
+	 * OBJ or MD3, which outsource parts of their material stuff into
+	 * external scripts. If you need the full functionality, provide
+	 * a custom IOSystem to make Assimp find these files.
 	 */
 	const aiScene* ReadFileFromMemory( 
 		const void* pBuffer,
@@ -487,6 +477,59 @@ public:
 	 * following methods is called: #ReadFile(), #FreeScene(). */
 	const char* GetErrorString() const;
 
+
+	// -------------------------------------------------------------------
+	/** Returns whether a given file extension is supported by ASSIMP.
+	 *
+	 * @param szExtension Extension to be checked.
+	 *   Must include a trailing dot '.'. Example: ".3ds", ".md3".
+	 *   Cases-insensitive.
+	 * @return true if the extension is supported, false otherwise */
+	bool IsExtensionSupported(const char* szExtension) const;
+
+	// -------------------------------------------------------------------
+	/** @brief Returns whether a given file extension is supported by ASSIMP.
+	 *
+	 * This function is provided for backward compatibility.
+	 * See the const char* version for detailed and up-to-date docs.
+	 * @see IsExtensionSupported(const char*) */
+	inline bool IsExtensionSupported(const std::string& szExtension) const;
+
+
+	// -------------------------------------------------------------------
+	/** Get a full list of all file extensions supported by ASSIMP.
+	 *
+	 * If a file extension is contained in the list this does of course not
+	 * mean that ASSIMP is able to load all files with this extension ---
+     * it simply means there is an importer loaded which claims to handle
+	 * files with this file extension.
+	 * @param szOut String to receive the extension list. 
+	 *   Format of the list: "*.3ds;*.obj;*.dae". This is useful for
+	 *   use with the WinAPI call GetOpenFileName(Ex). */
+	void GetExtensionList(aiString& szOut) const;
+
+	// -------------------------------------------------------------------
+	/** @brief Get a full list of all file extensions supported by ASSIMP.
+	 *
+	 * This function is provided for backward compatibility.
+	 * See the aiString version for detailed and up-to-date docs.
+	 * @see GetExtensionList(aiString&)*/
+	inline void GetExtensionList(std::string& szOut) const;
+
+
+	// -------------------------------------------------------------------
+	/** Find the loader corresponding to a specific file extension.
+	*
+	*  This is quite similar to IsExtensionSupported() except a
+	*  BaseImporter instance is returned.
+	*  @param szExtension Extension to check for. The following formats
+	*    are recgnized (BAH being the file extension): "BAH" (comparison
+	*    is case-insensitive), ".bah", "*.bah" (wild card and dot
+	*    characters at the beginning of the extension are skipped).
+	*  @return NULL if there is no loader for the extension.*/
+	BaseImporter* FindLoader (const char* szExtension) const;
+
+
 	// -------------------------------------------------------------------
 	/** Returns the scene loaded by the last successful call to ReadFile()
 	 *
@@ -509,97 +552,10 @@ public:
 	 *   are not necessarily shared. GetOrphanedScene() enforces you
 	 *   to delete the returned scene by yourself, but this will only
 	 *   be fine if and only if you're using the same heap as assimp.
-	 *   On Windows, it's typically fine provided everything is linked
+	 *   On Windows, it's typically fine when everything is linked
 	 *   against the multithreaded-dll version of the runtime library.
 	 *   It will work as well for static linkage with Assimp.*/
 	aiScene* GetOrphanedScene();
-
-
-
-
-	// -------------------------------------------------------------------
-	/** Returns whether a given file extension is supported by ASSIMP.
-	 *
-	 * @param szExtension Extension to be checked.
-	 *   Must include a trailing dot '.'. Example: ".3ds", ".md3".
-	 *   Cases-insensitive.
-	 * @return true if the extension is supported, false otherwise */
-	bool IsExtensionSupported(const char* szExtension) const;
-
-	// -------------------------------------------------------------------
-	/** @brief Returns whether a given file extension is supported by ASSIMP.
-	 *
-	 * This function is provided for backward compatibility.
-	 * See the const char* version for detailed and up-to-date docs.
-	 * @see IsExtensionSupported(const char*) */
-	inline bool IsExtensionSupported(const std::string& szExtension) const;
-
-	// -------------------------------------------------------------------
-	/** Get a full list of all file extensions supported by ASSIMP.
-	 *
-	 * If a file extension is contained in the list this does of course not
-	 * mean that ASSIMP is able to load all files with this extension ---
-     * it simply means there is an importer loaded which claims to handle
-	 * files with this file extension.
-	 * @param szOut String to receive the extension list. 
-	 *   Format of the list: "*.3ds;*.obj;*.dae". This is useful for
-	 *   use with the WinAPI call GetOpenFileName(Ex). */
-	void GetExtensionList(aiString& szOut) const;
-
-	// -------------------------------------------------------------------
-	/** @brief Get a full list of all file extensions supported by ASSIMP.
-	 *
-	 * This function is provided for backward compatibility.
-	 * See the aiString version for detailed and up-to-date docs.
-	 * @see GetExtensionList(aiString&)*/
-	inline void GetExtensionList(std::string& szOut) const;
-
-	// -------------------------------------------------------------------
-	/** Get the number of importrs currently registered with Assimp. */
-	size_t GetImporterCount() const;
-
-	// -------------------------------------------------------------------
-	/** Get meta data for the importer corresponding to a specific index..
-	*
-	*  For the declaration of #aiImporterDesc, include <assimp/importerdesc.h>.
-	*  @param index Index to query, must be within [0,GetImporterCount())
-	*  @return Importer meta data structure, NULL if the index does not
-	*     exist or if the importer doesn't offer meta information (
-	*     importers may do this at the cost of being hated by their peers).*/
-	const aiImporterDesc* GetImporterInfo(size_t index) const;
-
-	// -------------------------------------------------------------------
-	/** Find the importer corresponding to a specific index.
-	*
-	*  @param index Index to query, must be within [0,GetImporterCount())
-	*  @return Importer instance. NULL if the index does not
-	*     exist. */
-	BaseImporter* GetImporter(size_t index) const;
-
-	// -------------------------------------------------------------------
-	/** Find the importer corresponding to a specific file extension.
-	*
-	*  This is quite similar to #IsExtensionSupported except a
-	*  BaseImporter instance is returned.
-	*  @param szExtension Extension to check for. The following formats
-	*    are recognized (BAH being the file extension): "BAH" (comparison
-	*    is case-insensitive), ".bah", "*.bah" (wild card and dot
-	*    characters at the beginning of the extension are skipped).
-	*  @return NULL if no importer is found*/
-	BaseImporter* GetImporter (const char* szExtension) const;
-
-	// -------------------------------------------------------------------
-	/** Find the importer index corresponding to a specific file extension.
-	*
-	*  @param szExtension Extension to check for. The following formats
-	*    are recognized (BAH being the file extension): "BAH" (comparison
-	*    is case-insensitive), ".bah", "*.bah" (wild card and dot
-	*    characters at the beginning of the extension are skipped).
-	*  @return (size_t)-1 if no importer is found */
-	size_t GetImporterIndex (const char* szExtension) const;
-
-
-
 
 	// -------------------------------------------------------------------
 	/** Returns the storage allocated by ASSIMP to hold the scene data
@@ -620,12 +576,6 @@ public:
 	 * structure in a well-defined manner. This is a debug feature and not
 	 * intended for use in production environments. */
 	void SetExtraVerbose(bool bDo);
-
-
-	// -------------------------------------------------------------------
-	/** Private, do not use. */
-	ImporterPimpl* Pimpl() { return pimpl; };
-	const ImporterPimpl* Pimpl() const { return pimpl; };
 
 protected:
 

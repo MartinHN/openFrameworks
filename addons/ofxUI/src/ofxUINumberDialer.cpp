@@ -239,6 +239,7 @@ void ofxUINumberDialer::mouseDragged(int x, int y, int button)
     if(hit)
     {
         *value += zoneMultiplier*(hitPoint.y-y);
+ 
         if(*value > max)
         {
             *value = max;

@@ -912,6 +912,9 @@ void ofAppGLFWWindow::mouse_cb(GLFWwindow* windowP_, int button, int state, int 
 
 //------------------------------------------------------------
 void ofAppGLFWWindow::motion_cb(GLFWwindow* windowP_, double x, double y) {
+#ifdef TARGET_OSX
+    [(NSWindow*)ofGetCocoaWindow() resetCursorRects];
+#endif
 	rotateMouseXY(ofGetOrientation(), x, y);
 
 	if(!instance->buttonPressed){

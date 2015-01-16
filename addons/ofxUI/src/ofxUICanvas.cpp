@@ -1127,7 +1127,7 @@ void ofxUICanvas::addWidget(ofxUIWidget *widget) {
         child->setRectParent(widget->getRect());
     }
     
-    if(widget->getKind() == OFX_UI_WIDGET_LABEL) {
+    if(widget->getKind() == OFX_UI_WIDGET_LABEL ) {
         ofxUILabel *label = (ofxUILabel *) widget;
         setLabelFont(label);
         setWidgetColor(label);

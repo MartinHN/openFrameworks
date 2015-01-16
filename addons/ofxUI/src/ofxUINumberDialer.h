@@ -61,7 +61,7 @@ public:
     virtual void saveState(ofxXmlSettings *XML);
     virtual void loadState(ofxXmlSettings *XML);
 #endif    
-    
+    float max, min; 
 protected:
 	string textstring;
     string displaystring;
@@ -69,7 +69,7 @@ protected:
 	float zoneMultiplier; 
 	float *value;  
     bool useReference;     
-	float max, min; 
+	
     ofPoint hitPoint; 
     int numOfPrecisionZones;
     int currentPrecisionZone;

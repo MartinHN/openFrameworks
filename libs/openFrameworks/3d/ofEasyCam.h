@@ -10,7 +10,7 @@ public:
 
 	// TODO: this should be ofGetViewRect() eventually
 	virtual void begin(ofRectangle viewport = ofGetCurrentViewport());
-	void reset();
+	virtual void reset();
 
 	//----------------------------------------
 	// advanced functions
@@ -43,6 +43,10 @@ public:
 	
     void setAutoDistance(bool bAutoDistance);
 	
+
+    ofRectangle viewport;// having the  viewport saved localy will make it easier for all the needed maths dealing with viewport.
+
+    
 private:
 	void setDistance(float distance, bool save);
 
@@ -96,5 +100,4 @@ private:
 	ofVec3f prevPosition;
 	ofQuaternion prevOrientation;
     
-	ofRectangle viewport;// having the  viewport saved localy will make it easier for all the needed maths dealing with viewport.
-};
+	};

@@ -434,6 +434,7 @@ void ofxUIDropDownList::triggerEvent(ofxUIWidget *child)
 
 void ofxUIDropDownList::activateToggle(string _name)
 {
+    cout << _name << endl;
     for(unsigned int i = 0; i < toggles.size(); i++)
     {
         ofxUILabelToggle *t = toggles[i];

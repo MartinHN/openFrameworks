@@ -1110,7 +1110,6 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 			// this could probably be backported to the GL2 Renderer =)
 
 			rViewport = getCurrentViewport();
-
 			ofMatrix4x4 modelview, projection;
 			glGetFloatv(GL_MODELVIEW_MATRIX, modelview.getPtr());
 			glGetFloatv(GL_PROJECTION_MATRIX, projection.getPtr());
@@ -1119,12 +1118,15 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 			dScreen += ofVec3f(1.0) ;
 			dScreen *= 0.5;
 
-			dScreen.x += rViewport.x;
+//            dScreen.x += rViewport.x;
 			dScreen.x *= rViewport.width;
 
-			dScreen.y += rViewport.y;
+            
+//			dScreen.y += rViewport.y;
 			dScreen.y *= rViewport.height;
 
+            
+            
 			if (dScreen.z >= 1) return;
 
 
@@ -1143,6 +1145,7 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 			scale(2/rViewport.width, 2/rViewport.height, 1);
 
 			translate(dScreen.x, dScreen.y, 0);
+            
 		}
 			break;
 
@@ -1185,7 +1188,7 @@ void ofGLRenderer::drawString(string textString, float x, float y, float z, ofDr
 			// solves a bug with control characters
 			// getting drawn when they ought to not be
 			ofDrawBitmapCharacter(textString[c], (int)sx, (int)sy);
-
+            
 			sx += fontSize;
 			column++;
 		}

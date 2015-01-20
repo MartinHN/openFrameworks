@@ -267,9 +267,12 @@ void ofEasyCam::mouseReleased(ofMouseEventArgs & mouse){
 }
 
 void ofEasyCam::mouseDragged(ofMouseEventArgs & mouse){
-	mouseVel = mouse  - lastMouse;
+	if(mouse.button==0){
+     mouseVel = mouse  - lastMouse;
+        updateMouse(mouse);
+    }
 
-	updateMouse(mouse);
+	
 }
 
 

@@ -14,7 +14,6 @@
 		22769591170D9DD200604FC3 /* ofMatrixStack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2276958F170D9DD200604FC3 /* ofMatrixStack.cpp */; };
 		22769592170D9DD200604FC3 /* ofMatrixStack.h in Headers */ = {isa = PBXBuildFile; fileRef = 22769590170D9DD200604FC3 /* ofMatrixStack.h */; };
 		22A1C453170AFCB60079E473 /* ofRendererCollection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22A1C452170AFCB60079E473 /* ofRendererCollection.cpp */; };
-		22FAD01E17049373002A7EB3 /* ofAppGLFWWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 22FAD01C17049373002A7EB3 /* ofAppGLFWWindow.cpp */; };
 		22FAD01F17049373002A7EB3 /* ofAppGLFWWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 22FAD01D17049373002A7EB3 /* ofAppGLFWWindow.h */; };
 		27DEA3111796F578000A9E90 /* ofXml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 27DEA30F1796F578000A9E90 /* ofXml.cpp */; };
 		27DEA3121796F578000A9E90 /* ofXml.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DEA3101796F578000A9E90 /* ofXml.h */; };
@@ -822,7 +821,6 @@
 				DAC22D4116E7A4AF0020226D /* ofParameterGroup.cpp in Sources */,
 				6433E9AB19BCDB8900869EE5 /* ofAVFoundationPlayer.mm in Sources */,
 				67D96B971651AF6D00D5242D /* ofGLUtils.cpp in Sources */,
-				22FAD01E17049373002A7EB3 /* ofAppGLFWWindow.cpp in Sources */,
 				22A1C453170AFCB60079E473 /* ofRendererCollection.cpp in Sources */,
 				22769591170D9DD200604FC3 /* ofMatrixStack.cpp in Sources */,
 				22246D93176C9987008A8AF4 /* ofGLProgrammableRenderer.cpp in Sources */,

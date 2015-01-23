@@ -145,7 +145,7 @@ public:
 	Context(
 		Usage usage,
 		const std::string& caLocation, 
-		VerificationMode verificationMode = VERIFY_RELAXED,
+		VerificationMode verificationMode = VERIFY_NONE,
 		int verificationDepth = 9,
 		bool loadDefaultCAs = false,
 		const std::string& cipherList = "ALL:!ADH:!LOW:!EXP:!MD5:@STRENGTH");

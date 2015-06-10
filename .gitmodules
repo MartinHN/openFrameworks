@@ -1,3 +1,27 @@
 [submodule "apps/projectGenerator/projectGeneratorSimple"]
 	path = apps/projectGenerator/projectGeneratorSimple
 	url = https://github.com/ofZach/projectGeneratorSimple.git
+[submodule "addons/ofxIO"]
+	path = addons/ofxIO
+	url = https://github.com/bakercp/ofxIO
+[submodule "addons/ofxJSON"]
+	path = addons/ofxJSON
+	url = https://github.com/jefftimesten/ofxJSON
+[submodule "addons/ofxDelaunay"]
+	path = addons/ofxDelaunay
+	url = https://github.com/obviousjim/ofxDelaunay
+[submodule "addons/ofxBluetoothManager"]
+	path = addons/ofxBluetoothManager
+	url = https://github.com/vanderlin/ofxBluetoothManager
+[submodule "addons/ofxMidi"]
+	path = addons/ofxMidi
+	url = https://github.com/danomatika/ofxMidi
+[submodule "addons/ofxMtlWatchFolder"]
+	path = addons/ofxMtlWatchFolder
+	url = https://github.com/morethanlogic/ofxMtlWatchFolder
+[submodule "addons/ofxTweener"]
+	path = addons/ofxTweener
+	url = https://github.com/hautetechnique/ofxTweener
+[submodule "addons/ofxUI"]
+	path = addons/ofxUI
+	url = https://github.com/rezaali/ofxUI

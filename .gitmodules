@@ -16,9 +16,6 @@
 [submodule "addons/ofxMidi"]
 	path = addons/ofxMidi
 	url = https://github.com/danomatika/ofxMidi
-[submodule "addons/ofxMtlWatchFolder"]
-	path = addons/ofxMtlWatchFolder
-	url = https://github.com/morethanlogic/ofxMtlWatchFolder
 [submodule "addons/ofxTweener"]
 	path = addons/ofxTweener
 	url = https://github.com/hautetechnique/ofxTweener

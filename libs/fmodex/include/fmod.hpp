@@ -1,5 +1,9 @@
 /* ========================================================================================== */
+<<<<<<< HEAD
 /* FMOD Ex - C++ header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2011.      */
+=======
+/* FMOD Ex - C++ header file. Copyright (c), Firelight Technologies Pty, Ltd. 2004-2014.      */
+>>>>>>> d9fbdd0678bc039be59f83c6a550c2e5e1ac9d07
 /*                                                                                            */
 /* Use this header in conjunction with fmod.h (which contains all the constants / callbacks)  */
 /* to develop using C++ classes.                                                              */
@@ -215,6 +219,7 @@ namespace FMOD
         FMOD_RESULT F_API get3DCustomRolloff     (FMOD_VECTOR **points, int *numpoints);
         FMOD_RESULT F_API setSubSound            (int index, Sound *subsound);
         FMOD_RESULT F_API getSubSound            (int index, Sound **subsound);
+        FMOD_RESULT F_API getSubSoundParent      (Sound **parentsound);
         FMOD_RESULT F_API setSubSoundSentence    (int *subsoundlist, int numsubsounds);
         FMOD_RESULT F_API getName                (char *name, int namelen);
         FMOD_RESULT F_API getLength              (unsigned int *length, FMOD_TIMEUNIT lengthtype);

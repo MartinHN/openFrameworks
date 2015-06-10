@@ -4,12 +4,17 @@
 
 
 #include "ofBaseSoundPlayer.h"
-
+#define FMOD_CHANNELS 50
 
 extern "C" {
 #include "fmod.h"
 #include "fmod_errors.h"
+    
+    
+
 }
+
+#include "ofEvents.h"
 
 //		TO DO :
 //		---------------------------
@@ -39,8 +44,14 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 		ofFmodSoundPlayer();
 		virtual ~ofFmodSoundPlayer();
 
+<<<<<<< HEAD
 		bool load(string fileName, bool stream = false);
 		void unload();
+=======
+		bool loadSound(string fileName, bool stream = false);
+        bool loadSound(string fileName, bool stream,float begin,float end);
+		void unloadSound();
+>>>>>>> d9fbdd0678bc039be59f83c6a550c2e5e1ac9d07
 		void play();
 		void stop();
 
@@ -74,9 +85,30 @@ class ofFmodSoundPlayer : public ofBaseSoundPlayer {
 		float internalFreq; // 44100 ?
 		float speed; // -n to n, 1 = normal, -1 backwards
 		unsigned int length; // in samples;
-
+    
 		FMOD_RESULT result;
 		FMOD_CHANNEL * channel;
 		FMOD_SOUND * sound;
+    
+    
+    void setStopMS(float ms);
+
+    static ofEvent<std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE> >  audioEvent;
+
+    
 };
 
+
+extern "C"{
+    FMOD_RESULT F_CALLBACK stopCallback(FMOD_CHANNEL *channel, FMOD_CHANNEL_CALLBACKTYPE type, void *commanddata1, void *commanddata2){
+
+        
+            std::pair<FMOD_CHANNEL*,FMOD_CHANNEL_CALLBACKTYPE>arg(channel,type);
+            ofNotifyEvent(ofFmodSoundPlayer::audioEvent,arg, channel);
+        
+            return FMOD_OK;
+        
+        
+        
+    };
+}

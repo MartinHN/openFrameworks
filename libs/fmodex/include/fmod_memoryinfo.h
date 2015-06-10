@@ -1,5 +1,9 @@
 /* ============================================================================================= */
+<<<<<<< HEAD
 /* FMOD Ex - Memory info header file. Copyright (c), Firelight Technologies Pty, Ltd. 2008-2011. */
+=======
+/* FMOD Ex - Memory info header file. Copyright (c), Firelight Technologies Pty, Ltd. 2008-2014. */
+>>>>>>> d9fbdd0678bc039be59f83c6a550c2e5e1ac9d07
 /*                                                                                               */
 /* Use this header if you are interested in getting detailed information on FMOD's memory        */
 /* usage. See the documentation for more details.                                                */

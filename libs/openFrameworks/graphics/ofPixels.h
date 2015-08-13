@@ -186,6 +186,8 @@ public:
 	/// copied doesn't fit into the destination then the image is cropped.
 	bool pasteInto(ofPixels_<PixelType> &dst, int x, int y) const;
 
+	bool blendInto(ofPixels_<PixelType> &dst, int x, int y) const;
+
 	/// \brief Swaps the R and B channels of an
 	/// image, leaving the G and A channels as is.
 	void swapRgb();
@@ -251,8 +253,8 @@ public:
 
 	/// \brief Get number of bits per pixel
 	///
-	/// If you have RGB pixel data, this will return 3, if you have RGBA,
-	/// you'll have 4, if you have grayscale, this will return 1.
+	/// If you have RGB pixel data, this will return 24, if you have RGBA,
+	/// you'll have 32, if you have grayscale, this will return 8.
 	int getBitsPerPixel() const;
 	
 	/// \brief Get how large each channel of a pixel is
@@ -563,7 +565,7 @@ ofPixels_<PixelType>::ofPixels_(const ofPixels_<SrcType> & mom){
 	bAllocated = false;
 	pixelsOwner = false;
 	pixelsSize = 0;
-	pixels = NULL;
+	pixels = nullptr;
 	width = 0;
 	height = 0;
 	pixelFormat = OF_PIXELS_UNKNOWN;
@@ -1019,7 +1021,7 @@ inline typename ofPixels_<PixelType>::Lines ofPixels_<PixelType>::getLines(){
 //----------------------------------------------------------------------
 template<typename PixelType>
 inline typename ofPixels_<PixelType>::Pixels ofPixels_<PixelType>::getPixelsIter(){
-	return Pixels(begin(),end(),getNumChannels(),pixelFormat);
+	return Pixels(begin(),end()-getNumChannels(),getNumChannels(),pixelFormat);
 }
 
 //----------------------------------------------------------------------

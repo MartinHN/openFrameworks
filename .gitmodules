@@ -1,4 +1,4 @@
-[submodule "apps/projectGenerator/projectGeneratorSimple"]
+[submodule "apps/projectGenerator"]
 	path = apps/projectGenerator
 	url = https://github.com/openframeworks/projectGenerator.git
 [submodule "addons/ofxIO"]

@@ -166,7 +166,7 @@ void ofEasyCam::enableMouseInput(){
 		ofAddListener(events->mouseDragged , this, &ofEasyCam::mouseDragged);
 		ofAddListener(events->mousePressed, this, &ofEasyCam::mousePressed);
 		ofAddListener(events->mouseReleased, this, &ofEasyCam::mouseReleased);
-		ofAddListener(events->mouseScrolled, this, &ofEasyCam::mouseScrolled);
+//		ofAddListener(events->mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
 	// if enableMouseInput was called within ofApp::setup()
 	// `events` will still carry a null pointer, and bad things
@@ -183,7 +183,7 @@ void ofEasyCam::disableMouseInput(){
 		ofRemoveListener(events->mouseDragged, this, &ofEasyCam::mouseDragged);
 		ofRemoveListener(events->mousePressed, this, &ofEasyCam::mousePressed);
 		ofRemoveListener(events->mouseReleased, this, &ofEasyCam::mouseReleased);
-		ofRemoveListener(events->mouseScrolled, this, &ofEasyCam::mouseScrolled);
+//		ofRemoveListener(events->mouseScrolled, this, &ofEasyCam::mouseScrolled);
 	}
 	// if disableMouseInput was called within ofApp::setup()
 	// `events` will still carry a null pointer, and bad things
@@ -282,7 +282,8 @@ void ofEasyCam::mousePressed(ofMouseEventArgs & mouse){
 		prevOrientation = ofCamera::getGlobalOrientation();
 
 		if((bEnableMouseMiddleButton && mouse.button == OF_MOUSE_BUTTON_MIDDLE) || events->getKeyPressed(doTranslationKey)  || mouse.button == OF_MOUSE_BUTTON_RIGHT){
-			bDoTranslate = true;
+//			bDoTranslate = true;
+			bDoTranslate = false;
 			bDoRotate = false;
 		}else if(mouse.button == OF_MOUSE_BUTTON_LEFT){
 			bDoTranslate = false;

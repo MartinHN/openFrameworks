@@ -34,3 +34,6 @@ url=https://github.com/martinHN/ofxNearestNeighbour.git
 [submodule "addons/ofxTaskQueue"]
 	path = addons/ofxTaskQueue
 	url = https://github.com/bakercp/ofxTaskQueue.git
+[submodule "addons/ofxTuioWrapper"]
+	path = addons/ofxTuioWrapper
+	url = https://github.com/arturoc/ofxTuioWrapper.git

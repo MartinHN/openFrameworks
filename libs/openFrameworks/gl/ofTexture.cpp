@@ -6,6 +6,10 @@
 #include "ofGLUtils.h"
 #include <map>
 
+#ifdef TARGET_ANDROID
+#include "ofAppAndroidWindow.h"
+#endif
+
 //----------------------------------------------------------
 // static
 static bool bTexHackEnabled = true;
@@ -137,12 +141,21 @@ static void release(GLuint id){
 		if(getTexturesIndex().find(id)!=getTexturesIndex().end()){
 			getTexturesIndex()[id]--;
 			if(getTexturesIndex()[id]==0){
-				glDeleteTextures(1, (GLuint *)&id);
+
+#ifdef TARGET_ANDROID
+				if (!ofAppAndroidWindow::isSurfaceDestroyed())
+#endif
+					glDeleteTextures(1, (GLuint *)&id);
+
 				getTexturesIndex().erase(id);
 			}
 		}else{
 			ofLogError("ofTexture") << "release(): something's wrong here, releasing unknown texture id " << id;
-			glDeleteTextures(1, (GLuint *)&id);
+
+#ifdef TARGET_ANDROID
+			if (!ofAppAndroidWindow::isSurfaceDestroyed())
+#endif
+				glDeleteTextures(1, (GLuint *)&id);
 		}
 	}
 }
@@ -186,6 +199,18 @@ ofTexture::ofTexture(const ofTexture & mom){
 #endif
 }
 
+ofTexture::ofTexture(ofTexture && mom){
+    anchor = mom.anchor;
+    bAnchorIsPct = mom.bAnchorIsPct;
+    texData = mom.texData;
+    bWantsMipmap = mom.bWantsMipmap;
+    mom.texData.bAllocated = 0;
+    mom.texData.textureID = 0;
+#ifdef TARGET_ANDROID
+    registerTexture(this);
+#endif
+}
+
 //----------------------------------------------------------
 ofTexture& ofTexture::operator=(const ofTexture & mom){
 	if(!texData.bUseExternalTextureID){
@@ -200,6 +225,23 @@ ofTexture& ofTexture::operator=(const ofTexture & mom){
 	unregisterTexture(this);
 #endif
 	return *this;
+}
+
+//----------------------------------------------------------
+ofTexture& ofTexture::operator=(ofTexture && mom){
+    if(!texData.bUseExternalTextureID){
+        release(texData.textureID);
+    }
+    anchor = mom.anchor;
+    bAnchorIsPct = mom.bAnchorIsPct;
+    texData = mom.texData;
+    bWantsMipmap = mom.bWantsMipmap;
+    mom.texData.bAllocated = 0;
+    mom.texData.textureID = 0;
+#ifdef TARGET_ANDROID
+    unregisterTexture(this);
+#endif
+    return *this;
 }
 
 //----------------------------------------------------------
@@ -279,7 +321,7 @@ void ofTexture::allocate(const ofPixels& pix){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 //----------------------------------------------------------
@@ -288,7 +330,7 @@ void ofTexture::allocate(const ofPixels& pix, bool bUseARBExtention){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 //----------------------------------------------------------
@@ -297,7 +339,7 @@ void ofTexture::allocate(const ofShortPixels& pix){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 //----------------------------------------------------------
@@ -306,7 +348,7 @@ void ofTexture::allocate(const ofShortPixels& pix, bool bUseARBExtention){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 
@@ -316,7 +358,7 @@ void ofTexture::allocate(const ofFloatPixels& pix){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 //----------------------------------------------------------
@@ -325,7 +367,7 @@ void ofTexture::allocate(const ofFloatPixels& pix, bool bUseARBExtention){
 	if((pix.getPixelFormat()==OF_PIXELS_GRAY || pix.getPixelFormat()==OF_PIXELS_GRAY_ALPHA) && ofIsGLProgrammableRenderer()){
 		setRGToRGBASwizzles(true);
 	}
-	loadData(pix);
+	if(texData.bAllocated) loadData(pix);
 }
 
 #ifndef TARGET_OPENGLES
@@ -333,10 +375,9 @@ void ofTexture::allocate(const ofFloatPixels& pix, bool bUseARBExtention){
 void ofTexture::allocateAsBufferTexture(const ofBufferObject & buffer, int glInternalFormat){
 	texData.glInternalFormat = glInternalFormat;
 	texData.textureTarget = GL_TEXTURE_BUFFER;
-	allocate(texData);
-	glBindTexture(texData.textureTarget,texData.textureID);
-	glTexBuffer(GL_TEXTURE_BUFFER, glInternalFormat,buffer.getId());
-	glBindTexture(texData.textureTarget,0);
+	texData.bufferId = buffer.getId();
+	allocate(texData,0,0);
+	buffer.bind(GL_TEXTURE_BUFFER);
 }
 #endif
 
@@ -929,6 +970,11 @@ void ofTexture::enableMipmap(){
 void ofTexture::disableMipmap(){
 	bWantsMipmap = false;
 	texData.minFilter = GL_LINEAR;
+}
+
+//------------------------------------
+bool ofTexture::hasMipmap() const{
+	return texData.hasMipmap;
 }
 
 //------------------------------------

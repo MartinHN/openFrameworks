@@ -2,7 +2,7 @@
 #include "ofParameter.h"
 
 ofParameterGroup::ofParameterGroup()
-:obj(std::make_shared<Value>())
+:obj(new Value)
 {
 
 }
@@ -15,8 +15,7 @@ void ofParameterGroup::add(ofAbstractParameter & parameter){
 }
 
 void ofParameterGroup::clear(){
-	obj->parameters.clear();
-	obj->parametersIndex.clear();
+	obj.reset(new Value);
 }
 
 const ofParameter<bool> & ofParameterGroup::getBool(const string& name) const	{
@@ -350,7 +349,7 @@ ostream& operator<<(ostream& os, const ofParameterGroup& group) {
 	return os;
 }
 
-bool ofParameterGroup::contains(const string& name){
+bool ofParameterGroup::contains(const string& name) const{
 	return obj->parametersIndex.find(escape(name))!=obj->parametersIndex.end();
 }
 

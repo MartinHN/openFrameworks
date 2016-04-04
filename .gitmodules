@@ -37,3 +37,6 @@ url=https://github.com/martinHN/ofxNearestNeighbour.git
 [submodule "addons/ofxTuioWrapper"]
 	path = addons/ofxTuioWrapper
 	url = https://github.com/arturoc/ofxTuioWrapper.git
+[submodule "addons/ofxSyphon"]
+	path = addons/ofxSyphon
+	url = https://martinHN@github.com/MartinHN/ofxSyphon.git

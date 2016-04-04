@@ -670,10 +670,23 @@ inline void ofParameter<ParameterType>::eventsSetValue(const ParameterType & v){
 
             // Erase each invalid parent and notify all valid parents of this
             // object's changed value.
-            obj->parents.erase(std::remove_if(obj->parents.begin(),
-                                              obj->parents.end(),
-                                              notifyParents),
-                               obj->parents.end());
+
+// Hack Martin : this line trigger random crashes
+
+//						auto parentEnd = 	   std::remove_if(
+
+					for(auto i = obj->parents.begin();i!=obj->parents.end();++i){
+						auto parent = i->lock();
+
+						// If the parent's shared pointer is not nullptr, notify it.
+						if(parent != nullptr) {
+							parent->notifyParameterChanged(*this);
+//							return false;
+						} else {
+//							return true;
+						}
+					};
+//            obj->parents.erase( parentEnd ,obj->parents.end());
         }
         obj->bInNotify = false;
     }

@@ -847,6 +847,7 @@ void ofOpenALSoundPlayer::setMultiPlay(bool bMp){
 
 // ----------------------------------------------------------------------------
 void ofOpenALSoundPlayer::play(){
+	{
 	std::unique_lock<std::mutex> lock(mutex);
 	int err = glGetError();
 
@@ -883,8 +884,9 @@ void ofOpenALSoundPlayer::play(){
 			return;
 		}
 	}
-	alSourcePlayv(channels,&sources[sources.size()-channels]);
 
+	alSourcePlayv(channels,&sources[sources.size()-channels]);
+}
 	if(bMultiPlay){
 		ofAddListener(ofEvents().update,this,&ofOpenALSoundPlayer::update);
 	}

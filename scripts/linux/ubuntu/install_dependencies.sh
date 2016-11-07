@@ -111,12 +111,12 @@ fi
 
 GTK_VERSION=2.0
 echo "detecting latest gtk version"
-apt-cache show libgtk-3-dev
-exit_code=$?
-if [ $exit_code = 0 ]; then
-    echo selecting gtk 3
-    GTK_VERSION=-3
-fi
+# apt-cache show libgtk-3-dev
+# exit_code=$?
+# if [ $exit_code = 0 ]; then
+#     echo selecting gtk 3
+#     GTK_VERSION=-3
+# fi
 
 #checking for distrib tagged xserver-xorg
 XTAG=$(dpkg -l |grep xserver-xorg-core|grep ii|awk '{print $2}'|sed "s/xserver-xorg-core//")

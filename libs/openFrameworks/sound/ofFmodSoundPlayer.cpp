@@ -271,6 +271,7 @@ bool ofFmodSoundPlayer::isLoaded() const{
 void ofFmodSoundPlayer::setVolume(float vol){
 	if (isPlaying()){
 		FMOD_Channel_SetVolume(channel, vol);
+		
 	}
 	volume = vol;
 }
@@ -285,7 +286,7 @@ void ofFmodSoundPlayer::setPosition(float pct){
 
 void ofFmodSoundPlayer::setPositionMS(int ms) {
 	if (isPlaying()){
-		FMOD_Channel_SetPosition(channel, ms, FMOD_TIMEUNIT_MS);
+		result = FMOD_Channel_SetPosition(channel, ms, FMOD_TIMEUNIT_MS);
 	}
 }
 

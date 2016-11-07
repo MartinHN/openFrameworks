@@ -23,7 +23,7 @@ public:
 	virtual void begin(ofRectangle viewport = ofRectangle());
 
     /// \brief Reset the camera position and orientation.
-	void reset();
+	virtual void reset();
 
 	/// \}
 	/// \name Camera Target
